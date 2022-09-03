@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 description: python套件管理相關指令
 tags:
   - Python

@@ -1,13 +1,13 @@
 ---
-sidebar_position: 1
+sidebar_position: 0
 description: 基本介紹
 tags:
   - js
   - python
-  - leetcode
+  - leetCode
 ---
 
-# Introduce
+# 基本介紹
 
 
 
