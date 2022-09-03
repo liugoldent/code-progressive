@@ -6,8 +6,13 @@
   "sitemap_urls": [
     "https://code-progressive.netlify.app/sitemap.xml"
   ],
+  "stop_urls": [
+    "/search",
+    "/v3me",
+    "/playground",
+    "/inspector"
+  ],
   "sitemap_alternate_links": true,
-  "stop_urls": [],
   "selectors": {
     "lvl0": {
       "selector": "(//ul[contains(@class,'menu__list')]//a[contains(@class, 'menu__link menu__link--sublist menu__link--active')]/text() | //nav[contains(@class, 'navbar')]//a[contains(@class, 'navbar__link--active')]/text())[last()]",
@@ -41,8 +46,6 @@
       "type"
     ]
   },
-  "conversation_id": [
-    "833762294"
-  ],
-  "nb_hits": 9510
+  "js_render": true,
+  "nb_hits": 856
 }
