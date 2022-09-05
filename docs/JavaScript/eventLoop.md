@@ -1,7 +1,7 @@
 ---
 description: javascript event loop 筆記
 tags:
-  - js
+  - javascript
   - javascript
   - event loop
 ---
