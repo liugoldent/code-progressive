@@ -27,3 +27,7 @@ tags:
 [ref](https://github.com/nicehorse06/se-job/blob/master/interview/coding.md)
 [lidemyOJ](https://oj.lidemy.com/problem)
 [資料結構](https://www.udemy.com/course/master-the-coding-interview-data-structures-algorithms/)
+
+## Stock
+[函式庫](https://havocfuture.tw/docs/fintech/python)
+

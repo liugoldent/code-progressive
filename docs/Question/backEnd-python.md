@@ -17,7 +17,7 @@ brew install jq
 ```
 
 ## python
-### <u>*Cannot install Lxml on Mac OS X 10.9*</u>
+### <u>*1. Cannot install Lxml on Mac OS X 10.9*</u>
 #### [Ans Link](https://stackoverflow.com/questions/19548011/cannot-install-lxml-on-mac-os-x-10-9)
 
 Ans1：
@@ -29,19 +29,7 @@ Ans2：
  STATIC_DEPS=true pip install lxml
 ```
 
-### <u>*ImportError: No module named*</u>
-#### [Ans Link](https://stackoverflow.com/questions/19548011/cannot-install-lxml-on-mac-os-x-10-9)
-
-Ans1：
-```shell
-xcode-select --install
-```
-Ans2：
-```shell
- STATIC_DEPS=true pip install lxml
-```
-
-### <u>*ImportError: No module named*</u>
+### <u>*2. ImportError: No module named*</u>
 #### [Ans Link](https://blog.csdn.net/GungnirsPledge/article/details/107586458)
 
 Ans：
@@ -62,3 +50,29 @@ sys.path.append('/Users/guantingliu/Desktop/BackEnd/nightkin_py/modules/Stock')
 from stockDetail import Square
 ```
 
+### <u>*3. PyMongo [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate*</u>
+
+#### [Ans Link](https://stackoverflow.com/questions/68123923/pymongo-ssl-certificate-verify-failed-certificate-verify-failed-unable-to-ge)
+
+可以使用`certifi()`去解決
+```python
+client = MongoClient(cluster, tlsCAFile= certifi.where())
+```
+
+### <u>*4. pymongo.cursor.Cursor object at xxxxxxx*</u>
+#### [Ans Link](https://stackoverflow.com/questions/28968660/how-to-convert-a-pymongo-cursor-cursor-into-a-dict)  
+
+代表其print出的東西為物件，故解決辦法：
+```python
+array = list(col.find())
+print(array)
+```
+
+### <u>*5. pymongo - "dnspython" module must be installed to use mongodb+srv:// URIs*</u>
+#### [Ans Link](https://stackoverflow.com/questions/52930341/pymongo-dnspython-module-must-be-installed-to-use-mongodbsrv-uris)
+
+主要是要安裝 `mongo+srv`
+```shell
+# 這邊記得要用[srv]，不然無法安裝
+pip3 install 'pymongo[srv]'
+```
