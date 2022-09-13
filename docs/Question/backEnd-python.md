@@ -1,6 +1,5 @@
 ---
-sidebar_position: 2
-description: docSearch問題
+description: python 問題集
 tags:
   - Python
   - Flask
@@ -76,3 +75,13 @@ print(array)
 # 這邊記得要用[srv]，不然無法安裝
 pip3 install 'pymongo[srv]'
 ```
+
+### <u>*6.Extracting lxml xpath for html table*</u>
+
+#### [Ans Link](https://stackoverflow.com/questions/5586296/extracting-lxml-xpath-for-html-table)
+```python
+# 記得tbody要拿掉！因為瀏覽器會對html文本進行一定的規範化
+buyDetail = htmlTree.xpath('//table[@class="t01"] /tr/td/text()')
+```
+
+
