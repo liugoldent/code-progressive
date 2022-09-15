@@ -76,12 +76,19 @@ print(array)
 pip3 install 'pymongo[srv]'
 ```
 
-### <u>*6.Extracting lxml xpath for html table*</u>
+### <u>*6. Extracting lxml xpath for html table*</u>
 
 #### [Ans Link](https://stackoverflow.com/questions/5586296/extracting-lxml-xpath-for-html-table)
 ```python
 # 記得tbody要拿掉！因為瀏覽器會對html文本進行一定的規範化
 buyDetail = htmlTree.xpath('//table[@class="t01"] /tr/td/text()')
+```
+
+### <u>*7. TypeError: ObjectId('') is not JSON serializable*</u>
+#### [Ans Link](https://stackoverflow.com/questions/16586180/typeerror-objectid-is-not-json-serializable)
+```python
+# 最主要觀念就是要先將list用json_util.dumps轉為json_str格式，最後再json.loads()，就可以確保其丟給mongo的為Json檔案
+buyList = json.loads(json_util.dumps(buyAndSellList['buyList']))
 ```
 
 
