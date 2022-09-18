@@ -63,6 +63,10 @@ div {
 ## CSS box-model
 * content + border + padding
 
+## CSS box-sizing
+* content-box：設定的width / height = content（padding & border 會另外加上去）
+* border-box：你設定的width / height = border + padding + content
+
 ## 如何讓div水平居中
 ```css
 div {
