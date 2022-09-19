@@ -9,6 +9,7 @@ tags:
 
 ## 參考文章
 [Queueing a Series of State Updates](https://beta.reactjs.org/learn/queueing-a-series-of-state-updates?fbclid=IwAR3i7uS4P9NETuHiufK8MgoXXur2AN8KClMy1sbPJm2BRH11ojlSY6pn6vE)
+[Functional setState is the future of React](https://medium.com/free-code-camp/functional-setstate-is-the-future-of-react-374f30401b6b)
 
 
 
