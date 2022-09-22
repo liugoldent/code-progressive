@@ -33,4 +33,8 @@ pipenv shell
 # 之後操作指令同上面安裝指令
 ```
 
+### 安裝requiement.txt
+```shell
+pip3 install -r ./requirements.txt
+```
 
