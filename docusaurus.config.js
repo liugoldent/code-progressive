@@ -26,7 +26,15 @@ const config = {
     defaultLocale: "en",
     locales: ["en"],
   },
-
+  plugins: [
+    [
+      "@docusaurus/plugin-google-gtag",
+      {
+        trackingID: "G-MV4MKGH442",
+        anonymizeIP: true,
+      },
+    ],
+  ],
   presets: [
     [
       "classic",
@@ -50,13 +58,6 @@ const config = {
           customCss: require.resolve("./src/css/custom.css"),
         },
       }),
-    ],
-    [
-      "@docusaurus/plugin-google-gtag",
-      {
-        trackingID: 'G-MV4MKGH442',
-        anonymizeIP: true,
-      },
     ],
   ],
 
