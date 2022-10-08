@@ -51,6 +51,13 @@ const config = {
         },
       }),
     ],
+    [
+      "@docusaurus/plugin-google-gtag",
+      {
+        trackingID: 'G-MV4MKGH442',
+        anonymizeIP: true,
+      },
+    ],
   ],
 
   themeConfig:
