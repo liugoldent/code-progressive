@@ -28,9 +28,9 @@ const config = {
   },
   plugins: [
     [
-      "@docusaurus/plugin-google-gtag",
+      '@docusaurus/plugin-google-gtag',
       {
-        trackingID: "G-MV4MKGH442",
+        trackingID: 'G-MV4MKGH442',
         anonymizeIP: true,
       },
     ],
@@ -60,16 +60,16 @@ const config = {
       }),
     ],
   ],
-  scripts: [
-    {
-      src: 'https://www.googletagmanager.com/gtag/js?id=G-MV4MKGH442',
-      async: true,
-    },
-    {
-      src: '@static/gtag.js',
-      async: false,
-    },
-  ],
+  // scripts: [
+  //   {
+  //     src: 'https://www.googletagmanager.com/gtag/js?id=G-MV4MKGH442',
+  //     async: true,
+  //   },
+  //   {
+  //     src: '@static/gtag.js',
+  //     async: false,
+  //   },
+  // ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
