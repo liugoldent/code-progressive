@@ -60,7 +60,16 @@ const config = {
       }),
     ],
   ],
-
+  scripts: [
+    {
+      src: 'https://www.googletagmanager.com/gtag/js?id=G-MV4MKGH442',
+      async: true,
+    },
+    {
+      src: '@static/gtag.js',
+      async: false,
+    },
+  ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -144,7 +153,19 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
+
     }),
 };
 
 module.exports = config;
+
+
+// <!-- Google tag (gtag.js) -->
+// <script async src="https://www.googletagmanager.com/gtag/js?id=G-MV4MKGH442"></script>
+// <script>
+//   window.dataLayer = window.dataLayer || [];
+//   function gtag(){dataLayer.push(arguments);}
+//   gtag('js', new Date());
+
+//   gtag('config', 'G-MV4MKGH442');
+// </script>
