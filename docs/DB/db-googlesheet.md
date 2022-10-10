@@ -1,8 +1,8 @@
 ---
 tags:
   - NodeJs
-  - Express
-  - Google Sheets
+  - express
+  - google sheets
 ---
 
 # [Google Sheets] 使用Node.js 操作Google 試算表
