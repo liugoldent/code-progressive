@@ -4,11 +4,15 @@
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
+const date = new Date();
+let day = date.getDate();
+let month = date.getMonth() + 1;
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "My Site",
   tagline: "Dinosaurs are cool",
-  url: "https://your-docusaurus-test-site.com",
+  url: "https://code-progressive.netlify.app/",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
@@ -60,16 +64,6 @@ const config = {
       }),
     ],
   ],
-  // scripts: [
-  //   {
-  //     src: 'https://www.googletagmanager.com/gtag/js?id=G-MV4MKGH442',
-  //     async: true,
-  //   },
-  //   {
-  //     src: '@static/gtag.js',
-  //     async: false,
-  //   },
-  // ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -86,7 +80,7 @@ const config = {
             position: "left",
             label: "知識",
           },
-          // {to: '/blog', label: 'Blog', position: 'left'},
+          {to: '/blog', label: '每日選股', position: 'left'},
           // {
           //   href: 'https://github.com/facebook/docusaurus',
           //   label: 'GitHub',
@@ -153,7 +147,10 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
-
+      metadata: [
+        { name: 'keyword', content: '每日選股, 台股' },
+        { name: 'keyword', content: `${month}${day}選股`}
+      ],
     }),
 };
 
