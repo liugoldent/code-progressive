@@ -80,7 +80,6 @@ const config = {
             position: "left",
             label: "知識",
           },
-          {to: '/blog', label: '每日選股', position: 'left'},
           // {
           //   href: 'https://github.com/facebook/docusaurus',
           //   label: 'GitHub',
