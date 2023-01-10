@@ -97,3 +97,24 @@ class Test{
 }
 ```
 
+### is-A & has-A
+* is-A：繼承
+  * is kind of
+  * 超人是人類的一種
+  * 類別之間階層的父子關係
+```java
+class Person{ }
+
+class Superman extends Person{ }
+```
+* has-A：聚合
+  * 代表A class內有B class
+  * 類別A中的宣告包含了另一個類別B的型態
+  * 類別之間的whole/part關係
+```java
+class Animal { }
+
+class Circus {
+  public Animal a; //代表馬戲團中有包含到Animal型態
+}
+```
