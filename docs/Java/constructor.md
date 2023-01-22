@@ -7,7 +7,7 @@ tags:
   - class
 ---
 
-# 建構子
+# [JAVA 介紹]建構子
 
 ```java
 public class Hello {

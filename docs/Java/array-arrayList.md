@@ -5,9 +5,10 @@ tags:
   - java
   - array
   - arrayList
+keywords: [java,array,arrayList]
 ---
 
-# Array vs ArrayList
+# [JAVA 比較]Array vs ArrayList
 
 ## 程式碼比較
 1. Array的大小是固定的；ArrayList的大小是可變的。

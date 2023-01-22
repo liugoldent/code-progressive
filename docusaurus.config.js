@@ -10,13 +10,13 @@ let month = date.getMonth() + 1;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "My Site",
-  tagline: "Dinosaurs are cool",
+  title: "__yeah! Code",
+  tagline: "漸進一步-程式",
   url: "https://code-progressive.netlify.app/",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.ico",
+  favicon: "img/code.png",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -68,17 +68,17 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "My Site",
+        title: "__yeah! Code",
         logo: {
           alt: "My Site Logo",
-          src: "img/logo.svg",
+          src: "img/code.png",
         },
         items: [
           {
             type: "doc",
             docId: "intro",
             position: "left",
-            label: "知識",
+            label: "程式筆記",
           },
           // {
           //   href: 'https://github.com/facebook/docusaurus',
@@ -100,47 +100,51 @@ const config = {
       footer: {
         style: "dark",
         links: [
-          {
-            title: "Docs",
-            items: [
-              {
-                label: "Tutorial",
-                to: "/docs/intro",
-              },
-            ],
-          },
-          {
-            title: "Community",
-            items: [
-              {
-                label: "Stack Overflow",
-                href: "https://stackoverflow.com/questions/tagged/docusaurus",
-              },
-              {
-                label: "Discord",
-                href: "https://discordapp.com/invite/docusaurus",
-              },
-              {
-                label: "Twitter",
-                href: "https://twitter.com/docusaurus",
-              },
-            ],
-          },
+          // {
+          //   title: "Docs",
+          //   items: [
+          //     {
+          //       label: "Tutorial",
+          //       to: "/docs/intro",
+          //     },
+          //   ],
+          // },
+          // {
+          //   title: "Community",
+          //   items: [
+          //     {
+          //       label: "Stack Overflow",
+          //       href: "https://stackoverflow.com/questions/tagged/docusaurus",
+          //     },
+          //     {
+          //       label: "Discord",
+          //       href: "https://discordapp.com/invite/docusaurus",
+          //     },
+          //     {
+          //       label: "Twitter",
+          //       href: "https://twitter.com/docusaurus",
+          //     },
+          //   ],
+          // },
           {
             title: "More",
             items: [
+              // {
+              //   label: "Blog",
+              //   to: "/blog",
+              // },
               {
-                label: "Blog",
-                to: "/blog",
+                label: "__yeahPay",
+                href: "https://www.instagram.com/__yeahpay/",
               },
               {
-                label: "GitHub",
-                href: "https://github.com/facebook/docusaurus",
+                label: "__stockFlight",
+                href: "https://www.instagram.com/__stockflight/",
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} __yeah! Code`,
       },
       prism: {
         theme: lightCodeTheme,

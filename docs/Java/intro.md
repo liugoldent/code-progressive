@@ -5,7 +5,7 @@ tags:
   - java
 ---
 
-# Java 基本知識
+# [JAVA 介紹]Java 基本知識
 ## 推薦資源
 [廖雪峰的官方网站](https://www.liaoxuefeng.com/wiki/1252599548343744/1260464690677856)
 ## 常見關鍵字
