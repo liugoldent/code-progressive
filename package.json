@@ -11,7 +11,8 @@
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids"
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "test": "jest"
   },
   "dependencies": {
     "@docsearch/js": "^3.2.1",
@@ -27,7 +28,8 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "2.1.0"
+    "@docusaurus/module-type-aliases": "2.1.0",
+    "jest": "^29.5.0"
   },
   "browserslist": {
     "production": [
