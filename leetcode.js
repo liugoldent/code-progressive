@@ -1,20 +1,26 @@
 /**
- * @param {number[]} nums
+ * @param {string} s
+ * @param {string} t
  * @return {boolean}
  */
-var containsDuplicate = function(nums) {
-    if(nums.length === 0 || nums.length === 1){
-        return false
-    }
-    let hashSet = new Set()
-    for(let i = 0, len = nums.length ; i < len ; i++){
-        if(hashSet.has(nums[i])){
-            return true
-        }else{
-            hashSet.add(nums[i])
-        }
-    }
-    return false
-};
+var isAnagram = function (s, t) {
+  if (s.length !== t.length) {
+    return false;
+  }
+  let sObj = {};
+  let tObj = {};
 
-module.exports = containsDuplicate
+  for (let i = 0, len = s.length; i < len; i++) {
+    sObj[s[i]] = (sObj[s[i]] ? sObj[s[i]] : 0) + 1;
+    tObj[t[i]] = (tObj[t[i]] ? tObj[t[i]] : 0) + 1;
+  }
+  for (item in sObj) {
+    if(sObj[item] !== tObj[item]){
+      return false
+    }
+  }
+  return true
+};
+// console.log(isAnagram("anagram", "nagaram"))
+module.exports = isAnagram
+
