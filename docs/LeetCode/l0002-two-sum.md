@@ -47,3 +47,25 @@ class Solution:
                     return [i, hashtable[target - nums[i]]]
         return 
 ```
+
+## test case
+```js
+const twoSum = require("./leetcode.js");
+
+test("基本測試-1", function () {
+  expect(twoSum([1, 2, 3, 4], 6)).toEqual([1,3]);
+});
+
+test("基本測試-2", function () {
+  expect(twoSum([2, 7, 11, 15], 9)).toEqual([0,1]);
+});
+
+test("基本測試-3", function () {
+  expect(twoSum([3, 3], 6)).toEqual([0,1]);
+});
+
+test("基本測試-4", function () {
+  expect(twoSum([3, 2, 4], 6)).toEqual([1,2]);
+});
+
+```

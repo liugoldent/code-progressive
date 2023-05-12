@@ -1,26 +1,23 @@
 /**
- * @param {string} s
- * @param {string} t
- * @return {boolean}
+ * @param {string[]} strs
+ * @return {string[][]}
  */
-var isAnagram = function (s, t) {
-  if (s.length !== t.length) {
-    return false;
+let groupAnagrams = function(strs) {
+  if(strs.length === 1){
+    return [strs]
   }
-  let sObj = {};
-  let tObj = {};
-
-  for (let i = 0, len = s.length; i < len; i++) {
-    sObj[s[i]] = (sObj[s[i]] ? sObj[s[i]] : 0) + 1;
-    tObj[t[i]] = (tObj[t[i]] ? tObj[t[i]] : 0) + 1;
-  }
-  for (item in sObj) {
-    if(sObj[item] !== tObj[item]){
-      return false
+  let result = []
+  let anagramsMap = new Map()
+  for(let i = 0, len = strs.length ; i < len ; i++){
+    let sortStr = strs[i].split('').sort().join('')
+    if(anagramsMap.has(sortStr)){
+      let index = anagramsMap.get(sortStr)
+      result[index].push(strs[i])
+    }else{
+      anagramsMap.set(sortStr, result.length)
+      result.push([strs[i]])
     }
   }
-  return true
+  return result
 };
-// console.log(isAnagram("anagram", "nagaram"))
-module.exports = isAnagram
-
+module.exports = groupAnagrams;
