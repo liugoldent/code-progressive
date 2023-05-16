@@ -84,8 +84,6 @@ export default (){
 }
 
 ```
-
-
 ## 如何實現無感刷新token
 [q5393](https://github.com/haizlin/fe-interview/issues/5393)
 需要前後端的配合，詳細過程如下
@@ -94,4 +92,55 @@ export default (){
 3. 在server端會判斷此token是否過期，若過期則返回新的token與時間，沒過期則返回原本的過期時間與token
 4. 在client端，如果收到新的token與時間，就更新並重置定時器。
 
+## 如何得到localStorage、sessionStorage的大小
+[q5392](https://github.com/haizlin/fe-interview/issues/5392)
+主要可以透過js `getItem`的方式取得localStorage、sessionStorage，而因為這兩者都是字串，所以可以用`JSON.stringify()`來獲取大小
+```js
+// 定義計算的function
+function getStorageSize(storage) {
+  var size = 0;
+  
+  for (var i = 0; i < storage.length; i++) {
+    // 先取得key -> storage.key 為localStorage、sessionStorage專用
+    var key = storage.key(i);
+    // 再用getItem(key)取得value
+    var value = storage.getItem(key);
+    // 最後將兩者相加後，用JSON.stringify，取得其length
+    var itemSize = JSON.stringify(key + value).length;
+    // 加起來
+    size += itemSize;
+  }
+  
+  return size;
+}
 
+// 获取localStorage大小
+var localStorageSize = getStorageSize(localStorage);
+
+// 获取sessionStorage大小
+var sessionStorageSize = getStorageSize(sessionStorage);
+```
+
+## 如何得到cookie的大小
+[q5391](https://github.com/haizlin/fe-interview/issues/5391)
+由于 cookie 可以包含多个键值对，所以需要将 cookie 字符串分割为单个 cookie 并计算它们的大小。
+```js
+function getCookieSize() {
+  // 首先cookie可以從document.cookie取得，並且用split，將其分成陣列
+  var cookies = document.cookie.split(';');
+  var size = 0;
+  // preferred_color_mode=dark; tz=Asia%2pei; _octo=GH1.1.696124849.16
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i];
+    // 當cookie的第一個字元為空時（如上面為空）
+    while (cookie.charAt(0) === ' ') {
+      // 則往後取得這串cookie文字
+      cookie = cookie.substring(1);
+    }
+    // 最後把size加上去
+    size += cookie.length;
+  }
+  
+  return size;
+}
+```
