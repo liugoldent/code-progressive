@@ -1,55 +1,20 @@
 /**
  * @param {number[]} nums
- * @param {number} k
  * @return {number[]}
  */
-var topKFrequent = function (nums, k) {
-  let frequency = []
-  let elementMap = {}
-
+var productExceptSelf = function (nums) {
+  let result = new Array(nums.length).fill(1)
+  let p 
+  p = 1
   for (let i = 0, len = nums.length; i < len; i++) {
-    let initCount = elementMap[nums[i]] ? elementMap[nums[i]] : 0
-    elementMap[nums[i]] = initCount + 1
+    result[i] = result[i] * p // 左到右的乘積（不包含頭尾）
+    p = nums[i] * p // 累積的product
   }
-  Object.keys(elementMap).forEach((item) => {
-    let frequencyIndex = elementMap[item] // frquency 的 index
-    if (!frequency[frequencyIndex]) {
-      frequency[frequencyIndex] = []
-    }
-    frequency[frequencyIndex].push(item)
-  })
-  let result = []
-  for (let i = frequency.length - 1; i > 0; i--) {
-    
-    if (frequency[i]) {
-      for (let j = 0, lenj = frequency[i].length; j < lenj; j++) {
-        console.log(frequency[i][j])
-        if(result.length < k){
-          result.push(frequency[i][j])
-        }
-      }
-    }
+  p = 1
+  for (let j = nums.length - 1 ; j >= 0 ; j-- ) {
+    result[j] = result[j] * p // 右到左的乘積
+    p = nums[j] * p // 累積的product
   }
 };
 
-
-/**
- * @param {number[]} nums
- * @param {number} k
- * @return {number[]}
- */
-var topKFrequent = function(nums, k) {
-  let map = new Map();
-
-  for(let i of nums) {
-      let count = map.get(i) || 0;
-      map.set(i, count + 1);
-  }
-  let i = 0, result = [], values = [...map.entries()].sort((a,b) => b[1] - a[1]);
-  while(i < k) {
-      result.push(values[i][0]);
-      i++;
-  }
-
-  return result;
-};
+productExceptSelf([2,3,4,5])
