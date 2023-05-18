@@ -1,3 +1,24 @@
+---
+tags: 
+    - LeetCode
+    - Medium
+    - Longest Consecutive Sequence
+    - Javascript
+    - hashSet
+---
+# [0128] Longest Consecutive Sequence
+
+## Javascript 解
+
+[0128 youtube](https://www.youtube.com/watch?v=rc2QdQ7U78I&ab_channel=HuaHua)  
+1. 主要也是使用hashSet去解
+2. 對hashSet做遍歷
+3. 如果存在著比現在item還小的數字，則代表不是左邊界->繼續去找
+4. 若找到後，給予現在curNum & curMax大小
+5. 做while迴圈，如果一直有找到curNum+1的數值，則++
+6. 最後更新max值
+
+```javascript
 /**
  * @param {number[]} nums
  * @return {number}
@@ -23,5 +44,4 @@ var longestConsecutive = function(nums) {
     }
     return max
 };
-
-console.log(longestConsecutive([100,4,200,1,3,2]))
+```

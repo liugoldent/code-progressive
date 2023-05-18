@@ -8,7 +8,7 @@ tags:
 # FE-CSS
 
 
-### 聖杯佈局與雙飛翼佈局的理解與差別
+## 聖杯佈局與雙飛翼佈局的理解與差別
 [q2](https://github.com/haizlin/fe-interview/issues/2)
 * 相同
   * 理解：兩者同樣解決左右定寬以及中間自適應的三欄佈局。並且中間攔優先渲染
@@ -112,4 +112,13 @@ tags:
   }
 ```
 
+
+
+
+## 為什麼獲取clientWidth時，瀏覽器會重排與重繪
+[q5387](https://github.com/haizlin/fe-interview/issues/5387)
+在獲取`clientWidth`屬性時，瀏覽器會對當前元素進行重排與重繪  
+`clientWidth`是元素的可見寬度（包含padding），但是不包含border、margin、滾動條寬度，當獲取`clientWidth`時，瀏覽器需要計算元素可見寬度，這個過程包含了瀏覽器的重繪。
+注意：因為重排和重繪會佔用大量CPU資源，尤其頁面中有大量元素需要重排時，就會造成頁面性能下降。  
+因此為了減少頁面的重排與重繪，建議盡量減少對`clientWidth`的繁複訪問或修改。
 
