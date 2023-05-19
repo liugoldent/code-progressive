@@ -1,27 +1,23 @@
 /**
- * @param {number[]} nums
- * @return {number}
+ * @param {string} s
+ * @return {boolean}
  */
-var longestConsecutive = function(nums) {
-    if(nums.length === 0) return 0
-    let hashSet = new Set(nums)
-    let max = 0
-    for (const item of hashSet) {
-      // 若存在著比現在item小1的數字，則代表他還不是左邊界，則continue
-      if(hashSet.has(item -1)){
-        continue
-      }
-      // 找到也許是左邊界的值，重新設定條件
-      let currNum = item
-      let currMax = 1
-      while(hashSet.has(currNum+1)){
-        currNum++
-        currMax++
-      }
-      // update max
-      max = Math.max(max, currMax)
+var isPalindrome = function(s) {
+    let composeS = s.replace(/[^A-Za-z]/g, '').toLocaleLowerCase();
+    if(composeS.length === 0){
+      return true
     }
-    return max
+    let i = 0
+    let j = composeS.length -1
+    while(i !== j){
+      if(composeS[i] === composeS[j]){
+        i++
+        j--
+      }else{
+        return false
+      }
+    }
+    return true
 };
-
-console.log(longestConsecutive([100,4,200,1,3,2]))
+console.log(isPalindrome("A man, a plan, a canal: Panama"))
+module.export = isPalindrome()

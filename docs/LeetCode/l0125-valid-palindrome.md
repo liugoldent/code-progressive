@@ -1,3 +1,22 @@
+---
+tags: 
+    - LeetCode
+    - East
+    - Valid Palindrome
+    - Javascript
+    - two Pointer
+---
+# [0125] Valid Palindrome
+
+## Javascript 解
+思路
+1. 首先要針對字串做全部改小寫與去掉所有特殊符號
+2. 再來定義雙指針
+3. 從頭與從尾端開始找尋
+4. 如果都一樣就(左右指針往前進)並一直continue下去
+5. 注意終止條件是 i < j（就是指針遍歷結束的概念）
+
+```javascript
 /**
  * @param {string} s
  * @return {boolean}
@@ -36,5 +55,4 @@ test("基本測試", function () {
 test("基本測試", function () {
   expect(isPalindrome('aaa')).toBeTruthy()
 });
-
-
+```
