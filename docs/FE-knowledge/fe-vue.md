@@ -143,3 +143,17 @@ trim_trailing_whitespace = false
 * 所有組件放在 components 中
 * 共享代碼也可以使用 shared 作為目錄
 * 布局組件可以放在 layouts 目錄中
+
+## vue 的模板語法，是使用那個模板引擎呢？
+是使用`mustache`，模板引擎的初衷是解決字串拼接問題，也因這個慢慢擴大。
+
+## v-model 原理是什麼？
+`v-model`是一個語法糖：主要實現還是靠
+* v-bind：綁定響應式數據
+* v-input：觸發事件，並傳遞數據
+```html
+<!-- 先bind綁定value -->
+<!-- 再來input改變msg -->
+<input v-bind:value="msg"  v-on:input="msg=$event.target.value" />
+```
+

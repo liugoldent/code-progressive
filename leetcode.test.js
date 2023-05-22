@@ -1,40 +1,36 @@
 /**
- * @param {string} s
- * @return {boolean}
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number[]}
  */
-var isPalindrome = function (s) {
-  let alphanumericString = s.replace(/[^0-9A-Za-z]/g, '').toLocaleLowerCase();
-  if (alphanumericString.length === 0) {
-    return true
-  }
-  let i = 0
-  let j = alphanumericString.length - 1
-  while (i < j) {
-    if (alphanumericString[i] === alphanumericString[j]) {
-      i++
-      j--
-    } else {
-      return false
+var twoSum = function(numbers, target) {
+  let left = 0
+  let right = numbers.length - 1
+  while(left < right){
+    let sum = numbers[left] + numbers[right]
+    if(sum === target){
+      return [left+1, right+1]
     }
+   if( sum > target){
+          right--
+      }else{
+          left++
+      }
   }
-  return true
 };
 
 
 test("基本測試", () => {
-  expect(isPalindrome('A man, a plan, a canal: Panama')).toBeTruthy();
+  expect(twoSum([2,7,11,15], 9)).toMatchObject([1, 2]);
 });
 
-test("基本測試", function () {
-  expect(isPalindrome('aa')).toBeTruthy()
+test("基本測試", () => {
+  expect(twoSum([-1, 0], -1)).toMatchObject([1, 2]);
 });
 
-test("基本測試", function () {
-  expect(isPalindrome('0P')).toBeFalsy()
+test("基本測試", () => {
+  expect(twoSum([2,3,4], 6)).toMatchObject([1, 3]);
 });
 
-test("基本測試", function () {
-  expect(isPalindrome('aaa')).toBeTruthy()
-});
 
 

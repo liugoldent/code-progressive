@@ -20,21 +20,35 @@ condition2：當總和比目標值小則i++
  * @param {number} target
  * @return {number[]}
  */
-var twoSum = function (numbers, target) {
-    let i = 0
-    let j = numbers.length - 1
-    while (i < j) {
-        const sum = numbers[i] + numbers[j] 
-        if (sum === target) {
-            return [i + 1, j + 1]
-        }
-        if( sum > target){
-            j--
-        }else{
-            i++
-        }
+var twoSum = function(numbers, target) {
+  let left = 0
+  let right = numbers.length - 1
+  while(left < right){
+    let sum = numbers[left] + numbers[right]
+    if(sum === target){
+      return [left+1, right+1]
     }
+   if( sum > target){
+          right--
+      }else{
+          left++
+      }
+  }
 };
+
+
+test("基本測試", () => {
+  expect(twoSum([2,7,11,15], 9)).toMatchObject([1, 2]);
+});
+
+test("基本測試", () => {
+  expect(twoSum([-1, 0], -1)).toMatchObject([1, 2]);
+});
+
+test("基本測試", () => {
+  expect(twoSum([2,3,4], 6)).toMatchObject([1, 3]);
+});
+
 ```
 ## 好文連結
 [【第十一天 - Two-pointer 題目分析】](https://ithelp.ithome.com.tw/articles/10262608)
