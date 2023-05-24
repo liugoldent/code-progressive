@@ -4,7 +4,7 @@ tags:
     - East
     - Valid Palindrome
     - Javascript
-    - two Pointer
+    - two Pointers
 ---
 # [0125] Valid Palindrome
 

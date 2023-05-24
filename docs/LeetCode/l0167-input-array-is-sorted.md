@@ -4,6 +4,7 @@ tags:
     - Medium
     - Input Array Is Sorted
     - Javascript
+    - two pointers
 ---
 # [0167] Input Array Is Sorted
 ## Javascript 解

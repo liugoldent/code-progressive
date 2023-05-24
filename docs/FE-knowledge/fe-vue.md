@@ -157,3 +157,29 @@ trim_trailing_whitespace = false
 <input v-bind:value="msg"  v-on:input="msg=$event.target.value" />
 ```
 
+## 在使用computed時，可以讓函數名和data中的名稱相同嗎
+![initState](https://user-images.githubusercontent.com/59282087/236611014-d76129d3-1aa8-4e85-9062-67550dd93053.png)
+[vue-q-558](https://github.com/haizlin/fe-interview/issues/558)
+* 可以同名，但是會覆蓋掉資料
+* 會噴 [vue warn]: The computed property "xxxx" is already defined in data.
+* 在初始化時，會先把data綁到vm上，再把computed值綁到vm上，這樣會覆蓋掉
+* 初始化數據順序為：props -> methods -> data -> computed -> watch
+* 有此可以看到computed會把data資料覆蓋掉
+[initState原始碼](https://github.com/vuejs/vue/blob/77796596adc48d050beefd11e827e8e4d44c6b3c/src/core/instance/state.js#L48)
+```js
+export function initState (vm: Component) {
+  vm._watchers = []
+  const opts = vm.$options
+  if (opts.props) initProps(vm, opts.props)
+  if (opts.methods) initMethods(vm, opts.methods)
+  if (opts.data) {
+    initData(vm)
+  } else {
+    observe(vm._data = {}, true /* asRootData */)
+  }
+  if (opts.computed) initComputed(vm, opts.computed)
+  if (opts.watch && opts.watch !== nativeWatch) {
+    initWatch(vm, opts.watch)
+  }
+}
+```
