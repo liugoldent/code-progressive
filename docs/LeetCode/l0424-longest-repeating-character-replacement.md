@@ -1,3 +1,15 @@
+---
+tags: 
+    - LeetCode
+    - Medium
+    - Longest Repeating Character Replacement
+    - Javascript
+---
+
+# [0424] Longest Repeating Character Replacement
+## Javascript 解
+
+```js
 /**
  * @param {string} s
  * @param {number} k
@@ -30,25 +42,4 @@ var characterReplacement = function(s, k) {
   }
   return maxLength
 };
-
-console.log(characterReplacement('CD', 1))
-// test("基本測試", () => {
-//   expect(lengthOfLongestSubstring('abcabcbb')).toEqual(3);
-// });
-
-// test("基本測試", () => {
-//   expect(lengthOfLongestSubstring('bbbbb')).toEqual(1);
-// });
-
-// test("基本測試", () => {
-//   expect(lengthOfLongestSubstring('pwwkew')).toEqual(3);
-// });
-
-// test("基本測試", () => {
-//   expect(threeSum([-1,2,3,-5,6,-7])).toMatchObject([[ -5, -1, 6 ], [ -5, 2, 3 ]]);
-// });
-
-
-
-
-
+```
