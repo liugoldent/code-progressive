@@ -35,11 +35,12 @@ var minWindow = function(s, t) {
           minWindowLength = windowEnd - windowStart + 1;
           minWindow = s.substring(windowStart, windowEnd + 1);
         }
-
+        console.log('now', s.substring(windowStart, windowEnd + 1))
         const charStart = s[windowStart];
         if (targetFreq[charStart] !== undefined) {
           // 窗口左側的字符移出窗口，減少已匹配的目標字符數量
           targetFreq[charStart]++;
+          // 當大於0時，代表剛好又與t相等數量
           if (targetFreq[charStart] > 0) {
             // 窗口內的字符不再滿足目標字符串的要求
             windowCount--;
