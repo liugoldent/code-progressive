@@ -1,37 +1,48 @@
 /**
  * @param {string} s
- * @param {number} k
- * @return {number}
+ * @param {string} t
+ * @return {string}
  */
-var characterReplacement = function(s, k) {
-  const count = new Array(26).fill(0)
-  let maxLength = 0
-  let maxCount = 0
-  let start = 0
-  // 一個 for loop 跑完 s.length
-  for(let end = 0; end < s.length ; end++){
-    // 先取得charCode = (ex:67-65 = 第二個位置)
-    const charCode = s.charCodeAt(end) - 'A'.charCodeAt(0)
-    // 因為count是位置分佈，所以其位置++(該字母出現的次數++)
-    count[charCode]++
-    // 更新最頻繁出現的字母的次數
-    maxCount = Math.max(maxCount, count[charCode])
-
-    // 看左邊是否要縮小窗口
-    // 如果右邊-左邊的長度，減掉最大的count，又大於k（代表超過所能替換總數）
-    // 此時left(start)向左
-    // 並且要扣掉一次左邊出現的字母次數
-    if(end - start + 1 - maxCount > k){
-      let leftCharCode = s.charCodeAt(start) - 'A'.charCodeAt(0)
-      count[leftCharCode]--
-      start++
+var minWindow = function(s, t) {
+    const targetFreq = {}
+    for(let i = 0 ; i < t.length ; i++){
+      targetFreq[t[i]] = (targetFreq[t[i]] || 0) + 1
     }
-    maxLength = Math.max(maxLength, end-start+1)
-  }
-  return maxLength
+    let windowStart = 0
+    let windowEnd = 0
+    let minWindowLength = Infinity
+    let windowCount = 0
+    let minWindowStr = ''
+
+    while(windowEnd < s.length){
+      const charEnd = s[windowEnd]
+
+      if(targetFreq[charEnd] !== undefined){
+        targetFreq[charEnd]--
+        if(targetFreq[charEnd] >= 0){
+          windowCount++
+        }
+      }
+      while(windowCount === t.length){
+        if(windowEnd - windowStart + 1 < minWindowLength){
+          minWindowLength = windowEnd - windowStart +1
+          minWindowStr = s.substring(windowStart, windowEnd + 1)
+        }
+        const charStart = s[windowStart]
+        if(targetFreq[charStart] !== undefined){
+          targetFreq[charStart]++
+          if(targetFreq[charStart] > 0){
+            windowCount--
+          }
+        }
+        windowStart++
+      }
+      windowEnd++
+    }
+    return minWindowStr
 };
 
-console.log(characterReplacement('CD', 1))
+console.log(minWindow('ADOBECODEBANC', 'ABC'))
 // test("基本測試", () => {
 //   expect(lengthOfLongestSubstring('abcabcbb')).toEqual(3);
 // });
