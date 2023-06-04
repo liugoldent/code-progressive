@@ -9,16 +9,16 @@ var minWindow = function(s, t) {
     for (let i = 0; i < t.length; i++) {
       targetFreq[t[i]] = (targetFreq[t[i]] || 0) + 1;
     }
-  
+
     let windowStart = 0; // 滑動窗口的起始位置
     let windowEnd = 0; // 滑動窗口的結束位置
     let minWindowLength = Infinity; // 最小視窗長度
     let windowCount = 0; // 滑動窗口中已匹配目標字符的數量
     let minWindow = ''; // 最小視窗字符串
-  
+
     while (windowEnd < s.length) {
       const charEnd = s[windowEnd];
-  
+
       if (targetFreq[charEnd] !== undefined) {
         // 目標字符在窗口內出現，增加已匹配的目標字符數量
         targetFreq[charEnd]--;
@@ -27,7 +27,7 @@ var minWindow = function(s, t) {
           windowCount++;
         }
       }
-  
+
       // 窗口內的字符已經滿足目標字符串的要求
       while (windowCount === t.length) {
         // 更新最小視窗長度和最小視窗字符串
@@ -35,7 +35,7 @@ var minWindow = function(s, t) {
           minWindowLength = windowEnd - windowStart + 1;
           minWindow = s.substring(windowStart, windowEnd + 1);
         }
-  
+
         const charStart = s[windowStart];
         if (targetFreq[charStart] !== undefined) {
           // 窗口左側的字符移出窗口，減少已匹配的目標字符數量
@@ -45,13 +45,13 @@ var minWindow = function(s, t) {
             windowCount--;
           }
         }
-  
+
         windowStart++; // 滑動窗口向右移動
       }
-  
+
       windowEnd++; // 滑動窗口向右擴展
     }
-  
+
     return minWindow;
 };
 
