@@ -1,29 +1,23 @@
 /**
- * @param {number[]} height
+ * @param {number[]} nums
  * @return {number}
  */
-var trap = function(height) {
-    let left = 0
-    let right = height.length -1
-    let leftMax = 0
-    let rightMax = 0
-    let totalWater = 0
-    while(left < right){
-      if(height[left] < height[right]){
-        leftMax = Math.max(leftMax, height[left])
-        totalWater += leftMax - height[left]
-        left++
-      }else{
-        rightMax = Math.max(rightMax, height[right])
-        totalWater += rightMax - height[right]
-        right--
-      }
+var findMin = function (nums) {
+  let left = 0
+  let right = nums.length - 1
+  while (left < right) {
+    const mid = left + (Math.floor((right - left) / 2))
+    if (nums[right] >= nums[mid]) {
+      right = mid
+    } else {
+      left = mid + 1
     }
-    return totalWater
+  }
+  return nums[left]
 };
-
+console.log(findMin([3,4,5,1,2]))
 // test("基本測試", () => {
-//   expect(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7])).toEqual(49);
+//   expect(findMin([1, 2, 3, 4, 5, 6])).toEqual(1);
 // });
 
 // test("基本測試", () => {
