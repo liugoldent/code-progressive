@@ -183,3 +183,131 @@ export function initState (vm: Component) {
   }
 }
 ```
+
+## vue 要怎麼定義全局方法
+[vue 556](https://github.com/haizlin/fe-interview/issues/556)
+### prototype
+#### 缺點是使用此方法時沒有提示。
+```js
+Object.keys(tools).forEach(key => {
+      Vue.prototype[key] = tools[key] // 主要是這行
+ })
+```
+### mixin
+#### 利用全局引入mixin，mixin裡的methods和創建的每個單一組件合併。這樣做的好處是調用此方法時有提示
+```js
+// myMixin.js
+export default {
+  created() {
+    console.log('Mixin created');
+  },
+  methods: {
+    greet() {
+      console.log('Hello from mixin!');
+    }
+  }
+}
+
+
+// main.js
+import Vue from 'vue';
+import App from './App.vue';
+import myMixin from './myMixin';
+
+Vue.mixin(myMixin);
+
+new Vue({
+  render: h => h(App),
+}).$mount('#app');
+
+// MyComponent.vue
+export default {
+  created() {
+    this.greet(); // 调用mixin中的方法
+  }
+}
+
+```
+
+## vue2.0 不支持v-html中使用過濾器，該怎麼辦
+[vue 555](https://github.com/haizlin/fe-interview/issues/555)
+* 使用computed屬性來換掉message
+```html
+<template>
+  <div>
+    <div v-html="formattedContent"></div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      rawContent: '<p>{{ message }}</p>',
+      message: 'Hello, Vue!'
+    };
+  },
+  computed: {
+    formattedContent() {
+      return this.$options.filters.myFilter(this.rawContent, this.message);
+    }
+  },
+  filters: {
+    myFilter(value, message) {
+      // 在这里实现过滤器逻辑
+      // 例如，将value中的占位符{{ message }}替换为实际的message值
+      return value.replace('{{ message }}', message);
+    }
+  }
+};
+</script>
+
+```
+
+## 怎麼解決vue打包之後，靜態資源的圖片失效問題
+[vue q554](https://github.com/haizlin/fe-interview/issues/554)
+1. 確定線上環境是否在根路徑上
+  - publicPath是用於指定打包後的靜態資源文件在服務器上的訪問路徑。默認情況下，publicPath的值是/，表示靜態資源文件將被部署在服務器的根路徑下。如果你的項目將被部署在子目錄下，你需要將publicPath設置為對應的子目錄路徑。例如，如果項目將被部署在 https://example.com/my-app/，那麽publicPath應該設置為/my-app/。
+  - assetsPublicPath是在開發模式下用於指定靜態資源的訪問路徑，適用於開發環境
+2. 確定靜態文件放的位置
+  - 如果放在public/static，不經過webpack打包，放在public上又分為相對or絕對路徑
+  - 如果是放在assets，經過打包，要使用相對路徑
+3. 路徑是否是動態的，如果是，要用require引入
+
+## 怎麽解決vue動態設置img的src不生效的問題
+[vue q553](https://github.com/haizlin/fe-interview/issues/553)
+* require('@/assets/images/xxx.png')
+
+## vue 項目如何做好SEO
+[vue q552](https://github.com/haizlin/fe-interview/issues/552)
+* 使用SSR框架：Nuxt.js
+* 靜態化
+* 預渲染：prerender-spa-plugin
+* 使用phantom.js針對爬蟲做處理
+
+## 跟keep-alive有關的生命周期是哪些？描述下這些生命周期
+[vue q551](https://github.com/haizlin/fe-interview/issues/551)
+* keep-alive生命週期：
+1. activated：頁面第一次進入時，會觸發created -> mounted -> activated
+2. deactivated：頁面退出時，會觸發deactivated，當再次前進or後退時，只觸發activated
+```js
+beforeRouteEnter - 在進入路由之前調用。這個生命周期鉤子在組件實例化之前被調用，因此在這個階段無法訪問組件實例。
+
+created - 組件實例創建後立即調用。在這個階段，可以進行一些初始化的操作，但是DOM尚未渲染。
+
+beforeMount - 在組件掛載到DOM之前調用。在這個階段，組件的模板已經編譯完成，但尚未插入到DOM中。
+
+mounted - 組件掛載到DOM後調用。在這個階段，組件已經被插入到DOM中，可以進行DOM操作和請求數據。
+
+activated - 組件被<keep-alive>緩存後重新激活時調用。在這個階段，組件從緩存中恢覆，可以執行一些特定的操作。
+
+beforeUpdate - 在組件更新之前調用。在這個階段，數據已經改變，但尚未重新渲染DOM。
+
+updated - 組件更新完成後調用。在這個階段，組件的數據已經更新，並且DOM已經重新渲染。
+
+deactivated - 組件被<keep-alive>緩存時調用。在這個階段，組件被緩存起來，可以執行一些特定的操作。
+
+beforeDestroy - 在組件銷毀之前調用。在這個階段，組件實例仍然可用，可以執行一些清理操作。
+
+destroyed - 組件銷毀後調用。在這個階段，組件實例已經被銷毀，所有的事件監聽器和定時器也被移除。
+```

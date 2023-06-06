@@ -21,11 +21,11 @@ console.log(findMin([3,4,5,1,2]))
 // });
 
 // test("基本測試", () => {
-//   expect(maxArea([1, 1])).toEqual(1);
+//   expect(lengthOfLongestSubstring('bbbbb')).toEqual(1);
 // });
 
 // test("基本測試", () => {
-//   expect(threeSum([0,0,0])).toMatchObject([[0,0,0]]);
+//   expect(lengthOfLongestSubstring('pwwkew')).toEqual(3);
 // });
 
 // test("基本測試", () => {
