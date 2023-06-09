@@ -394,4 +394,129 @@ var vm = new Vue({
 最好使用每條數據的唯一標識作為key, 比如id、手機號、身份證號、學號等唯一值。
 如果不存在對數據的逆序添加、逆序刪除等破壞順序操作，僅用於渲染列表用於展示，使用index作為key是沒有問題的。
 
+## vue的一些寫作風格
+[vue 寫作風格](https://v2.cn.vuejs.org/v2/style-guide#%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BF%85%E8%A6%81)
+### 必要條件
+* 組件的命名（多個單詞＋首字大寫）：TodoItem
+* 組件的data必須是函數
+```js
+// 以下會造成組件在共用時，每個組件實例時會引用到相同的物件
+data: {
+  listTitle: '',
+  todos: []
+}
+// 取而代之的是，我們將組件data設定成函數，這樣每個組件可以管理自己的數據
+data: function () {
+  return {
+    listTitle: '',
+    todos: []
+  }
+}
+```
+* props定義明確
+  * 因為寫清楚，可以讓使用組件的人更懂更了解組件所需
+  * 在開發環境下，如果向組件提供不正確的資料，Vue將會警告
+```js
+props: {
+  status: {
+    type: String,
+    required: true,
+    validator: function (value) {
+      return [
+        'syncing',
+        'synced',
+        'version-conflict',
+        'error'
+      ].indexOf(value) !== -1
+    }
+  }
+}
+```
+* v-for加上key值
+主要也是因為在渲染時，vue會去比較虛擬DOM與真實DOM，讓DIFF演算法更有效率
+```html
+<ul>
+  <li
+    v-for="todo in todos"
+    :key="todo.id"
+  >
+    {{ todo.text }}
+  </li>
+</ul>
+```
+* 避免v-for + v-if用在一起
+  * `v-for="user in users" v-if="user.isActive"`常見的這種狀況，請用`computed`計算指令
+  * 如果是想要隱藏v-for項目，如`v-for="user in users" v-if="shouldShowUsers"`，請將v-if放在其他元素上
+```html
+<ul>
+  <li
+    v-for="user in users"
+    v-if="user.isActive"
+    :key="user.id"
+  >
+    {{ user.name }}
+  </li>
+</ul>
+```
+```js
+this.users.map(function (user) {
+  if (user.isActive) {
+    return user.name
+  }
+})
+```
+
+* 為組件樣式設定作用域
+  * 使用BEM or Scope or Modules
+```html
+<!-- 使用 `scoped` attribute -->
+<style scoped>
+.button {
+  border: none;
+  border-radius: 2px;
+}
+
+.button-close {
+  background-color: red;
+}
+</style>
+
+
+<!-- 使用 CSS Modules -->
+<style module>
+.button {
+  border: none;
+  border-radius: 2px;
+}
+
+.buttonClose {
+  background-color: red;
+}
+</style>
+
+<!-- 使用 BEM 约定 -->
+<style>
+.c-Button {
+  border: none;
+  border-radius: 2px;
+}
+
+.c-Button--close {
+  background-color: red;
+}
+</style>
+```
+* 私有property名稱
+  * 建議使用`$_property`，不要只用$ or _，因為可能與vue原本的property衝突
+```js
+var myGreatMixin = {
+  // ...
+  methods: {
+    $_myGreatMixin_update: function () {
+      // ...
+    }
+  }
+}
+```
+
 

@@ -1,21 +1,37 @@
 /**
  * @param {number[]} nums
+ * @param {number} target
  * @return {number}
  */
-var findMin = function (nums) {
-  let left = 0
-  let right = nums.length - 1
+var search = function (nums, target) {
+  if (nums.length === 1 && nums[0] !== target) {
+    return -1;
+  }
+  let left = 0;
+  let right = nums.length;
   while (left < right) {
-    const mid = left + (Math.floor((right - left) / 2))
-    if (nums[right] >= nums[mid]) {
-      right = mid
-    } else {
-      left = mid + 1
+    const mid = Math.floor((right - left) / 2);
+    if(nums[mid] === target) return mid
+    if(nums[left] <= nums[mid]){
+      if(nums[left] <= target && target < nums[mid]){
+        right = mid
+      }else{
+        left = mid + 1
+      }
+    }else{
+      if(nums[mid] < target && target <= nums[right]){
+        left = mid + 1
+      }else{
+        right = mid
+      }
     }
   }
-  return nums[left]
+  return nums[left] === target ? left : -1
 };
-console.log(findMin([3,4,5,1,2]))
+
+// search([1], 0);
+console.log(search([4, 5, 6, 7, 0, 1, 2], 0))
+
 // test("基本測試", () => {
 //   expect(findMin([1, 2, 3, 4, 5, 6])).toEqual(1);
 // });
@@ -31,8 +47,3 @@ console.log(findMin([3,4,5,1,2]))
 // test("基本測試", () => {
 //   expect(threeSum([-1,2,3,-5,6,-7])).toMatchObject([[ -5, -1, 6 ], [ -5, 2, 3 ]]);
 // });
-
-
-
-
-
