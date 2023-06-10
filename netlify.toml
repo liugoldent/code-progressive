@@ -1,0 +1,3 @@
+[build]
+  command = "npm run build"  # 这里假设你的构建命令是 npm run build
+  publish = "path/to/build/folder"  # 将 'path/to/build/folder' 替换为 Docusaurus 构建生成的目录路径

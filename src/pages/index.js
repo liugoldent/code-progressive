@@ -35,7 +35,7 @@ export default function Home() {
       title={`${siteConfig.title}`}
       description="Description will go into a meta tag in <head />"
     >
-      <Link to="/docs">
+      <Link to="/docs/intro">
         <div className={styles.header}>
           <img
             className={styles.header__img}
