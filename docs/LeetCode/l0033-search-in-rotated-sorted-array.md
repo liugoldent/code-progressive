@@ -10,7 +10,7 @@ tags:
 ## Javascript 解
 解釋：在一個旋轉過的Array，去找是否有其數值
 因為一樣是有序的序列，所以也可以用Binary Search去找尋
-
+[Ans](https://duncan-mcardle.medium.com/leetcode-problem-33-search-in-rotated-sorted-array-javascript-71cb7f38b563)
 ```javascript
 /**
  * @param {number[]} nums

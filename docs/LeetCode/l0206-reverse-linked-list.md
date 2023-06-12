@@ -9,7 +9,7 @@ tags:
 ## Javascript 解
 
 ## 思路：
-![it邦幫忙解答](https://ithelp.ithome.com.tw/articles/10271920)
+[it邦幫忙解答](https://ithelp.ithome.com.tw/articles/10271920)
 ```javascript
 /**
  * Definition for singly-linked list.
