@@ -519,4 +519,37 @@ var myGreatMixin = {
 }
 ```
 
+## 在vue中，怎麼重置Data
+[q544](https://github.com/haizlin/fe-interview/issues/544)
+重新执行组件的 data 函数,这个函数可以在vm.$options中找到
+```js
+Object.assign(this.$data, this.$options.data())
+```
+
+## Vue在渲染模板時，怎麼保留模板中的HTML
+[q508](https://github.com/haizlin/fe-interview/issues/508)
+```html
+<template comments>
+<!-- 註解 -->
+<template>
+```
+
+## 解釋一下Vue.observable
+[q507](https://github.com/haizlin/fe-interview/issues/507)
+* 讓一個物件可以被成響應式
+* 返回的物件可以直接用於渲染函數or計算屬性內，並且會在改變時，同時觸發相對的更新
+* 可以作為最小的跨組件狀態儲存器
+
+## 請問styles上加上scoped屬性的用途與原理
+[q506](https://github.com/haizlin/fe-interview/issues/506)
+[補充](https://segmentfault.com/a/1190000021670036)
+* 用途：防止全局同名污染
+* 原理：在標籤加上v-data-something屬性，再在選擇器上加上對應的[v-data-something]，即CSS帶屬性選擇器，以此完成類似作用域的選擇方法
+* 缺點：
+  * 由於只是通過屬性限制，class還是原本的class，所以在其他地方對類設置樣式還是有可能污染
+  * 添加屬性選擇器，對於CSS選擇器的權重加重了
+  * 父層組件包著子組件，會給子組件的根節點添加data屬性。在外層組件中無法修改子組件樣式
+* 使用CSS Module
+  * 優點：沒有添加唯一的屬性，而是通過修改類名限制作用域。這樣類產生了變化，在其他地方就不會污染了。也沒有權重的增加。
+
 
