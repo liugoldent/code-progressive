@@ -1,3 +1,18 @@
+---
+tags: 
+    - LeetCode
+    - Medium
+    - Reorder List
+    - Javascript
+    - Linked List
+---
+# [0143] Reorder List
+這題大致分三個程序
+1. 先用快慢指針找到中間點
+2. 再將linked list reverse
+3. 將兩個linked list merge
+## Javascript 解
+```js
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {
@@ -31,7 +46,7 @@ var reorderList = function (head) {
         prev = curr
         curr = next
     }
-    // 把前半段的最後截斷變成null
+    // 確認：把前半段的最後截斷變成null
     slow.next = null
 
 
@@ -46,6 +61,6 @@ var reorderList = function (head) {
         p1 = next1
         p2 = next2
     }
-
     return head
 };
+```

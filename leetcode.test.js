@@ -1,36 +1,55 @@
 /**
- * @param {number[]} nums
- * @param {number} target
- * @return {number}
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
  */
-var search = function (nums, target) {
-  if (nums.length === 1 && nums[0] !== target) {
-    return -1;
+/**
+ * @param {ListNode} head
+ * @return {void} Do not return anything, modify head in-place instead.
+ */
+var reorderList = function(head) {
+  if(!head || !head.next){
+    return head
   }
-  let left = 0;
-  let right = nums.length;
-  while (left < right) {
-    const mid = Math.floor((right - left) / 2);
-    if(nums[mid] === target) return mid
-    if(nums[left] <= nums[mid]){
-      if(nums[left] <= target && target < nums[mid]){
-        right = mid
-      }else{
-        left = mid + 1
-      }
-    }else{
-      if(nums[mid] < target && target <= nums[right]){
-        left = mid + 1
-      }else{
-        right = mid
-      }
-    }
+
+  let slow = head
+  let fast = head
+  // 先找到中間節點(使用快慢指針)
+  while(fast.next && fast.next.next){
+    slow = slow.next
+    fast = fast.next.next
   }
-  return nums[left] === target ? left : -1
+
+  let prev = null
+  let curr = slow.next
+  // 反轉後半部份linked list
+  while(curr){
+    let next = curr.next
+    curr.next = prev
+    prev = curr
+    curr = next
+  }
+  // 把前半段的最後截斷變成null
+  slow.next = null
+
+
+  let p1 = head
+  let p2 = prev
+
+  while(p2){
+    let next1 = p1.next
+    let next2 = p2.next
+    p1.next = p2
+    p2.next = next1
+    p1 = next1
+    p2 = next2
+  }
+
+  return head
 };
 
-// search([1], 0);
-console.log(search([4, 5, 6, 7, 0, 1, 2], 0))
 
 // test("基本測試", () => {
 //   expect(findMin([1, 2, 3, 4, 5, 6])).toEqual(1);
