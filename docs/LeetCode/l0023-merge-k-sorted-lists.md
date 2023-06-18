@@ -7,6 +7,8 @@ tags:
     - Javascript
 ---
 # [0023] Merge k Sorted Lists
+[LeetCode problem #23–Merge k sorted lists (JavaScript)](https://duncan-mcardle.medium.com/leetcode-problem-23-merge-k-sorted-lists-javascript-59d9bb998fd)
+[Leetcode No.23(Merge k Sorted Lists) 心得(Hard)](https://medium.com/@ChYuan/leetcode-no-23-merge-k-sorted-lists-%E5%BF%83%E5%BE%97-hard-495d0991c99a)
 ## Javascript 解
 * 思考：
     * 在這邊我們先將Linked List改成Array形式
