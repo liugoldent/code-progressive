@@ -552,4 +552,42 @@ Object.assign(this.$data, this.$options.data())
 * 使用CSS Module
   * 優點：沒有添加唯一的屬性，而是通過修改類名限制作用域。這樣類產生了變化，在其他地方就不會污染了。也沒有權重的增加。
 
+## vue3更新了哪些功能或是有什麼改進的
+* 支援ts
+* proxy代替Object.definePrototype()
+* 多個根節點
+* composition API
+* hooks
+* 優化diff 算法
+* setup函數
+* ref reactive
+* 去掉$listener
+* v-if v-for優先級調換
+* 改變生命週期
+
+## 子組件如何調用父組件方法
+1. 直接在子組件通過`this.$parent.event`來調用父組件的方法
+2. 在子組件裡用`$emit`向父組件觸發一個事件，父組件監聽這個事件
+3. 父組件把方法傳進去子組件內，在子組件調用方法
+
+## watch、methods的屬性使用箭頭函數定義結果會怎樣？
+[q476](https://github.com/haizlin/fe-interview/issues/476)
+* 不應該用箭頭函數定義`watcher`函數。因為箭頭函數會綁定上下文，所以this將不會按照期望指向Vue實例。會為`undefined`
+
+## 如何在Vue中加入Favicon
+1. 將favicon放入`static`資料夾中
+2. 在index.html中添加
+  `<link rel="shortcut icon" type="image/x-icon" href="static/favicon.ico">`
+  * 順帶，如果要動態更改favicon，可以把favicon綁定到Vue上
+  * 注意這邊綁定是在`mount('#app')`層級就綁定
+3. 刷新瀏覽器介面
+
+
+
+
+
+
+
+
+
 
