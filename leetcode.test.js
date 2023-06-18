@@ -1,34 +1,26 @@
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
-/**
- * @param {ListNode} head
- * @param {number} n
- * @return {ListNode}
- */
-var removeNthFromEnd = function(head, n) {
-    const dummy = new ListNode(0)
-    dummy.next = head
+var mergeKLists = function (lists) {
+  let mainArray = []
 
-    let fast = dummy
-    let slow = dummy
+  const addLinkedListToMainArray = function(subList){
+    mainArray.push(subList.val)
 
-    for(let i = 0 ; i < n ; i++){
-      fast = fast.next
+    if(subList.next !== null){
+      addLinkedListToMainArray(subList.next``)
     }
+  }
 
-    while(fast.next !== null){
-      fast = fast.next
-      slow = slow.next
+  for(let i = 0, len = lists.length ; i < len ; i++){
+    if(lists[i] !== null){
+      addLinkedListToMainArray(lists[1])
     }
+  }
 
-    slow.next = slow.next.next
+  mainArray = mainArray.sort((a, b) => a - b);
 
-    return dummy.next
+  let newList = null
+  for(let i = 0 , len = mainArray.length ; i < len ; i++){
+    
+  }
 };
 
 // test("基本測試", () => {
