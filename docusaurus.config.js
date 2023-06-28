@@ -34,7 +34,7 @@ const config = {
     [
       '@docusaurus/plugin-google-gtag',
       {
-        trackingID: 'G-MV4MKGH442',
+        trackingID: 'G-279PGEJ1XN',
         anonymizeIP: true,
       },
     ],
