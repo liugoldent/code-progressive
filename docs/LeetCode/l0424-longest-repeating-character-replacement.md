@@ -2,46 +2,37 @@
 tags: 
     - LeetCode
     - Easy
-    - Tree
+    - Sliding Window
     - Javascript
-    - Subtree of Another Tree
+    - Longest Repeating Character Replacement
 ---
 
-# [0572] Subtree of Another Tree
+# [0424] Longest Repeating Character Replacement
 ## Javascript 解
 
 ```js
 /**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
+ * @param {string} s
+ * @param {number} k
+ * @return {number}
  */
-/**
- * @param {TreeNode} root
- * @param {TreeNode} subRoot
- * @return {boolean}
- */
-var isSubtree = function(root, subRoot) {
-    if(root === null && subRoot === null){
-        return true
-    }
-    if(root === null || subRoot === null || !isSame(root, subRoot)){
-        return false
-    }
+var characterReplacement = function(s, k) {
+  const count = new Array(26).fill(0)
+  let maxLength = 0
+  let maxCount = 0
+  let start = 0
+  for(let end = 0; end < s.length ; end++){
+    const charCode = s.charCodeAt(end) - 'A'.charCodeAt(0)
+    count[charCode]++
+    maxCount = Math.max(maxCount, count[charCode])
 
-    return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot)
+    if(end - start + 1 - maxCount > k){
+      let leftCharCode = s.charCodeAt(start) - 'A'.charCodeAt(0)
+      count[leftCharCode]--
+      start++
+    }
+    maxLength = Math.max(maxLength, end-start+1)
+  }
+  return maxLength
 };
-
-var isSame = function(p, q){
-    if(p === null && q === null){
-        return true
-    }
-    if(p === null || q === null || p.val !== q.val){
-        return false
-    }
-    return isSame(p.left, q.left) && isSame(p.right, q.right)
-}
 ```
