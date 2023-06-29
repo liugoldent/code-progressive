@@ -1,33 +1,47 @@
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
+function TreeNode(val, left, right) {
+  this.val = (val === undefined ? 0 : val);
+  this.left = (left === undefined ? null : left);
+  this.right = (right === undefined ? null : right);
+}
 
-var mergeKLists = function (lists) {
-  let mainArray = []
+function levelOrder(root) {
+  if (!root) {
+    return []; // 空树的情况，直接返回空数组
+  }
 
-  const addLinkedListToMainArray = function (subList) {
-    mainArray.push(subList.val)
+  const result = []; // 存储层级遍历结果的二维数组
+  const queue = [root]; // 存储待访问的节点的队列
+  console.log(111,queue)
+  while (queue.length > 0) {
+    const levelSize = queue.length;
+    const currentLevel = [];
+    console.log('levelSize', levelSize)
+    console.log('currentLevel', currentLevel)
+    for (let i = 0; i < levelSize; i++) {
+      const node = queue.shift();
+      currentLevel.push(node.val);
 
-    if (subList.next !== null) {
-      addLinkedListToMainArray(subList.next)
+      if (node.left) {
+        queue.push(node.left);
+      }
+      if (node.right) {
+        queue.push(node.right);
+      }
     }
+
+    result.push(currentLevel);
   }
 
-  for (let i = 0, len = lists.length; i < len; i++) {
-    if (lists[i] !== null) {
-      addLinkedListToMainArray(lists[i])
-    }
-  }
+  return result;
+}
 
-  mainArray = mainArray.sort((a, b) => a - b);
+// 创建二叉树
+const root = new TreeNode(3);
+root.left = new TreeNode(9);
+root.right = new TreeNode(20);
+root.right.left = new TreeNode(15);
+root.right.right = new TreeNode(7);
 
-  let newList = null
-  for (let i = mainArray.length - 1; i >= 0; i--) {
-    newList = new ListNode(mainArray[i], newList)
-  }
-  return newList
-};
+// 执行层级遍历
+const traversalResult = levelOrder(root);
+console.log(traversalResult);
