@@ -1,3 +1,22 @@
+---
+tags: 
+    - LeetCode
+    - Medium
+    - Validate Binary Search Tree
+    - Javascript
+    - Tree
+---
+# [0098] Validate Binary Search Tree
+* 驗證是否為BST
+    * 首先我們需要一個輔助函數來做遞迴
+    * 輔助函數：
+        * 1. 如果root為空則true
+        * 2. 測試左子樹：如果max(上一個節點val) <= node.val(下一個節點.val)
+        * 3. 測試右子樹：如果min(上一個節點val) >= node.val(上一個節點.val)
+        * 則為false
+
+
+```js
 /**
  * Definition for a binary tree node.
  */
@@ -43,3 +62,4 @@ tree.right = new TreeNode(7);
 tree.left.left = new TreeNode(2);
 tree.left.right = new TreeNode(4);
 tree.right.right = new TreeNode(8);
+```
