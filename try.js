@@ -1,4 +1,4 @@
-let s = '102. Binary Tree Level Order Traversal'
-console.log(s.replace(/\s/g, '-').toLocaleLowerCase())
+let s = '105. Construct Binary Tree from Preorder and Inorder Traversal'
+console.log(`l0${s.replace(/\s/g, '-').toLocaleLowerCase()}.md`)
 
 
