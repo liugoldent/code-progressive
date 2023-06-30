@@ -7,35 +7,29 @@ function TreeNode(val, left, right) {
     this.right = (right===undefined ? null : right)
 }
 
+
 /**
  * @param {TreeNode} root
  * @return {boolean}
  */
 var isValidBST = function(root) {
-  return valid(root, null, null, 'root')
+  let tempResult = []
+  return seeTree(root, tempResult)
 };
 
-var valid = function(node, min, max, status){
-  if(node === null){
-      return true
+var dfs = function(root, result){
+  if(!root) return null
+  // 如果root.left有，就再往下跑
+  if(root.left){
+    dfs(root.left, result)
   }
-  // 1. min 有值（代表往右尋找）+ node.val 為子樹節點，如果min（給的是上一個node.val）大於子樹節點則錯誤
-  // 2. max 有值（代表往左尋找）+ node.val 為子樹節點，如果node.val >= 上一個節點則為錯誤
-  // node.val -> 此次節點
-  // min or max 皆為父層節點
-  if((min !== null && node.val <= min) || (max !== null && node.val >= max)){
-      return false
+  // 這邊push代表都是左節點跑完後才push近來，所以直接就等於排序後的結果
+  result.push(root.val)
+  if(root.right){
+    dfs(root.right, result)
   }
-  // 驗證左子樹 && 驗證右子樹
-  return valid(node.left, min, node.val, 'left') && valid(node.right, node.val, max, 'right')
+  return result
 }
-
-// 示例二叉树
-//        5
-//       / \
-//      3   7
-//     / \   \
-//    2   4   8
 
 var tree = new TreeNode(5);
 tree.left = new TreeNode(3);
@@ -43,3 +37,4 @@ tree.right = new TreeNode(7);
 tree.left.left = new TreeNode(2);
 tree.left.right = new TreeNode(4);
 tree.right.right = new TreeNode(8);
+isValidBST(tree)
