@@ -34,3 +34,5 @@ tags:
 ## Jest
 [測試](https://ithelp.ithome.com.tw/users/20107429/ironman/3897)  
 
+## 前端技能樹
+[前端工程師在工作中的各種實戰技能 (Vue 3)](https://ithelp.ithome.com.tw/articles/10264806)
