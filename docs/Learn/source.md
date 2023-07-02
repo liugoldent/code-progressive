@@ -36,3 +36,8 @@ tags:
 
 ## 前端技能樹
 [前端工程師在工作中的各種實戰技能 (Vue 3)](https://ithelp.ithome.com.tw/articles/10264806)
+
+## 股價預測
+[source](https://github.com/WillKoehrsen/Data-Analysis/blob/master/stocker/stocker.py)  
+[FinLab版本](https://github.com/koreal6803/Stocker/blob/master/stocker.py)
+[文章](https://www.finlab.tw/%E8%B6%85%E7%B0%A1%E5%96%AE-machine-learning-%E9%A0%90%E6%B8%AC%E8%82%A1%E5%83%B9/#qu_chu_fan_ren_de_warrning)
