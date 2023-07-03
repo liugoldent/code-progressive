@@ -42,7 +42,27 @@ JSON.parse(JSON.stringify())
 #### 淺拷貝
 ```javascript
 Object.assign() // 只能完成第一層的淺層複製
+
+let a = {
+    'text': 1,
+    'text2': {
+        result: 2
+    }
+}
+
+let b = Object.assign({}, a)
+let c = JSON.parse(JSON.stringify(a))
+b['text'] = 2
+b['text2']['result'] = 3
+b['text2']['result2'] = 4
+console.log(a) // { text: 1, text2: { result: 3, result2: 4 } }
+console.log(b) // { text: 2, text2: { result: 3, result2: 4 } }
+console.log(c) // { text: 1, text2: { result: 2 } }
+
 ```
+
+
+
 
 ### 型別
 

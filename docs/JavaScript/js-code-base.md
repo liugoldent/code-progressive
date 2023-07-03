@@ -104,4 +104,3 @@ import A, { B } from './a.js'
 
 obj.hasOwnProperty("key") //obj表示物件，结果為false表示不包含；否則表示包含
 ```
-
