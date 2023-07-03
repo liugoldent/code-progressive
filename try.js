@@ -1,4 +1,4 @@
-let s = '297. Serialize and Deserialize Binary Tree'
+let s = '208. Implement Trie (Prefix Tree)'
 console.log(`l0${s.replace(/\s/g, '-').toLocaleLowerCase()}.md`)
 
 
