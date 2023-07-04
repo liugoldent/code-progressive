@@ -1,74 +1,59 @@
-/**
- * Definition for a binary tree node.
- * function TreeNode(val) {
- *     this.val = val;
- *     this.left = this.right = null;
- * }
- */
 
-/**
- * Encodes a tree to a single string.
- *
- * @param {TreeNode} root
- * @return {string}
- */
-var serialize = function(root) {
-  if(!root){
-      return 'null'
+class TrieNode {
+  constructor() {
+    this.children = new Map();
+    this.isEndOfWord = false;
+  }
+}
+
+class WordDictionary {
+  constructor() {
+    this.root = new TrieNode();
   }
 
-  let queue = [root]
-  let result = []
-
-  while(queue.length > 0){
-      let node = queue.shift()
-
-      if(node){
-          result.push(node.val)
-          result.push(node.left)
-          result.push(node.right)
-      }else{
-          result.push('null')
+  addWord(word) {
+    let node = this.root;
+    for (let i = 0; i < word.length; i++) {
+      const char = word[i];
+      if (!node.children.has(char)) {
+        node.children.set(char, new TrieNode());
       }
+      node = node.children.get(char);
+    }
+    node.isEndOfWord = true;
   }
-  return result.join(',')
-};
 
-/**
-* Decodes your encoded data to tree.
-*
-* @param {string} data
-* @return {TreeNode}
-*/
-var deserialize = function(data) {
-  if(data === 'null'){
-      return null
+  search(word) {
+    return this.searchNode(word, this.root);
   }
-  let splitData = data.split(',')
-  let root = new TreeNode(parseInt(splitData[0]))
-  let queue = [root]
-  let index = 1
 
-  while(queue.length > 0 && index < splitData.length){
-      let node = queue.shift()
-
-      if(splitData[index] !== 'null'){
-          node.left = new TreeNode(parseInt(splitData[index]))
-          queue.push(node.left)
+  searchNode(word, node) {
+    for (let i = 0; i < word.length; i++) {
+      const char = word[i];
+      if (char === '.') {
+        for (const childNode of node.children.values()) {
+          if (this.searchNode(word.slice(i + 1), childNode)) {
+            return true;
+          }
+        }
+        return false;
+      } else if (!node.children.has(char)) {
+        console.log(node.children)
+        console.log('1')
+        return false;
       }
-      index++
-
-      if(splitData[index] !== 'null'){
-          node.right = new TreeNode(parseInt(splitData[index]))
-          queue.push(node.right)
-      }
-      index++
+      node = node.children.get(char);
+      console.log(node)
+    }
+    return node.isEndOfWord;
   }
+}
 
-  return root
-};
+const wordDictionary = new WordDictionary();
+wordDictionary.addWord("apple");
+wordDictionary.addWord("banana");
+wordDictionary.addWord("cat");
 
-/**
-* Your functions will be called as such:
-* deserialize(serialize(root));
-*/
+console.log(wordDictionary.search('rar'
+))
+

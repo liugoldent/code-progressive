@@ -5,7 +5,7 @@ tags:
   - TypeScript
 ---
 # 指定型別的方式
-## Type Interface
+## Type Inference
 * 型別推斷：ts幫你推斷是什麼型別
 ```ts
 let x = 3
