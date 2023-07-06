@@ -1,3 +1,42 @@
+---
+tags: 
+    - LeetCode
+    - Easy
+    - Heap / Priority Queue
+    - Javascript
+    - Kth Largest Element in a Stream
+---
+
+# [0703] Kth Largest Element in a Stream
+
+## 一般sort解法
+```js
+var KthLargest = function(k, nums){
+    this.k = k; // 代表要找到的第k大元素
+    this.heap = [];
+    for(let num of nums){
+        this.add(num);
+    }
+}
+
+KthLargest.prototype.add = function(val){
+    if(this.heap.length < this.k){ // 如果最小堆的長度小於k => 直接將元素添加到堆中
+        this.heap.push(val);
+        this.heap.sort((a, b) => a - b); // 使用sort方法进行排序
+    }else if(val > this.heap[0]){ // 如果元素大于堆顶元素，替换堆顶元素并进行排序
+        this.heap[0] = val;
+        this.heap.sort((a, b) => a - b); // 使用sort方法进行排序
+    }
+
+    return this.heap[0];
+}
+
+```
+
+## 進階二分搜尋法
+* 在排序部分，使用二分搜尋
+* BigO可勝過99%的人
+```js
 ///////
 
 /**
@@ -64,3 +103,7 @@ KthLargest.prototype.heapifyDown = function(index) {
  * var obj = new KthLargest(k, nums);
  * var param_1 = obj.add(val);
  */
+
+
+```
+
