@@ -5,7 +5,7 @@ tags:
   - TypeScript
 ---
 # 基本型別
-## 資料型別
+## 資料型別 - 總覽與基本型別
 * 原始資料型別：String、number、Boolean、null、undefined
 * 物件型別：object、arrays、function
 * TS特有型別：any、unknown、void、never、union types、intersection types、literal types、tuple、enums
@@ -139,5 +139,137 @@ const getUserInfo2 = (person5: { name: string, age?: number }) =>{
 }
 getUserInfo2({name: 'alex'}) // -> 注意這邊要傳物件進去 -> 結果：" Hello, my name is alex. I'm undefined years old." 
 
+// 參數型別註譯
+function greet(name: string){
+  console.log("Hello, " + name.toUpperCase() + "!!")
+}
+greet(42) // Argument of type 'number' is not assignable to parameter of type 'string'.
+
+
+// 返回值型別註譯
+function getFavoriteNumber(): number {
+  return 28
+}
+
+function greet(name: string): string{
+  return 28
+}
+// Type 'number' is not assignable to type 'string'.
+```
+#### Function的定義
+```ts
+function sum(x:number , y:number): number {
+  return x + y
+}
+
+let sum3 = (x: number, y: number): number => x+y
 ```
 
+## 資料型別 - 特殊型別
+### any
+* 用途：如果我們不希望某些值出現型別檢查錯誤，可以使用`any`，他用來表示允許賦值成任意型別
+```ts
+let myVar: any = 'seven'
+myVar = 7
+```
+* 未宣告型別的變數及參數也視為`any`
+```ts
+let somethinn;
+something = 7
+something = 'seven'
+```
+* 提醒使用了any：  
+在tsConfig中，打開`noImplicitAny = true` or 打開`strict: true`
+他就會提醒你any型別。
+
+### unknown
+* 可以接受任何型別賦值，有點類似`any`，但使用上比`any`安全
+```ts
+function f1(a: unknown) {
+  a.b()
+}
+```
+* 使用`unknown`會報錯，沒有b函式屬性。
+* `unknown`和`any`都可以接受任何型別的賦值，但any可以賦值給任何型別，`unknown`只可以給`unknown` or `any`
+```ts
+let value: unknown;
+
+let value1: unknown = value; // ok
+let value2: any = value; // ok
+let value3: boolean = value; // error
+let value4: number = value; // error
+let value5: string = value; // error
+let value6: object = value; // error
+let value7: any[] = value; // error
+let value8: Function = value; // error
+```
+### void
+* 表示空值的概念，在ts中代表沒有返回值
+```ts
+function alertName(): void {
+  alert('xxx')
+}
+```
+### never
+* 表示不應該存在的狀態，一般用於錯誤處理
+```ts
+function error(message: string):never {
+  throw new Error(message)
+}
+```
+## 資料型別 － 特殊：Union / Intersection
+### union 聯合型別
+* 表示取值可以為多種型別中的其中一種。跟JS的||概念是一樣的
+```ts
+// 正常狀況下
+function printId(id: number | string){
+  console.log("your id is: " + id)
+}
+printId(101)
+printId('202')
+
+```
+* 但是函數內部使用不同屬性，就會報錯
+* 解決方式：
+  ＊ 使用typeof）
+  * 使用Array.isArray()... 之類的
+```ts
+function printId(id: number | string) {
+  console.log(id.toUpperCase());
+}
+// Property 'toUpperCase' does not exist on type 'string | number'.
+// Property 'toUpperCase' does not exist on type 'number'.
+```
+
+### intersection Types（交集型別）
+* 與`&&` 概念相同，必須同時符合兩種型別
+* 錯誤例子
+```ts
+function printId(id: number & string) {
+  console.log("Your ID is: " + id);
+}
+printId(101); //error
+printId("202"); //error
+```
+* 主要用來組合現有的型別
+```ts
+interface Colorful {
+  color: string;
+}
+
+interface Circle {
+  radius: number;
+}
+
+//用type aliases 宣告 ColorfulCircle 型別，需滿足 Colorful 及 Circle 型別
+type ColorfulCircle = Colorful & Circle;
+
+//帶入的參數需滿足 ColorfulCircle 型別
+function draw(circle: ColorfulCircle) {
+  console.log(`Color was ${circle.color}`);
+  console.log(`Radius was ${circle.radius}`);
+}
+
+draw({ color: "blue", radius: 42 });// ok
+draw({ color: "red", raidus: 42 }); //error
+```
