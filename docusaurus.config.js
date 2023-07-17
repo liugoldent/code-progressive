@@ -80,22 +80,21 @@ const config = {
             position: "left",
             label: "程式筆記",
           },
-          // {
-          //   href: 'https://github.com/facebook/docusaurus',
-          //   label: 'GitHub',
-          //   position: 'right',
-          // },
         ],
       },
       algolia: {
         contextualSearch: true,
         placeholder: "Search in website",
         appId: "3TGXEHXUAQ",
-        apiKey: "e65973d39353ba71bc8db48d08d26989",
+        apiKey: "33fc9d43d54c6edc7e2cfad5aca67046",
         indexName: "code_progressive",
         externalUrlRegex: "external\\.com|domain\\.com",
         searchParameters: {},
         searchPagePath: "search",
+        replaceSearchResultPathname: {
+          from: '/docs/', // or as RegExp: /\/docs\//
+          to: '/',
+        },
       },
       footer: {
         style: "dark",
@@ -152,7 +151,7 @@ const config = {
       },
       metadata: [
         { name: 'keyword', content: '每日選股, 台股' },
-        { name: 'keyword', content: `${month}${day}選股`}
+        { name: 'keyword', content: `${month}${day}選股` }
       ],
     }),
 };
