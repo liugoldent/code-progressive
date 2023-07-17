@@ -83,18 +83,9 @@ const config = {
         ],
       },
       algolia: {
-        contextualSearch: true,
-        placeholder: "Search in website",
         appId: "3TGXEHXUAQ",
-        apiKey: "33fc9d43d54c6edc7e2cfad5aca67046",
+        apiKey: "e65973d39353ba71bc8db48d08d26989",
         indexName: "code_progressive",
-        externalUrlRegex: "external\\.com|domain\\.com",
-        searchParameters: {},
-        searchPagePath: "search",
-        replaceSearchResultPathname: {
-          from: '/docs/', // or as RegExp: /\/docs\//
-          to: '/',
-        },
       },
       footer: {
         style: "dark",
