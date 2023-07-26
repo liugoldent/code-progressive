@@ -218,6 +218,7 @@ function error(message: string):never {
 }
 ```
 ## 資料型別 － 特殊：Union / Intersection
+
 ### union 聯合型別
 * 表示取值可以為多種型別中的其中一種。跟JS的||概念是一樣的
 ```ts
@@ -273,3 +274,150 @@ function draw(circle: ColorfulCircle) {
 draw({ color: "blue", radius: 42 });// ok
 draw({ color: "red", raidus: 42 }); //error
 ```
+
+## 資料型別 - 特殊：Literal Types（字面值型別） / Tuple（元祖）
+### Literal
+* 值的表現方式，某些特殊的"值"可以當作"型別"來使用
+```ts
+let x: "hello" = "hello";
+x = "hello"; //ok
+x = "howdy"; // Type '"howdy"' is not assignable to type '"hello"'.
+```
+### number literal types
+```ts
+function compare(a: string, b: string): -1 | 0 | 1 {
+  return a === b ? 0 : a > b ? 1 : -1;
+}
+```
+### non-literal types
+```ts
+interface Options {
+  width: number
+}
+
+function configure(x: Options | 'auto'){
+  console.log(x)
+}
+configure({ width: 10})
+configure('auto')
+configure('autoatic') 
+// Argument of type '"autoatic"' is not assignable to parameter of type 'Options | "auto"'.
+```
+
+### Tuple 元祖
+* 為合併了不同型別的物件
+```ts
+const iris: [string, number] = ['iris', 18]
+
+let tom: [string, number];
+tom = ['tom', 18]
+tom[0] = 'tom'
+tom[1] = 25
+
+tom = ['tom chen']
+// Type '[string]' is not assignable to type '[string, number]'.Source has 1 element(s) but target requires 2.
+tom.push(true)
+// Argument of type 'boolean' is not assignable to parameter of type 'string | number'.
+```
+
+## 資料型別 - 特殊：enums（列舉）
+### Numeric Enums
+```ts
+//宣告一個名為Week的Enum type變數，並讓其包含一周的星期
+enum Week {
+    Sunday,
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday
+}
+//將today定義為Week中的Friday 
+var today = Week.Friday;
+//用Week.Friday作為判斷能讓程式碼更一目瞭然
+if (today == Week.Friday) console.log("Today is Friday!");
+
+// 注意下面這邊，列舉可以讓使用數字得到"Friday"
+// 可以使用"Friday" 得到5
+console.log(Week[5]);        //return "Friday"
+console.log(Week["Friday"]); //return 5
+```
+* 注意如果重新定義index，會導致編譯的不同
+```ts
+//宣告一個名為Week的Enum type變數，並讓其包含一周的星期
+enum Week {
+    Sunday = 8,
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday
+}
+//將today定義為Week中的Friday 
+var today = Week.Friday;
+//用Week.Friday作為判斷能讓程式碼更一目瞭然
+if (today == Week.Friday) console.log("Today is Friday!");
+console.log(Week[5]);        //return undefined
+console.log(Week[12]);        //return "Thursday"
+console.log(Week["Friday"]); //return 5
+```
+### String Enums
+* 注意字串是沒有index可以找的
+```ts
+enum Direction {
+  Up = "UP",
+  Down = "DOWN",
+  Left = "LEFT",
+  Right = "RIGHT",
+}
+
+console.log(Direction[0])
+// Element implicitly has an 'any' type because expression of type '0' can't be used to index type 'typeof Direction'. Property '0' does not exist on type 'typeof Direction'.
+console.log(Direction["Up"])
+// 然後key是，"Up"
+```
+### Computed and constant members
+* 計算所得列舉
+```ts
+enum Color {Red, Green, Blue = "blue".length};
+console.log(Color.Blue); //4
+```
+### 常數列舉
+* 這種列舉在編譯時，會被刪掉
+```ts
+const enum Directions {
+    Up,
+    Down,
+    Left,
+    Right
+}
+
+let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];
+```
+* 編譯之後
+```js
+"use strict";
+let directions = [0 /* Directions.Up */, 1 /* Directions.Down */, 2 /* Directions.Left */, 3 /* Directions.Right */];
+```
+
+### 外部列舉
+* 使用declare enum 定義的列舉型別
+* 一樣編譯之後，列舉被刪掉
+```ts
+declare enum Directions {
+    Up,
+    Down,
+    Left,
+    Right
+}
+
+let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];
+
+```
+* 編譯之後
+```js
+var directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];
+```
+
