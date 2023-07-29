@@ -455,7 +455,22 @@ const alex2: IPerson = {
   gender: 'female'
 }
 ```
+
+### 新增任意屬性的方法
+#### 使用index Signatures新增
+* 可以利用`[propNmae: key]: value`定義了任意屬性
+* key：通常為`string`型別
+* value：可以為任意你想處理的型別
+```ts
+interface IPerson {
+  name: string;
+  age?: number;
+  [propName: string]: string | number | undefined
+}
+```
+
 * 唯讀屬性：readonly
+
 ```ts
 interface IPerson {
   readonly id: number;
@@ -472,6 +487,7 @@ const iris: IPerson = {
 
 iris[id] = 9999 // error
 ```
+
 * 運用於function中
 ```ts
 const greetPerson = (person: IPerson) => {
@@ -489,6 +505,58 @@ interface More extends Basic {
 }
 
 
+* 但注意index Signature，其value指定的型別，需要都在已經有的型別中
+```ts
+// error example
+interface NumberDictionary {
+  [index: string]: number;
+  length: number; // ok
+  name: string; // 這裏index signature的value為number，但是name出現string會報錯，因為index signature沒有此型別
+}
+
+// ok example
+interface NumberOrStringDictionary {
+  [index: string]: number | string;
+  length: number; // ok, length is a number
+  name: string; // ok, name is a string
+}
+```
+* 使用readonly
+```ts
+interface ReadonlyStringArray {
+  readonly [index: number]: string;
+}
+
+let myArray: ReadonlyStringArray = {
+  1: 'a',
+  2: 'b'
+}
+
+myArray[2] = 'bbb' // error：因為readonly
+```
+### String Literal & Mapped Types
+* String Literal：代表某些特殊值可以當型別來使用
+* Mapped Types是應用`in`在`index`跑迴圈的概念
+* 在新增屬性時，屬性只能是`index`定義的值
+```ts
+//String Literal Type
+type Index = 'a' | 'b' | 'c';
+
+// Mapped Types 
+type FromIndex = { 
+    [k in Index]?: number 
+};
+
+const good: FromIndex = { 
+    b: 1, 
+    c: 2 
+};
+
+const bad: FromIndex = {
+    b:1,
+    c:2,
+    d:3  // 這邊會報錯，主要是因為當初定義時沒有定義
+};
 ```
 
 
