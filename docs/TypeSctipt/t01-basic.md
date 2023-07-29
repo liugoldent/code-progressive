@@ -421,3 +421,79 @@ let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Ri
 var directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];
 ```
 
+## 資料型別 - 特殊：Interface（介面）
+### Interface
+* 定義一個介面，接著定義其內容與內容型別
+* 不論多或少皆不被允許
+```ts
+interface IPerson {
+  name: String;
+  age: number;
+}
+
+const alex: IPerson = {
+  name: 'Iris',
+  age: 18
+}
+```
+* 可以接受`?`，但一樣不可以刪除或新增未定義的屬性
+```ts
+interface IPerson {
+  name: String;
+  age?: number;
+}
+```
+* 如果對未來有不確定性，該怎麼新增
+```ts
+interface IPerson {
+  name: String;
+  age: number;
+  [propName: string]: string | number | undefined
+}
+const alex2: IPerson = {
+  name: 'Iris',
+  gender: 'female'
+}
+```
+* 唯讀屬性：readonly
+```ts
+interface IPerson {
+  readonly id: number;
+  name: string;
+  age?: number;
+  [propName: string]: any;
+}
+
+const iris: IPerson = {
+  id: 89777,
+  name: 'Iris',
+  [propName: string]: any;
+}
+
+iris[id] = 9999 // error
+```
+* 運用於function中
+```ts
+const greetPerson = (person: IPerson) => {
+  console.log('xxxx')
+}
+```
+* Extending Types 擴展：讓interface被擴展(也可被拓展多個)
+```ts
+interface Basic {
+  name?: string;
+}
+
+interface More extends Basic {
+  unit: string;
+}
+
+
+```
+
+
+
+
+
+
+
