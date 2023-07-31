@@ -1,10 +1,11 @@
 ---
-description: TS - 指定型別
+description: TS - 基本型別
 tags:
   - TS
   - TypeScript
 ---
-# 基本型別
+# [TS] 基本型別
+
 ## 資料型別 - 總覽與基本型別
 * 原始資料型別：String、number、Boolean、null、undefined
 * 物件型別：object、arrays、function
@@ -231,9 +232,6 @@ printId('202')
 
 ```
 * 但是函數內部使用不同屬性，就會報錯
-* 解決方式：
-  ＊ 使用typeof）
-  * 使用Array.isArray()... 之類的
 ```ts
 function printId(id: number | string) {
   console.log(id.toUpperCase());
@@ -275,7 +273,7 @@ draw({ color: "blue", radius: 42 });// ok
 draw({ color: "red", raidus: 42 }); //error
 ```
 
-## 資料型別 - 特殊：Literal Types（字面值型別） / Tuple（元祖）
+## 資料型別 - 特殊：Literal Types（字面值型別）
 ### Literal
 * 值的表現方式，某些特殊的"值"可以當作"型別"來使用
 ```ts
@@ -304,8 +302,20 @@ configure('autoatic')
 // Argument of type '"autoatic"' is not assignable to parameter of type 'Options | "auto"'.
 ```
 
-### Tuple 元祖
-* 為合併了不同型別的物件
+## 資料型別 - 特殊：Tuple（元祖）
+### Tuple 優點
+* 確保固定結構： Tuple 允許您指定陣列中每個位置的元素型別，因此可以確保在開發過程中不會隨意增減元素或改變元素型別。這在需要明確且不可變的數據結構時非常有用，以避免錯誤。
+* 保持順序： Tuple 保留元素的順序，這對於某些特定情況下很重要。例如，當您需要表示座標 (x, y) 時，Tuple 可以很方便地表示
+```ts
+let point: [number, number] = [10, 20];
+```
+* 提供特定索引的含義：Tuple 的每個位置都有特定的含義，例如在表示日期時，可以使用 Tuple 表示 (年份, 月份, 日)：
+```ts
+let date: [number, number, number] = [2023, 7, 31];
+```
+* 性能優化： Tuple 在某些情況下可以提供比使用陣列更好的性能。由於 Tuple 的元素數目和型別固定，因此在某些特定情況下，編譯器和運行時可以對 Tuple 做出更有效的優化。
+### 使用
+* 表示具有固定元素數目且每個元素可以是不同型別的陣列。
 ```ts
 const iris: [string, number] = ['iris', 18]
 
@@ -319,8 +329,27 @@ tom = ['tom chen']
 tom.push(true)
 // Argument of type 'boolean' is not assignable to parameter of type 'string | number'.
 ```
+```ts
+let person: [string, number, boolean];
+person = ["John Doe", 30, true];
+```
 
 ## 資料型別 - 特殊：enums（列舉）
+* enum 是一種用於定義命名常數集合的機制。它可以幫助您在程式碼中更清晰地表示某些特定值，而不是使用數字或字串。
+* 當有一組固定且相關聯的值時，使用 enum 可以提供更好的可讀性和維護性。
+### Enum 基本語法
+```ts
+enum EnumName {
+  Member1,
+  Member2,
+  Member3,
+  // ...
+}
+```
+### Enum 優點
+* 可讀性和可維護性： 使用 enum 可以為數字或字串值賦予有意義的名稱，從而增加程式碼的可讀性。當您閱讀程式碼時，直觀地知道變數是哪個具體的狀態或類型，而不需要直接查看具體的數字或字串值。
+* 避免錯誤： enum 使程式碼更具有明確性，減少了手動輸入數字或字串值時可能出現的錯誤。如果在程式碼中使用具體的數字或字串值，容易出現拼寫錯誤或數值不一致的問題，而 enum 可以解決這個問題。
+* 節省記憶體和優化性能： enum 在編譯時會轉換為對應的 JavaScript 物件，並且支援反向查找（由值獲取對應的名稱）。這樣做可以減少在記憶體中儲存多個相同的數字或字串值，並且對於一些特定情況下可以提高性能。
 ### Numeric Enums
 ```ts
 //宣告一個名為Week的Enum type變數，並讓其包含一周的星期
@@ -378,6 +407,16 @@ console.log(Direction[0])
 console.log(Direction["Up"])
 // 然後key是，"Up"
 ```
+* 上面程式編譯之後
+```ts
+var Direction;
+(function (Direction) {
+    Direction["Up"] = "UP";
+    Direction["Down"] = "DOWN";
+    Direction["Left"] = "LEFT";
+    Direction["Right"] = "RIGHT";
+})(Direction || (Direction = {}));
+```
 ### Computed and constant members
 * 計算所得列舉
 ```ts
@@ -422,9 +461,11 @@ var directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Ri
 ```
 
 ## 資料型別 - 特殊：Interface（介面）
-### Interface
+### Interface 的基本
 * 定義一個介面，接著定義其內容與內容型別
 * 不論多或少皆不被允許
+* 允許我們定義物件應該具有哪些屬性，以及每個屬性的型別
+* 可以幫助團隊成員在協作時更清楚地了解彼此的物件結構
 ```ts
 interface IPerson {
   name: String;
@@ -468,9 +509,7 @@ interface IPerson {
   [propName: string]: string | number | undefined
 }
 ```
-
 * 唯讀屬性：readonly
-
 ```ts
 interface IPerson {
   readonly id: number;
@@ -503,7 +542,7 @@ interface Basic {
 interface More extends Basic {
   unit: string;
 }
-
+```
 
 * 但注意index Signature，其value指定的型別，需要都在已經有的型別中
 ```ts
@@ -558,10 +597,43 @@ const bad: FromIndex = {
     d:3  // 這邊會報錯，主要是因為當初定義時沒有定義
 };
 ```
+### Interface的多態
+在下面範例中，創建了兩個類別 Circle 和 Rectangle，它們都實現了 Shape 介面。printArea 函式接受一個 Shape 類型的參數，這使我們可以使用 Circle 和 Rectangle 的實例作為參數，因為它們都符合 Shape 的定義。這種多態性允許我們以一致的方式處理不同的物件，並且讓程式碼更加靈活和可擴展。
+```ts
+interface Shape {
+  getArea(): number;
+}
 
+class Circle implements Shape {
+  constructor(private radius: number) {}
 
+  getArea(): number {
+    return Math.PI * this.radius * this.radius;
+  }
+}
 
+class Rectangle implements Shape {
+  constructor(private width: number, private height: number) {}
 
+  getArea(): number {
+    return this.width * this.height;
+  }
+}
+
+function printArea(shape: Shape) {
+  console.log("Area:", shape.getArea());
+}
+
+const circle = new Circle(5);
+const rectangle = new Rectangle(4, 6);
+
+printArea(circle); // Output: "Area: 78.53981633974483"
+printArea(rectangle); // Output: "Area: 24"
+
+```
+
+## 文章來源
+[前端是該來學一下 TypeScript 了](https://ithelp.ithome.com.tw/users/20131472/ironman/4100)
 
 
 
