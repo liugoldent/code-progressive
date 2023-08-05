@@ -43,6 +43,26 @@ export default MyComponent;
 #### 1. 沒有使用setCount 改變變數
 #### 2. 有使用setCount，但是變數狀態沒有改變
 
+## useState的物件使用
+```jsx
+const Form = () => {
+  // 使用 useState 定義一個包含多個屬性的物件狀態
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+    email: '',
+  });
 
-
+  // 更新物件狀態時，需要使用 spread operator (...) 來複製原有的物件
+  const handleInputChange = event => {
+    const { name, value } = event.target;
+    // prevFormData 記得也要放入這個prev...的，這樣react才可以知道舊資料有哪些
+    setFormData(prevFormData => ({
+      // 注意這邊要使用...，不能只set一個值
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+}
+```
 
