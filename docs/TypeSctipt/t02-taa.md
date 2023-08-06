@@ -4,7 +4,7 @@ tags:
   - TS
   - TypeScript
 ---
-# 指定型別的方式
+# [TS] 指定型別的方式
 ## Type Inference
 * 型別推斷：ts幫你推斷是什麼型別
 ```ts
@@ -56,4 +56,5 @@ let foo: Foo = {
 }
 ```
 
-
+## 文章來源
+[前端是該來學一下 TypeScript 了](https://ithelp.ithome.com.tw/users/20131472/ironman/4100)
