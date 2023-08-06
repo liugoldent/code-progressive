@@ -88,6 +88,91 @@ const MyComponent = () => {
 };
 ```
 
+## useEffect的async function
+```jsx
+useEffect(() => {
+    // STEP 1：在 useEffect 中定義 async function 取名為 fetchData
+    const fetchData = async () => {
+      try {
+        // STEP 2：使用 Promise.all 搭配 await 等待兩個 API 都取得回應後才繼續
+        const response = await axios.get('https://api.example.com/data');
+        setData(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        setError('Error fetching data');
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+```
+
+## useEffect 與 useCallback一起使用
+[[Day 20 - 即時天氣] 在 useEffect 中使用呼叫需被覆用的函式 - useCallback 的使用](https://ithelp.ithome.com.tw/articles/10225504)
+* 有些時候，如果我們的useEffect相依是function，而當我們沒有將此function設定為useCallback，會導致無窮迴圈
+* 原因是：每次react在渲染時，useEffect執行，react會將其dependencies視為「不同的」物件（因為位址不同）
+* 解決辦法：將使用到dependencies的function定義為useCallback（這樣位址就會相同了）
+```jsx
+import React, { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
+
+const fetchData = async () => {
+  try {
+    const response = await axios.get('https://api.example.com/data');
+    return response.data;
+  } catch (error) {
+    throw new Error('Error fetching data');
+  }
+};
+
+const DataFetching = () => {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // 使用 useCallback 包裹 getData 函式
+  // 這樣可以確保每次組件渲染時 getData 的引用都是相同的，從而避免在 useEffect 的依賴數組中造成無限重渲染的問題。
+  const getData = useCallback(async () => {
+    try {
+      const fetchedData = await fetchData();
+      setData(fetchedData);
+      setIsLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setIsLoading(false);
+    }
+  }, []);
+
+  // 在 useEffect 中使用 getData 函式作為依賴
+  useEffect(() => {
+    getData();
+  }, [getData]); // 把 getData 放入依賴數組
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  return (
+    <div>
+      <h1>Data Fetching Example</h1>
+      <ul>
+        {data.map(item => (
+          <li key={item.id}>{item.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default DataFetching;
+
+```
+
 
 
 
