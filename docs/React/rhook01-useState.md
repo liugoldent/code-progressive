@@ -12,6 +12,9 @@ tags:
 * 使用 useState，您可以在 Function Component 中儲存和更新狀態，並根據狀態的變化重新渲染元件。
 * 在React中，看到use開頭的，就是`Hook`
 * 在 React 中講到「狀態（state）」時，一般你可以直接把它成「資料（data）」來理解。
+### 操作
+* useState會回傳一個陣列，通常我們會使用陣列解構取出兩個變數，第一個當作渲染，第二個是告知React資料有變化，要重新re-render
+
 ## 基本程式
 ### 正常會更新的寫法
 #### 更新原則
@@ -43,7 +46,8 @@ export default MyComponent;
 #### 1. 沒有使用setCount 改變變數
 #### 2. 有使用setCount，但是變數狀態沒有改變
 
-## useState的物件使用
+## useState的物件型別使用
+### 物件
 ```jsx
 const Form = () => {
   // 使用 useState 定義一個包含多個屬性的物件狀態
@@ -65,4 +69,31 @@ const Form = () => {
   };
 }
 ```
+### 陣列
+```jsx
+import React, { useState } from 'react';
 
+const ArrayExample = () => {
+  const [numbers, setNumbers] = useState([1, 2, 3]);
+
+  const handleAddNumber = () => {
+    // 使用展開運算子創建新陣列，並在末尾添加新的數字
+    setNumbers([...numbers, 4]);
+  };
+
+  return (
+    <div>
+      <h1>Array Example</h1>
+      <ul>
+        {numbers.map((number, index) => (
+          <li key={index}>{number}</li>
+        ))}
+      </ul>
+      <button onClick={handleAddNumber}>Add Number</button>
+    </div>
+  );
+};
+
+export default ArrayExample;
+
+```

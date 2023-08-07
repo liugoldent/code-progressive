@@ -10,9 +10,11 @@ tags:
 ## 概念
 * 在組件「渲染之後」，做這個useEffect，因此也適合拿來做呼叫API後取得資料
 * effect 指的是副作用，也就是與React本身無關，而需要被執行的動作稱作副作用，這些動作像是發送API請求資料
+* 主要大多用途都是在於我們畫面 render 之後要做某些事情，其實也就是在跟 React 說等一下 render 後要記得執行裡面的某些事情
 ## 使用
 ### 基本使用
 * 這個方法的參數中需要帶入一個函式，而這個函式會在畫面渲染完成「後」被呼叫
+* 如果useEffect，第二個參數是空，則每次渲染後都會執行
 ```jsx
 const Component = () => {
   console.log('first')
@@ -31,10 +33,43 @@ const Component = () => {
 }
 // first -> render -> useEffect
 ```
+### 類似監聽使用
+```jsx
+import React, { useState, useEffect } from 'react';
+
+const NumberExample = () => {
+  const [count, setCount] = useState(0);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    if (count > 5) {
+      setMessage('Count is greater than 5');
+    } else {
+      setMessage('Count is not greater than 5');
+    }
+  }, [count]); // 將 count 作為依賴數組
+
+  return (
+    <div>
+      <h1>useEffect Example</h1>
+      <p>Count: {count}</p>
+      <p>{message}</p>
+      <button onClick={() => setCount(count + 1)}>Increment Count</button>
+    </div>
+  );
+};
+
+export default NumberExample;
+
+```
+
+
+
 ## 類似生命週期的使用
 ### 模擬ComponentDidMount
 * 第一次渲染時，因為dependencies的值剛被帶入，所以會做一次useEffect的函式
 * 第二次畫面渲染完時，因為不會再次呼叫setCurrentWeather，如此避免掉無窮迴圈的問題
+* 概念其實與 Vue 的 onMounted 的生命週期神似
 ```jsx
 import React, { useEffect } from 'react';
 
@@ -72,6 +107,7 @@ const MyComponent = () => {
 
 ### 模擬 componentWillUnmount
 * 內部return 一個function，該函式將在組件將要卸載時被調用，類似於 componentWillUnmount。
+* 動作順序：Component mounted -> 觸發 -> Component will unmount -> 畫面更新 -> Component mounted
 ```jsx
 import React, { useState, useEffect } from 'react';
 
