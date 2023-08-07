@@ -86,6 +86,7 @@ export default MyComponent;
 ```
 
 ## 使用inline-style
+* 記得style是用物件去包裹
 ### 固定數值
 * 物件的屬性名稱會是 CSS 的屬性，但會用「小寫駝峰」來表示；屬性值則是 CSS 的值
 ```jsx
@@ -213,8 +214,33 @@ const handleClick = (type) => {
   }
 }
 ```
+### prevent事件
+* 在vue中，我們可以`@click.prevent`，在react只能自己寫
+```jsx
+const App = () => {
+  const sayHi = (e) => {
+    e.preventDefault()
+    window.alert('Hello！');
+  }
+
+  return (
+    <div>
+      <a href="https://israynotarray.com/" onClick={ sayHi }>點我</a>
+    </div>
+  )
+}
+```
+### 常見的on事件
+* onClick：button點擊
+* onChange：select、input、textarea
+* onSubmit：主要用於form表單上
+* onKeyDown：鍵盤上按下什麼案件
+* onFocus：常見於輸入匡，只要我們關注那個欄位就會觸發事件
+* onBlur：離開關注時，會出發
 
 ## JSX中要使用表達式（Expression Statements）
+### 表達式
+* 經過一些符號結合上下語句並運算回傳結果
 ```js
  <div
     style={{
@@ -226,6 +252,13 @@ const handleClick = (type) => {
       <Counter />
     ))}
   </div>
+```
+### 陳述式
+* 用於命令執行指定的一系列操作，最大的特徵是不會回傳結果
+* 它只會靜靜躺在那邊等你呼叫，最大特徵在於不會回傳任何的結果，但是陳述式必定會先執行過一次
+```js
+var a = 1
+const b = 2
 ```
 
 ## In React - 一個 JSX 元素只能有一個最外層元素 : `React Fragment or <>`
@@ -342,6 +375,50 @@ function NestedFunctionExample() {
   );
 }
 ```
+## JSX的Key值寫法
+* key 其實主要是幫助 React 識別這個元件是否被調整或刪除等行為，來決定是否重新渲染
+```jsx
+import React from 'react';
+
+const MyComponent = () => {
+  const data = [
+    { id: 1, name: 'Item 1' },
+    { id: 2, name: 'Item 2' },
+    { id: 3, name: 'Item 3' },
+    // Add more data items as needed
+  ];
+
+  return (
+    <div>
+      <h1>My List</h1>
+      <ul>
+        {data.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default MyComponent;
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

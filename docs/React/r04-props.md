@@ -9,8 +9,9 @@ tags:
 # [React] Props
 ## 概念
 * 有時我們需要將數據傳給子組件，需要使用到props
+* 記得props進去子組件是物件
 ## 基本程式
-### 傳入子組件
+### 傳入資料到子組件
 ```jsx
 // ParentComponent.js
 import React from 'react';
@@ -68,6 +69,63 @@ function ChildComponent({ data, handleClick }) {
 }
 
 export default ChildComponent;
+```
+
+## React 的slot使用方式
+### 1. 直接寫在tag內
+```jsx
+import React from 'react';
+
+// 父元素
+const Card = ({ header, content }) => {
+  return (
+    <div className="card">
+      <div className="card-header">{header}</div>
+      <div className="card-content">{content}</div>
+    </div>
+  );
+};
+
+// 使用父元素並傳遞子元素
+const App = () => {
+  return (
+    <div>
+      <Card
+        header={<h2>Title</h2>}
+        content={<p>This is the content of the card.</p>}
+      />
+    </div>
+  );
+};
+
+export default App;
+
+```
+### 2. 寫在tag之間
+```jsx
+import React from 'react';
+
+const MyComponent1 = ({ children }) => {
+  return (
+    <div className="my-component">
+      {children}
+    </div>
+  );
+};
+
+const App = () => {
+  return (
+    <div>
+      <MyComponent1>
+        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+        <button type="button" className="btn btn-primary">儲存</button>
+      </MyComponent1>
+    </div>
+  );
+};
+
+export default App;
+
 ```
 
 
