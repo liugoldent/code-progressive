@@ -404,6 +404,54 @@ export default MyComponent;
 
 ```
 
+## Props的預設為True
+* 在JSX中，如果我們沒給Props值，那麼預設的值就是True
+```jsx
+import React from 'react';
+
+const MyComponent = ({ isEnabled = true }) => {
+  return (
+    <div>
+      <p>Component is {isEnabled ? 'enabled' : 'disabled'}</p>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
+    <div>
+      <MyComponent /> {/* 使用預設值 */}
+      <MyComponent isEnabled={false} /> {/* 傳遞自定義值 */}
+    </div>
+  );
+};
+
+export default App;
+```
+
+## 忽略特定型別
+* 如果要輸出Boolean、null之類的，就要用String()
+```jsx
+const App = () => {
+  return (
+  <div>
+    <div>Boolean：{ true }</div>
+    <div>Boolean：{ String(true) }</div>
+    
+    <div>Boolean：{ false }</div>
+    <div>Boolean：{ String(false) }</div>
+ 
+    <div>Null：{ null }</div>
+    <div>Null：{ String(null) }</div>
+
+    <div>Undefined：{ undefined }</div>
+    <div>Undefined：{ String(undefined) }</div>
+  </div>
+  )
+}
+const root = ReactDOM.createRoot(document.querySelector('#root'));
+root.render(<App />);
+```
 
 
 
