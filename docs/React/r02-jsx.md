@@ -274,7 +274,7 @@ const Counter = () => {
   </React.Fragment>
 }
 
-// <>
+// <> => 其限制在於，如果跑迴圈，不可以用<>空的tag
 const Counter = () => {
   <>
     <div>
