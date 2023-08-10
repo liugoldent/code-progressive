@@ -5,7 +5,7 @@ tags:
     - frontend
 ---
 
-# FE-HTML
+# [FE] HTML
 
 ### 頁面載入時，import 跟 link 差在哪裡
 [q1](https://github.com/haizlin/fe-interview/issues/1)

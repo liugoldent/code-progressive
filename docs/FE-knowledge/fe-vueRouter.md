@@ -6,7 +6,7 @@ tags:
     - frontend
 ---
 
-# FE-Vue Router
+#  [FE] Vue Router
 ![vue router分類](https://www.leyeah.com/upload/images/2022/12/01/63889748cd28e.jpg)
 ## vue-router怎麼重新定向頁面
 [vue-router怎么重定向页面？](https://github.com/haizlin/fe-interview/issues/419)

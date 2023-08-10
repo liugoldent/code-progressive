@@ -6,7 +6,7 @@ tags:
     - frontend
 ---
 
-# FE-VueX
+# [FE] VueX
 
 ## 請說說actions 與 mutations有什麼區別
 [VueX 原始碼解析](https://www.gushiciku.cn/pl/p6ye/zh-tw)

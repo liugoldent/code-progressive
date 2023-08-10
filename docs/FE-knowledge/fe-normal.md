@@ -5,7 +5,7 @@ tags:
     - frontend
 ---
 
-# FE-Normal
+# [FE] Normal
 
 ## 當前端使用者併發多個請求，如果只送一個（例如防抖）
 [q5394](https://github.com/haizlin/fe-interview/issues/5394)

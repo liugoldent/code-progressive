@@ -5,7 +5,7 @@ tags:
     - frontend
 ---
 
-# FE-Git
+# [FE] Git
 
 ## 請解釋Git 游離分支是什麼，以及怎麼解決
 [Git 游離分之（圖解）](https://juejin.cn/post/6844903623017627661)

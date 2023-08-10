@@ -5,7 +5,7 @@ tags:
     - frontend
 ---
 
-# FE-JS
+# [FE] JS
 
 ## 用JS寫一個方法，使得結果映射到值[0-1]之間
 ```js
