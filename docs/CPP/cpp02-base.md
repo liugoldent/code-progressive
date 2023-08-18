@@ -1,11 +1,11 @@
 ---
-description: C++ 語法
+description: C++ 規範
 tags:
   - c++
   - backend
-keywords: [c++語法]
+keywords: [c++規範]
 ---
-# [C++] 基本語法
+# [C++] 基本規範
 ## 編寫架構
 * 一定要雙引號
 * 結束一定要分號
@@ -107,6 +107,32 @@ fruit = apples + oranges;   // 获取水果的总数
 * iterator
 * algorithm
 
+## 註解
+* C++也有單行與多行註解
+```cpp
+#include <iostream>
+using namesapce std;
+
+int main(){
+  // 這是一個註解
+  /**
+    * 跨行註解
+    */
+}
+```
+
+## 輸出語法
+```cpp
+int num = 42;
+std::cout << "The answer is: " << num;
+// The answer is: 42
+
+std::cout << "Hello, world!"
+// 輸出Hello world，但是不會換行，會直接接下面的print
+
+std::cout << "Hello, world!" << std:endl;
+// 輸出Hello world，會換行
+```
 
 
 
