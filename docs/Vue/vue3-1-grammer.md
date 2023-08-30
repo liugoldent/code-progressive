@@ -99,5 +99,124 @@ numberRef.value = 101;
 console.log(value); //印出 11
 ```
 
+## nextTick
+* 基本知識：響應式資料更新之後，Vue會先同步更新相依數據，再非同步去更新DOM
+* 所以更新渲染DOM這件事是非同步的，我們就不知道DOM什麼時候會更新完成，但如果我們在更新之後，想要拿寬、高來做事，就要使用到`nextTick`
+* tick：事件循環。每次修改資料之後，Vue會做
+  * 同步：修改資料
+  * 非同步：修改DOM，等這個Tick跑完，再執行nextTick
+  * 非同步：執行nextTick callback
 
 
+## CSS style scoped
+### 不加scoped
+* 未加上scoped的樣式，會影響到全域，包含祖先&後代
+
+### 加上scoped
+* 加上scoped之後，只會影響到同個元件or頁面的HTML元素
+
+### `:deep()`
+* 如果想要從父元件影響到子元件的樣式，但又不希望將樣式影響到全域，可以使用`:deep()`，來突破scoped限制
+* 但要注意，是所有後代元件都會被影響到
+```html
+<style scoped>
+:deep(h1){
+  color: dark;
+}
+</style>
+```
+
+### `:slotted()`
+* Vue預設傳入元件的`<slot/>`樣式，不會被當層元件的scoped影響，因為`<slot />`屬於他的父元件，所以如果想在當前元件做樣式管理，可以使用`:slotted()`
+* 也就是slot內容會被父元件影響
+* 要從子元件影響slot內容，要用`:slotted()`
+```html
+<style scoped>
+:slotted(h1) {
+  color: darksalmon;
+}
+</style>
+```
+
+### `:global`
+* 提供`:global ()`選擇器，可以在`<style scope>`內使用，指定樣式轉換為全域樣式
+```html
+<style scoped>
+:global(h1) {
+  color: darksalmon;
+}
+</style>
+```
+
+## sass/scss
+[Day 15: 在 Vue 專案使用 Sass/SCSS +共用變數 (feat. Vite)](https://ithelp.ithome.com.tw/articles/10301528)
+### 內建支持的語言
+* `.scss`、`.sass`、`.less`、`.styl`、`.stylus`等檔案
+* 使用
+```html
+<style lang="scss">
+$primary-color: #333;
+body {
+    color: $primary-color;
+    }
+</style>
+```
+
+### 區域引入
+* 可以透過`@use`&`@import`，將整份`.scss`檔案引入到元件
+```html
+<style lang="scss" scoped>
+@use "@/assets/scss/_font.scss";
+@import "@/assets/scss/_colors.scss";
+
+body {
+    color: $primary-color;
+    font-size: font.$super-big;
+    }
+</style>
+```
+
+### 全域引入
+* 引入點1：`App.vue`
+* 引入點2：`main.js`
+* 全域共享這份 `.scss` 檔所轉換出來的 CSS 樣式
+
+### 引用方式採坑
+* 需`@use`在前，`@import`在後
+#### `@use`
+* 會做`name-spacing`，每次取用變數都要`fileName.variableName`，避免變數衝突的問題
+* 引入需寫在檔案最前面，須優先於`@import`
+
+#### `@import`
+* 沒有`name-spacing`，兩個檔案如果定義相同名稱的變數，會後者覆蓋前者
+* 引入需在檔案前面，但不得先於`@use`
+
+## name-slot
+### 組件
+#### 父組件
+```html
+<template>
+  <div>
+    <h1>父组件</h1>
+    
+    <!-- 使用具名插槽，将内容插入到 'customSlot' 中 -->
+    <ChildComponent>
+      <template v-slot:customSlot="slotProps">
+        <p>{{ slotProps.data }}</p>
+      </template>
+    </ChildComponent>
+  </div>
+</template>
+```
+#### 子組件
+```html
+<template>
+  <div>
+    <!-- 使用具名插槽，命名为 'customSlot' -->
+    <slot name="customSlot" :data="slotData"></slot>
+  </div>
+</template>
+```
+
+## 為何多選綁定陣列不能用 reactive()?
+* 主要是因為在Vue的底層，更新陣列，是再重新給一個值，而reactive，在重新給值的這個部分，就會造成綁定失效
