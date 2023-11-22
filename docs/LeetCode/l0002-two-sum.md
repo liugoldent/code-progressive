@@ -49,6 +49,28 @@ class Solution:
         return 
 ```
 
+## cpp 解
+```cpp
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        std::unordered_map<int, int> numMap;
+
+        for(int i = 0; i< nums.size(); i++){
+            int complement = target - nums[i];
+            // 如果在 map 中找到了 complement，说明找到了两个数的和为 target
+            if(numMap.find(complement) != numMap.end()){
+                return {numMap[complement], i};
+            }
+
+            numMap[nums[i]] = i;
+        }
+        // 如果没有找到符合条件的两个数，返回一个空的 vector
+        return {};
+    }
+};
+```
+
 ## test case
 ```js
 const twoSum = require("./leetcode.js");
