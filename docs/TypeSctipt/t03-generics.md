@@ -207,6 +207,43 @@ function greet1<Str extends string>(s: Str) {
 greet1("world");
 ```
 
+## 各種型別泛型
+### 函式型別泛型
+```ts
+type IdentityFunction<T> = (arg: T) => T; // 先定義型別
+let myIdentity : IdentityFunction<number> = (arg: number) => arg // 再宣告myIdentity是一個function，型別為IdentityFunction
+console.log(myIdentity(123))
+```
+
+## 物件型別泛型
+```ts
+type Box<T> = {
+  value: T
+}
+let box:Box<string> = { value: 'Hello'}
+```
+
+## 類別型別泛型
+```ts
+class Box<T> {
+  value: T;
+
+  constructor(value: T) {
+    this.value = value
+  }
+}
+let box: Box<number> = new Box(3)
+```
+
+## 接口型別泛型
+```ts
+interface Pair<T,U> {
+  first: T,
+  second: U
+}
+let pair: Pair<number, string> = { first: 1, second: 'Hello'}
+```
+
 ## 文章來源
 [前端是該來學一下 TypeScript 了](https://ithelp.ithome.com.tw/users/20131472/ironman/4100)
 
