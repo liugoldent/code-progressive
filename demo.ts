@@ -28,3 +28,14 @@ type GroceryItem<
 	price: Price,
 	inStock: InStock
 };
+
+
+enum Days {
+  Sun,
+  Mon,
+  Tue
+}
+
+console.log(Days['Sun'] === 1)
+
+
