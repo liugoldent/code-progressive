@@ -36,6 +36,6 @@ enum Days {
   Tue
 }
 
-console.log(Days['Sun'] === 1)
+export const a = 1
 
 

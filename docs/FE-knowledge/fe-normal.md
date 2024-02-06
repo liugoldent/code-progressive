@@ -167,3 +167,39 @@ function getCookieSize() {
 * 為一種輕量級的數據交換格式，常用在不同系統之間傳輸數據。
 * 他以易於理解和生成的方式表示結構化數據，支援數組、物件、字串、數字、布林、空值等數據
 * 並且為跨語言，因此在不同語言都有其內建的JSON解析與生成器。
+
+## SPA 首屏加載速度慢怎麼解決
+* First Contentful Paint：通過`DOMContentLoad` or `performance`來計算出首屏時間
+### 加載慢的原因
+* 網路延遲問題
+* 資源文件體積過大
+* 資源重複請求去加載
+* 加載腳本時，渲染內容堵塞
+
+### 解決方案
+* 減少入口文件大小：例如懶加載，把不同路由對應的組件分割成不同的程式，等待路由被請求時再單獨打包路由
+```js
+routes:[ 
+    path: 'Blogs',
+    name: 'ShowBlogs',
+    component: () => import('./components/ShowBlogs.vue')
+]
+```
+* 靜態資源本地緩存
+  * 後端
+    * 採用HTTP緩存、設置Cache-control、Last-Modified
+    * 採用Service Worker離線緩存
+  * 前端
+    * 採用LocalStorage
+* UI框架按需要加載
+* 圖片資源壓縮
+* 組件重複打包
+```js
+// 設置webpack的CommonsChunkPlugin，會把使用3次以上的包抽離出來，放到公共依賴文件
+minChunks: 3
+```
+* 開啟GZip壓縮
+* 使用SSR
+
+
+

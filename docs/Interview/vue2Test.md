@@ -21,7 +21,7 @@ tags:
   * vue3：setup()
 * beforeMount：vue實體尚未與DOM綁定
   * vue3：onBeforeMount()
-* mounted：綁定完成
+* mounted：綁定完成（DOM已创建）
   * vue3：onMounted()
   * DOM渲染也在此階段完成
 * beforeUpdate：狀態改變，畫面尚未更新前
@@ -66,6 +66,13 @@ tags:
     })
 </script>
 ```
+
+## 為何在Vue2天加新屬性時，介面不會刷新
+* 因為Vue2資料在生成時，是使用defineProperty生成響應式數據，所以偵測不到
+* 解決辦法
+  * Vue.set()
+  * Object.assign()：需要創建一個新物件
+  * $forcecUpdated()
 
 ## 父子傳值
 * props down / emit up

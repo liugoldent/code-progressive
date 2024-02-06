@@ -445,6 +445,8 @@ props: {
 </ul>
 ```
 * 避免v-for + v-if用在一起
+  * 原因：性能浪費：每次渲染會先循環再進行條件判斷
+  * 真的要用可以用`computed` or 在外層使用`v-if`
   * `v-for="user in users" v-if="user.isActive"`常見的這種狀況，請用`computed`計算指令
   * 如果是想要隱藏v-for項目，如`v-for="user in users" v-if="shouldShowUsers"`，請將v-if放在其他元素上
 ```html
@@ -582,9 +584,24 @@ Object.assign(this.$data, this.$options.data())
   * 注意這邊綁定是在`mount('#app')`層級就綁定
 3. 刷新瀏覽器介面
 
-
-
-
+## 為何 data屬性是一個函數
+* 假設我們創建兩個組件實例，當修改組件A的data值，組件B的值也會被改變
+```js
+console.log(componentB.data.count)  // 0
+componentA.data.count = 1 // 因為共用一個內存地址，所以會發生影響
+console.log(componentB.data.count)  // 1
+```
+* 如果使用函數則不會
+```js
+function Component(){
+	this.data = this.data()
+}
+Component.prototype.data = function (){
+    return {
+   		count : 0
+    }
+}
+```
 
 
 
