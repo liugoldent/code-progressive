@@ -40,6 +40,7 @@ test()
 JSON.parse(JSON.stringify())
 ```
 #### 淺拷貝
+##### object
 ```javascript
 Object.assign() // 只能完成第一層的淺層複製
 
@@ -59,6 +60,12 @@ console.log(a) // { text: 1, text2: { result: 3, result2: 4 } }
 console.log(b) // { text: 2, text2: { result: 3, result2: 4 } }
 console.log(c) // { text: 1, text2: { result: 2 } }
 
+```
+##### array
+```js
+const fxArrs = fxArr.slice(0) // slice
+const fxArrs2 = fxArr.concat() // concat
+const fxArrs3 = [...fxArr] // 拓展運算符
 ```
 
 
@@ -83,7 +90,12 @@ fun.call(this, arg1, arg2) == fun.apply(this, arguments)
 ### == vs ===
 * == 會自動轉型
 * === 要型別正確 & 資料正確 才會true
-
+* ==：
+  * 兩個都為簡單類型，字符串和布爾值都會轉換成數值，再比較 
+  * 簡單類型與引用類型比較，對象轉化成其原始類型的值，再比較 
+  * 兩個都為引用類型，則比較它們是否指向同一個對象 
+  * null 和 undefined 相等 
+  * 存在 NaN 則返回 false
 ### map vs filter vs reduce
 * map 遍歷陣列，然後返回新陣列
 * filter 遍歷陣列，然後條件為true才會返回

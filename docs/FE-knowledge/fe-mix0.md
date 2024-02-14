@@ -9,7 +9,7 @@ tags:
 
 ## 請說明js的作用域?
 ### 全域作用域
-全域作用域是指在整個 JavaScript 應用程式中可訪問的作用域。在全域作用域中聲明的變數和函式可以在程式碼的任何地方被訪問。
+* 全域作用域是指在整個 JavaScript 應用程式中可訪問的作用域。在全域作用域中聲明的變數和函式可以在程式碼的任何地方被訪問。
 ```js
 var globalVariable = 42; // 全域作用域變數
 
@@ -17,11 +17,11 @@ function globalFunction() {
   // 在全域作用域中定義的函式
 }
 ```
-### 區域作用域
-區域作用域是指在函式內部聲明的變數和函式，只能在該函式內部訪問。每次呼叫函式時，都會創建一個新的區域作用域。
+### 函數作用域
+* 函數作用域是指在函式內部聲明的變數和函式，只能在該函式內部訪問。每次呼叫函式時，都會創建一個新的函數作用域。
 ```js
 function localScopeExample() {
-  var localVariable = 10; // 區域作用域變數
+  var localVariable = 10; // 函數作用域變數
   console.log(localVariable); // 可以在這個函式內部訪問 localVariable
 }
 console.log(localVariable)
@@ -30,6 +30,7 @@ console.log(localVariable)
 
 ```
 ### 塊級作用域
+* 在es6中引入`let`和`const`關鍵字，與`var`不同，在大括號外不可讀取`let`、`const`
 ```js
 if (true) {
   let blockScopedVar = 5; // 塊級作用域變數
@@ -38,6 +39,21 @@ if (true) {
 // 這裡無法訪問 blockScopedVar
 ```
 
+### 靜態作用域
+* 在變數被創建時就確定好，而非執行時確定的
+
+### 作用域鏈
+* 編譯狀況：當js在遇到這個變量時，會先在這個作用域先找該變量，沒找到再往上找，以此類推直到找到全局作用域
+
+## JS生命週期
+* [文章參考](https://github.com/febobo/web-interview/issues/63)
+* 上下文：分成全域以及函數
+* 創建階段 -> 執行階段 -> 回收階段
+* 創建階段：
+  1. this binding
+  2. 詞法環境（用於儲存函數聲明、let const綁定）被創建：
+    1. 分為全局環境與函數環境
+  3. 變量環境（儲存變量）被創建
 
 ## 請說明什麼是提升(Hoisting)?
 涉及變數和函式聲明在執行期間被移動到它們所在作用域的頂部。儘管在程式碼中變數和函式聲明似乎是按照它們的實際位置進行執行的，但實際上它們在執行之前會被“提升”到它們所在作用域的頂部。
@@ -45,6 +61,7 @@ if (true) {
 ### 變數提升
 * 在 JavaScript 中，使用 var 關鍵字聲明的變數會被提升到其所在的作用域的頂部，但變數的賦值不會提升，只有聲明部分會被提升。
 * let 和 const 關鍵字聲明變數，提升的行為有所不同，為TDZ死區
+* 因為js在創建時期，會將var會在變量環境聲明為undefined，但let const在創建在詞法環境時沒被賦值（uninitialized），所以是TDZ
 ```js
 console.log(myVar); // 結果為 undefined
 var myVar = 42;
@@ -62,6 +79,11 @@ function myFunction() {
 ## 請說明什麼是閉包並給出一個實例
 1. 內部函式可以訪問外部函式的變數和參數。
 2. 外部函式的變數不會被垃圾回收，只要內部函式存在，它們就會被保留。
+3. 使用場景
+  * 創建私有變量：類似悠遊卡除值（個人有個人的變量）
+  * 延長變量生命週期
+  * 柯里化
+4. 閉包在處理速度與內存消耗方面對程式具有負面影響
 ```js
 function outerFunction() {
   var outerVar = "I am from outer";

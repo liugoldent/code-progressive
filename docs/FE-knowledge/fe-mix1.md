@@ -260,11 +260,26 @@ console.log(sortedArray);
 ```
 
 ## 簡單介紹一下你所認識的原型鏈是什麼
+* [參考文章](https://github.com/febobo/web-interview/issues/59)
+
 * 原型鏈（Prototype Chain）是 JavaScript 中一個重要的概念，用於實現對象之間的繼承和屬性查找。在 JavaScript 中，每個物件都有一個連接到另一個物件的鏈，這個連接被稱為原型鏈。這個連接的目的是允許對象繼承其它物件的屬性和方法。
 
-* 每個 JavaScript 物件（包括函數）都有一個 `__proto__` 屬性，它指向該物件的原型。當我們訪問一個物件的屬性或方法時，如果該物件本身沒有這個屬性或方法，JavaScript 引擎會沿著原型鏈往上搜索，直到找到對應的屬性或方法，或者達到原型鏈的頂端，即 Object.prototype。
+* 每個 JavaScript 物件（包括函數）都有一個 `__proto__` 屬性，它指向該物件的原型（prototype）。當我們訪問一個物件的屬性或方法時，如果該物件本身沒有這個屬性或方法，JavaScript 引擎會沿著原型鏈往上搜索，直到找到對應的屬性或方法，或者達到原型鏈的頂端，即 Object.prototype。
 
 * 例如，如果我們創建一個物件 obj，並訪問一個屬性 obj.prop，如果 obj 本身沒有這個屬性，JavaScript 將在 obj 的原型尋找，然後在原型的原型上尋找，直到找到屬性或達到 Object.prototype。
+
+* 每個物件的`__proto__`會指向某個原型物件的`prototype`
+
+* 繼承
+  1. 把子構造函數`Child`的`__proto__`指向父構造函數`Parent`
+  2. 把子實例的`Child.prototype.__proto__`指向父類parent的原型對象`Parent.prototype`
+
+
+* [圖例](https://camo.githubusercontent.com/0b465545fa4e4cd8175067bac398b1ec3eb699647a6080fbdbd93e763862ab21/68747470733a2f2f7374617469632e7675652d6a732e636f6d2f36303832356161302d373235652d313165622d383566362d3666616337376330633962332e706e67)
+
+```js
+Person.__proto__ === Function.prototype // 建構出來的原型上面是Function，而prototype的__proto__才是Object.prototype
+```
 
 ```js
 // 創建一個物件 person
