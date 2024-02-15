@@ -82,5 +82,9 @@ tags:
 * created：是在組建實例一旦完成立刻調用，這時候節點尚未生成
 * mounted：是在頁面dom渲染完成之後就立刻執行。
 
+## watch vs watchEffect
+* [文章](https://blog.csdn.net/weixin_57909742/article/details/133779422)
+* watch：需要明確指出監控的數據，開啟deep才可以深度監控屬性或元素的變化
+* watchEffect：自動收集使用到的響應式數據，因此代碼更簡潔，但是無法使用舊值與新值
 
 
