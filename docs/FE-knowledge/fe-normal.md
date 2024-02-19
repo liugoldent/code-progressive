@@ -50,7 +50,7 @@ const request = debounce(()=>{
   // call api
 }, 500)
 ```
-### vue + axios
+### vue2 + axios
 如果在Vue中使用Axios發送請求，可以使用axios的`cancelToken`來取消重複的請求，從而實現多個相同的請求只發送一個的效果。
 #### 1. 創建cancelToken
 ```js

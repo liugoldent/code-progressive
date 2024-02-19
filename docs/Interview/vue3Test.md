@@ -85,6 +85,6 @@ tags:
 ## watch vs watchEffect
 * [文章](https://blog.csdn.net/weixin_57909742/article/details/133779422)
 * watch：需要明確指出監控的數據，開啟deep才可以深度監控屬性或元素的變化
-* watchEffect：自動收集使用到的響應式數據，因此代碼更簡潔，但是無法使用舊值與新值
+* watchEffect：自動收集使用到的響應式數據，因此代碼更簡潔，但是無法使用舊值與新值，如果是物件要讓watchEffect動作，必須要監聽物件的key值
 
 
