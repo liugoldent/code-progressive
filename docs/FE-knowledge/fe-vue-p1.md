@@ -5,7 +5,7 @@ tags:
   - frontend
 ---
 
-# [FE] Vue
+# [FE] Vue - p1
 
 ## 請說說 Vue.use 的方法的作用及原理
 

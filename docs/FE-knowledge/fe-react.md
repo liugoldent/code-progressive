@@ -4,7 +4,7 @@ tags:
     - Test
     - React
 ---
-# [面試]React
+# [FE] React
 
 ## React特點
 * Virtual DOM

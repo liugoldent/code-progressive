@@ -4,7 +4,7 @@ tags:
     - Test
     - typescript
 ---
-# [面試] TypeScript - p2
+# [FE] TypeScript - p2
 
 ## TS - 泛型
 * 不預先指定好類型，而在使用時再指定類型的特性
