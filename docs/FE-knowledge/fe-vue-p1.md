@@ -330,6 +330,26 @@ export default {
 - 預渲染：prerender-spa-plugin
 - 使用 phantom.js 針對爬蟲做處理
 
+## keep-alive
+
+- 可以使被包含的組件保留狀態，避免重新渲染
+- include：字符串或正則表達式，只有名稱匹配的組件會被緩存
+- exclude：字符串或正則表達式，任何名稱匹配的組件都不會被緩存
+
+```html
+<keep-alive include="include_components" exclude="exclude_components">
+  <component>
+    <!-- 该组件是否缓存取决于include和exclude属性 -->
+  </component>
+</keep-alive>
+
+<template>
+  <keep-alive :include="['ComponentA', 'ComponentB']" :exclude="['ComponentC']">
+    <router-view></router-view>
+  </keep-alive>
+</template>
+```
+
 ## 跟 keep-alive 有關的生命周期是哪些？描述下這些生命周期
 
 [vue q551](https://github.com/haizlin/fe-interview/issues/551)
@@ -360,6 +380,20 @@ deactivated - 組件被<keep-alive>緩存時調用。在這個階段，組件被
 beforeDestroy - 在組件銷毀之前調用。在這個階段，組件實例仍然可用，可以執行一些清理操作。
 
 destroyed - 組件銷毀後調用。在這個階段，組件實例已經被銷毀，所有的事件監聽器和定時器也被移除。
+```
+
+## keep-alive 如何再度獲取數據
+```js
+beforeRouteEnter(to, from, next){
+    next(vm=>{
+        console.log(vm)
+        // 每次进入路由执行
+        vm.getData()  // 获取数据
+    })
+}
+activated(){
+	  this.getData() // 获取数据
+},
 ```
 
 ## vue - filter 使用
@@ -611,6 +645,35 @@ Object.assign(this.$data, this.$options.data());
 - 返回的物件可以直接用於渲染函數 or 計算屬性內，並且會在改變時，同時觸發相對的更新
 - 可以作為最小的跨組件狀態儲存器
 
+```js
+// 引入vue
+import Vue from 'vue
+// 创建state对象，使用observable让state对象可响应
+export let state = Vue.observable({
+  name: '张三',
+  'age': 38
+})
+// 创建对应的方法
+export let mutations = {
+  changeName(name) {
+    state.name = name
+  },
+  setAge(age) {
+    state.age = age
+  }
+}
+```
+```html
+<template>
+  <div>
+    姓名：{{ name }}
+    年龄：{{ age }}
+    <button @click="changeName('李四')">改变姓名</button>
+    <button @click="setAge(18)">改变年龄</button>
+  </div>
+</template>
+```
+
 ## 請問 styles 上加上 scoped 屬性的用途與原理
 
 [q506](https://github.com/haizlin/fe-interview/issues/506)
@@ -686,43 +749,47 @@ Component.prototype.data = function () {
 ```
 
 ## vue3 如何使用 axios
+
 [文章](https://www.gushiciku.cn/pl/a6bP/zh-tw)
+
 ```html
 <template>
   <div class="box"></div>
 </template>
 <script>
-  import { ref, reactive, getCurrentInstance } from 'vue'
+  import { ref, reactive, getCurrentInstance } from "vue";
   export default {
     setup(props, cxt) {
       // 方法一 start
-      const currentInstance = getCurrentInstance()
-      const { $http, $message, $route } = currentInstance.appContext.config.globalProperties
-      
+      const currentInstance = getCurrentInstance();
+      const { $http, $message, $route } =
+        currentInstance.appContext.config.globalProperties;
+
       function getList() {
         $http({
-          url: '/api/v1/posts/list'
-        }).then(res=>{
-          let { data } = res.data
-          console.log(data)
-        })
+          url: "/api/v1/posts/list",
+        }).then((res) => {
+          let { data } = res.data;
+          console.log(data);
+        });
       }
       // 方法一 end
 
       // 方法二 start
-      const { proxy } = getCurrentInstance()
-      
+      const { proxy } = getCurrentInstance();
+
       function getData() {
-        proxy.$http({
-          url: '/api/v1/posts/list'
-        }).then(res=>{
-          let { data } = res.data
-          console.log(data)
-        })
+        proxy
+          .$http({
+            url: "/api/v1/posts/list",
+          })
+          .then((res) => {
+            let { data } = res.data;
+            console.log(data);
+          });
       }
       // 方法二 end
-
-    }  
-  }
+    },
+  };
 </script>
 ```

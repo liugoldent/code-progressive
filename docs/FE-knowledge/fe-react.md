@@ -114,3 +114,18 @@ useEffect(() => {
 ## forwardRef作用
 * 轉發ref
 
+## Vue 與 React 對比
+### 相同點
+* 都有組件化思想
+* 都有支持SSR渲染
+* 都有Virtual DOM
+* 數據驅動視圖
+* 都有支持native的方案。`Vue`：`weex`、`React`：`React Native`。
+* 都有自己的建構工具：`Vue`：`vue-cli`。`React`：`create-react-app`
+
+### 差異點
+* 數據變化的實現原理不同。`react`是不可變的數據、`Vue`是可變的數據
+* 組件通信不同。`React`是透過回調函數來進行通信。`Vue`是事件or回調函數
+* diff算法不同。`React`是用diff演算法來看需要更新哪些DOM，得到patch樹，再統一操作批量更新DOM。`Vue`是透過雙指針邊對比邊更新DOM。
+
+
