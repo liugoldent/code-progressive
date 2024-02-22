@@ -23,7 +23,9 @@ tags:
 - `.native`：使用原生事件
 
 ### sync
-* 允許子組件改動父組件資料
+
+- 允許子組件改動父組件資料
+
 ```js
 //父组件
 <comp :myMessage.sync="bar"></comp>
@@ -39,6 +41,30 @@ func(e){
 //子组件js
 func2(){
   this.$emit('update:myMessage',params);
+}
+```
+
+### $event
+
+- 有時如果想要訪問事件參數，就可以使用此$event
+
+```html
+<!-- 使用特殊的 $event 变量 -->
+<button @click="warn('Form cannot be submitted yet.', $event)">Submit</button>
+
+<!-- 使用内联箭头函数 -->
+<button @click="(event) => warn('Form cannot be submitted yet.', event)">
+  Submit
+</button>
+```
+
+```js
+function warn(message, event) {
+  // 这里可以访问原生事件
+  if (event) {
+    event.preventDefault();
+  }
+  alert(message);
 }
 ```
 

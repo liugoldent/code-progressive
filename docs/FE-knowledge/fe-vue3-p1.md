@@ -44,6 +44,51 @@ tags:
   1. 自動收集使用到的響應式數據，因此代碼更簡潔
   2. 但是無法使用舊值與新值
   3. 如果是物件要讓 watchEffect 動作，必須要監聽物件的 key 值
+- watch reactive的物件
+```js
+const obj = reactive({ count: 0 })
+// 注意這邊是使用函數
+// 提供一个 getter 函数
+watch(
+  () => obj.count,
+  (count) => {
+    console.log(`count is: ${count}`)
+  }
+)
+```
+- 客制選擇
+```js
+watch(
+  source,
+  (newValue, oldValue) => {
+    // 当 `source` 变化时，仅触发一次
+  },
+  { once: true },
+  { deep: true }, 
+  { immediate: true }, 
+)
+```
+
+## props的寫法
+```html
+<script setup>
+import { defineProps } from 'vue'
+import PropTypes from 'vue'
+
+const props = defineProps({
+  title: {
+    type: String,
+    required: true
+  }
+})
+</script>
+
+<template>
+  <h4>{{ props.title }}</h4>
+</template>
+
+```
+
 
 ## vue3 的性能提升，是通過哪幾個方面顯現的
 
@@ -114,6 +159,58 @@ tags:
 * 減少程式體積
 * 減少程式執行時間
 * 對架構更優化
+
+## computed
+```js
+const now = computed(() => Date.now())
+```
+
+## class & style
+```html
+<div :class="{ active: isActive }"></div>
+<div :class="[activeClass, errorClass]"></div>
+<div :class="[isActive ? activeClass : '', errorClass]"></div>
+
+<div :style="[baseStyles, overridingStyles]"></div>
+<div :style="styleObject"></div>
+```
+```js
+const classObject = computed(() => ({
+  active: isActive.value && !error.value,
+  'text-danger': error.value && error.value.type === 'fatal'
+}))
+
+const styleObject = reactive({
+  color: 'red',
+  fontSize: '13px'
+})
+```
+
+## 列表渲染
+### 基本
+```html
+<li v-for="(value, key, index) in myObject">
+  {{ index }}. {{ key }}: {{ value }}
+</li>
+
+<li v-for="(item, index) in items">
+  {{ parentMessage }} - {{ index }} - {{ item.message }}
+</li>
+
+<!-- 記得下方是從1開始 -->
+<span v-for="n in 10">{{ n }}</span>
+```
+
+### v-for v-if 注意事項
+```html
+<!--
+ 这会抛出一个错误，因为属性 todo 此时
+ 没有在该实例上定义
+-->
+<li v-for="todo in todos" v-if="!todo.isComplete">
+  {{ todo.name }}
+</li>
+```
 
 
 

@@ -117,8 +117,6 @@ tags:
 - atrrs / listeners（祖先）
 - VueX
 
-
-
 ## vueX
 
 ### state
@@ -182,7 +180,6 @@ Vue.filter("capitalize", function (value) {
   // ...
 });
 ```
-
 
 ## css 只在當前組件起作用
 
@@ -252,11 +249,13 @@ const mixin = {
   };
 </script>
 ```
+
 [文章](https://github.com/febobo/web-interview/issues/15)
-- 這時會提到一個問題，也就是「如果有同名時」，兩者相同名稱，將以內部組件為優先。而後者mixin會蓋掉前者mixin
-  - 組件內部優先級最高，會覆蓋mixin中命名的選項
-  - 如果mixin和組件中都定義了同名的生命週期，會先執行mixin中的
-  - 對於其他methods、computed，如果有同名，會被合併到陣列中依次執行
+
+- 這時會提到一個問題，也就是「如果有同名時」，兩者相同名稱，將以內部組件為優先。而後者 mixin 會蓋掉前者 mixin
+  - 組件內部優先級最高，會覆蓋 mixin 中命名的選項
+  - 如果 mixin 和組件中都定義了同名的生命週期，會先執行 mixin 中的
+  - 對於其他 methods、computed，如果有同名，會被合併到陣列中依次執行
 
 ### vue3
 
@@ -285,7 +284,7 @@ export default function () {
 
 ##### in vue3 的 template 模板
 
-```vue
+```html
 <template>
   <h1>{{ "Hello Vue3 !!" }}</h1>
   <p>{{ count }}</p>
@@ -294,20 +293,20 @@ export default function () {
 </template>
 
 <script>
-// 一樣我們先引入mixin的js檔案
-import useCounter from "./utils/useCounter";
+  // 一樣我們先引入mixin的js檔案
+  import useCounter from "./utils/useCounter";
 
-export default {
-  setup() {
-    // 再來這邊使用解構的方式去拿變數出來，以此就可以解決命名相沖的問題
-    const { count, double, increment } = useCounter();
-    return {
-      count,
-      double,
-      increment,
-    };
-  },
-};
+  export default {
+    setup() {
+      // 再來這邊使用解構的方式去拿變數出來，以此就可以解決命名相沖的問題
+      const { count, double, increment } = useCounter();
+      return {
+        count,
+        double,
+        increment,
+      };
+    },
+  };
 </script>
 ```
 
