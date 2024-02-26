@@ -7,7 +7,7 @@ tags:
     - Python
 ---
 # [0020] Valid Parentheses
-## Javascript 解
+## Javascript 解 - 1
 思路：
 1. 先將反向括號設定成一個物件
 2. 然後對string跑迴圈
@@ -38,6 +38,40 @@ var isValid = function(s) {
             if(arr.pop() !== strObj[s[i]]){
                 return false
             }
+        }
+    }
+    return arr.length === 0
+};
+```
+
+## Javascript 解 -2
+```js
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isValid = function(s) {
+    if(s.length %2 !== 0){
+        return false
+    }
+    const parentObj = {
+        "(": ")",
+        "{": "}",
+        "[": "]"
+    }
+    let arr = []
+    for(let i = 0, len = s.length ; i < len ; i++){
+        if(s[i] === '[' || s[i] === '{' || s[i] === '('){
+            arr.push(s[i])
+        }else{
+            if(arr.length === 0){
+                return false
+            }
+            let top = arr.pop()
+            if(parentObj[top] !== s[i]){
+                return false
+            }
+
         }
     }
     return arr.length === 0
