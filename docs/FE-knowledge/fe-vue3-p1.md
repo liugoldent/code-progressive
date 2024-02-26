@@ -213,4 +213,54 @@ const styleObject = reactive({
 ```
 
 
+## provide inject
+* 盡量保持provide的響應式數據在供給方中
+* 如果真的要讓子組件更改資料，建議傳遞function下去
+### provide
+```html
+<script setup>
+import { provide } from 'vue'
+
+provide(/* 注入名 */ 'message', /* 值 */ 'hello!')
+</script>
+```
+```js
+import { provide } from 'vue'
+
+export default {
+  setup() {
+    provide(/* 注入名 */ 'message', /* 值 */ 'hello!')
+  }
+}
+```
+
+### inject
+```html
+<script setup>
+import { inject } from 'vue'
+
+const message = inject('message')
+</script>
+```
+```js
+import { inject } from 'vue'
+
+export default {
+  setup() {
+    const message = inject('message')
+    return { message }
+  }
+}
+```
+
+### 確保提供數據不給更改：readonly()
+```html
+<script setup>
+import { ref, provide, readonly } from 'vue'
+
+const count = ref(0)
+provide('read-only-count', readonly(count))
+</script>
+```
+
 

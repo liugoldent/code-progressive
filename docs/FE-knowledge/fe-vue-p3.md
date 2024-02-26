@@ -47,9 +47,10 @@ tags:
 ```
 
 - 作用域插槽
-
+* 插槽上的 name 是一个 Vue 特别保留的 attribute，不会作为 props 传递给插槽
+* 子組件可以將數據傳給父組件
 ```html
-子組件可以將數據傳給父組件
+
 <template>
   <slot name="footer" testProps="子组件的值">
     <h3>没传footer插槽</h3>

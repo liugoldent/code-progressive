@@ -9,7 +9,9 @@ tags:
 [Vue 3 響應式基礎](https://ithelp.ithome.com.tw/articles/10298545)
 
 ## reactive
+
 [文章](https://www.yilingsj.com/xwzj/2022-08-24/vue3-reactive-responsive.html)
+
 ### 基本原理
 
 - 使用`Proxy`實作
@@ -50,24 +52,25 @@ function reactive(obj) {
 - 預設為 deeply reactive，若為巢狀物件，所有巢狀資料都會有響應性
 - 將`ref`資料傳進去`reactive`，會自動取出`value`值
 
-### 物件or陣列更新值
+### 物件 or 陣列更新值
+
 ```js
-reactiveObj.name = '李四' // 物件更新value
-reactiveList[1].name = '王五' // 陣列更新其值
-reactiveList.splice(0, 1)
-reactiveList.push({})
+reactiveObj.name = "李四"; // 物件更新value
+reactiveList[1].name = "王五"; // 陣列更新其值
+reactiveList.splice(0, 1);
+reactiveList.push({});
 
 // 清空數組
-reactiveList.length = 0 // 清空了数组
+reactiveList.length = 0; // 清空了数组
 
 // 讓陣列重新賦值
-reactiveList.length = 0 // 清空了数组
-    const twoList=[
-      { name: '王五', age: 20 },
-      { name: '赵六', age: 23 },
-      { name: '张大三', age: 25 },
-    ]
-    reactiveList.push(...twoList) // 追加新数据
+reactiveList.length = 0; // 清空了数组
+const twoList = [
+  { name: "王五", age: 20 },
+  { name: "赵六", age: 23 },
+  { name: "张大三", age: 25 },
+];
+reactiveList.push(...twoList); // 追加新数据
 ```
 
 ### 喪失響應性
@@ -79,22 +82,24 @@ reactiveList.length = 0 // 清空了数组
 const objReactive = reactive({ name: "obj" });
 console.log(`原本的`, objReactive);
 Object.assign(objReactive, { name: "new-obj" }); // 利用object.assign針對原本key值做改變
-// or 
-objReactive.name = 'aaa'
+// or
+objReactive.name = "aaa";
 console.log(`透過 Object.assign 修改的`, objReactive);
 
 // 多key值更新
 x = reactive({
   ...x, // 保留原有的属性
-  name: 'Alice',
-  age: 25
-})
+  name: "Alice",
+  age: 25,
+});
 
 // 更新多个属性
-x = reactive(Object.assign({}, x, {
-  name: 'Alice',
-  age: 25
-}))
+x = reactive(
+  Object.assign({}, x, {
+    name: "Alice",
+    age: 25,
+  })
+);
 ```
 
 - 屬性值脫離 Proxy，失去響應性
@@ -117,20 +122,21 @@ state = reactive({ count: 1 });
 - 對解構不友善
 
 ```js
-const state = reactive({ count: 0 })
+const state = reactive({ count: 0 });
 
 // 当解构时，count 已经与 state.count 断开连接
-let { count } = state
+let { count } = state;
 // 不会影响原始的 state
-count++
+count++;
 
 // 该函数接收到的是一个普通的数字
 // 并且无法追踪 state.count 的变化
 // 我们必须传入整个对象以保持响应性
-callSomeFunction(state.count)
+callSomeFunction(state.count);
 ```
 
 ### 何時建議用
+
 - 如果要將一群狀態放入一個變量中，使用`reactive`較好
 
 ## ref
@@ -336,3 +342,102 @@ console.log(value); //印出 11
 ## 為何多選綁定陣列不能用 reactive()?
 
 - 主要是因為在 Vue 的底層，更新陣列，是再重新給一個值，而 reactive，在重新給值的這個部分，就會造成綁定失效
+
+## emit
+
+### 基本使用
+
+```js
+export default {
+  emits: ['inFocus', 'submit'],
+  setup(props, ctx) {
+    ctx.emit('submit')
+  }
+}
+
+
+export default {
+  emits: ['inFocus', 'submit'],
+  setup(props, {emit}) {
+    emit('submit')
+  }
+}
+```
+
+### 校驗
+
+```html
+<script setup>
+  const emit = defineEmits({
+    // 没有校验
+    click: null,
+
+    // 校验 submit 事件
+    submit: ({ email, password }) => {
+      if (email && password) {
+        return true;
+      } else {
+        console.warn("Invalid submit event payload!");
+        return false;
+      }
+    },
+  });
+
+  function submitForm(email, password) {
+    emit("submit", { email, password });
+  }
+</script>
+```
+
+## defineModel
+
+- defineModel：他是一個 ref，如果沒設定值，是 undefined
+- 可以在更新時，更簡潔去更新板上的資料
+
+```html
+<!-- Child.vue -->
+<script setup>
+  const model = defineModel();
+
+  function update() {
+    model.value++;
+  }
+</script>
+
+<template>
+  <div>parent bound v-model is: {{ model }}</div>
+</template>
+```
+
+### modifiers 修正
+
+```html
+<script setup>
+  const [model, modifiers] = defineModel({
+    set(value) {
+      if (modifiers.capitalize) {
+        return value.charAt(0).toUpperCase() + value.slice(1);
+      }
+      return value;
+    },
+  });
+</script>
+
+<template>
+  <input type="text" v-model="model" />
+</template>
+```
+
+## 傳遞 Attributes
+
+- 有些狀況是，如果在組件上加上 class or style，會影響到組件內部的 class or styles
+- 解決辦法:
+
+```html
+<script setup>
+  defineOptions({
+    inheritAttrs: false,
+  });
+  // ...setup 逻辑
+</script>
+```
