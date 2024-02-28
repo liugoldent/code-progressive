@@ -85,7 +85,7 @@ tags:
 
 ## 如何實現瀏覽器中多個標籤頁內的通訊
 * websocket
-不過safari在無痕模式下，localStorage會丟出QuotaExceededError的異常
+* localStorage：不過safari在無痕模式下，localStorage會丟出QuotaExceededError的異常
 
 ## websocket 如何相容低瀏覽器
 * websocket.js
@@ -113,6 +113,7 @@ tags:
 ### OG：open Graph Protocol
 
 ```HTML5
+<!-- facebook -->
 <head>
     <meta property="og:type" content="type" />  
     <meta property="og:title" content="site_title" />
@@ -121,6 +122,13 @@ tags:
     <meta property="og:url" content="site_url" />
     <meta property="og:site_name" content="site_name" />
 </head>
+<!-- twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@yourtwitterusername">
+<meta name="twitter:title" content="Your Page Title">
+<meta name="twitter:description" content="Description of your page">
+<meta name="twitter:image" content="URL to the image you want to display">
+
 ```
 
 ## HTML5語意標籤
