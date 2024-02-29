@@ -220,7 +220,7 @@ fetchData()
 
 通過將圖形處理交給 GPU，可以釋放 CPU 的資源，讓 CPU 專注於處理其他任務，從而提高整體系統性能。
 
-## 如何在 Browser 中使用 GPU 應用在話面上
+## 如何在 Browser 中使用 GPU 應用在畫面上
 
 ### WebGL（Web Graphics Library）：
 
