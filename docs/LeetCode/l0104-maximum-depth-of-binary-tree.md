@@ -34,6 +34,37 @@ var maxDepth = function(root) {
 };
 ```
 ```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function(root) {
+    if(!root) return 0
+    let queue = [root]
+    let depth = 0
+    while(queue.length){
+        const qLen = queue.length
+
+        for(let i = 0 , len = qLen ; i < len ; i++){
+            const curr = queue.shift()
+
+            if(curr.right) queue.push(curr.right)
+            if(curr.left) queue.push(curr.left)
+        }
+        depth++
+    }
+    return depth
+};
+```
+```js
 // demo code
 // 創建一顆二元樹
 const root = new TreeNode(3);
@@ -48,3 +79,38 @@ const depth = maxDepth(root);
 // 輸出最大深度
 console.log(depth);
 ```
+
+## python 解
+```python
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function(root) {
+    if(!root) return 0
+    let queue = [root]
+    let depth = 0
+    while(queue.length){
+        const qLen = queue.length
+
+        for(let i = 0 , len = qLen ; i < len ; i++){
+            const curr = queue.shift()
+
+            if(curr.right) queue.push(curr.right)
+            if(curr.left) queue.push(curr.left)
+        }
+        depth++
+    }
+    return depth
+};
+```
+
+
