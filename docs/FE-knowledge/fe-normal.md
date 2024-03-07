@@ -14,10 +14,10 @@ tags:
 // 指在一定的時間內，如果使用者一直點擊，則只會觸發最後一次（因為每一次都會清掉之前的timer
 function debounce(func, delayTime){
   let timer
-  return function(){
-    clearTimer(timer)
+  return function(...args){
+    clearTimeout(timer)
     timer = setTimeout(()=>{
-      func.apply(this, arguments)
+      func.apply(this, args)
     }, delayTime)
   }
 }
@@ -33,10 +33,10 @@ const request = debounce(()=>{
 ```js
 function throttle(func, delayTime){
   let timer
-  return function(){
+  return function(...args){
     if(!timer){
+      func.apply(this, args)
       timer = setTimeout(()=>{
-        func.apply(this, arguments)
         timer = null
       }, delayTime)
     }
