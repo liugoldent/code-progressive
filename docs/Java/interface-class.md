@@ -92,7 +92,7 @@ class Program
 // ex2:
 class Human{
     static int total = 0;  // 紀錄總人數
-    Sring name;
+    String name;
     int age;
     int height;
     Human(String str){

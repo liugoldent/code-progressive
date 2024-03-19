@@ -249,12 +249,14 @@ minChunks: 3;
 - 用特定的 header，來告訴 server 不要使用緩存
 - header：`Cache-Control: no-cache` 或 `Pragma: no-cache`
 
-
 ## 微任務、宏任務 - Event Queue
+
 [參考文章](https://ost.51cto.com/posts/4391)
-* 宏任務主要包括：scrip(JS 整體程式碼)、setTimeout、setInterval、setImmediate、I/O、UI 互動
-* 微任務主要包括：Promise(重點)、process.nextTick(Node.js)、MutaionObserver
-![任務圖片](https://dl-harmonyos.51cto.com/images/202105/c9f7c7326092151e93d50733406f38dadade1b.jpg)
+
+- 宏任務主要包括：scrip(JS 整體程式碼)、setTimeout、setInterval、setImmediate、I/O、UI 互動
+- 微任務主要包括：Promise(重點)、process.nextTick(Node.js)、MutaionObserver
+  ![任務圖片](https://dl-harmonyos.51cto.com/images/202105/c9f7c7326092151e93d50733406f38dadade1b.jpg)
+
 ```js
 new Promise((resolve) => {
   console.log("promise"); // 遇到這邊會先執行這邊（因為沒遇到resolve都不會加入微任務
@@ -269,3 +271,16 @@ new Promise((resolve) => {
   }
 });
 ```
+
+## Nginx
+### 前端服务器：
+* Nginx 可以作为前端服务器，直接接收来自用户的请求。在这种情况下，Nginx 可以处理静态文件的传输，以及将动态请求代理给后端应用服务器（例如，Node.js、Django、Flask、Ruby on Rails 等）。
+
+### 负载均衡器
+* Nginx 可以用作负载均衡器，将请求分发到多个后端服务器，从而提高系统的可靠性和性能。在这种情况下，Nginx 可以根据一定的算法（如轮询、加权轮询、IP hash 等）将请求分发给不同的服务器。
+
+### 反向代理服务器：
+* Nginx 也经常用作反向代理服务器，它将接收到的请求转发给后端服务器，并将响应返回给客户端。这有助于隐藏后端服务器的真实 IP 地址，提高系统的安全性，并允许灵活地管理后端服务器的配置。
+
+### 静态文件服务器
+* Nginx 可以直接提供静态文件（如 HTML、CSS、JavaScript、图像等）的服务，而无需借助其他应用服务器。这使得 Nginx 在处理静态内容时非常高效。
