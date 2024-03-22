@@ -123,14 +123,14 @@ const config = {
               //   label: "Blog",
               //   to: "/blog",
               // },
-              {
-                label: "__yeahPay",
-                href: "https://www.instagram.com/__yeahpay/",
-              },
-              {
-                label: "__stockFlight",
-                href: "https://www.instagram.com/__stockflight/",
-              },
+              // {
+              //   label: "__yeahPay",
+              //   href: "https://www.instagram.com/__yeahpay/",
+              // },
+              // {
+              //   label: "__stockFlight",
+              //   href: "https://www.instagram.com/__stockflight/",
+              // },
             ],
           },
         ],
@@ -141,8 +141,8 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       metadata: [
-        { name: 'keyword', content: '每日選股, 台股' },
-        { name: 'keyword', content: `${month}${day}選股` }
+        // { name: 'keyword', content: '每日選股, 台股' },
+        // { name: 'keyword', content: `${month}${day}選股` }
       ],
     }),
 };

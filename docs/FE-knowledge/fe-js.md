@@ -268,9 +268,40 @@ console.log("5");
 
 - 因為 js 是單一執行緒，所以遇到同步與非同步時，瀏覽器機制不同。
 
-1. 當 js 執行到該行時，會進入 Call Stack（先進後出）
+1. 當 js 執行到該行時，會進入 Call Stack（後進結果先出）
+```js
+function func1() {
+  console.log('func1');
+}
+
+function func2() {
+  console.log('func2');
+  func1();
+}
+
+function func3() {
+  console.log('func3');
+  func2();
+}
+
+func3();
+
+```
 2. 然後遇到 cb 時，cb 進入 Web API 等待
 3. 然後 Web API 得到結果時，將這個 cb 丟給 Queue（先進先出）
+```js
+// 定義一個定時器，每隔一秒觸發一次
+const timerId = setInterval(() => {
+  console.log('Timer fired!');
+}, 1000);
+
+// 等待 5 秒後停止定時器
+setTimeout(() => {
+  clearInterval(timerId); // 停止定時器
+  console.log('Timer stopped after 5 seconds.');
+}, 5000);
+
+```
 4. 最後當 stack 都清空時，Queue 的資料或 function 會進入 Call Stack 執行
 
 ### this
@@ -505,6 +536,41 @@ let difference = new Set([...a].filter(x => !b.has(x)));
 * size()、set()、get()、has()、delete()、clear() => 都是對key做操作
 * keys()、values()、entries()、forEach()
 
+## setTimeout setInterval
+### setTimeout
+* 用於在指定的時間後執行一次指定的函數或代碼片段
+```js
+setTimeout(() => {
+  console.log('This will be executed after 2000 milliseconds.');
+}, 2000);
+```
+* 取消：
+```js
+const timeoutId = setTimeout(() => {
+  console.log('This will be executed after 2000 milliseconds.');
+}, 2000);
+
+// 在需要的時候取消定時器
+clearTimeout(timeoutId);
+```
+### setInterval
+* 在指定的時間間隔內重複執行指定的函數或代碼片段
+```js
+setInterval(() => {
+  console.log('This will be executed every 1000 milliseconds.');
+}, 1000);
+```
+* 需要重複執行的情況，如定期更新介面或執行周期性任務
+* 取消
+```js
+const intervalId = setInterval(() => {
+  console.log('This will be executed every 1000 milliseconds.');
+}, 1000);
+
+// 在需要的時候取消定時器
+clearInterval(intervalId);
+
+```
 
 
 ## 考古題文章

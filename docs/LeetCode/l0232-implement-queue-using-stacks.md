@@ -10,12 +10,10 @@ tags:
 ## Javascript 解
 思路：這題主要是說，你只能用stack去做出Queue
 ```javascript
+
 var MyQueue = function() {
     this.stack = []
-};
-
-Array.prototype.size = function() {
-    return this.length;
+    this.helpStack = []
 };
 
 /** 
@@ -23,72 +21,38 @@ Array.prototype.size = function() {
  * @return {void}
  */
 MyQueue.prototype.push = function(x) {
-    return this.stack.push(x)
+    this.stack.push(x)
 };
 
 /**
  * @return {number}
  */
 MyQueue.prototype.pop = function() {
-    let keep = []
-    let element
-    
-    // 思考keep是Queue，我們製作出一個queue
-    // stack = [1,2,3,4,5]
-    // keep = [5,4,3,2]
-    while(this.stack.size() > 1){
-        keep.push(this.stack.pop())
+    if(this.helpStack.length === 0){
+        while(this.stack.length > 0){
+             this.helpStack.push(this.stack.pop())
+        }
     }
-    
-    // 然後取出this.stack.pop = 最後的「1」
-    element = this.stack.pop()
-    
-    // 而我們要將stack 復原，所以重新將stack.push
-    // keep = [5,4,3,2]
-    // stack = [2,3,4,5]
-    while(keep.size() > 0){
-        this.stack.push(keep.pop())
-    }
-    
-    // 於是最後我們將element return 出來得到答案
-    return element
+    return this.helpStack.pop()
 };
 
 /**
  * @return {number}
  */
 MyQueue.prototype.peek = function() {
-    let keep = []
-    let element
-    
-    // 思考keep是Queue，我們製作出一個queue
-    // stack = [1,2,3,4,5]
-    // keep = [5,4,3,2]
-    while(this.stack.size()>1){
-        keep.push(this.stack.pop())
+    if(this.helpStack.length === 0){
+        while(this.stack.length > 0){
+             this.helpStack.push(this.stack.pop())
+        }
     }
-    
-    // 然後取出this.stack.pop = 最後的「1」
-    //  因為peak不會將元素消失，所以keep要將element重新放回去所以變成
-    // keep = [5,4,3,2] => keep = [5,4,3,2,1]
-    element = this.stack.pop()
-    keep.push(element)
-    
-    // 而我們要將stack 復原，所以重新將stack.push
-    // keep = [5,4,3,2,1]
-    // stack = [1,2,3,4,5]
-    while(keep.size()>0){
-        this.stack.push(keep.pop())
-    }
-    // 最後return element
-    return element
+    return this.helpStack[this.helpStack.length - 1]
 };
 
 /**
  * @return {boolean}
  */
 MyQueue.prototype.empty = function() {
-    return this.stack.size() === 0
+    return this.stack.length === 0 && this.helpStack.length === 0
 };
 
 /** 
