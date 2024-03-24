@@ -210,6 +210,27 @@ function deepCopy(obj) {
 10. 渲染完成：
 網站的主要內容和資源已經完全下載、解析並渲染，網站完成渲染。
 
+### 渲染流程
+1. 讀取HTML產生DOM Tree
+2. 讀取CSS Link Tag生成CSSOM Tree
+3. DOM Tree與CSSOM Tree生成Render tree
+4. 根據render tree生成Layout Tress，再產生Layer Tree，負責各元素大小與位置的計算
+5. 最後paint 畫面
+6. 產生tree之後的流程：layout（回流Reflow） -> paint（重繪Repaint） -> Composition（Translate）。只要動一次回流，後面都會動，所以成本很大
+7. 這也就是為何css動畫建議用transform的原因
+```css
+transform: translate(xxx, yyy); // 這邊是屬於composition層級
+```
+8. 註：compositing：是在compositor thread & raster thread執行，而不會佔用主執行緒
+
+### Composition
+1.  把各layer分別作Rasterize（柵格化），並在Compositor Thread把各個經過柵格化的圖層組合起來
+2. Compositor Thread 會再將一個Layer切分成更小的單位-tile（柵格化的最小單位），並把這些tiles送到真正負責柵格化的Raster Threads，Raster Threads將tiles柵格化後會放到瀏覽器的GPU儲存空間裡
+3. tiles被柵格化後，Compositor Thread會匯聚成被稱作Draw Quads的資訊，來產生Compositor Frame
+4. summary：layer -> 切分成 -> tile -> 送到 -> raster threads -> 將tiles -> 放入GPU儲存空間 -> compositor threads 匯聚成 Draw Quads -> 產生 Compositor Frame 
+
+
+
 ## 說明對於虛擬DOM的理解
 ### 運作原理：
 當網頁需要進行更新時，瀏覽器的虛擬 DOM 會計算出實際 DOM 的差異（稱為「差異比對」或「調和」），並僅更新需要更改的部分。這樣可以避免不必要的實際 DOM 操作，從而提高性能。
@@ -242,6 +263,11 @@ function deepCopy(obj) {
 * 批量更新 DOM：如果需要進行多個變更，可以通過在單次操作中進行批量更新，然後將其應用到 DOM，以減少多次重繪和重排。
 
 * 使用虛擬 DOM：前端框架（如 React）使用虛擬 DOM 來最小化 DOM 的實際變更，只更新必要的部分，從而減少重繪和重排。
+
+* 如何避免多餘的reflow & repaint
+  * 避免用多個statement修改style，建議使用新增或移除class的方式
+  * 先一次讀取完，再一次修改（全部讀取完，不要一次讀取完修改一個）
+  * 參考csstrigger.com，來觀察各種屬性改變會觸發渲染的階段
 
 ## 說明OSI網路模型有哪七層 / TCP主要的運作方式
 ###  OSI 網路模型的七層

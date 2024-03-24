@@ -157,6 +157,172 @@ NetworkInformation = {
 }
 ```
 
+## 渲染流程優化
+* render process optimization
+### 歷史：Single And Multiple
+* 過往的瀏覽器是Single Process
+* 現在的是Multiple
+    * 解決問題1：不穩定性（因為多個process，所以當頁面失去回應時，只會影響到他們目前所執行的process）
+    * 解決問題2：不流暢（同一的原因）
+    * 解決問題3：不安全（multiple的會製作出隔離環境）
+    * 缺點：更多process，更多記憶體被佔用
+    * 缺點：系統架構更複雜：也要考慮是不同的process溝通
+
+### 渲染引擎運作機制
+* 每一個Tab都會產生一個獨立的renderer process
+* 詳細流程可以參考「渲染流程篇章」
+### 控制js的載入時機
+* 如果可以css的檔案要盡快引入，js則在css之後，因為js執行會造成網頁載入的暫停
+#### async script
+* async 會非同步去請求外部腳本，回應後停止解析HTML，馬上執行腳本內容
+* example：google ananlytics
+#### defer sctipt
+* defer也會非同步去請求外部腳本，但是會等執行解析完HTML才執行
+* 但要注意就是會照script tag順序去執行（由上往下）
+
+### 優化資源載入時機
+* 使用resouce hints（將將來會運用到的資源，預先處理）
+#### preload：
+* 用來取得「目前頁面」的重要資源，例如縮圖的影片（越快下載越好）
+#### prefetch
+* 這些資源待會會用到，先幫我下載（不限於此頁面使用）
+#### preconnect
+* 這個網頁會在不久的將來用到，請先幫我建立好連線
+* 通常只會對確定短時間內就會用到的domain做preconnect，因為如果10秒內沒有使用，會自動把連線close
+* 如果網站中有很多資源要從CDN拿取，可以preconnect CDN的域名
+* streaming 串流媒體
+* Dynamic URL request
+* 耗費較多頻寬
+* 最關鍵的connection使用這個。因為還要解析DNS
+#### dns-prefetch
+* 支援度較好
+* 為preconnect子集
+* 建議與preconnect一起使用（原因在於瀏覽器支援度）
+* 不會建立連接，而只是告訴瀏覽器在空閒時解析 DNS，以便在需要時更快地建立連接
+* DNS-Prefetch可解省第一步DNS Resolution時間
+#### prerender
+* 盡可能預先渲染下個頁面
+* 不僅下載對應資源，還會對資源進行解析
+#### as attribute
+* 瀏覽器會對於有as屬性的，去判斷是否要先下載
+```html
+<link rel="preload" as="font" type="font/woff2" href="myfont.woff2">
+```
+
+## virtualized list
+* 只渲染可視區域的列表元素，根據可視區的offset大小以及所有列表元素的位置，計算在可視區應該渲染哪些元素
+
+### 框架
+* react：react-window、react-virtualized
+* vue：vue-virtual-scroll-list、vue-virtual-scroller
+* svelte：svelte-virtual-list
+
+## 延遲載入
+* lazy-loading：要用到時，再載入
+
+### 圖片的lazy load
+* 搭配intersection observer web api，偵測目標元素是不是與特定位置交會，交會再去載入新的圖檔
+* 瀏覽器原生支援的attribute
+* loading屬性
+    * auto：等同於沒有加，會採取預設行為
+    * lazy：當圖片一開始就在viewport內，或靠近viewport時開始載入
+    * eager：不管圖片在哪，就是馬上載入
+* 不是每個圖片都適合做lazy loading，如果一開始就在viewport上或很靠近，就不應該，因為要做這個瀏覽器還要先判斷圖片的位置（多做一件事的概念）
+* 記得使用這個時，圖片都要先撐開，避免造成版面之後的位移，影響使用者體驗與CLS分數。
+* 不用等到真的出現在viewport才載入
+```html
+<img src="xxx.jpg" loading="lazy" alt="image alt" width="200" />
+```
+
+### lazy loading with intersection observer
+* intersection observer web api：作用是「監聽目標元素在畫面上出現或離開的時機，並執行我們給予他的call back」
+* 不建議滑到一半就載入是因為怕浪費（搞不好使用者根本不想滑）
+```js
+// 如果要使用
+const intersectionObserver = new IntersectionObserver((entries) =>{
+
+})
+intersectionObserver.observer(document.querySelector('.demo-box'))
+
+// 如果取消了
+intersectionObserver.unobserve(
+    document.querySelector('.demo-box')
+)
+```
+
+## CSS 效能優化
+### selector 效能
+1. ID selector
+2. class selector
+3. element selector元素選擇器
+4. general sibling combinator兄弟選擇器
+5. child combinator子選擇器
+6. descendant combinator後代選擇器
+7. attribute selector屬性選擇器
+8. pseudo element / class selector偽元素選擇器
+9. notice不要亂用「*」，因為css是從右到左搜尋，所以會耗效能
+
+### 避免之事
+* 並不是都用ID就好：因為在開發時，命名可能不是那麼好維護，除非非常確定是唯一值
+* 避免在ID or class 前限定元素
+```css
+/* 不建議，因為#navbar已經找到元素了，還在找div浪費時間 */
+div#navbar {
+
+}
+```
+* 建議語法
+```css
+/* 建議用以下，因為只會找一層 */
+div>p {
+
+}
+/* 不建議用以下，因為子層都會被找 */
+div p {
+
+}
+```
+
+* 非必要狀況，避免使用昂貴的attributes
+    * :nth-child
+    * filter
+    * opacity
+    * box-shadow
+    * border-radius
+
+* 減少reflow
+    * 改變元素margin or padding
+    * 改變元素的width、height、position的left or top
+    * 改變font-size or font-family
+    * 改變視窗大小
+### 可以做
+* extract critical css
+    * 翻譯：只把可視範圍的css提取出來，直接內聯到HTML的技術
+    * 如何使用：critical、critical CSS、pentHouse
+* preload resources defined in CSS
+* preload CSS files
+
+### CPU GPU Acceleration
+* 主要是硬體加速
+* 再次強調，使用transform，因為他不會觸發reflow、repaint
+* 例如說3D的transform，該元素會被提升到一個單獨的圖層
+* 一些css屬性，會被歸類於GPU accelerated properties
+    * transform
+    * filter
+    * opacity
+* transform Hack
+    * 讓二維假裝成三維
+    * transform: translate3D(0, 20px, 0)
+* will-change
+    * 提早通知瀏覽器，有什麼未來對元素做什麼類型的操作，讓它做好加速準備
+    * 技巧：不要使用「*」去加上will-change
+    * 技巧：變更生效後移除will-change屬性
+```css
+will-change: transform;
+will-change: transform, opacity;
+```
+
+
 
 
 
