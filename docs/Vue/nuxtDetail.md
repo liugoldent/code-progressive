@@ -163,7 +163,7 @@ nuxt 的配置文件
 - 無法讀取`this`
 - 在 server 端  
   主要為 Nuxt.js 在環境初始化時才會觸發的生命週期，而我們可以在這個階段初始化 Vuex
-
+- 用於啟動之前執行一些非同步的初始化操作，例如加載應用的初始數據，設置VueX store
 ```js
 export const actions = {
   nuxtServerInit({ commit }, { req }) {
@@ -179,7 +179,7 @@ export const actions = {
 - 無法讀取`this`
 - 在 server 端  
   其分別有：Global、Layout、Page，執行順序依序為 Global -> Layout -> Page。
-
+- 可以定義一些函數，在渲染頁面之前執行路由跳轉之前執行。用於處理身份驗證或路由控制
 ```js
 // 在middleware下新建filter.js
 export default({store, route, redirect, params, query, req, res}){
@@ -218,7 +218,7 @@ export default {
 - 無法讀取`this`
 - 在 server 端  
   主要用於驗證參數，並且一定要回傳`true` or `false`，用於切換頁面後，想要驗證 router 參數，就可以用此生命週期。
-
+- 當你定義路由時，可以為路由參數設置驗證規則。如果驗證失敗，可以選擇跳轉到另一個錯誤頁面或者重定向到另一個頁面
 ```js
 export default {
   validate({ params, query }) {
@@ -232,6 +232,8 @@ export default {
 - 無法讀取`this`
 - 在 server 端  
   為實戰上最常用的生命週期，因為一般 SPA 是靠 JS 去渲染 DOM，而這使得 SEO 很差，這時我們只需要將生成畫面的資料放在`asyncData`中，那 Nuxt.js 就會真實被渲染在畫面上。
+- 主要用於將資料放上seo供給爬蟲
+- 每次都會執行
 
 ```js
 export default {
@@ -250,10 +252,11 @@ export default {
 
 - 在這邊可以操作`this`
 - 通常`fetch` 會放置於`data()`後
+- 如果是keep-alive要用到的資料，要在這邊操作 
 
 > > > 點擊連結 -> 組件建立完成 -> render 畫面（換頁） -> fetch()
 
 ### `fetch` vs `asyncData`
-
-- `fetch`用於取回遠端資料後，要被 Vue 使用的資料
-- `asyncData`用於取回遠端資料後，不用被 Vue 使用的資料
+[AsyncData 和 Fetch 使用详解](https://www.cnblogs.com/China-Dream/p/15667561.html)
+- `fetch`用於取回遠端資料後，要被 Vue 使用的資料。使用this直接覆蓋值
+- `asyncData`用於取回遠端資料後，不用被 Vue 使用的資料。通過return 合併data數據

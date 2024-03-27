@@ -216,13 +216,13 @@ function deepCopy(obj) {
 3. DOM Tree與CSSOM Tree生成Render tree
 4. 根據render tree生成Layout Tress，再產生Layer Tree，負責各元素大小與位置的計算
 5. 最後paint 畫面
-6. 產生tree之後的流程：layout（回流Reflow） -> paint（重繪Repaint） -> Composition（Translate）。只要動一次回流，後面都會動，所以成本很大
+6. 產生tree之後的流程：layout（回流Reflow） -> paint（重繪Repaint） -> Composite（Translate）。只要動一次回流，後面都會動，所以成本很大
 7. 這也就是為何css動畫建議用transform的原因
 ```css
 transform: translate(xxx, yyy); // 這邊是屬於composition層級
 ```
 8. 註：compositing：是在compositor thread & raster thread執行，而不會佔用主執行緒
-
+![優化](https://image.slidesharecdn.com/techtalk-howbrowserswork002-170410093945/95/how-browsers-work-36-638.jpg?cb=1491817536)
 ### Composition
 1.  把各layer分別作Rasterize（柵格化），並在Compositor Thread把各個經過柵格化的圖層組合起來
 2. Compositor Thread 會再將一個Layer切分成更小的單位-tile（柵格化的最小單位），並把這些tiles送到真正負責柵格化的Raster Threads，Raster Threads將tiles柵格化後會放到瀏覽器的GPU儲存空間裡
