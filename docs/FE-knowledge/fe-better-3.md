@@ -92,17 +92,17 @@ if-none-match: 'xxxxxxx'
 * memory cache：把資源放在memory上，效能會比disk快，但缺點是存在裡面的資料缺乏持久性，當關閉瀏覽器時，存在內的memory cache會被清空
 
 ## 5-2 Service workers cache
-### ervice workers 基本：
+### service workers 基本：
 * 是一層在瀏覽器與network之間的proxy，擁有攔截使用者發出請求的能力（透過監聽fetch事件），可以攔截請求後，決定要不要回傳快取的內容
 * 優先級別高於上面的Http Caching，為前端可控範圍的第一道防線
 * service workers 無法操作DOM，並且需要依賴postMessage來與頁面溝通
 * 自己撰寫較難，建議配合workbox
-### ervice workers 應用：
+### service workers 應用：
 * service workers的cache實現離線瀏覽功能
 * 像native App一樣的推播功能
 * Background sync
 
-### ervice workers 限制：
+### service workers 限制：
 * 網站必須支援localhost or https
 * 第二個參數為可作用範圍
 * 靠事件監聽機制，來控制SW的生命週期
