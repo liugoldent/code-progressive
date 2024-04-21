@@ -39,7 +39,7 @@ const config = {
     },
   ],
   plugins: [
-    
+
     [
       "@docusaurus/plugin-google-gtag",
       {

@@ -18,8 +18,11 @@ export default function Home() {
         <div className={styles.header}>
           <img
             className={styles.header__img}
-            src="https://picsum.photos/2048/2048/?blur=5"
-            loading="eager"
+            src="https://picsum.photos/512/"
+            rel="preload"
+            loading="lazy"
+            width="500"
+            height="500"
           />
           <p className={styles.header__text}>{`${siteConfig.title}`}</p>
         </div>
