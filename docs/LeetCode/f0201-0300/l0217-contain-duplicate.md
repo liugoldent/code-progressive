@@ -1,21 +1,49 @@
 ---
-tags: 
-    - LeetCode
-    - Easy
-    - Javascript
-    - Array And Hashing
+description: contain Duplicate 解答
+tags:
+  - LeetCode
+  - easy
+  - javascript
+  - python
+  - interview
+  - Array And Hashing
+keywords:
+  [
+    facebook,
+    amazon,
+    apple,
+    netflix,
+    google,
+    faang interview,
+    js,
+    javascript,
+    interview,
+    js 面試,
+    js interview,
+    前端面試題,
+    frontend interview,
+    フロントエンドの面接質問,
+    프론트엔드 면접 문제,
+    software engineer,
+    Contains Duplicate,
+    Contains Duplicate js ans,
+    Contains Duplicate python ans
+  ]
 ---
 # [0217] Contains Duplicate
-## Javascript 解
 
-## 思路：
+## 思路
 首先我們可以用暴力解，做兩次for循環，其BigO = O(nlogn)
 但是可以藉由放入hashSet的方式去解出這題
+* 步驟
+1. 先設定一個set 
 for迴圈內：
-1. 如果這個hashSet有值了，就return true
+1. 如果這個hashSet有找到重複值了，就return true
 2. 如果這個hashSet沒有值，就將這個值add 進入hashSet
 3. 如果跑完都沒有return true
 4. 最後return false
+
+## Javascript 解
 ```javascript
 /**
  * @param {number[]} nums
@@ -37,6 +65,20 @@ var containsDuplicate = function(nums) {
 };
 module.exports = containsDuplicate
 ```
+
+## Python 解
+```python
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        visit=set()
+        for n in nums:
+            if n in visit:
+                return True
+            visit.add(n)
+        return False
+```
+
+## 測試程式
 ```javascript
 // test case
 const containsDuplicate = require('./leetcode.js')

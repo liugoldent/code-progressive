@@ -1,13 +1,36 @@
 ---
-tags: 
-    - LeetCode
-    - Easy
-    - Valid Anagram
-    - Javascript
-    - Python
-    - Array And Hashing
+description: hydration是什麼、注水是什麼
+tags:
+  - LeetCode
+  - Easy
+  - javascript
+  - python
+  - interview
+  - Array And Hashing
+keywords:
+  [
+    facebook,
+    amazon,
+    apple,
+    netflix,
+    google,
+    faang interview,
+    js,
+    javascript,
+    interview,
+    js 面試,
+    js interview,
+    前端面試題,
+    frontend interview,
+    フロントエンドの面接質問,
+    프론트엔드 면접 문제,
+    software engineer,
+    Valid Anagram,
+    Valid Anagram js ans,
+    Valid Anagram python ans
+  ]
 ---
-# [0243] Valid Anagram
+# [0242] Valid Anagram
 ## Javascript 解
 思路：
 題意：問題是說，兩個字串是否是重組字
@@ -40,10 +63,32 @@ var isAnagram = function (s, t) {
   }
   return true
 };
-// console.log(isAnagram("anagram", "nagaram"))
 module.exports = isAnagram
+```
+## Python 解
+```python
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        return sorted(s) == sorted(t)
 
 
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        s_obj = {}
+        t_obj = {}
+
+        for i in range(len(s)):
+            s_obj[s[i]] = s_obj.get(s[i], 0) + 1
+            t_obj[t[i]] = t_obj.get(t[i], 0) + 1
+        
+        for key in s_obj:
+            if s_obj[key] != t_obj.get(key, 0):
+                return False
+        return True
 ```
 
 ```javascript

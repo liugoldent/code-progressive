@@ -123,4 +123,6 @@ const pkgMsg = (msgId: number, data: Buffer) => {
 ## 參考文章
 [DAY12 - 檔案類的物件關係釐清(1) - File, FileList, Blob](https://ithelp.ithome.com.tw/articles/10271735)
 [微信小程序websocket使用protobuf，发送arraybuffer](https://blog.csdn.net/qq_31754591/article/details/130995991)
+[WebSocket系列之JavaScript字符串如何与二进制数据间进行互相转换](https://juejin.cn/post/6844903585528954894)
+[WebSocket系列之二进制数据设计与传输](https://juejin.cn/post/6844903585969340424#heading-6)
 
