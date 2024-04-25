@@ -1,22 +1,29 @@
 ---
-tags: 
-    - LeetCode
-    - Medium
-    - Word Search
-    - Javascript
-    - Backtracking
+tags:
+  - LeetCode
+  - Medium
+  - Word Search
+  - javascript
+  - Backtracking
 ---
+
 # [0079] Word Search
+
 ```js
 /**
  * @param {character[][]} board
  * @param {string} word
  * @return {boolean}
  */
-var exist = function(board, word) {
+var exist = function (board, word) {
   const m = board.length; // 矩陣的行數
   const n = board[0].length; // 矩陣的列數
-  const directions = [[0, 1], [1, 0], [0, -1], [-1, 0]]; // 右、下、左、上四個方向
+  const directions = [
+    [0, 1],
+    [1, 0],
+    [0, -1],
+    [-1, 0],
+  ]; // 右、下、左、上四個方向
   let visited = Array.from(Array(m), () => Array(n).fill(false)); // 用於標記是否已訪問過的二維數組
 
   // 定義DFS函數
@@ -24,7 +31,15 @@ var exist = function(board, word) {
     // 若index等於word的長度，表示已找到符合條件的單詞，返回true
     if (index === word.length) return true;
     // 若i、j超出範圍、已訪問過、或當前字符不等於word的當前字符，返回false
-    if (i < 0 || i >= m || j < 0 || j >= n || visited[i][j] || board[i][j] !== word[index]) return false;
+    if (
+      i < 0 ||
+      i >= m ||
+      j < 0 ||
+      j >= n ||
+      visited[i][j] ||
+      board[i][j] !== word[index]
+    )
+      return false;
 
     // 標記當前字符已訪問
     visited[i][j] = true;
@@ -48,5 +63,4 @@ var exist = function(board, word) {
   // 若遍歷完矩陣後未找到符合條件的單詞，返回false
   return false;
 };
-
 ```

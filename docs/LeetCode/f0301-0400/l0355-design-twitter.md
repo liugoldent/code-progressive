@@ -1,19 +1,23 @@
 ---
-tags: 
-    - LeetCode
-    - Medium
-    - Design Twitter
-    - Javascript
-    - Heap / Priority
+tags:
+  - LeetCode
+  - Medium
+  - Design Twitter
+  - javascript
+  - Heap / Priority
 ---
+
 # [0355] Design Twitter
+
 ## Javascript 解
+
 [贾考博 LeetCode 355. Design Twitter - 马斯克你到底买不买? 给个准信儿](https://www.youtube.com/watch?v=vUGrlKvib1k&ab_channel=%E8%B4%BE%E8%80%83%E5%8D%9A)
+
 ```js
 /**
  * Initialize your data structure here.
  */
-var Twitter = function() {
+var Twitter = function () {
   this.users = new Map(); // 用一個Map去創建users的陣列
   this.tweets = []; // 儲存tweet資料
 };
@@ -23,7 +27,7 @@ var Twitter = function() {
  * @param {number} userId
  * @param {number} tweetId
  */
-Twitter.prototype.postTweet = function(userId, tweetId) {
+Twitter.prototype.postTweet = function (userId, tweetId) {
   // 確認是否有此會員
   if (!this.users.has(userId)) {
     // 如果沒有會員，則要新增一個set
@@ -38,20 +42,20 @@ Twitter.prototype.postTweet = function(userId, tweetId) {
  * @param {number} userId
  * @return {number[]}
  */
-Twitter.prototype.getNewsFeed = function(userId) {
+Twitter.prototype.getNewsFeed = function (userId) {
   // 首先找到follow的使用者
   const followedUsers = this.users.get(userId);
-  
+
   // 然後取得文章內容 || 使用者的文章
-  const filteredTweets = this.tweets.filter(tweet => {
+  const filteredTweets = this.tweets.filter((tweet) => {
     return tweet.userId === userId || followedUsers.has(tweet.userId);
   });
-  
+
   // 對找出的文章做排序（記得是b => a）因為要最新的放上面
   filteredTweets.sort((a, b) => b.timestamp - a.timestamp);
-  
+
   // 最後取出前10篇文章
-  return filteredTweets.slice(0, 10).map(tweet => tweet.tweetId);
+  return filteredTweets.slice(0, 10).map((tweet) => tweet.tweetId);
 };
 
 /**
@@ -59,7 +63,7 @@ Twitter.prototype.getNewsFeed = function(userId) {
  * @param {number} followerId
  * @param {number} followeeId
  */
-Twitter.prototype.follow = function(followerId, followeeId) {
+Twitter.prototype.follow = function (followerId, followeeId) {
   // 如果沒有followerId -> 先set
   if (!this.users.has(followerId)) {
     this.users.set(followerId, new Set());
@@ -68,7 +72,7 @@ Twitter.prototype.follow = function(followerId, followeeId) {
   if (!this.users.has(followeeId)) {
     this.users.set(followeeId, new Set());
   }
-  
+
   // 然後取得追隨者的陣列，再加上followeeId
   this.users.get(followerId).add(followeeId);
 };
@@ -78,12 +82,12 @@ Twitter.prototype.follow = function(followerId, followeeId) {
  * @param {number} followerId
  * @param {number} followeeId
  */
-Twitter.prototype.unfollow = function(followerId, followeeId) {
-  // 確認是否已經追蹤，若沒有追蹤了，就return 
+Twitter.prototype.unfollow = function (followerId, followeeId) {
+  // 確認是否已經追蹤，若沒有追蹤了，就return
   if (!this.users.has(followerId) || !this.users.has(followeeId)) {
     return;
   }
-  
+
   // 有追蹤，就delete掉
   this.users.get(followerId).delete(followeeId);
 };
@@ -96,5 +100,4 @@ Twitter.prototype.unfollow = function(followerId, followeeId) {
  * obj.follow(followerId,followeeId)
  * obj.unfollow(followerId,followeeId)
  */
-
 ```

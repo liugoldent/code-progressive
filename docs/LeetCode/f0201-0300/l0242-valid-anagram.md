@@ -1,5 +1,5 @@
 ---
-description: hydration是什麼、注水是什麼
+description: leetCode Valid Anagram js 解答, python 解答
 tags:
   - LeetCode
   - Easy
@@ -27,18 +27,24 @@ keywords:
     software engineer,
     Valid Anagram,
     Valid Anagram js ans,
-    Valid Anagram python ans
+    Valid Anagram python ans,
   ]
 ---
+
 # [0242] Valid Anagram
+
 ## Javascript 解
+
 思路：
 題意：問題是說，兩個字串是否是重組字
+
 1. 所以就會代表說，兩個字串長度不同，一定不是重組
 2. 如果相同
-  - 先將兩個字串都跑for迴圈
-  - 組成HashSet對，如：`{a:3,b:2}`，表示a字母有三個，b字母有兩個
-  - 最後跑HashSet對，看兩邊字母出現次數是否相同
+
+- 先將兩個字串都跑 for 迴圈
+- 組成 HashSet 對，如：`{a:3,b:2}`，表示 a 字母有三個，b 字母有兩個
+- 最後跑 HashSet 對，看兩邊字母出現次數是否相同
+
 ```javascript
 /**
  * @param {string} s
@@ -57,15 +63,17 @@ var isAnagram = function (s, t) {
     tObj[t[i]] = (tObj[t[i]] ? tObj[t[i]] : 0) + 1;
   }
   for (item in sObj) {
-    if(sObj[item] !== tObj[item]){
-      return false
+    if (sObj[item] !== tObj[item]) {
+      return false;
     }
   }
-  return true
+  return true;
 };
-module.exports = isAnagram
+module.exports = isAnagram;
 ```
+
 ## Python 解
+
 ```python
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
@@ -84,7 +92,7 @@ class Solution:
         for i in range(len(s)):
             s_obj[s[i]] = s_obj.get(s[i], 0) + 1
             t_obj[t[i]] = t_obj.get(t[i], 0) + 1
-        
+
         for key in s_obj:
             if s_obj[key] != t_obj.get(key, 0):
                 return False
@@ -93,26 +101,25 @@ class Solution:
 
 ```javascript
 // test code
-const isAnagram = require('./leetcode.js')
+const isAnagram = require("./leetcode.js");
 
+test("基本測試-1", function () {
+  expect(isAnagram("anagram", "nagaram")).toBe(true);
+});
 
-test('基本測試-1', function () {
-    expect(isAnagram('anagram', 'nagaram')).toBe(true)
-})
+test("基本測試-2", function () {
+  expect(isAnagram("cat", "rat")).toBe(false);
+});
 
-test('基本測試-2', function () {
-  expect(isAnagram('cat', 'rat')).toBe(false)
-})
+test("基本測試-3", function () {
+  expect(isAnagram("catr", "rat")).toBe(false);
+});
 
-test('基本測試-3', function () {
-  expect(isAnagram('catr', 'rat')).toBe(false)
-})
+test("基本測試-4", function () {
+  expect(isAnagram("a", "c")).toBe(false);
+});
 
-test('基本測試-4', function () {
-  expect(isAnagram('a', 'c')).toBe(false)
-})
-
-test('基本測試-5', function () {
-  expect(isAnagram('acc', 'cca')).toBe(true)
-})
+test("基本測試-5", function () {
+  expect(isAnagram("acc", "cca")).toBe(true);
+});
 ```

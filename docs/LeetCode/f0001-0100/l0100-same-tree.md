@@ -3,7 +3,7 @@ tags:
   - LeetCode
   - Easy
   - Tree
-  - Javascript
+  - javascript
   - Same Tree
 ---
 

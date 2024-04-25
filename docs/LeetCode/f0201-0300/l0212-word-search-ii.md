@@ -1,12 +1,14 @@
 ---
-tags: 
-    - LeetCode
-    - Medium
-    - Javascript
-    - Tries
-    - Word Search II
+tags:
+  - LeetCode
+  - Medium
+  - javascript
+  - Tries
+  - Word Search II
 ---
+
 # [0212] Word Search II
+
 ```js
 // 一樣先定義字典樹的節點
 class TrieNode {
@@ -92,9 +94,4 @@ const findWords = function (board, words) {
 
   return result;
 };
-
 ```
-
-
-
-

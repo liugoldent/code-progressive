@@ -1,16 +1,19 @@
 ---
-tags: 
-    - LeetCode
-    - Hard
-    - Find Median from Data Stream
-    - Javascript
-    - Heap / Priority Queue
+tags:
+  - LeetCode
+  - Hard
+  - Find Median from Data Stream
+  - javascript
+  - Heap / Priority Queue
 ---
 
 # [0295] Find Median from Data Stream
+
 [堆的講解-youtube](https://www.youtube.com/watch?v=j-DqQcNPGbE&list=PLAnjpYDY-l8L7kiVvyYrYsM9pq9BflB2l&index=18&ab_channel=%E9%BB%84%E6%B5%A9%E6%9D%B0)
 [堆的講解-it](https://ithelp.ithome.com.tw/articles/10279678?sc=iThelpR)
-## javascript 解
+
+## Javascript 解
+
 ```js
 class MedianFinder {
   constructor() {
@@ -91,7 +94,10 @@ class MinHeap {
     // 取得最後一個節點
     let currentIndex = this.size() - 1;
     // 當有父節點時，並且父節點大於現在節點
-    while (this.hasParent(currentIndex) && this.getParent(currentIndex) > this.heap[currentIndex]) {
+    while (
+      this.hasParent(currentIndex) &&
+      this.getParent(currentIndex) > this.heap[currentIndex]
+    ) {
       // 取得parentIndex，讓其交換
       const parentIndex = this.getParentIndex(currentIndex);
       this.swap(parentIndex, currentIndex);
@@ -107,7 +113,10 @@ class MinHeap {
       // 先假設左邊子節點的數值是最小的
       let smallestChildIndex = this.getLeftChildIndex(currentIndex);
       // 然後如果右邊子節點有比較小的值，就把最小值變成右節點
-      if (this.hasRightChild(currentIndex) && this.getRightChild(currentIndex) < this.getLeftChild(currentIndex)) {
+      if (
+        this.hasRightChild(currentIndex) &&
+        this.getRightChild(currentIndex) < this.getLeftChild(currentIndex)
+      ) {
         smallestChildIndex = this.getRightChildIndex(currentIndex);
       }
 
@@ -163,7 +172,10 @@ class MinHeap {
    * @description 交換兩者元素
    */
   swap(index1, index2) {
-    [this.heap[index1], this.heap[index2]] = [this.heap[index2], this.heap[index1]];
+    [this.heap[index1], this.heap[index2]] = [
+      this.heap[index2],
+      this.heap[index1],
+    ];
   }
 }
 
@@ -183,7 +195,7 @@ class MaxHeap {
 
     const removedValue = this.peek(); // 先取出第一個元素
     this.heap[0] = this.heap.pop(); // 取出最後一個元素
-    this.heapifyDown(); // 
+    this.heapifyDown(); //
     return removedValue;
   }
   /**
@@ -206,7 +218,10 @@ class MaxHeap {
 
   heapifyUp() {
     let currentIndex = this.size() - 1;
-    while (this.hasParent(currentIndex) && this.getParent(currentIndex) < this.heap[currentIndex]) {
+    while (
+      this.hasParent(currentIndex) &&
+      this.getParent(currentIndex) < this.heap[currentIndex]
+    ) {
       const parentIndex = this.getParentIndex(currentIndex);
       this.swap(parentIndex, currentIndex);
       currentIndex = parentIndex;
@@ -221,7 +236,10 @@ class MaxHeap {
       // 我們先假設左邊子節點比較大
       let largestChildIndex = this.getLeftChildIndex(currentIndex);
       // 然後去判斷右邊子節點是否大於左邊子節點
-      if (this.hasRightChild(currentIndex) && this.getRightChild(currentIndex) > this.getLeftChild(currentIndex)) {
+      if (
+        this.hasRightChild(currentIndex) &&
+        this.getRightChild(currentIndex) > this.getLeftChild(currentIndex)
+      ) {
         // 如果右邊比較大，就將這個index，設成右邊的子節點
         largestChildIndex = this.getRightChildIndex(currentIndex);
       }
@@ -276,9 +294,10 @@ class MaxHeap {
   }
 
   swap(index1, index2) {
-    [this.heap[index1], this.heap[index2]] = [this.heap[index2], this.heap[index1]];
+    [this.heap[index1], this.heap[index2]] = [
+      this.heap[index2],
+      this.heap[index1],
+    ];
   }
 }
-
-
 ```

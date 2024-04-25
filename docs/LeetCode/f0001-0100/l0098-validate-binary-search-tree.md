@@ -3,7 +3,7 @@ tags:
   - LeetCode
   - Medium
   - Validate Binary Search Tree
-  - Javascript
+  - javascript
   - Tree
 ---
 
