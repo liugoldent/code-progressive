@@ -42,3 +42,40 @@ keywords:
 * Legacy API 難以處理
 ### Micro service 崛起
 * 需要一個統一的介面 (接口) 來協助整合
+
+
+
+## 生態
+* GraphQL Client, GateWay, GraphQL Server, Datbase-to-GraphQL Server
+
+### 1. graphQL Client
+* 客戶端
+* 組織 query 並將 query 傳送去 server 的函式庫
+* 支援 GraphQL 的 Declarative data fetching
+* client 端只需寫好 query ，函式庫會幫你處理其餘工作如 query 解析、 FrameWork 整合、錯誤處理、 建置時間優化、快取等等
+
+### 2. 閘道器 GraphQL Gateway
+* 處於 GraphQL Client 與 GraphQL Server 之間的一個服務
+* 支援路由導向、效能紀錄、資料收集等等功能
+
+### 3. 後端伺服器 GraphQL BackEnd Server
+* 負責接受前端來的 Query 並回應資料的函式庫
+* 實際處理資料的地方
+* 可實作 Schema Stitching (可將不同服務的 GraphQL Schema 整合成一個 Schema)
+* 組成一個 GraphQL BackEnd Server 需
+  * GraphQL Schema Definition + Resolver Functions (開發者的資料設計)
+  * GraphQL 執行引擎 (負責實現 GraphQL 功能，本標題重點)
+  * Network Layer (路由處理，如 NodeJS 的 express)
+
+### 4. 資料庫對 GraphQL 伺服器端 Database-to-GraphQL server
+* 負責 Database 與 GraphQL 之間的溝通
+* 有些會以 ORM (如 mongoose 對 mongodb) 的方式提供服務
+* 將 Database 轉換成 GraphQL API
+* 可以取代 GraphQL Server 直接與 Client 端溝通
+
+
+## 基本
+
+### query vs schema
+* Query 是 client side 是符合 schema 規定的查詢語言格式 ;
+* Schema 是 server side 定義整體資料結構格式。
