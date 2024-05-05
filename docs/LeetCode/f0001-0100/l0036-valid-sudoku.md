@@ -1,9 +1,35 @@
 ---
+description: valid sudoku js 解,valid sudoku python 解
 tags:
   - LeetCode
   - Medium
-  - Valid Sudoku
   - javascript
+  - python
+  - interview
+  - Array And Hashing
+keywords:
+  [
+    facebook,
+    amazon,
+    apple,
+    netflix,
+    google,
+    faang interview,
+    leetCode,
+    js,
+    javascript,
+    interview,
+    js 面試,
+    js interview,
+    前端面試題,
+    frontend interview,
+    フロントエンドの面接質問,
+    프론트엔드 면접 문제,
+    software engineer,
+    valid sudoku,
+    valid sudoku js ans,
+    valid sudoku python ans,
+  ]
 ---
 
 # [0036] Valid Sudoku

@@ -1,10 +1,35 @@
 ---
+description: leetCode Longest Consecutive Sequence js 解答, python 解答
 tags:
   - LeetCode
   - Medium
-  - Longest Consecutive Sequence
   - javascript
-  - hashSet
+  - python
+  - interview
+  - Array And Hashing
+keywords:
+  [
+    facebook,
+    amazon,
+    apple,
+    netflix,
+    google,
+    faang interview,
+    leetCode,
+    js,
+    javascript,
+    interview,
+    js 面試,
+    js interview,
+    前端面試題,
+    frontend interview,
+    フロントエンドの面接質問,
+    프론트엔드 면접 문제,
+    software engineer,
+    Longest Consecutive Sequence,
+    Longest Consecutive Sequence js ans,
+    Longest Consecutive Sequence python ans,
+  ]
 ---
 
 # [0128] Longest Consecutive Sequence
@@ -25,25 +50,46 @@ tags:
  * @param {number[]} nums
  * @return {number}
  */
-var longestConsecutive = function (nums) {
-  if (nums.length === 0) return 0;
-  let hashSet = new Set(nums);
-  let max = 0;
-  for (const item of hashSet) {
-    // 若存在著比現在item小1的數字，則代表他還不是左邊界，則continue
-    if (hashSet.has(item - 1)) {
-      continue;
-    }
-    // 找到也許是左邊界的值，重新設定條件
-    let currNum = item;
-    let currMax = 1;
-    while (hashSet.has(currNum + 1)) {
-      currNum++;
-      currMax++;
-    }
-    // update max
-    max = Math.max(max, currMax);
+const longestConsecutive = function (nums) {
+  if(nums.length === 0){
+      return 0
   }
-  return max;
-};
+  let setNums = new Set(nums)
+  let maxLength = 0
+  for(let num of setNums){
+      if(!setNums.has(num - 1)){
+          let currentNum = num
+          let currentLength  = 1
+          while(setNums.has(currentNum  + 1)){
+              currentNum++
+              currentLength++
+          }
+          maxLength = Math.max(maxLength, currentLength)
+      }
+  }
+  return maxLength
+}
+```
+
+## Python解
+```python
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        if len(nums) == 0 or not nums:
+            return 0
+        
+        setNums = set(nums)
+        maxLength = 0
+        
+        for num in setNums:
+            if num-1 not in setNums:
+                currentNum = num
+                currentLength = 1
+                
+                while currentNum+1 in setNums:
+                    currentNum += 1
+                    currentLength += 1
+                maxLength = max(currentLength, maxLength)
+        
+        return maxLength
 ```

@@ -1,12 +1,35 @@
 ---
-description: leetCode two sum js 解答, python 解答
+description: leetCode Two Sum js 解答, python 解答
 tags:
   - LeetCode
   - Easy
-  - Two Sum
   - javascript
-  - Python
+  - python
+  - interview
   - Array And Hashing
+keywords:
+  [
+    facebook,
+    amazon,
+    apple,
+    netflix,
+    google,
+    faang interview,
+    leetCode,
+    js,
+    javascript,
+    interview,
+    js 面試,
+    js interview,
+    前端面試題,
+    frontend interview,
+    フロントエンドの面接質問,
+    프론트엔드 면접 문제,
+    software engineer,
+    Two Sum,
+    Two Sum js ans,
+    Two Sum python ans,
+  ]
 ---
 
 # [0002] Two Sum
