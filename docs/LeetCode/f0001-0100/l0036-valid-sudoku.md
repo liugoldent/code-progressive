@@ -6,7 +6,7 @@ tags:
   - javascript
   - python
   - interview
-  - Array And Hashing
+  - Hashing
 keywords:
   [
     facebook,
@@ -82,6 +82,7 @@ function isValidSudoku(board) {
 ```
 
 ## Python 解
+
 ```python
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
@@ -108,5 +109,5 @@ class Solution:
                     return False
                 seen.add(num)
         return True
-            
+
 ```

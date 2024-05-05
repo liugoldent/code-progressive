@@ -6,7 +6,7 @@ tags:
   - javascript
   - python
   - interview
-  - Array And Hashing
+  - Hashing
 keywords:
   [
     facebook,
@@ -51,45 +51,46 @@ keywords:
  * @return {number}
  */
 const longestConsecutive = function (nums) {
-  if(nums.length === 0){
-      return 0
+  if (nums.length === 0) {
+    return 0;
   }
-  let setNums = new Set(nums)
-  let maxLength = 0
-  for(let num of setNums){
-      if(!setNums.has(num - 1)){
-          let currentNum = num
-          let currentLength  = 1
-          while(setNums.has(currentNum  + 1)){
-              currentNum++
-              currentLength++
-          }
-          maxLength = Math.max(maxLength, currentLength)
+  let setNums = new Set(nums);
+  let maxLength = 0;
+  for (let num of setNums) {
+    if (!setNums.has(num - 1)) {
+      let currentNum = num;
+      let currentLength = 1;
+      while (setNums.has(currentNum + 1)) {
+        currentNum++;
+        currentLength++;
       }
+      maxLength = Math.max(maxLength, currentLength);
+    }
   }
-  return maxLength
-}
+  return maxLength;
+};
 ```
 
-## Python解
+## Python 解
+
 ```python
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
         if len(nums) == 0 or not nums:
             return 0
-        
+
         setNums = set(nums)
         maxLength = 0
-        
+
         for num in setNums:
             if num-1 not in setNums:
                 currentNum = num
                 currentLength = 1
-                
+
                 while currentNum+1 in setNums:
                     currentNum += 1
                     currentLength += 1
                 maxLength = max(currentLength, maxLength)
-        
+
         return maxLength
 ```

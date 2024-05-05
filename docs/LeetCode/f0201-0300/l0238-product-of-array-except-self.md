@@ -6,7 +6,7 @@ tags:
   - javascript
   - python
   - interview
-  - Array And Hashing
+  - Hashing
 keywords:
   [
     facebook,
@@ -37,6 +37,7 @@ keywords:
 ## Javascript 解
 
 #### 演算法：「左右乘積」或「前綴和後綴」的演算法
+
 題意：找出除了自己以外的乘積
 [參考文章](https://englishandcoding.pixnet.net/blog/post/34138027-leetcode-%E7%AD%86%E8%A8%98%EF%BC%8D238.-product-of-array-except-self)
 

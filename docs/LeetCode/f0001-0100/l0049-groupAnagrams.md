@@ -6,7 +6,7 @@ tags:
   - javascript
   - python
   - interview
-  - Array And Hashing
+  - Hashing
 keywords:
   [
     facebook,

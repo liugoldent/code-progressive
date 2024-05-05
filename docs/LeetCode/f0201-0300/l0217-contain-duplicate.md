@@ -6,30 +6,30 @@ tags:
   - javascript
   - python
   - interview
-  - Array And Hashing
+  - Array
+  - And
+  - Hashing
 keywords:
-  [
-    facebook,
-    amazon,
-    apple,
-    netflix,
-    google,
-    faang interview,
-    leetCode,
-    js,
-    javascript,
-    interview,
-    js 面試,
-    js interview,
-    前端面試題,
-    frontend interview,
-    フロントエンドの面接質問,
-    프론트엔드 면접 문제,
-    software engineer,
-    Contains Duplicate,
-    Contains Duplicate js ans,
-    Contains Duplicate python ans,
-  ]
+  - facebook
+  - amazon
+  - apple
+  - netflix
+  - google
+  - faang interview
+  - leetCode
+  - js
+  - javascript
+  - interview
+  - js 面試
+  - js interview
+  - 前端面試題
+  - frontend interview
+  - フロントエンドの面接質問
+  - 프론트엔드 면접 문제
+  - software engineer
+  - Contains Duplicate
+  - Contains Duplicate js ans
+  - Contains Duplicate python ans
 ---
 
 # [0217] Contains Duplicate
@@ -105,3 +105,6 @@ test("基本測試-5", function () {
   expect(containsDuplicate([-1])).toBe(false);
 });
 ```
+
+## 相關連結
+[[l0002-two-sum]]

@@ -1,12 +1,12 @@
 ---
-description: leetCode Top K Frequent Elements js 解答, python 解答 
+description: leetCode Top K Frequent Elements js 解答, python 解答
 tags:
   - LeetCode
   - Medium
   - javascript
   - python
   - interview
-  - Array And Hashing
+  - Hashing
 keywords:
   [
     facebook,

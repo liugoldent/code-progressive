@@ -49,10 +49,6 @@ GraphQL 既是一種用於 API 的查詢語言也是一個滿足你數據查詢�
 * 需要一個統一的介面 (接口) 來協助整合
 
 
-<<<<<<< HEAD
-## 文章參考
-[GraphQL詳解](https://juejin.cn/post/7038491089656872974)
-=======
 
 ## 生態
 * GraphQL Client, GateWay, GraphQL Server, Datbase-to-GraphQL Server
@@ -88,4 +84,3 @@ GraphQL 既是一種用於 API 的查詢語言也是一個滿足你數據查詢�
 ### query vs schema
 * Query 是 client side 是符合 schema 規定的查詢語言格式 ;
 * Schema 是 server side 定義整體資料結構格式。
->>>>>>> f1847b5e91ae57da37562ba47f63ca85caeb11e3
