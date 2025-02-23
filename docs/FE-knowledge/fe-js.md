@@ -30,8 +30,8 @@ function test(a) {
     var d = 6;
     const e = 7;
   }
-  console.log(c); // 1
-  console.log(d); // 6
+  console.log(c); // 1 因為此層沒有，所以會往外找
+  console.log(d); // 6 d 是用 var 宣告，屬於函式作用域，所以在 if 區塊外仍然可以存取。
   console.log(e); // error
 }
 

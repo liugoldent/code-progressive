@@ -166,79 +166,149 @@ const removed = parent.removeChild(self);
 removed === self; // true
 ```
 
-## BOM
+## BOM vs DOM
 
-### DOM vs BOM
-
-- DOM：把文擋 HTML 當一個一棵樹的模型。頂級物件是 document。主要操作頁面元素
-- BOM：把瀏覽器當一個 JS 物件，包含瀏覽器的一些屬性與方法。頂級物件是 window。主要操作與瀏覽器窗口交互的物件。
+### DOM
+#### 定義：
+DOM 是一種解析 HTML 或 XML 文件的程式設計介面，將文件轉換成一個樹狀結構，每個節點代表文件中的一部分（例如元素、文字、屬性等）。
+#### 主要作用：
+允許使用 JavaScript 等程式語言動態存取與操作文件內容、結構及樣式。可以新增、刪除或修改 HTML 元素與屬性，以實現網頁互動效果。
 
 ### BOM
-
-- 常用物件：
-  - window：setTimeout
-  - navigator
-  - location
-  - history
+#### 定義：
+指的是瀏覽器提供的一組物件與介面，這些物件並非直接屬於 HTML 文件，而是用來操作瀏覽器環境及視窗相關的功能。
+#### 主要作用：
+* 允許開發者與瀏覽器進行互動，例如：取得瀏覽器資訊、操控瀏覽器視窗、管理歷史紀錄等。
+* 常見的 BOM 物件包括：
+  * window：代表整個瀏覽器視窗，是所有 BOM 物件的全域容器。
+  * navigator：提供關於瀏覽器的資訊，例如使用者代理（user agent）、平台等。
+  * location：用於取得或設定目前頁面的 URL，也可用於進行頁面導向。
+  * history：允許操作瀏覽器的歷史紀錄，如前進、後退等功能。
 
 ## 大文件上傳如何切割
 
 - 拿到文件，保存文件唯一性標識，切割文件，分段上傳，每次上傳一段，根據唯一性標識判斷文件上傳進度，直到文件的全部片段上傳完畢
-- 流式上傳：將文件轉換為流（Stream）的形式進行上傳，而不是將整個文件讀取到內存中然後再上傳。這樣可以降低內存使用量，特別是對於大文件來說。
 
-### 讀取文件內容
-
+### 分割上傳
 ```js
-const input = document.querySelector("input");
-input.addEventListener("change", function () {
-  var file = this.files[0];
-});
-// 標記為唯一性
-const md5code = md5(file);
-```
-
-### 開始分割
-
-```js
-var reader = new FileReader();
-reader.readAsArrayBuffer(file);
-reader.addEventListener("load", function (e) {
-  //每10M切割一段,这里只做一个切割演示，实际切割需要循环切割，
-  var slice = e.target.result.slice(0, 10 * 1024 * 1024);
-});
-```
-
-### 上傳
-
-```js
-const formdata = new FormData();
-formdata.append("0", slice);
-//这里是有一个坑的，部分设备无法获取文件名称，和文件类型，这个在最后给出解决方案
-formdata.append("filename", file.filename);
-var xhr = new XMLHttpRequest();
-xhr.addEventListener("load", function () {
-  //xhr.responseText
-});
-xhr.open("POST", "");
-xhr.send(formdata);
-xhr.addEventListener("progress", updateProgress);
-xhr.upload.addEventListener("progress", updateProgress);
-
-function updateProgress(event) {
-  if (event.lengthComputable) {
-    //进度条
+function uploadFile(file, chunkSize = 1024 * 1024) {
+  const totalChunks = Math.ceil(file.size / chunkSize);
+  let currentChunk = 0;
+  
+  function uploadChunk() {
+    const start = currentChunk * chunkSize;
+    const end = Math.min(file.size, start + chunkSize);
+    const blob = file.slice(start, end);
+    
+    // 使用 FormData 封裝需要傳送的資料
+    const formData = new FormData();
+    formData.append('chunk', blob, file.name);
+    formData.append('chunkIndex', currentChunk);
+    formData.append('totalChunks', totalChunks);
+    
+    // 假設 /upload 為上傳 API 的 URL
+    fetch('/upload', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log(`第 ${currentChunk + 1} 塊上傳成功`);
+        currentChunk++;
+        if (currentChunk < totalChunks) {
+          uploadChunk(); // 繼續上傳下一塊
+        } else {
+          console.log('檔案上傳完成');
+        }
+      } else {
+        console.error(`第 ${currentChunk} 塊上傳失敗`);
+      }
+    })
+    .catch(error => {
+      console.error(`上傳第 ${currentChunk} 塊時發生錯誤：`, error);
+    });
   }
+  
+  // 開始上傳第一塊
+  uploadChunk();
 }
 ```
 
-## 如何判斷一個元素是否在可是區域中
+## 如何判斷一個元素是否在可視區域中
 
 ### offsetTop、scrollTop
 
-- offsetTop：是相對於其最近的已定位（positioned）祖先元素的垂直偏移量的屬性
-- scrollTop：表示元素的垂直滾動條的位置屬性。scrollTop=0：會回到原本位置
-- scrollWidth 和 scrollHeight 主要用於確定元素內容的實際大小
-- scrollLeft 和 scrollTop 屬性既可以確定元素當前滾動的狀態，也可以設置元素的滾動位置
+- elem.scrollHeight - elem.scrollTop - elem.clientHeight
+- 參考網址(https://www.shubo.io/element-size-scrolling/)
+- 參考網址(https://blog.csdn.net/qq_24133535/article/details/120328129)
+
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>scrollTop 與 offsetTop 範例</title>
+  <style>
+    /* 設定一個固定高度、可捲動的容器 */
+    #container {
+      height: 200px;
+      overflow: auto;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+    /* 內容高度較高，讓容器產生捲軸 */
+    #content {
+      height: 600px;
+      background: linear-gradient(to bottom, #f06, #48f);
+      padding-top: 20px;
+    }
+    /* 設定一個目標元素，放在內容中間位置 */
+    .target {
+      margin-top: 300px;
+      height: 50px;
+      background: yellow;
+      text-align: center;
+      line-height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>scrollTop 與 offsetTop 範例</h1>
+  <button id="scrollBtn">捲動到目標元素</button>
+  
+  <!-- 可捲動的容器 -->
+  <div id="container">
+    <div id="content">
+      <div class="target" id="target">目標元素</div>
+    </div>
+  </div>
+
+  <p>容器目前的 scrollTop 值：<span id="scrollPos">0</span></p>
+  <p>目標元素的 offsetTop 值（相對於容器）：<span id="offsetPos">0</span></p>
+
+  <script>
+    const container = document.getElementById('container');
+    const target = document.getElementById('target');
+    const scrollPosSpan = document.getElementById('scrollPos');
+    const offsetPosSpan = document.getElementById('offsetPos');
+    const scrollBtn = document.getElementById('scrollBtn');
+
+    // 取得目標元素相對於容器的 offsetTop
+    offsetPosSpan.textContent = target.offsetTop;
+
+    // 當容器捲動時，更新 scrollTop 的值顯示
+    container.addEventListener('scroll', function() {
+      scrollPosSpan.textContent = container.scrollTop;
+    });
+
+    // 按下按鈕後，將容器捲動到目標元素的位置
+    scrollBtn.addEventListener('click', function() {
+      container.scrollTop = target.offsetTop;
+    });
+  </script>
+</body>
+</html>
+```
 
 ### getBoundingClientRect
 

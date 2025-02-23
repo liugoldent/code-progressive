@@ -68,10 +68,10 @@ tags:
   * 第一次訪問，瀏覽器會根據manifest去下載相應的資源，並進行離線儲存。
 
 ## iframe
-優點
+### 優點
 * 能夠把網頁原封不動展現出來
-* 如果有多個網頁引用iframe，那麼只需要修改iframe內容就可以達到換頁功能。
-缺點
+* 如果有多個網頁引用iframe，那麼只需要修改iframe內容就可以達到換頁功能。  
+### 缺點
 * 搜尋引擎無法爬蟲讀取這種頁面
 * iframe會增加server http 請求
 
@@ -80,8 +80,42 @@ tags:
 * for：當點選其元件時，所連結的元件將獲得焦點。
 * accesskey：幫使用者設定快捷鍵
 
+### 請問在 HTML 中使用 `<label>` 的 for 屬性主要用途為何？
+* 將 `<label>` 與特定的表單控件關聯，使點擊 `<label>` 時自動將焦點聚焦在該控件上。
+* 讓使用者在點擊 `<label>` 時啟動對應的輸入控件（例如，勾選核取方塊或激活輸入框）。
+* for 屬性必須與對應控件的 id 值匹配，若控件沒有設定 id，則 `<label>` 無法正確關聯。
+
+```html
+<label for="username">Username:</label>
+<input type="text" id="username">
+```
+
+```html
+<form>
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email">
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password">
+
+  <button type="submit">Submit</button>
+</form>
+```
+
+
 ## HTML5的自動完成功能
-* 可以設定form的autocomplete on or off 來開啟輸入匡的自動完成功能
+* 可以設定`form`的`autocomplete` on or off 來開啟輸入匡的自動完成功能
+```html
+<form autocomplete="on">
+  <label for="username">使用者名稱:</label>
+  <input type="text" id="username" name="username">
+  <br>
+  <label for="email">電子郵件:</label>
+  <input type="email" id="email" name="email">
+  <br>
+  <button type="submit">送出</button>
+</form>
+```
 
 ## 如何實現瀏覽器中多個標籤頁內的通訊
 * websocket
