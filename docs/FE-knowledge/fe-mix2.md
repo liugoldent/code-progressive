@@ -50,7 +50,7 @@ promise
 ```
 
 ### Promise.all
-* 該 Promise 實例在可迭代物件中的所有 Promise 實例都成功解決（resolved）時才會解決，並且解決值是一個包含所有 Promise 實例解決值的陣列。如果可迭代物件中有任何一個 Promise 實例被拒絕（rejected），則返回的 Promise 實例會立即被拒絕，並且拒絕值是第一個被拒絕的 Promise 實例的拒絕值
+* 該 Promise 實例在可迭代物件中的所有 Promise 實例**都成功解決（resolved）時才會解決**，並且解決值是一個包含所有 Promise 實例解決值的陣列。如果**可迭代物件中有任何一個 Promise 實例被拒絕（rejected），則返回的 Promise 實例會立即被拒絕**，並且拒絕值是第一個被拒絕的 Promise 實例的拒絕值
 ```js
 const promise1 = Promise.resolve(3);
 const promise2 = 42;
@@ -91,7 +91,7 @@ Promise
 ```
 
 ### Promise.settled
-* 這個靜態方法接收一個可迭代物件，並返回一個新的 Promise 實例。該 Promise 實例在可迭代物件中的所有 Promise 實例都解決或拒絕後才會解決，並且解決值是一個包含所有 Promise 實例解決狀態的陣列，每個元素都是一個物件，包含 status 屬性表示狀態（fulfilled 或 rejected）和 value 或 reason 屬性表示解決值或拒絕原因。
+* 這個靜態方法接收一個可迭代物件，並返回一個新的 Promise 實例。該 Promise 實例在可迭代物件中的**所有 Promise 實例都解決或拒絕後才會解決**，並且解決值是一個包含所有 Promise 實例解決狀態的陣列，每個元素都是一個物件，包含 status 屬性表示狀態（fulfilled 或 rejected）和 value 或 reason 屬性表示解決值或拒絕原因。
 ```js
 const promise1 = Promise.resolve(3);
 const promise2 = new Promise((resolve, reject) => {
@@ -265,6 +265,54 @@ Web Worker 支援運行 JavaScript 腳本，這使得它可以執行計算、數
 ### 多線程處理：
 
 瀏覽器通常支援多個 Web Worker 實例，這使得你可以同時運行多個後台線程來處理不同的任務。
+
+### web-worker範例
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Worker 範例</title>
+</head>
+<body>
+  <h1>Web Worker 範例</h1>
+  <button id="startWorker">啟動 Worker</button>
+  <p id="result">結果顯示在這裡</p>
+
+  <script>
+    // 建立 worker 物件，並指向 worker.js 檔案
+    const worker = new Worker('worker.js');
+
+    // 當 Worker 傳回訊息時，接收並更新畫面
+    worker.onmessage = function(event) {
+      document.getElementById('result').textContent = 'Worker 回傳: ' + event.data;
+    };
+
+    // 當按下按鈕時，向 Worker 傳送訊息，啟動背景運算
+    document.getElementById('startWorker').addEventListener('click', function() {
+      worker.postMessage('開始計算');
+    });
+  </script>
+</body>
+</html>
+```
+```js
+// worker.js：在 Worker 中接收主線程傳來的訊息
+self.onmessage = function(event) {
+  console.log('Worker 收到訊息: ' + event.data);
+  
+  // 模擬一個計算密集型的任務（例如計算 0 到 1億的累加和）
+  let result = 0;
+  for (let i = 0; i < 100000000; i++) {
+    result += i;
+  }
+  
+  // 完成計算後，將結果傳回主線程
+  self.postMessage(result);
+};
+
+```
+
 
 ## 如何優化動畫?
 

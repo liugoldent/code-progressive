@@ -352,3 +352,101 @@ export default {
 </script>
 
 ```
+
+## Vue2 & Vue3 差異
+
+### 響應系統：
+Vue 3 使用 Proxy 取代 Vue 2 的 Object.defineProperty。這一變化使得 Vue 3 的響應性系統能夠處理嵌套屬性、陣列和動態屬性的變化，性能上也有了顯著提升。
+
+### Composition API:
+setup 函數讓邏輯更加聚合和可重用，避免了 Options API 中的邏輯分散問題，特別適合處理複雜邏輯和大型專案。也可以拆成Composables來做細粒化的邏輯複用。
+
+### Tree-shaking：
+Vue 3 進行了 Tree-shaking 的優化，允許只打包實際使用到的部分，減少最終 bundle 的大小，所以使用動態載入組件可以有效減少專案打包體積哦！component、mixin也隨之為了支援 Tree-shaking 改為模組化。
+
+### 虛擬 DOM 和渲染性能
+Vue 3 重新設計了虛擬 DOM，改用靜態分析（static tree hoisting），在Template 編譯時預計出哪些部分是靜態的，並只對動態部分進行更新，從而提升渲染性能。
+
+### webpack
+1. 核心邏輯是打包，預先將所有的專案內容與資源做靜態分析然後包成數個檔案。第一次啟動的時候會做完整Modules分析和打包，速度會慢上許多
+2. 使用各種不同的loader和plugin處理非JS的資源，建構過程中轉換成可以使用的Module。
+
+### Vite
+1. 基於ES Module，開發環境內不會進行預先打包，是直接使用瀏覽器所知的ES Module 導入，熱更新也優化成這個方式，不須像webpack那般重新打包，所以開發時的啟動速度爆快！
+2. Vite用的是esbuild做預先構建，這是由golang編寫的工具，大幅加快較大dependency的處理速度。
+
+### Webpack vs Vite
+1. Webpack 慢的原因是打包過程使用Dependency Graph Analysis，它會從入口檔案開始遍歷所有的 import/require 語句，每個引入的模組，繼續分析其相依來源，直到沒有新的相依來源為止。這個過程會建立一個完整模組依賴關係圖。各種loader的處理時間相對也長，未來可能用到的模組也會一並打包。而 Vite 在開發時不會將所有Module打包，而是按需載入，這大幅減少了初次啟動時間。
+
+2. Webpack 和 Vite 如何進行打包細粒化
+Webpack的Code Splitting可以異步載入或手動切塊(regex)，也有支援Tree-shaking。
+Vite則有原生ES Module支援，替可能用到的Modules產生Preload tag，讓瀏覽器可以預先載入這些模組，但不執行它們。
+
+### Watch 和 Computed 各自是同步還是異步？為什麼？
+watch是異步，監聽對象的資料變化時會將一個callBack放入 event queue，確保資料更新以後再執行，避免多次觸發。
+computed是同步，原理是 getter 來實踐的，但屬於懶執行。依賴的對象資料發生變化時，只有在需要時才會重新計算它的值。
+
+### Vite中如果我要進一步減少打包體積，具體應該要怎麼做：
+1. 注意按需引入，Vite 有 vite-plugin-style-import。但也可以平常在使用UI框架時手動處理實際用到哪些組件。
+2. 清理不必要的語言包，這些檔案很大，可以用vite-plugin-locale選擇性引入你需要的語言。
+3. rollup有自帶的manualChunks hook，可以利用它來分割，並且在terserOptions設定compress來移除多餘的console和debugger:
+4. 動態載入組件:
+盡量把一些需要特定事件才引入的組件用這種方式寫，可以有效減少打包體積，讓下載資源的速度快上一些，或者defineAsyncComponent做lazy
+```html
+<Component :is="name" />
+```
+```js
+const componentsMap = {
+　ComponentA: () => import('@/components/ComponentA.vue'),
+};
+```
+5. 如果是Nuxt，將不太需要請求API的靜態頁面路由，改設定為SSG
+
+### 有使用過Vue的Teleport嗎? 請你解釋運作原理和寫出一個具體例子
+1. 運作的原理:
+這是個可以指定掛載位置，用來動態插入DOM特定節點的組件。這個組件允許我們使用 to 的屬性指定一個CSS選擇器或者DOM元素來插入。但這個Teleport仍然屬於調用它的父組件底下響應，即便DOM遭到移動，生命週期也不會因此被改變。
+2. 如果defineExpose的事件需要曝露出去，請避免在computed中調用「異步事件」，很容易造成抖動。
+
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue 3 Teleport 範例</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <style>
+    /* 針對 teleport 目標的樣式 */
+    #teleport-target {
+      border: 2px solid red;
+      padding: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Vue app 主要掛載點 -->
+  <div id="app">
+    <h1>Vue Teleport 範例</h1>
+    <p>這是在 app 中的內容</p>
+
+    <!-- 使用 teleport 將內容渲染到 #teleport-target -->
+    <teleport to="#teleport-target">
+      <div style="background-color: lightblue; padding: 10px;">
+        這個區塊是透過 Teleport 移動到 #teleport-target 區域的！
+      </div>
+    </teleport>
+  </div>
+
+  <!-- Teleport 目標，將會在此呈現 teleport 內容 -->
+  <div id="teleport-target">
+    <h2>Teleport 目標區</h2>
+  </div>
+
+  <script>
+    // 建立並掛載 Vue 3 應用程式
+    const app = Vue.createApp({});
+    app.mount('#app');
+  </script>
+</body>
+</html>
+```

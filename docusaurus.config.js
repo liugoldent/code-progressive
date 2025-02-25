@@ -84,7 +84,6 @@ const config = {
             position: "left",
             label: "Note",
           },
-          {href: '/blog', label: 'Blog', position: 'left'},
           {
             href: "https://medium.com/at99percent",
             label: "Medium",
