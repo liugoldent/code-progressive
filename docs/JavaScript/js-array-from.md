@@ -59,7 +59,7 @@ numbers[0] === numbersClone[0] // => false
 const length = 3
 const init = 0
 // 使用Array.from
-const result = Array.from({length}, () => init)
+const result = Array.from({length}, () => init) // 輸出：[0,0,0]
 
 // 使用array.fill()
 const result = Array(length).fill(init) // 輸出：[0,0,0]

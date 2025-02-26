@@ -118,15 +118,19 @@ const ans = obj.getAmount.bind(obj); // 輸出100
 - 題目-2
 
 ```js
-var amount = 1000(function () {
+var amount = 1000
+;(function () {
   const obj = {
     amount: 100,
     foo: function () {
       setTimeout(() => {
-        console.log(this.amount);
+        console.log(this.amount); // 100
       }, 0);
       setTimeout(function () {
-        console.log(this.amount);
+        console.log(amount); // 1000
+      }, 0);
+      setTimeout(function () {
+        console.log(this.amount); // undefined
       }, 0);
     },
   };
@@ -135,4 +139,4 @@ var amount = 1000(function () {
 ```
 
 - 在第一個 setTimeout 函數中，使用了箭頭函數 () => {}，這導致內部的 this 始終指向 obj，因此 this.amount 訪問了 obj 的 amount 屬性，輸出為 100。
-- 在第二個 setTimeout 函數中，使用了普通的匿名函數 function() {}，這導致內部的 this 指向全局範圍，因此 this.amount 訪問了全局範圍的 amount 變數，輸出為 1000。
+- 在第三個 setTimeout 函數中，使用了普通的匿名函數 function() {}，訪問了全局範圍的 amount 變數，輸出為 1000。

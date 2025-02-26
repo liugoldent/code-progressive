@@ -22,6 +22,11 @@ tags:
   * 第一個await之後的function會進入microTask
 * 微任務：在當前宏任務結束之前去做。先進先出
 * 同步任務：主線程。非同步任務：Event Queue
+* 順序：
+  * 第一階段：同步一次先執行完
+  * 遇到await -> await 內執行完，才會執行await之後的程式
+  * await 內遇到resolve才是執行完，不然不會往下執行
+
 
 
 ![eventLoop](https://camo.githubusercontent.com/0543b7e9ab5a20ebb98cedb05365abc3457902fdf6134b4d892f9859d7c8a656/68747470733a2f2f7374617469632e7675652d6a732e636f6d2f36653830653565302d376362382d313165622d383566362d3666616337376330633962332e706e67)

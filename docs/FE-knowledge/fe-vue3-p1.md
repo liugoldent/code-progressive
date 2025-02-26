@@ -39,9 +39,9 @@ tags:
 
 - [文章](https://blog.csdn.net/weixin_57909742/article/details/133779422)
 - watch：
-  1. 需要明確指出監控的數據，開啟 deep 才可以深度監控屬性或元素的變化
+  1. 需要**明確指出監控的數據**，開啟 deep 才可以深度監控屬性或元素的變化
 - watchEffect：
-  1. 自動收集使用到的響應式數據，因此代碼更簡潔
+  1. **自動收集使用到的響應式數據**，因此代碼更簡潔
   2. 但是無法使用舊值與新值
   3. 如果是物件要讓 watchEffect 動作，必須要監聽物件的 key 值
 - watch reactive的物件
@@ -66,6 +66,7 @@ watch(
   { once: true },
   { deep: true }, 
   { immediate: true }, 
+  // 監聽器建立後會立刻執行一次，輸出當前 someRef 的值；之後每當 someRef 改變時，監聽器才會再次被觸發。
 )
 ```
 
@@ -317,8 +318,8 @@ export default {
 * 將一個由reactive生成的響應式數據，變成非響應式數據
 
 ## markRaw
-* 可以將原始數據標記為非響應式的，即使後來使用ref or reactive都無法是響應式
-* 當渲染具有不可變數據源的大列表時，跳過響應式能提高效能
+* 可以將**原始數據標記為非響應式的**，即使後來使用ref or reactive都無法是響應式
+* 當渲染具有不可變數據源的大列表時，**跳過響應式能提高效能**
 
 ## ref
 * 一樣是可以取得元素，但是vue3寫法不同
@@ -362,36 +363,41 @@ Vue 3 使用 Proxy 取代 Vue 2 的 Object.defineProperty。這一變化使得 V
 setup 函數讓邏輯更加聚合和可重用，避免了 Options API 中的邏輯分散問題，特別適合處理複雜邏輯和大型專案。也可以拆成Composables來做細粒化的邏輯複用。
 
 ### Tree-shaking：
-Vue 3 進行了 Tree-shaking 的優化，允許只打包實際使用到的部分，減少最終 bundle 的大小，所以使用動態載入組件可以有效減少專案打包體積哦！component、mixin也隨之為了支援 Tree-shaking 改為模組化。
+Vue 3 進行了 Tree-shaking 的優化，允許**只打包實際使用到的部分**，減少最終 bundle 的大小，所以使用動態載入組件可以有效減少專案打包體積哦！component、mixin也隨之為了支援 Tree-shaking 改為模組化。
 
 ### 虛擬 DOM 和渲染性能
-Vue 3 重新設計了虛擬 DOM，改用靜態分析（static tree hoisting），在Template 編譯時預計出哪些部分是靜態的，並只對動態部分進行更新，從而提升渲染性能。
+Vue 3 重新設計了虛擬 DOM，改用**靜態分析**（static tree hoisting），在Template 編譯時預計出哪些部分是靜態的，並**只對動態部分進行更新**，從而提升渲染性能。
 
 ### webpack
-1. 核心邏輯是打包，預先將所有的專案內容與資源做靜態分析然後包成數個檔案。第一次啟動的時候會做完整Modules分析和打包，速度會慢上許多
+1. 核心邏輯是打包，預先**將所有的專案內容與資源做靜態分析然後包成數個檔案**。第一次啟動的時候會做完整Modules分析和打包，速度會慢上許多
 2. 使用各種不同的loader和plugin處理非JS的資源，建構過程中轉換成可以使用的Module。
 
 ### Vite
-1. 基於ES Module，開發環境內不會進行預先打包，是直接使用瀏覽器所知的ES Module 導入，熱更新也優化成這個方式，不須像webpack那般重新打包，所以開發時的啟動速度爆快！
+1. 基於ES Module，開發環境內不會進行預先打包，是直接使用瀏覽器所知的**ES Module 導入**，熱更新也優化成這個方式，不須像webpack那般重新打包，所以開發時的啟動速度爆快！
 2. Vite用的是esbuild做預先構建，這是由golang編寫的工具，大幅加快較大dependency的處理速度。
 
 ### Webpack vs Vite
-1. Webpack 慢的原因是打包過程使用Dependency Graph Analysis，它會從入口檔案開始遍歷所有的 import/require 語句，每個引入的模組，繼續分析其相依來源，直到沒有新的相依來源為止。這個過程會建立一個完整模組依賴關係圖。各種loader的處理時間相對也長，未來可能用到的模組也會一並打包。而 Vite 在開發時不會將所有Module打包，而是按需載入，這大幅減少了初次啟動時間。
+1. Webpack 慢的原因是打包過程使用Dependency Graph Analysis，它會從**入口檔案開始遍歷所有的 import/require 語句**，每個引入的模組，繼續分析其相依來源，直到沒有新的相依來源為止。這個過程會建立一個完整模組依賴關係圖。各種loader的處理時間相對也長，未來可能用到的模組也會一並打包。而 Vite 在開發時不會將所有Module打包，而是**按需載入**，這大幅減少了初次啟動時間。
 
 2. Webpack 和 Vite 如何進行打包細粒化
-Webpack的Code Splitting可以異步載入或手動切塊(regex)，也有支援Tree-shaking。
-Vite則有原生ES Module支援，替可能用到的Modules產生Preload tag，讓瀏覽器可以預先載入這些模組，但不執行它們。
+Webpack的Code Splitting可以**異步載入**或手動切塊(regex)，也有支援Tree-shaking。
+Vite則有原生ES Module支援，**替可能用到的Modules產生Preload tag**，讓瀏覽器可以預先載入這些模組，但不執行它們。
 
 ### Watch 和 Computed 各自是同步還是異步？為什麼？
-watch是異步，監聽對象的資料變化時會將一個callBack放入 event queue，確保資料更新以後再執行，避免多次觸發。
-computed是同步，原理是 getter 來實踐的，但屬於懶執行。依賴的對象資料發生變化時，只有在需要時才會重新計算它的值。
+**watch是異步**，監聽對象的資料變化時會將一個callBack放入 event queue，確保資料更新以後再執行，避免多次觸發。  
+**computed是同步**，原理是 getter 來實踐的，但屬於懶執行。依賴的對象資料發生變化時，只有在需要時才會重新計算它的值。
 
 ### Vite中如果我要進一步減少打包體積，具體應該要怎麼做：
-1. 注意按需引入，Vite 有 vite-plugin-style-import。但也可以平常在使用UI框架時手動處理實際用到哪些組件。
+1. 注意按需引入，Vite 有 **vite-plugin-style-import**。但也可以平常在使用UI框架時手動處理實際用到哪些組件。
 2. 清理不必要的語言包，這些檔案很大，可以用vite-plugin-locale選擇性引入你需要的語言。
 3. rollup有自帶的manualChunks hook，可以利用它來分割，並且在terserOptions設定compress來移除多餘的console和debugger:
-4. 動態載入組件:
+4. **動態載入組件**:
 盡量把一些需要特定事件才引入的組件用這種方式寫，可以有效減少打包體積，讓下載資源的速度快上一些，或者defineAsyncComponent做lazy
+5. 使用 Bundle Visualizer 分析打包結果:
+利用 vite-plugin-visualizer 等工具分析 bundle 結構，找出占用體積較大的模組，再進行針對性優化。
+6. 外部化依賴（Externalize Dependencies）
+* 將部分大庫（例如 lodash、moment 等）設定為外部依賴，利用 CDN 或其他方式提供，讓它們不納入打包檔案中。
+* 可在 Vite 的 build.rollupOptions.external 中設定需要外部化的模組。
 ```html
 <Component :is="name" />
 ```
@@ -401,6 +407,21 @@ const componentsMap = {
 };
 ```
 5. 如果是Nuxt，將不太需要請求API的靜態頁面路由，改設定為SSG
+```html
+<script setup>
+defineRouteRules({
+  // 設定 prerender 為 true，讓 Nuxt 在生成階段預先渲染此頁面
+  prerender: true
+})
+</script>
+
+<template>
+  <div>
+    <h1>這是一個靜態生成的頁面</h1>
+    <p>這個頁面會在生成階段預先渲染成 HTML。</p>
+  </div>
+</template>
+```
 
 ### 有使用過Vue的Teleport嗎? 請你解釋運作原理和寫出一個具體例子
 1. 運作的原理:
