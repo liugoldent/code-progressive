@@ -244,11 +244,6 @@ Vue.filter("capitalize", function (value) {
 - v-if：在頻繁切換的場景，性能表現較好
 - v-show：在頻繁切換且元素結構穩定的場景，v-show 更適合
 
-## $route vs $router
-
-- $route 包含 push, params, hash, query, fullPath, matched, name 等參數
-- $router 則是包含跳轉方法與 hook
-
 ## 動態路由的數值
 
 - 於 router 的 index.js 中，對 path 屬性加上「:」，使用 router 物件的 params.id 獲取。

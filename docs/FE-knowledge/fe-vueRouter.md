@@ -40,9 +40,9 @@ export default {
 // 会匹配所有路径
 // 含有通配符的路由应该放在最后
 // 一定要放在最後！！
-path: '*',
-name: '404',
-component: () => import('../views/404.vue')
+  path: '*',
+  name: '404',
+  component: () => import('../views/404.vue')
 }
 ```
 
@@ -75,7 +75,7 @@ component: () => import('../views/404.vue')
 - 透過 HTML5 history API 裏的 `pushState()` 和`replaceState()` 方法，以及瀏覽器的 `popstate` 事件來實現
 - 優點：對 url 更加友好，更符合傳統網站的 URL 格式，對 SEO 更加有利
 - 缺點：需要伺服器的特殊配置，並且在刷新頁面時會向服務器發送新的 HTTP 請求，可能會增加服務器的負擔與網路流量
-- 缺點解釋：必須確認後端有相對應的配置才行，如果沒有後端的配置，使用者直接輸入網址，就會被導到 404 error 頁面
+- 缺點解釋：必須確認**後端有相對應的配置**才行，如果沒有後端的配置，使用者直接輸入網址，就會被導到 404 error 頁面
 
 ### hash mode
 
@@ -84,12 +84,57 @@ component: () => import('../views/404.vue')
 - 缺點：對 URL 看起來不太友好、在 SEO 優化方面也有一定局限性。（在爬蟲時，不會讀取到`#`之後的內容，因為會把`#`當作錨點）
 
 ## vue-router 有哪些元件
+### `<router-link>`：用於建立連結，點擊後會切換到對應的路由。
+* 當使用者點擊連結後，Vue Router 根據 to 屬性切換路由，從而在 `<router-view>` 中渲染對應的組件。
+### `<router-view>`：根據當前路由，渲染對應的組件。
+* 這是路由的出口，根據當前的路由路徑渲染相應的組件（例如 Home 或 About）。
+### `<keep-alive>`：包裹 `<router-view>` 時，當路由切換時會暫存不活躍的組件，保留組件狀態，避免每次切換都重新創建組件。
+* 包裹 `<router-view>` 後，當路由切換時不會銷毀不活躍的組件，而是將它們保留在緩存中。這對於需要保持狀態（例如表單填寫進度或滾動位置）的組件來說非常有用。
+```html
+<template>
+  <div id="app">
+    <h1>Vue Router 與 Keep-Alive Demo</h1>
+    <nav>
+      <router-link to="/">Home</router-link> | 
+      <router-link to="/about">About</router-link>
+    </nav>
+    <!-- 使用 keep-alive 來緩存不活躍的組件 -->
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
+  </div>
+</template>
 
-- `<router-link>`和`<router-view>`和`<keep-alive>`
+<script>
+export default {
+  name: 'App'
+}
+</script>
+
+<style>
+/* 簡單的樣式 */
+nav {
+  margin-bottom: 20px;
+}
+
+router-link {
+  margin: 0 10px;
+}
+</style>
+```
 
 ## active-class 是哪個元件的屬性
-
 - 是`<router-link>`的屬性，用來做選中樣式的切換，當`<router-link>`標籤被點選時，會應用此樣式
+
+```html
+<template>
+  <nav>
+    <router-link to="/home" active-class="my-active-class">Home</router-link>
+    <router-link to="/about" active-class="my-active-class">About</router-link>
+  </nav>
+</template>
+
+```
 
 ## 嵌套路由
 * 會有children，當在子層的router
@@ -116,28 +161,68 @@ const routes = [
 ]
 ```
 ## 命名視圖
-```html
-<router-view class="view left-sidebar" name="LeftSidebar"></router-view>
-<router-view class="view main-content"></router-view>
-<router-view class="view right-sidebar" name="RightSidebar"></router-view>
-```
+### 為什麼使用命名視圖？
+* 複雜佈局：當頁面有多個區域（例如 header、sidebar、main 等），每個區域需要獨立渲染不同的內容時，可以利用命名視圖來解決。
+* 單一路由，多個組件：你可以在一個路由中定義多個組件，各自對應到不同的 `<router-view>` 插槽，而不必為每個區域建立單獨的路由。
+
+### 如何使用命名視圖？
 ```js
+// router/index.js
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '@/components/Home.vue'
+import Sidebar from '@/components/Sidebar.vue'
+import Header from '@/components/Header.vue'
+
+const routes = [
+  {
+    path: '/dashboard',
+    components: {
+      default: Home,
+      sidebar: Sidebar,
+      header: Header
+    }
+  }
+]
+
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/', 
-      components: { // 意思說：path到'/'，會顯示三個name為以下的component
-        default: Home,
-        // LeftSidebar: LeftSidebar 的缩写
-        LeftSidebar,
-        // 它们与 `<router-view>` 上的 `name` 属性匹配
-        RightSidebar,
-      },
-    },
-  ],
+  history: createWebHistory(),
+  routes
 })
+
+export default router
+
 ```
+```html
+<!-- DashboardLayout.vue -->
+<template>
+  <div>
+    <!-- 命名為 header 的視圖 -->
+    <router-view name="header"></router-view>
+    <div class="container">
+      <!-- 命名為 sidebar 的視圖 -->
+      <router-view name="sidebar"></router-view>
+      <!-- 預設視圖 -->
+      <router-view></router-view>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'DashboardLayout'
+}
+</script>
+
+<style>
+.container {
+  display: flex;
+}
+</style>
+```
+
+### 總結
+* 命名視圖可以讓你在單一路由中同時渲染多個組件，滿足複雜佈局的需求。
+透過在路由配置中使用 components 屬性與在模板中設置具有對應 name 屬性的 `<router-view>`，你可以靈活地組合頁面不同區域的內容。
 
 ## 命名路由
 ```js
@@ -182,15 +267,26 @@ const routes = [
 
 ## `+` & `*`的差別
 
+### + (Plus Modifier)
+路由參數必須匹配「一個或多個」路徑片段。也就是說，如果使用 :param+，那麼路徑中至少要有一個對應的值。
+### * (Asterisk Modifier)
+表示該路由參數可以匹配「零個或多個」路徑片段。使用 :param* 意味著即使路徑中沒有對應的參數，匹配也會成功
+
+### summary
++：要求至少有一個匹配項，匹配結果至少有一個值。
+*：允許沒有匹配項，匹配結果可能是空的。
 ```js
 const routes = [
   // /:chapters ->  匹配 /one, /one/two, /one/two/three, 等
   { path: "/:chapters+" },
+
   // /:chapters -> 匹配 「/」, /one, /one/two, /one/two/three, 等
   // 可以匹配到「/」
   { path: "/:chapters*" },
+
   // /:orderId -> 仅匹配数字
   { path: '/:orderId(\\d+)' },
+
   // /:productName -> 匹配其他任何内容
   { path: '/:productName' },
 
@@ -370,16 +466,16 @@ beforeRouteUpdate(to, from, next){
 - 強制重新整理引數會被清空
 
 ```js
-  // 傳遞引數
-  this.$router.push({
-    name: Home，
-    params: {
-    	number: 1 ,
-    	code: '999'
-  	}
-  })
-  // 接收引數
-  const p = this.$route.params
+// 傳遞引數
+this.$router.push({
+  name: Home，
+  params: {
+    number: 1 ,
+    code: '999'
+  }
+})
+// 接收引數
+const p = this.$route.params
 ```
 
 ### Query:
@@ -392,10 +488,10 @@ beforeRouteUpdate(to, from, next){
 this.$router.push({
   name: Home，
   query: {
-  number: 1 ,
-  code: '999'
-}
-                  })
+    number: 1 ,
+    code: '999'
+  }
+})
 // 接收引數
 const q = this.$route.query
 ```
@@ -411,7 +507,7 @@ const router = new VueRouter({
       path: '/home',
       name: 'Home'，
       component:() = import('../views/home')
-		}
+    }
   ]
 })
 ```

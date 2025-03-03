@@ -140,3 +140,73 @@ var amount = 1000
 
 - 在第一個 setTimeout 函數中，使用了箭頭函數 () => {}，這導致內部的 this 始終指向 obj，因此 this.amount 訪問了 obj 的 amount 屬性，輸出為 100。
 - 在第三個 setTimeout 函數中，使用了普通的匿名函數 function() {}，訪問了全局範圍的 amount 變數，輸出為 1000。
+
+
+- 題目-3
+```js
+const obj = {
+  name: 'Alice',
+  getName: function() { return this.name; },
+  getNameArrow: () => this.name,
+};
+
+console.log(obj.getName());      // (A)
+console.log(obj.getNameArrow()); // (B)
+```
+- 題目-4
+```js
+function showName() {
+  console.log(this.name);
+}
+
+const person = {
+  name: 'Bob'
+};
+
+const boundShowName = showName.bind(person);
+boundShowName(); // (A)
+
+const callShowName = showName;
+callShowName();  // (B)
+```
+- 題目-5
+```js
+const user = {
+  name: 'Charlie',
+  greet: function() {
+    const inner = function() {
+      console.log(`Hello, ${this.name}`);
+    };
+    inner();
+  }
+};
+user.greet();
+
+```
+- 題目-6
+```js
+const user = {
+  name: 'Dave',
+  greet: function() {
+    const inner = () => {
+      console.log(`Hello, ${this.name}`);
+    };
+    inner();
+  }
+};
+
+user.greet();
+```
+- 題目-7
+```js
+const obj = {
+  name: 'Eve',
+  speak() {
+    console.log(`My name is ${this.name}`);
+  }
+};
+
+const speakFunction = obj.speak;
+speakFunction(); // (A)
+obj.speak();     // (B)
+```

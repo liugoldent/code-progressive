@@ -112,7 +112,7 @@ export default {
 ## 如何封裝axios
 [封裝Axios](https://github.com/febobo/web-interview/issues/25)
 ### 是什麼
-* 是一種清亮的HTTP客戶端
+* 是一種輕量的HTTP客戶端
 ### 特性
 * 在瀏覽器中創建XMLHttpRequests
 * 從node.js創建https請求

@@ -24,7 +24,7 @@ tags:
 - Pinia 對 TS 有更好的支援，不再需要多餘的 types 來包裝
 - Pinia 使用 action 可以直接引入函數
 - Pinia 取得 state 不用再傳遞參數，可直接使用「this」取得
-- Pinia 可以再 action 使用 async/await 取得非同步資料更改 state
+- Pinia 可以在 action 使用 async/await 取得非同步資料更改 state
 - Pinia 不再是單一 store，使得我們與 Store 互動比 VueX 簡單
 - devtools 支持
   - 追蹤 actions、mutations 時間線

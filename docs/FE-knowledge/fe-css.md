@@ -422,6 +422,55 @@ clientWidth 屬性返回的是元素的內容區域寬度（包含內邊距但�
   - 如果 position:sticky 元素的任意父節點定位設置為 overflow:hidden，則父容器無法進行滾動，所以 position:sticky 元素也不會有滾動然後固定的情況。
   - 如果 position:sticky 元素的任意父節點定位設置為 position:relative | absolute | fixed，則元素相對父元素進行定位，而不會相對 viewprot 定位。
 
+- 它的「左右」會依據「父層中距離自己最近有定位的元素」定位，
+- 它的「上下」會依據正常的 flow 排列；
+- 如果畫面滾到父層之外，則會一起被滾離視窗範圍。
+
+1. 一開始元素按正常文檔流顯示（relative 行為）。
+2. 滾動到設定位置時，Sticky 元素變得固定（看起來像 fixed）。
+3. 當父容器的邊界超出設定範圍時，Sticky 元素也會跟著離開固定狀態，不會脫離父容器。
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>Sticky 樣式範例</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+    /* sticky header */
+    header {
+      position: sticky;
+      top: 0;
+      background-color: #333;
+      color: #fff;
+      padding: 15px;
+      font-size: 20px;
+      z-index: 1000; /* 保證在其他元素上層 */
+    }
+    /* 模擬頁面內容 */
+    .content {
+      padding: 20px;
+      background: linear-gradient(to bottom, #f5f5f5, #ddd);
+      height: 2000px; /* 製造足夠的滾動距離 */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    這是一個 Sticky Header
+  </header>
+  <div class="content">
+    <p>向下滾動時，你會發現標頭一直固定在視窗的頂部。</p>
+    <p>這裡可以放置你的頁面內容。</p>
+  </div>
+</body>
+</html>
+
+```
 ## css 九宮格佈局
 
 ```html

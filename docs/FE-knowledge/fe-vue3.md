@@ -426,6 +426,17 @@ const styleObject = reactive({
 ```
 
 ### v-for v-if 注意事項
+#### 在一起使用的問題
+* 性能問題：
+由於 Vue 會先執行 v-for，然後對每一個迭代的項目再執行 v-if 判斷，如果資料量很大，這將導致不必要的計算，影響效能。
+
+* 可讀性降低：
+將過濾邏輯直接寫在模板中，不如在 computed 屬性中先過濾好資料，這樣模板更乾淨，邏輯也更容易理解和維護。
+
+* 意外的邏輯錯誤：
+有時候使用 v-if 的條件可能不容易和 v-for 迭代的邏輯匹配，容易導致預期外的結果。最佳實踐是先在 data 或 computed 中處理好資料，再用 v-for 渲染已經過濾的清單。
+
+* demo：
 ```html
 <!--
  这会抛出一个错误，因为属性 todo 此时
@@ -435,6 +446,7 @@ const styleObject = reactive({
   {{ todo.name }}
 </li>
 ```
+
 
 ## v-if v-show :is
 ### v-if
