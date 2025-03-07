@@ -701,7 +701,7 @@ export let mutations = {
 - ref reactive
 - 去掉$listener
 - v-if v-for 優先級調換
-- 改變生命週期
+- 生命週期名稱改變
 
 ## 子組件如何調用父組件方法
 

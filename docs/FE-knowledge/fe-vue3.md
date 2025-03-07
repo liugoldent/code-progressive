@@ -261,7 +261,7 @@ export default {
 
 ## 組件間通信方式
 ### 父子組件間的數據傳遞
-*（props、emit）
+* （props、emit）
 ### 跨層級共享數據（provide/inject），以及響應式數據如何保證不被誤改
 * provide('count', readonly(count));
 
@@ -290,8 +290,20 @@ export default {
 2. 使用各種不同的loader和plugin處理非JS的資源，建構過程中轉換成可以使用的Module。
 
 ### Vite
-1. 基於ES Module，開發環境內不會進行預先打包，是直接使用瀏覽器所知的**ES Module 導入**，熱更新也優化成這個方式，不須像webpack那般重新打包，所以開發時的啟動速度爆快！
-2. Vite用的是esbuild做預先構建，這是由golang編寫的工具，大幅加快較大dependency的處理速度。
+1. 原生 ES Modules
+Vite 在開發模式下直接利用瀏覽器原生支援的 **ES Modules**。這意味著它不需要像 Webpack 那樣將所有資源預先打包，因為瀏覽器可以按需請求模組，只在需要時進行編譯和載入。
+
+2. 依賴預編譯 (Pre-Bundling)
+Vite 使用 esbuild 來預編譯第三方依賴。esbuild 是使用 Go 語言編寫，性能極高，遠比 Webpack 使用的 Babel 或其他 JS 編譯器更快。
+
+3. 按需編譯
+在開發階段，Vite 僅對實際訪問的檔案進行轉譯，而不是一次性打包整個應用。這種「懶編譯」的策略大幅降低了啟動和更新的時間。
+
+4. 快速的模組熱重載 (HMR)
+利用 ES Modules 的特性，Vite 的 HMR 能夠快速更新變更的模組，而不必重新編譯整個應用，使得開發時的反饋速度更快。
+
+5. 簡化的構建流程
+雖然在生產環境中 Vite 還是使用 Rollup 來進行打包，但其在開發環境中的優化讓整體開發體驗更為流暢。
 
 ### 原因
 1. Webpack 慢的原因是打包過程使用Dependency Graph Analysis，它會從**入口檔案開始遍歷所有的 import/require 語句**，每個引入的模組，繼續分析其相依來源，直到沒有新的相依來源為止。這個過程會建立一個完整模組依賴關係圖。各種loader的處理時間相對也長，未來可能用到的模組也會一並打包。而 Vite 在開發時不會將所有Module打包，而是**按需載入**，這大幅減少了初次啟動時間。

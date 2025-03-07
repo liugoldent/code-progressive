@@ -90,7 +90,7 @@ Promise
 });
 ```
 
-### Promise.settled
+### Promise.allSettled
 * 這個靜態方法接收一個可迭代物件，並返回一個新的 Promise 實例。該 Promise 實例在可迭代物件中的**所有 Promise 實例都解決或拒絕後才會解決**，並且解決值是一個包含所有 Promise 實例解決狀態的陣列，每個元素都是一個物件，包含 status 屬性表示狀態（fulfilled 或 rejected）和 value 或 reason 屬性表示解決值或拒絕原因。
 ```js
 const promise1 = Promise.resolve(3);
