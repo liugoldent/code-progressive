@@ -83,6 +83,13 @@ class Solution:
         return False
 ```
 
+### 使用set直接比對長度
+```python
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        return len(nums) != len(set(nums))
+```
+
 ## 測試程式
 
 ```javascript

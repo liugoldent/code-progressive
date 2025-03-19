@@ -112,6 +112,19 @@ class Solution:
         return list(anagramsMap.values())
 ```
 
+```python
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        from collections import defaultdict
+        argument = defaultdict(list)
+
+        for s in strs:
+            key = ''.join(sorted(s))
+            argument[key].append(s)
+        
+        return list(argument.values())
+```
+
 ## test case
 
 ```js

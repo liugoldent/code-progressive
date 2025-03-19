@@ -100,6 +100,19 @@ class Solution:
         return True
 ```
 
+```python
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        
+# or
+
+from collections import Counter
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        return Counter(s) == Counter(t)
+```
+
 ```javascript
 // test code
 const isAnagram = require("./leetcode.js");

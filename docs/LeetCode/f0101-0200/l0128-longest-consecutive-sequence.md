@@ -76,21 +76,18 @@ const longestConsecutive = function (nums) {
 ```python
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        if len(nums) == 0 or not nums:
-            return 0
+        numSet = set(nums)
+        longest = 0
 
-        setNums = set(nums)
-        maxLength = 0
+        for num in numSet:
+            if num - 1 not in numSet:
+                current_num = num
+                current_streak = 1
 
-        for num in setNums:
-            if num-1 not in setNums:
-                currentNum = num
-                currentLength = 1
+                while current_num + 1 in numSet:
+                    current_num += 1
+                    current_streak += 1
+                longest = max(longest, current_streak)
 
-                while currentNum+1 in setNums:
-                    currentNum += 1
-                    currentLength += 1
-                maxLength = max(currentLength, maxLength)
-
-        return maxLength
+        return longest
 ```

@@ -32,7 +32,7 @@ keywords:
   ]
 ---
 
-# [0238] Product of Array Except Self
+# [0238] Products of Array Except Self
 
 ## Javascript 解
 
@@ -89,4 +89,23 @@ class Solution:
             right_product = nums[i] * right_product
 
         return result
+```
+
+```python
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        output = [1] * n
+
+        prefix = 1
+        for i in range(n):
+            output[i] = prefix
+            prefix *= nums[i]
+
+        suffix = 1
+        for j in range(n-1, -1, -1):
+            output[j] *= suffix
+            suffix *= nums[j]
+
+        return output
 ```

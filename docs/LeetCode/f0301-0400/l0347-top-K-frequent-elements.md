@@ -121,6 +121,18 @@ def topKFrequent(nums, k):
 # print(topKFrequent(nums, k))  # Output: [1, 2]
 ```
 
+```python
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        frequency = {}
+        for num in nums:
+            frequency[num] = frequency.get(num, 0) + 1
+        
+        sortedItem = sorted(frequency.items(), key=lambda x:x[1] , reverse = True)
+
+        return [item[0] for item in sortedItem[:k]]
+```
+
 1. `counter.keys()`: counter 是一個 Counter 對象，`counter.keys()` 返回了所有不重複的元素，也就是數組中的所有不同的元素。
 
 2. `sorted(...)`: 這個函數用於對給定的可迭代對象進行排序。在這裡，我們使用 sorted 函數來對元素進行排序。
@@ -132,3 +144,40 @@ def topKFrequent(nums, k):
 ### lambda 函式參考
 
 [排序？index sort? lambda 又有你的事了？](https://ithelp.ithome.com.tw/articles/10218710)
+**key：傳入是物件就拿value，傳入是陣列就拿第二個元素**
+#### example
+1. 排序學生分數
+```python
+students = [("Alice", 85), ("Bob", 90), ("Charlie", 80)]
+sorted_students = sorted(students, key=lambda x: x[1], reverse=True)
+print(sorted_students)  
+# 輸出: [('Bob', 90), ('Alice', 85), ('Charlie', 80)]
+# 會取得每個元組的第二個元素（即分數）去做排序
+```
+
+2. 排序字典項目
+```python
+students = [("Alice", 85), ("Bob", 90), ("Charlie", 80)]
+sorted_students = sorted(students, key=lambda x: x[1], reverse=True)
+print(sorted_students)  
+# 輸出: [('Bob', 90), ('Alice', 85), ('Charlie', 80)]
+# 會取得每個元組的第二個元素（即分數）去做排序
+# 取得每個元組的 value（分數）
+```
+
+3. 排序二維列表
+```python
+data = [[1, 3], [2, 1], [3, 2]]
+sorted_data = sorted(data, key=lambda x: x[1], reverse=True)
+print(sorted_data)  
+# 輸出: [[1, 3], [3, 2], [2, 1]]
+# 因為傳入數組，故也是利用每個元素的第二個值做排序
+```
+
+4. 排序座標點（依 y 座標由大到小）
+```python
+points = [(1, 2), (3, 1), (2, 5), (4, 3)]
+sorted_points = sorted(points, key=lambda x: x[1], reverse=True)
+print(sorted_points)  
+# 輸出: [(2, 5), (4, 3), (1, 2), (3, 1)]
+```
