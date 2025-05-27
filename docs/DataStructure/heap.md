@@ -33,22 +33,98 @@ tags:
 
 ## js Heap Code
 ```js
+class MaxHeap {
+  constructor() {
+    this.heap = [];
+  }
+
+  size() {
+    return this.heap.length;
+  }
+
+  parent(i) {
+    return Math.floor((i - 1) / 2);
+  }
+
+  left(i) {
+    return 2 * i + 1;
+  }
+
+  right(i) {
+    return 2 * i + 2;
+  }
+
+  swap(i, j) {
+    [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
+  }
+
+  // 插入：上浮
+  push(val) {
+    this.heap.push(val);
+    let i = this.heap.length - 1;
+    while (i > 0 && this.heap[i] > this.heap[this.parent(i)]) {
+      this.swap(i, this.parent(i));
+      i = this.parent(i);
+    }
+  }
+
+  // 弹出堆顶：用最后一个顶替后下沉
+  pop() {
+    if (this.size() === 0) return undefined;
+    const max = this.heap[0];
+    const end = this.heap.pop();
+    if (this.size() > 0) {
+      this.heap[0] = end;
+      this.heapify(0);
+    }
+    return max;
+  }
+
+  // 下沉：保证子堆也保持堆序
+  heapify(i) {
+    const l = this.left(i), r = this.right(i);
+    let largest = i;
+    if (l < this.size() && this.heap[l] > this.heap[largest]) largest = l;
+    if (r < this.size() && this.heap[r] > this.heap[largest]) largest = r;
+    if (largest !== i) {
+      this.swap(i, largest);
+      this.heapify(largest);
+    }
+  }
+
+  // 查看堆顶
+  peek() {
+    return this.heap[0];
+  }
+}
+
+
 class MinHeap {
   constructor() {
     this.heap = [];
   }
 
-  // 索引辅助
-  parent(i) { return Math.floor((i - 1) / 2); }
-  left(i)   { return 2 * i + 1; }
-  right(i)  { return 2 * i + 2; }
+  size() {
+    return this.heap.length;
+  }
 
-  // 交换
+  parent(i) {
+    return Math.floor((i - 1) / 2);
+  }
+
+  left(i) {
+    return 2 * i + 1;
+  }
+
+  right(i) {
+    return 2 * i + 2;
+  }
+
   swap(i, j) {
     [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
   }
 
-  // push 并上浮
+  // 插入：上浮
   push(val) {
     this.heap.push(val);
     let i = this.heap.length - 1;
@@ -58,24 +134,24 @@ class MinHeap {
     }
   }
 
-  // pop 堆顶，并下沉
+  // 弹出堆顶：用最后一个顶替后下沉
   pop() {
-    if (this.heap.length === 0) return undefined;
+    if (this.size() === 0) return undefined;
     const min = this.heap[0];
-    const last = this.heap.pop();
-    if (this.heap.length) {
-      this.heap[0] = last;
+    const end = this.heap.pop();
+    if (this.size() > 0) {
+      this.heap[0] = end;
       this.heapify(0);
     }
     return min;
   }
 
-  // 从 i 节点开始下沉
+  // 下沉：保证子堆也保持堆序
   heapify(i) {
     const l = this.left(i), r = this.right(i);
     let smallest = i;
-    if (l < this.heap.length && this.heap[l] < this.heap[smallest]) smallest = l;
-    if (r < this.heap.length && this.heap[r] < this.heap[smallest]) smallest = r;
+    if (l < this.size() && this.heap[l] < this.heap[smallest]) smallest = l;
+    if (r < this.size() && this.heap[r] < this.heap[smallest]) smallest = r;
     if (smallest !== i) {
       this.swap(i, smallest);
       this.heapify(smallest);
@@ -86,10 +162,5 @@ class MinHeap {
   peek() {
     return this.heap[0];
   }
-
-  size() {
-    return this.heap.length;
-  }
 }
-
 ```

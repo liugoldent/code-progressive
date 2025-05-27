@@ -83,3 +83,75 @@ var findKthLargest = function (nums, k) {
   return quickSelect(nums, 0, nums.length - 1, k);
 };
 ```
+
+### 最大堆最小堆
+```js
+class MaxHeap {
+    constructor() {
+        this.heap = []
+    }
+    size(){
+        return this.heap.length
+    }
+    parent(i){
+        return Math.floor((i-1) / 2)
+    }
+    left(i) {
+        return 2*i+1
+    }
+    right(i){
+        return 2*i+2
+    }
+    swap(i,j){
+        [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]]
+    }
+    push(val){
+        this.heap.push(val)
+        let i = this.heap.length - 1
+        while(i > 0 && this.heap[i] > this.heap[this.parent(i)]){
+            this.swap(i, this.parent(i))
+            i = this.parent(i)
+        }
+    }
+
+    pop(){
+        if(this.heap.length === 0) return undefined
+        const max = this.heap[0]
+        const end = this.heap.pop()
+        if(this.size() > 0){
+            this.heap[0] = end
+            this.heapify(0)
+        }
+        return max
+    }
+
+    heapify(i){
+        const l = this.left(i)
+        const r = this.right(i)
+        let largest = i
+        if(l < this.size() && this.heap[l] > this.heap[largest]) largest = l
+        if(r < this.size() && this.heap[r] > this.heap[largest]) largest = r
+        if(largest !== i){
+            this.swap(i, largest)
+            this.heapify(largest)
+        }
+    }
+}
+
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var findKthLargest = function(nums, k) {
+    const heap = new MaxHeap()
+    nums.forEach(x => heap.push(x))
+
+    for(let i = 1; i < k; i++){
+        heap.pop()
+    }
+
+    return heap.pop()
+};
+```
