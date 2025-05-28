@@ -101,6 +101,37 @@ var topKFrequent = function (nums, k) {
 };
 ```
 
+```js
+// bucket solution
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+var topKFrequent = function(nums, k) {
+    const freq = new Map()
+    for(const x of nums){
+        freq.set(x, (freq.get(x) || 0) + 1)
+    }
+    const buckets = Array(nums.length + 1)
+    .fill(null)
+    .map(() => [])
+
+    for(const [num, count] of freq.entries()){
+        buckets[count].push(num)
+    }
+
+    const res = []
+    for(let i = buckets.length - 1; i >= 0 && res.length < k ; i--){
+        if(buckets[i].length > 0){
+            res.push(...buckets[i])
+        }
+    }
+
+    return res.slice(0, k)
+};
+```
+
 ## Python 解
 
 ```python
