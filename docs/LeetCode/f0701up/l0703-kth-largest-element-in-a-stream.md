@@ -12,27 +12,70 @@ tags:
 ## 一般 sort 解法
 
 ```js
+/* ---------- 最小堆工具函式 ---------- */
+function heapSize(h) { return h.length; }
+function heapPeek(h) { return h[0]; }
+
+function heapPush(h, val) {
+  h.push(val);
+  let i = h.length - 1;
+  while (i > 0) {
+    const p = Math.floor((i-1)/2);
+    if (h[p] <= h[i]) break;
+    [h[p], h[i]] = [h[i], h[p]];
+    i = p;
+  }
+}
+
+function heapPop(h) {
+  if (!h.length) return undefined;
+  const min = h[0];
+  const last = h.pop();
+  if (h.length) {
+    h[0] = last;
+    let i = 0;
+    while (true) {
+      const l = i * 2 + 1;
+      const r = l + 1;
+      let s = i;
+      if (l < h.length && h[l] < h[s]) s = l;
+      if (r < h.length && h[r] < h[s]) s = r;
+      if (s === i) break;
+      [h[i], h[s]] = [h[s], h[i]];
+      i = s;
+    }
+  }
+  return min;
+}
+/* ----------------------------------- */
+
+/**
+ * @param {number} k
+ * @param {number[]} nums
+ */
 var KthLargest = function (k, nums) {
-  this.k = k; // 代表要找到的第k大元素
+  this.k = k;
   this.heap = [];
-  for (let num of nums) {
-    this.add(num);
+  /* 初始化：把 nums 全扔進堆（超過 k 就彈最小） */
+  for (var i = 0; i < nums.length; i++) {
+    this.add(nums[i]);
   }
 };
 
+/**
+ * @param {number} val
+ * @return {number}
+ */
 KthLargest.prototype.add = function (val) {
-  if (this.heap.length < this.k) {
-    // 如果最小堆的長度小於k => 直接將元素添加到堆中
-    this.heap.push(val);
-    this.heap.sort((a, b) => a - b); // 使用sort方法进行排序
-  } else if (val > this.heap[0]) {
-    // 如果元素大于堆顶元素，替换堆顶元素并进行排序
-    this.heap[0] = val;
-    this.heap.sort((a, b) => a - b); // 使用sort方法进行排序
+  if (heapSize(this.heap) < this.k) {
+    heapPush(this.heap, val)
+  } else if (val > heapPeek(this.heap)) {
+    heapPop(this.heap)
+    heapPush(this.heap, val)
   }
-
-  return this.heap[0];
+  return heapPeek(this.heap)   // 堆頂 = 第 k 大
 };
+
 ```
 
 ## 進階二分搜尋法

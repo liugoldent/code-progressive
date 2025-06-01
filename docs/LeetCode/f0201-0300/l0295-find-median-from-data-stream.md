@@ -11,8 +11,9 @@ tags:
 
 [堆的講解-youtube](https://www.youtube.com/watch?v=j-DqQcNPGbE&list=PLAnjpYDY-l8L7kiVvyYrYsM9pq9BflB2l&index=18&ab_channel=%E9%BB%84%E6%B5%A9%E6%9D%B0)
 [堆的講解-it](https://ithelp.ithome.com.tw/articles/10279678?sc=iThelpR)
+[推薦視頻](https://www.youtube.com/watch?v=cqhED6Xgy9Y&ab_channel=%E5%B1%B1%E6%99%AF%E5%9F%8E%E4%B8%80%E5%A7%90)
 
-## Javascript 解
+## Javascript 解 - 1
 
 ```js
 class MedianFinder {
@@ -300,4 +301,187 @@ class MaxHeap {
     ];
   }
 }
+```
+
+## Javascript 解 - 2
+
+```js
+/**
+ * 用于实现堆（优先队列）的通用类
+ * comparator(a, b) 返回 true 时，表示 a 的优先级高于 b
+ */
+class Heap {
+  constructor(comparator) {
+    this.data = [];
+    this.comparator = comparator;
+  }
+
+  size() {
+    return this.data.length;
+  }
+
+  peek() {
+    return this.data[0];
+  }
+
+  // 插入元素 x 到堆中，维持堆性质
+  push(x) {
+    this.data.push(x);
+    this._siftUp(this.data.length - 1);
+  }
+
+  // heap - pop
+  pop() {
+    if (this.data.length === 0) return null;
+    const top = this.data[0];
+    const last = this.data.pop();
+    if (this.data.length > 0) {
+      this.data[0] = last;
+      this._siftDown(0);
+    }
+    return top;
+  }
+
+  _parent(index) {
+    return Math.floor((index - 1) / 2);
+  }
+
+  _leftChild(index) {
+    return index * 2 + 1;
+  }
+
+  _rightChild(index) {
+    return index * 2 + 2;
+  }
+  // 這個是heap - 上浮
+  _siftUp(index) {
+    let parent = this._parent(index);
+    while (
+      index > 0 &&
+      this.comparator(this.data[index], this.data[parent])
+    ) {
+      this._swap(index, parent);
+      index = parent;
+      parent = this._parent(index);
+    }
+  }
+
+  // 這個是heap - heapify
+  _siftDown(index) {
+    const size = this.data.length;
+    while (true) {
+      let left = this._leftChild(index);
+      let right = this._rightChild(index);
+      let candidate = index;
+
+      if (
+        left < size &&
+        this.comparator(this.data[left], this.data[candidate])
+      ) {
+        candidate = left;
+      }
+      if (
+        right < size &&
+        this.comparator(this.data[right], this.data[candidate])
+      ) {
+        candidate = right;
+      }
+      if (candidate === index) break;
+      this._swap(index, candidate);
+      index = candidate;
+    }
+  }
+
+  _swap(i, j) {
+    [this.data[i], this.data[j]] = [this.data[j], this.data[i]];
+  }
+}
+
+/**
+ * 295. Find Median From Data Stream
+ * 维护一个最大堆（lowerHalf）和一个最小堆（upperHalf）：
+ * - lowerHalf: 存储较小的一半数，用最大堆实现，堆顶是这一半的最大值
+ * - upperHalf: 存储较大的一半数，用最小堆实现，堆顶是这一半的最小值
+ *
+ * 插入新数时：
+ *   1. 如果 lowerHalf 为空，或者新数 ≤ lowerHalf.peek()，就推到 lowerHalf；否则推到 upperHalf。
+ *   2. 平衡两个堆：保证 |size(lowerHalf) - size(upperHalf)| ≤ 1。若差值为 2，就把堆顶元素从大堆移动到小堆。
+ *
+ * 查找中位数时：
+ *   - 若两个堆大小相等，则中位数 = (lowerHalf.peek() + upperHalf.peek()) / 2
+ *   - 否则中位数 = 元素较多的那一堆的堆顶
+ */
+class MedianFinder {
+  constructor() {
+    // 最大堆：放较小的一半元素，堆顶是最大值
+    this.lowerHalf = new Heap((a, b) => a > b);
+    // 最小堆：放较大的一半元素，堆顶是最小值
+    this.upperHalf = new Heap((a, b) => a < b);
+  }
+
+  /** 
+   * 将数值 num 加入数据流
+   * @param {number} num
+   * @return {void}
+   */
+  addNum(num) {
+    // 初步将 num 放入合适的堆
+    if (
+      this.lowerHalf.size() === 0 ||
+      num <= this.lowerHalf.peek()
+    ) {
+      this.lowerHalf.push(num);
+    } else {
+      this.upperHalf.push(num);
+    }
+
+    // 如果两个堆的大小差 > 1，需要从大堆“弹顶”到小堆
+    if (this.lowerHalf.size() - this.upperHalf.size() > 1) {
+      this.upperHalf.push(this.lowerHalf.pop());
+    } else if (this.upperHalf.size() - this.lowerHalf.size() > 1) {
+      this.lowerHalf.push(this.upperHalf.pop());
+    }
+  }
+
+  /**
+   * 返回到目前为止所有数的中位数
+   * @return {number}
+   */
+  findMedian() {
+    const sizeL = this.lowerHalf.size();
+    const sizeU = this.upperHalf.size();
+
+    if (sizeL === sizeU) {
+      // 如果两个堆大小相等，中位数为两个堆顶平均
+      if (sizeL === 0) return null; // 如果都空，返回 null 或者按题意返回 0
+      return (this.lowerHalf.peek() + this.upperHalf.peek()) / 2;
+    } else if (sizeL > sizeU) {
+      return this.lowerHalf.peek();
+    } else {
+      return this.upperHalf.peek();
+    }
+  }
+}
+
+/* ------------------ 测试 ------------------ */
+const mf = new MedianFinder();
+mf.addNum(1);
+mf.addNum(2);
+console.log(mf.findMedian()); // 输出 1.5
+mf.addNum(3);
+console.log(mf.findMedian()); // 输出 2
+
+// 进一步测试
+const mf2 = new MedianFinder();
+const nums = [5, 15, 1, 3];
+for (const x of nums) {
+  mf2.addNum(x);
+  console.log(`Added ${x}, current median: ${mf2.findMedian()}`);
+}
+// 依次输出：
+// Added 5, current median: 5
+// Added 15, current median: 10
+// Added 1, current median: 5
+// Added 3, current median: 4
+
 ```
