@@ -95,3 +95,70 @@ const findWords = function (board, words) {
   return result;
 };
 ```
+
+
+```js
+/**
+ * @param {character[][]} board
+ * @param {string[]} words
+ * @return {string[]}
+ */
+
+ function buildTrie(words) {
+  const root = {};
+
+  for (const word of words) {
+    let node = root;
+    for (const char of word) {
+      if (!node[char]) {
+        node[char] = {};
+      }
+      node = node[char];
+    }
+    node.word = word; // 在單字結尾儲存完整單字
+  }
+
+  return root;
+}
+
+var findWords = function(board, words) {
+    const result = []
+    const trie = buildTrie(words)
+    const rows = board.length
+    const cols = board[0].length
+
+    const dfs = (i, j, node) => {
+        const char = board[i][j]
+        if(!node[char]) return
+
+        const nextNode = node[char]
+
+        if(nextNode.word){
+            result.push(nextNode.word)
+            nextNode.word = null
+        }
+
+        board[i][j] = '#'
+
+        const directions = [[1,0],[0,1],[-1,0],[0,-1]];
+
+        for(const [dx, dy] of directions) {
+            const ni = i + dx
+            const nj = j + dy
+            if(ni >= 0 && nj >= 0 && ni < rows && nj < cols && board[ni][nj] !== '#'){
+                dfs(ni, nj, nextNode)
+            }
+        }
+
+        board[i][j] = char
+    }
+
+    for(let i = 0 ; i < rows; i++){
+        for(let j = 0; j < cols; j++){
+            dfs(i, j, trie)
+        }
+    }
+
+    return result
+};
+```
