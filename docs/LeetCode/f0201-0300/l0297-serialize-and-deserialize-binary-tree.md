@@ -77,6 +77,7 @@ var deserialize = function (data) {
   while (queue.length > 0 && index < splitData.length) {
     // 先取出節點
     let node = queue.shift();
+    if(!node) continue
 
     // 如果資料不為null
     if (splitData[index] !== "null") {
