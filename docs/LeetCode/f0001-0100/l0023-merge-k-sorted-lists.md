@@ -39,14 +39,17 @@ var mergeKLists = function (lists) {
     }
   };
 
+  // O(n)
   for (let i = 0, len = lists.length; i < len; i++) {
     if (lists[i] !== null) {
       addLinkedListToMainArray(lists[i]);
     }
   }
 
+  // O(log n)
   mainArray = mainArray.sort((a, b) => a - b);
 
+  // O(n)
   let newList = null;
   for (let i = mainArray.length - 1; i >= 0; i--) {
     newList = new ListNode(mainArray[i], newList);
