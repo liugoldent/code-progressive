@@ -31,7 +31,7 @@ function generateFilenameFromHeader(header) {
 
 
 // 範例
-const input = "Q2. Minimum Absolute Difference in Sliding Submatrix";
+const input = "Q1. Find All Anagrams in a String";
 const filename = generateFilenameFromHeader(input);
 console.log(filename); 
 // 印出： "q1-partition-array-into-two-equal-product-subsets.md"
