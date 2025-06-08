@@ -22,30 +22,42 @@ tags:
   [Ans Video](https://www.youtube.com/watch?v=fBiiKy8kwaY&t=205&ab_channel=%E8%B4%BE%E8%80%83%E5%8D%9A)
 
 ```js
+/**
+ * @param {string} s
+ * @return {number}
+ */
 var lengthOfLongestSubstring = function(s) {
-  let sMap = new Map();  // 记录每个字符上一次出现的索引
-  let left = 0;          // 滑动窗口左边界
-  let maxLen = 0;        // 记录最大窗口长度
+    // 用來記錄每個字元上次出現的位置
+    let sMap = new Map()
 
-  for (let i = 0; i < s.length; i++) {
-    const charS = s[i];
-    // 如果之前出现过这个字符，就尝试把 left 移到 "上一次出现位置 + 1"
-    if (sMap.has(charS)) {
-      // prev = 上次出现的索引
-      const prev = sMap.get(charS);
-      // left 不能后退，所以要取 max
-      left = Math.max(left, prev + 1);
+    // 左邊界初始在 index 0
+    let left = 0
+
+    // 最大長度結果
+    let maxLen = 0
+
+    // 右邊界 i 從頭走到尾
+    for (let i = 0; i < s.length; i++) {
+        const charS = s[i]
+
+        // 如果這個字元之前出現過，且位置在目前視窗內
+        if (sMap.has(charS)) {
+            const prev = sMap.get(charS)
+            // 把左邊界推到「重複字元的下一個位置」與目前 left 中較大的那一個
+            // 避免倒退回去（保證 left 單調不減）
+            left = Math.max(left, prev + 1)
+        }
+
+        // 更新該字元在 map 中最後出現的位置為目前的 i
+        sMap.set(charS, i)
+
+        // 計算目前視窗長度（i - left + 1）
+        maxLen = Math.max(maxLen, i - left + 1)
     }
 
-    // 更新当前字符最新出现的位置为 i
-    sMap.set(charS, i);
-
-    // 计算当前窗口长度 = i - left + 1，更新 maxLen
-    maxLen = Math.max(maxLen, i - left + 1);
-  }
-
-  return maxLen;
+    return maxLen
 };
+
 
 
 test("基本測試", () => {
