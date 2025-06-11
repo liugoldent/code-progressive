@@ -1,3 +1,22 @@
+---
+tags:
+  - LeetCode
+  - Easy
+  - Find if Path Exists in Graph
+  - Javascript
+---
+
+# [1971] Find if Path Exists in Graph
+
+## Javascript 解
+```js
+/**
+ * @param {number} n
+ * @param {number[][]} edges
+ * @param {number} source
+ * @param {number} destination
+ * @return {boolean}
+ */
 function validPath(n, edges, source, destination) {
   // 1. 建圖：鄰接表
   const graph = Array.from({ length: n }, () => [])
@@ -25,7 +44,4 @@ function validPath(n, edges, source, destination) {
 
   return dfs(source)
 }
-
-
-// 範例測試
-validPath(3, [[0,1],[1,2],[2,0]], 0, 2)
+```

@@ -34,6 +34,11 @@ var maxDepth = function(root) {
     const R = maxDepth(root.right)
     return Math.max(L, R) + 1
 };
+
+var maxDepth = function(root) {
+    if(!root) return 0
+    return 1 + Math.max(maxDepth(root.left), maxDepth(root.right))
+};
 ```
 
 ```js
