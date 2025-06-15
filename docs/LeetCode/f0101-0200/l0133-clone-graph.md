@@ -47,13 +47,16 @@ var cloneGraph = function(node) {
     const visited = new Map();
 
     function dfs(curr) {
+        // 如果已經複製過了，直接回傳該 clone 節點
         if (visited.has(curr)) {
             return visited.get(curr);
         }
 
+        // 建立新的 clone 節點（淺層，不含鄰居）
         const copy = new Node(curr.val);
         visited.set(curr, copy);
 
+        // 遞迴複製所有鄰居
         for (const neighbor of curr.neighbors) {
             copy.neighbors.push(dfs(neighbor));
         }
