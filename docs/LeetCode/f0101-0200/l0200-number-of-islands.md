@@ -1,4 +1,10 @@
-# LeetCode 200 — Number of Islands 解題紀錄（JavaScript｜DFS｜圖遍歷）
+---
+description: "LeetCode 200 - Number of Islands JavaScript 題解，使用 DFS 深度優先搜索與 Grid 圖遍歷技巧，教你一步步計算島嶼數量。適合面試圖論與遞迴常見題目準備。"
+date: 2025-06-16
+tags: [LeetCode, JavaScript, DFS, Graph, Grid Traversal, Flood Fill, 遞迴, 面試題]
+---
+
+# [0200] Number of Islands
 
 > Tags: `DFS`, `Graph`, `Grid Traversal`, `Flood Fill`, `LeetCode`, `JavaScript`, `面試常見題`
 > 難度：中等  

@@ -1,10 +1,9 @@
 ---
-title: "LeetCode 133 - Clone Graph | JavaScript DFS 深拷貝圖解法"
 description: "使用 JavaScript 解 LeetCode 133 Clone Graph，採用 DFS 遞迴實作圖的深拷貝，含完整程式碼與解說"
 tags: [LeetCode, JavaScript, Graph, DFS, Clone Graph, 深拷貝, 資料結構]
 ---
 
-# [0133] Clone Graph - JavaScript 解法
+# [0133] Clone Graph
 
 > 使用 DFS 遞迴演算法實作無向圖的深層複製，這題目是典型的圖遍歷應用。支援有環的圖，避免重複拷貝。
 

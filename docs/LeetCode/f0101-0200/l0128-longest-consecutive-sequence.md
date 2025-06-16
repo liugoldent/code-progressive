@@ -1,93 +1,66 @@
 ---
-description: leetCode Longest Consecutive Sequence js 解答, python 解答
-tags:
-  - LeetCode
-  - Medium
-  - javascript
-  - python
-  - interview
-  - Hashing
-keywords:
-  [
-    facebook,
-    amazon,
-    apple,
-    netflix,
-    google,
-    faang interview,
-    leetCode,
-    js,
-    javascript,
-    interview,
-    js 面試,
-    js interview,
-    前端面試題,
-    frontend interview,
-    フロントエンドの面接質問,
-    프론트엔드 면접 문제,
-    software engineer,
-    Longest Consecutive Sequence,
-    Longest Consecutive Sequence js ans,
-    Longest Consecutive Sequence python ans,
-  ]
+description: "LeetCode 128 題解：Longest Consecutive Sequence。使用 JavaScript 搭配 Set 判斷連續序列開頭，實現 O(n) 時間複雜度的高效解法，避免排序並優化重複處理。"
+date: 2025-06-16
+tags: [LeetCode, JavaScript, Set, 陣列處理, 最長序列, 面試題, 哈希]
 ---
 
 # [0128] Longest Consecutive Sequence
 
-## Javascript 解
+> **Tags:** `HashSet`, `陣列`, `JavaScript`, `LeetCode`, `面試常考`, `連續子序列`  
+> **難度：** Hard  
+> **題目連結：** [LeetCode 128 - Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)
 
-[0128 youtube](https://www.youtube.com/watch?v=rc2QdQ7U78I&ab_channel=HuaHua)
+---
 
-1. 主要也是使用 hashSet 去解
-2. 對 hashSet 做遍歷
-3. 如果存在著比現在 item 還小的數字，則代表不是左邊界->繼續去找
-4. 若找到後，給予現在 curNum & curMax 大小
-5. 做 while 迴圈，如果一直有找到 curNum+1 的數值，則++
-6. 最後更新 max 值
+## 📘 題目描述
 
-```javascript
+給定一個整數陣列 `nums`，請你找出其中最長的**連續元素序列**（順序可打亂），並回傳該序列的長度。
+
+**你必須設計一個時間複雜度為 O(n)** 的演算法解決此問題。
+
+---
+
+## 🧠 解題思路（使用 Set 判斷序列開頭）
+
+這題不能用排序（O(n log n)），我們可以使用 `Set` 搭配以下邏輯：
+
+1. 先將所有元素存入 `Set`，以 O(1) 查找。
+2. 針對每個元素 `num`：
+   - 如果 `num - 1` **不存在於 Set 中**，代表這是序列的開頭。
+   - 向後不斷查找 `num+1`、`num+2`... 直到序列中斷，記錄該序列長度。
+3. 每次更新最大長度。
+
+透過這種方式，每個數最多只被處理一次，達成 O(n)。
+
+---
+
+## ✅ JavaScript 實作
+
+```js
 /**
  * @param {number[]} nums
  * @return {number}
  */
-const longestConsecutive = function (nums) {
-  if (nums.length === 0) {
-    return 0;
-  }
-  let setNums = new Set(nums);
-  let maxLength = 0;
-  for (let num of setNums) {
-    if (!setNums.has(num - 1)) {
-      let currentNum = num;
-      let currentLength = 1;
-      while (setNums.has(currentNum + 1)) {
-        currentNum++;
-        currentLength++;
-      }
-      maxLength = Math.max(maxLength, currentLength);
+var longestConsecutive = function(nums) {
+    if (!nums.length) return 0;
+
+    const setNums = new Set(nums);
+    let maxLength = 0;
+
+    for (let num of setNums) {
+        // 只有當 num 是序列起點時才進入
+        if (!setNums.has(num - 1)) {
+            let currentNum = num;
+            let currentLength = 1;
+
+            while (setNums.has(currentNum + 1)) {
+                currentNum++;
+                currentLength++;
+            }
+
+            maxLength = Math.max(maxLength, currentLength);
+        }
     }
-  }
-  return maxLength;
+
+    return maxLength;
 };
-```
-
-## Python 解
-
-```python
-class Solution:
-    def longestConsecutive(self, nums: List[int]) -> int:
-        numSet = set(nums)
-        longest = 0
-
-        for num in numSet:
-            if num - 1 not in numSet:
-                current_num = num
-                current_streak = 1
-
-                while current_num + 1 in numSet:
-                    current_num += 1
-                    current_streak += 1
-                longest = max(longest, current_streak)
-
-        return longest
-```
