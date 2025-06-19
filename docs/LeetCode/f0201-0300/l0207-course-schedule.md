@@ -1,5 +1,4 @@
 ---
-title: "[LeetCode] 207. Course Schedule｜DFS 拓樸排序｜JS 解法"
 description: "使用 DFS 深度優先搜尋判斷有向圖中是否存在環。LeetCode 207 Course Schedule 題目完整解析，含 JavaScript 程式碼與圖解。"
 date: 2025-06-12
 tags: [LeetCode, 演算法, Graph, DFS, JavaScript, 拓樸排序]
@@ -8,7 +7,7 @@ canonical: "https://yourdomain.com/leetcode/207-course-schedule"
 image: "https://yourdomain.com/assets/leetcode-course-schedule.png"
 ---
 
-# 📘 LeetCode 207. Course Schedule 解題筆記
+# [0207] Course Schedule
 
 這題是典型的 **圖論 DFS 判環** 問題。給定課程與先修課程的配對，判斷是否可以完成所有課程（即圖中**不能有循環**）。
 

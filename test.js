@@ -1,31 +1,19 @@
-function validPath(n, edges, source, destination) {
-  // 1. 建圖：鄰接表
-  const graph = Array.from({ length: n }, () => [])
 
-  for(const [u, v] of edges){
-    graph[u].push(v)
-    graph[v].push(u)
-  }
+var wordBreak = function(s, wordDict) {
+    const wordSet = new Set(wordDict)
+    const dp = new Array(s.length + 1).fill(false)
+    dp[0] = true
 
-  const visited = new Set()
-
-  // 2. DFS 遍歷
-  function dfs(node){
-    if(node === destination) return true
-    visited.add(node)
-
-    for(const neighbor of graph[node]){
-      if(!visited.has(neighbor)){
-        if(dfs(neighbor)) return true
-      }
+    for(let i = 1; i <= s.length ; i++){
+        for(let j = 0; j < i; j++){
+            const word = s.slice(j, i)
+            if(dp[j] && wordSet.has(word)){
+                dp[i] = true
+                break
+            }
+        }
     }
 
-    return false
-  }
-
-  return dfs(source)
-}
-
-
-// 範例測試
-validPath(3, [[0,1],[1,2],[2,0]], 0, 2)
+    return dp[s.length]
+};
+wordBreak("leetcode", ["leet", "code"]); // ➜ true
