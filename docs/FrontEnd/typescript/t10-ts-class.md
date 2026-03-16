@@ -1,4 +1,5 @@
 ---
+slug: "/TypeSctipt/t10-ts-class"
 title: "[TS] Class"
 description: "TS - TS Class"
 tags:

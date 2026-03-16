@@ -1,324 +1,313 @@
 ---
 slug: "/FE-knowledge/fe-vue-p2"
 title: "前端 Vue - p2"
-description: "前端 Vue - p2 筆記，整理 MVVM、生命週期 等重點。"
+description: "整理 Vue 的 MVVM、生命週期、雙向綁定、響應式、指令、條件渲染、元件通信與 mixin 等常見面試觀念。"
 tags:
-  - JavaScript
-  - Testing
+  - Frontend
   - Vue
-keywords: ["前端", "Vue", "p2", "FE-knowledge", "MVVM", "生命週期", "雙向綁定的原理：defineProperty", "雙向綁定是什麼"]
+  - JavaScript
+keywords: ["Vue", "MVVM", "lifecycle", "reactivity", "directive", "v-if", "v-show", "mixin", "Vuex"]
 ---
-
-
-
 
 # [FE] Vue - p2
 
-## MVVM
+這篇延續 Vue 基礎篇，往執行流程與元件行為走。主題看起來很多，但其實都圍繞一個核心問題：
 
-- model：代表業務邏輯
-- View：代表 View，負責將數據轉換成 UI 展現出來
-- ViewModel：監聽 Model 數據改變 & 控制 View 行為的地方。簡單來說就是同步 View & Model 的物件。
-- 注意 View & Model 之間沒有直接關係，是透過 ViewModel 來聯繫
+Vue 到底怎麼把資料變成畫面，並在資料變動時讓畫面更新。
 
-## 生命週期
+## MVVM 在 Vue 裡代表什麼
 
-### 列表（總共分為 8 階段）創建 -> 載入 -> 更新 -> 銷毀
+Vue 常被歸類在 MVVM 架構下，可以先用最簡單的方式理解：
 
-- beforeCreate：vue 實體被建立，狀態與事件都未初始化
-  - vue3：setup()
-- created：vue 實體被建立，狀態與事件都已初始化
-  - vue3：setup()
-- beforeMount：vue 實體尚未與 DOM 綁定
-  - vue3：onBeforeMount()
-- mounted：綁定完成（DOM 已创建）
-  - vue3：onMounted()
-  - DOM 渲染也在此階段完成
-- beforeUpdate：狀態改變，畫面尚未更新前
-  - vue3：onBeforeUpdate
-- updated：狀態改變，畫面也改變完成
-  - vue3：onUpdated
-- beforeDestroy：vue 實體被銷毀前
-  - vue3：onBeforeUnmount
-- destroyed：vue 實體被銷毀完畢
-  - vue3：onUnmounted
+- `Model`：資料與業務狀態
+- `View`：畫面
+- `ViewModel`：負責把資料和畫面串起來的那一層
 
-### 作用是什麼
+在 Vue 中，元件實例本身就扮演了很大一部分的 ViewModel 角色。它會：
 
-- 方便我們控制 vue 物件的過程
+- 追蹤資料
+- 把資料映射到模板
+- 在資料更新時觸發畫面更新
 
-### 第一次加載觸發哪些 hook
+重點不是硬背縮寫，而是理解 Vue 的價值在於「不用手動同步 DOM 與 state」。
 
-- beforeCreate、created、beforeMount、mounted
+## Vue 生命週期要怎麼理解
 
-### 資料請求放在 created or mounted 的區別
+生命週期不是一張表而已，它是在描述一個元件從建立到銷毀的過程中，哪些時機點可以插入邏輯。
 
-- 在 mounted 時，有可能會造成頁面閃動（頁面 DOM 已經完成）
-- created：是在組建實例一旦完成立刻調用，這時候節點尚未生成
-- mounted：是在頁面 dom 渲染完成之後就立刻執行。
+### Vue 2 常見生命週期
 
-## 雙向綁定的原理：defineProperty()
+- `beforeCreate`
+- `created`
+- `beforeMount`
+- `mounted`
+- `beforeUpdate`
+- `updated`
+- `beforeDestroy`
+- `destroyed`
 
-- 透過`Object.defineProperty`來監控各個屬性的 getter or setter
-- 當我們透過 JS 物件，把它傳給 Vue 實例時，Vue 會先遍歷他的所有屬性，將其轉換為 getter setter。
-- Vue 通過 Observer 來監聽自己的 model 變化，通過 Compile 來更新自己的模板
+### Vue 3 對應 hook
 
-```html
-<body>
-  <div id="app">
-    <input type="text" id="txt" />
-    <p id="show"></p>
-  </div>
-</body>
-<script type="text/javascript">
-  var obj = {};
-  Object.defineProperty(obj, "txt", {
-    get: function () {
-      return obj;
-    },
-    set: function (newValue) {
-      document.getElementById("txt").value = newValue;
-      document.getElementById("show").innerHTML = newValue;
-    },
-  });
-  document.addEventListener("keyup", function (e) {
-    obj.txt = e.target.value;
-  });
-</script>
-```
+- `setup`
+- `onBeforeMount`
+- `onMounted`
+- `onBeforeUpdate`
+- `onUpdated`
+- `onBeforeUnmount`
+- `onUnmounted`
 
-## 雙向綁定是什麼
+### 怎麼記比較合理
 
-- 當用戶與 UI 進行交互，改變 UI 的值之後，數據模型會跟著改變。
-- 反過來，當數據模型的值發生改變，UI 也會自動更新反應
+可以分成四段：
 
-## 響應式
+1. 建立：資料與實例準備好
+2. 掛載：模板變成真實 DOM
+3. 更新：資料變動後重新渲染
+4. 銷毀：清除監聽器、timer、外部資源
 
-- 當數據發生變化時，相關的 UI 會自動去更新反應這些變化，而不需要透過手動編寫代碼來處理數據和 UI 之間的同步
+### 資料請求放 `created` 還是 `mounted`
 
-## Vue 實例掛載的過程中發生了什麼?
+Vue 2 常被問這題，本質上是在問你需不需要依賴 DOM。
 
-1. 初始化實例
-2. 模板編譯
-3. 創建虛擬 DOM
-4. 掛載（mount）:在這階段 Vue 將虛擬 DOM 掛載到真正的 DOM 上。這過程發生在 beforeMount & mounted 之間
-5. 數據響應式
-6. 完成掛載（mounted）
+- 不依賴 DOM：通常 `created` 就能做
+- 需要操作 DOM：放 `mounted`
 
-## 為何在 Vue2 添加新屬性時，介面不會刷新
+如果只是打 API，大多數情況不需要等 DOM 掛完。
 
-- 因為 Vue2 資料在生成時，是使用 defineProperty 生成響應式數據，所以偵測不到
-- 解決辦法
-  - Vue.set()
-  - Object.assign()：需要創建一個新物件
-  - $forcecUpdated()
+## 雙向綁定與響應式
 
-## 傳值
+### 雙向綁定是什麼
 
-- props down / emit up（父子）
-- ref（父子）
-- eventBus（兄弟）
-- $parent / $root（兄弟）
-- provide / inject（祖先）
-- atrrs / listeners（祖先）
-- VueX
+雙向綁定可以簡單理解成：
 
-## vueX
+- 資料改，畫面跟著改
+- 使用者改輸入，資料也跟著改
 
-### state
+Vue 裡最常見的表現就是 `v-model`。
 
-- vuex 的狀態管理區，每一個應用僅包含一個 store 物件，不可直接修改這些數據
+### Vue 2 為什麼能做到響應式
 
-### mutation
+Vue 2 主要透過 `Object.defineProperty()` 攔截資料的讀寫。
 
-- mutation 更新 state
+```js
+const obj = {};
 
-### getters
-
-- 類似 vue 的 computed
-
-### action
-
-- 支援非同步
-- 透過 store.dispatch 來操作 action -> action commit 給 mutation -> mutation 直接操作 state
-
-## vue-cli 如何新增自定義指令
-
-### vue2 - directive
-
-```javascript
-Vue.directive("dir2", {
-  inserted(el) {
-    console.log(el);
+Object.defineProperty(obj, "value", {
+  get() {
+    return "hello";
+  },
+  set(newValue) {
+    console.log("changed:", newValue);
   },
 });
 ```
 
-### vue3 - app.config.globalProperties
+Vue 會把資料轉成 getter / setter，當資料被讀取時收集依賴，被寫入時通知相關的 watcher 更新畫面。
 
-```js
-// in main.js
-app.config.globalProperties.sharedModule_str = sharedModule_str;
-```
+### Vue 2 的限制在哪裡
+
+這套機制不是不能用，但有限制：
+
+- 新增物件屬性不容易被偵測
+- 刪除屬性也不容易追蹤
+- 陣列索引、長度變化處理麻煩
+
+這也是 Vue 3 為什麼改用 `Proxy` 的原因。
+
+### 為什麼新增屬性時畫面不更新
+
+在 Vue 2 裡，如果某個屬性一開始不在響應式系統內，後來直接加上去，Vue 不一定知道它要追蹤。
+
+常見處理方式：
+
+- `Vue.set(obj, "key", value)`
+- 建立新物件後整體替換
+
+## Vue 實例掛載時發生什麼事
+
+如果面試官問「Vue 掛載過程做了什麼」，可以從這個順序回答：
+
+1. 建立元件實例
+2. 初始化 props、methods、data、computed、watch
+3. 編譯模板或讀取 render function
+4. 產生虛擬 DOM
+5. 掛載到真實 DOM
+6. 建立後續更新所需的依賴追蹤
+
+重點不是把每一步背成流程圖，而是知道 Vue 做了：
+
+- 初始化
+- 編譯
+- 渲染
+- 追蹤更新
+
+## 元件之間怎麼傳值
+
+Vue 常見的溝通方式可以依關係分類：
+
+### 父子元件
+
+- `props` 往下傳
+- `emit` 往上送
+- `ref` 直接取子元件方法或 DOM
+
+### 跨層級
+
+- `provide / inject`
+
+### 全域狀態
+
+- Vuex 或 Pinia
+
+### 過去常見但現在不太推薦
+
+- event bus
+- `$parent`
+- `$root`
+
+這些方式不是完全不能用，但可維護性通常比較差。
+
+## Vuex 在做什麼
+
+如果只用一句話說，Vuex 是把全域狀態管理集中起來。
+
+### 核心角色
+
+- `state`：原始資料
+- `getters`：衍生狀態
+- `mutations`：同步修改 state
+- `actions`：處理非同步邏輯，再 commit mutation
+
+這種架構的優勢是資料流清楚，但缺點是樣板較重。也因此在 Vue 3 時代，很多專案更偏向使用 Pinia。
+
 ## 自定義指令
-### 全域
+
+自定義指令適合處理「直接跟 DOM 行為有關」的邏輯，而不是一般商業邏輯。
+
+例如：
+
+- 自動聚焦
+- click outside
+- lazy load
+- debounce / throttle 行為封裝
+
+### Vue 2 全域註冊
+
 ```js
-// 註冊一個全域自訂義指令 `v-focus`
-Vue.directive('focus', {
-  // 當被綁定的元素插入到 DOM 中时……
-  inserted: function (el) {
-    // 聚焦元素
-    el.focus()  // 頁面加載後自動讓輸入匡獲取取到焦點的小功能
-  }
-})
+Vue.directive("focus", {
+  inserted(el) {
+    el.focus();
+  },
+});
 ```
 
-### 局部註冊
+### Vue 3 寫法
+
 ```js
-directives: {
-  focus: {
-    // 指令的定义
-    inserted: function (el) {
-      el.focus() // 頁面加載後自動讓輸入匡獲取取到焦點的小功能
-    }
-  }
+app.directive("focus", {
+  mounted(el) {
+    el.focus();
+  },
+});
+```
+
+### 什麼情況適合用指令
+
+當你的邏輯主要在「操作 DOM 本身」，指令通常比寫成 component 或 util 更合理。
+
+## `v-if` 與 `v-show`
+
+這題很常被問，但不要只回答 `display: none`。
+
+### `v-if`
+
+- 條件不成立時，DOM 不存在
+- 切換成本較高
+- 適合不常切換的內容
+
+### `v-show`
+
+- DOM 一直都在
+- 只是切換 CSS `display`
+- 適合頻繁切換
+
+### 怎麼選
+
+- 初始可能根本不需要渲染：`v-if`
+- 只是要常常切換顯示：`v-show`
+
+這本質上是渲染成本的選擇，不是語法題。
+
+## CSS 只作用在當前元件怎麼做
+
+最常見就是：
+
+```vue
+<style scoped>
+.title {
+  color: red;
+}
+</style>
+```
+
+`scoped` 的本質不是 CSS 天然隔離，而是 Vue 在編譯時幫你加上屬性選擇器，讓樣式只命中特定元件。
+
+這很方便，但也不是完全無副作用：
+
+- 深層子元件樣式覆蓋會比較麻煩
+- 有時需要搭配 `:deep()`
+
+## 動態路由怎麼理解
+
+像這樣：
+
+```js
+{
+  path: "/user/:id",
+  component: UserPage
 }
 ```
-```html
-<input v-focus />
-```
 
-### 應用場景
-[自訂義指令](https://github.com/febobo/web-interview/issues/21)
-* 防抖
-* 圖片懶加載
-* 一鍵copy功能
-
-
-## 自定義過濾器 filters
-### 是什麼？
-* 就是將不必要的東西過濾掉
-* 實質上不改變原始數據，只是對數據加工，可以看成一種純函數
-### 應用場景
-* 單位轉換、數字打點、文本格式化、時間格式化
-### 1. 直接如同 data 同樣層級設定
+代表 URL 中這段是動態參數，可以在元件內透過 route params 取得：
 
 ```js
-var vm = new Vue({
-  el: "#app",
-  data: {
-    msg: "",
-  },
-  filters: {
-    capitalize: function (value) {
-      // ...
-    },
-  },
-});
+const route = useRoute();
+console.log(route.params.id);
 ```
 
-### 2. 全域
+這類路由常用在：
+
+- 詳情頁
+- 編輯頁
+- 多層資源頁面
+
+## mixin 為什麼後來常被 composable 取代
+
+### mixin 的問題
+
+mixin 在 Vue 2 很常見，但問題也很典型：
+
+- 命名衝突
+- 資料來源不清楚
+- 依賴關係隱晦
+
+而且當 mixin 多了之後，元件會變得很難追蹤到底哪些能力從哪裡進來。
+
+### Vue 3 為什麼偏向 composable
+
+Vue 3 更推薦用 composable，因為它是顯式引入：
 
 ```js
-Vue.filter("capitalize", function (value) {
-  // ...
-});
-```
+import { computed, ref } from "vue";
 
-### 使用
-* 同名時，局部的或蓋掉全域的
-```html
-{{ message | filterA | filterB }}
-```
-
-## css 只在當前組件起作用
-
-- use `<style scoped></style>`
-
-## v-if vs v-show
-
-- v-if = 依條件渲染
-- v-show = display: none
-
-### 編譯時機
-
-- v-if：在 DOM 上會真正的消失
-- v-show：只是在 CSS 上加上 display: none 的 CSS 屬性
-
-### 性能表現
-
-- v-if：在頻繁切換的場景，性能表現較好
-- v-show：在頻繁切換且元素結構穩定的場景，v-show 更適合
-
-## 動態路由的數值
-
-- 於 router 的 index.js 中，對 path 屬性加上「:」，使用 router 物件的 params.id 獲取。
-
-## mixin
-
-### vue2
-
-- 組件的 data、methods 優先級高於 mixin 的
-- 生命週期會先執行 mixin 的，在執行組件中的
-- 自定義與組件屬性會高於 mixin
-
-#### Demo
-
-##### in mixin conuter.js
-
-```js
-// 注意：其實寫法跟vue一樣
-const mixin = {
-  data() {
-    return {
-      countMixin: 0,
-    };
-  },
-  methods: {
-    incrementMixin() {
-      this.countMixin++;
-    },
-  },
-};
-```
-
-##### in vue2
-
-```html
-<script>
-  import counter from "./mixin/counter";
-
-  export default {
-    // 在這邊是直接mixins進來
-    mixins: [counter],
-  };
-</script>
-```
-
-[文章](https://github.com/febobo/web-interview/issues/15)
-
-- 這時會提到一個問題，也就是「如果有同名時」，兩者相同名稱，將以內部組件為優先。而後者 mixin 會蓋掉前者 mixin
-  - 組件內部優先級最高，會覆蓋 mixin 中命名的選項
-  - 如果 mixin 和組件中都定義了同名的生命週期，會先執行 mixin 中的
-  - 對於其他 methods、computed，如果有同名，會被合併到陣列中依次執行
-
-### vue3
-
-- composition API 依靠原生 JS 來共享程式碼，因此 mixin 的命名衝突就會被解決。
-
-##### in mixin 資料夾的 useCounter.js
-
-```js
-// 不管vue2 or vue3 我們一樣在寫vue來創造mixin
-import { ref, computed } from "vue";
-
-export default function () {
+export function useCounter() {
   const count = ref(0);
   const double = computed(() => count.value * 2);
+
   function increment() {
-    count.value++;
+    count.value += 1;
   }
-  // 然後這邊return 變數出去，讓別人接
+
   return {
     count,
     double,
@@ -327,32 +316,29 @@ export default function () {
 }
 ```
 
-##### in vue3 的 template 模板
+這樣的好處是：
 
-```html
-<template>
-  <h1>{{ "Hello Vue3 !!" }}</h1>
-  <p>{{ count }}</p>
-  <p>{{ double }}</p>
-  <button @click="increment">測試1</button>
-</template>
+- 來源清楚
+- 不會隱式覆蓋
+- 更容易做型別推導與測試
 
-<script>
-  // 一樣我們先引入mixin的js檔案
-  import useCounter from "./utils/useCounter";
+## 實務上怎麼回答這篇常見題
 
-  export default {
-    setup() {
-      // 再來這邊使用解構的方式去拿變數出來，以此就可以解決命名相沖的問題
-      const { count, double, increment } = useCounter();
-      return {
-        count,
-        double,
-        increment,
-      };
-    },
-  };
-</script>
-```
+如果你被問到生命週期、MVVM、雙向綁定、`v-if` / `v-show`、mixin，可以這樣回答：
 
-[共用方法-vue mixins 與 vue3 composition api 簡介](https://www.tpisoftware.com/tpu/articleDetails/2459)
+1. Vue 的核心是透過響應式系統把資料和畫面同步。
+2. 生命週期讓你可以在建立、掛載、更新、銷毀等時機插入邏輯。
+3. Vue 2 的雙向綁定建立在 `defineProperty` 上，因此對新屬性和陣列變化有限制。
+4. 元件溝通應優先走 `props / emit`，更複雜才上 `provide/inject` 或全域狀態。
+5. mixin 是舊時代的共用邏輯方案，Vue 3 更推薦 composable。
+
+## 總結
+
+這篇真正要掌握的不是零散 API，而是 Vue 的執行模型：
+
+- 如何建立元件
+- 如何追蹤資料變化
+- 如何更新畫面
+- 如何組織元件之間的溝通方式
+
+理解這條主線之後，你再看 Vue 3 的 Composition API、Pinia、Nuxt 3，會順很多。

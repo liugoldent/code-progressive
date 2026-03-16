@@ -1,4 +1,5 @@
 ---
+slug: "/TypeSctipt/t05-narrowing"
 title: "[TS] Narrowing - 型別狹義化"
 description: "TS - Narrowing"
 tags:

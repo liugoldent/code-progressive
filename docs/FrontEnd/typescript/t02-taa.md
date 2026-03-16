@@ -1,4 +1,5 @@
 ---
+slug: "/TypeSctipt/t02-taa"
 title: "[TS] 指定型別的方式"
 description: "[TS] 指定型別的方式 筆記，整理 Type Inference、Type Annotation 等重點。"
 tags:

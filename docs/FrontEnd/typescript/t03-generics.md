@@ -1,4 +1,5 @@
 ---
+slug: "/TypeSctipt/t03-generics"
 title: "[TS] 泛型"
 description: "[TS] 泛型 筆記，整理 概念、範例 等重點。"
 tags:

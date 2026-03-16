@@ -1,4 +1,5 @@
 ---
+slug: "/TypeSctipt/t07-discriminated-unions"
 title: "[TS] Discriminated Unions - 可辨識聯合"
 description: "TS - Discriminated unions"
 tags:

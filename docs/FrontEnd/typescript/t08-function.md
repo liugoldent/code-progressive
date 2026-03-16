@@ -1,4 +1,5 @@
 ---
+slug: "/TypeSctipt/t08-function"
 title: "[TS] Function - 函數的進階使用"
 description: "TS - Function"
 tags:

@@ -1,4 +1,5 @@
 ---
+slug: "/TypeSctipt/thero01-basic"
 title: "[TS Hero] Beginner"
 description: "TS - TS Hero Beginner"
 tags:

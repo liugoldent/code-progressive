@@ -1,4 +1,5 @@
 ---
+slug: "/TypeSctipt/t09-es6-class"
 title: "[TS] ES6 Class"
 description: "TS - ES6 Class"
 tags:

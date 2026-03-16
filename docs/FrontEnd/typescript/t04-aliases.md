@@ -1,4 +1,5 @@
 ---
+slug: "/TypeSctipt/t04-aliases"
 title: "[TS] Interface vs Type Aliases 用法與差別"
 description: "TS - Interface vs Type Aliases 用法與差別"
 tags:

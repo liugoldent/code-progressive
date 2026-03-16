@@ -1,4 +1,5 @@
 ---
+slug: "/TypeSctipt/t06-type-predicates"
 title: "[TS] Type Predicates - 型別斷言"
 description: "TS - Type Predicates"
 tags:
