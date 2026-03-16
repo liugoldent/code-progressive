@@ -1,7 +1,9 @@
 ---
-description: "LeetCode 55 Jump Game：判斷能否從陣列起點一路跳到終點。用貪婪法維護最遠可達位置，時間 O(n)／空間 O(1)。附完整程式碼、思路圖解、常見陷阱與 SEO 關鍵字。"
 date: 2025-06-18
+title: "[0055] Jump Game"
+description: "[0055] Jump Game 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags: [LeetCode, JavaScript, Greedy, Array, Jump Game, 面試題]
+keywords: ["0055", "Jump", "Game", "LeetCode", "JavaScript", "Greedy", "Array", "面試題"]
 ---
 
 # [0055] Jump Game

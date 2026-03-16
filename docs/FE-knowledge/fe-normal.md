@@ -1,8 +1,10 @@
 ---
-description: 平常知識點
+title: "前端 Normal"
+description: "前端 Normal 筆記，整理 如何實現無感刷新 token、如何得到 cookie 的大小 等重點。"
 tags:
   - normal
   - frontend
+keywords: ["前端", "Normal", "FE-knowledge", "當前端使用者併發多個請求，如果只送一個（例如防抖）", "如何實現無感刷新", "token", "如何得到", "localStorage、sessionStorage"]
 ---
 
 # [FE] Normal

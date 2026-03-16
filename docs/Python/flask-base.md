@@ -1,9 +1,10 @@
 ---
-description: python套件管理相關指令
+title: "[Python] 基礎- Python 套件管理"
+description: "python套件管理相關指令"
 tags:
   - Python
   - Flask
-keywords: [python, 套件管理, python3, os, pipenv]
+keywords: ["python", "套件管理", "python3", "os", "pipenv"]
 ---
 
 # [Python] 基礎- Python 套件管理

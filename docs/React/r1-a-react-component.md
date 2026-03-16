@@ -1,10 +1,13 @@
 ---
-description: react Component
+title: "React React Component"
+description: "react Component"
 tags:
   - javascript
   - react
   - frontEnd
+keywords: ["React", "Component", "Class", "Function"]
 ---
+
 # [React] React Component
 ## Class Component
 ### 基本程式

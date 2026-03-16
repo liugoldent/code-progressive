@@ -1,23 +1,10 @@
 ---
-description: python如何安裝django
+title: "Django安裝"
+description: "python如何安裝django"
 tags:
   - python
   - django
-keywords:
-  [
-    html,
-    css,
-    python,
-    python,
-    django,
-    interview,
-    python 面試,
-    python interview,
-    後端面試題,
-    backend interview,
-    フロントエンドの面接質問,
-    프론트엔드 면접 문제,
-  ]
+keywords: ["Django安裝", "Python", "簡易流程", "參考"]
 ---
 
 # Django安裝

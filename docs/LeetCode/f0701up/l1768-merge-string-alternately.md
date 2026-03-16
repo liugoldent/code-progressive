@@ -1,9 +1,12 @@
 ---
+title: "[1768] Merge Strings Alternately"
+description: "[1768] Merge Strings Alternately 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Merge Strings Alternately
   - Javascript
+keywords: ["1768", "Merge", "Strings", "Alternately", "LeetCode", "Javascript"]
 ---
 
 # [1768] Merge Strings Alternately

@@ -1,7 +1,9 @@
 ---
-description: Vue3 語法介紹
+title: "[Vue3] Vue3 語法介紹"
+description: "[Vue3] Vue3 語法介紹 筆記，整理 reactive、shallow Reactive 等重點。"
 tags:
   - Vue
+keywords: ["Vue3", "語法介紹", "Vue", "reactive", "shallow", "ref", "nextTick"]
 ---
 
 # [Vue3] Vue3 語法介紹

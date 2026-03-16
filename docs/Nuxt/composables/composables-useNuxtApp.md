@@ -1,19 +1,10 @@
 ---
-description: 介紹 useNuxtApp
+title: "useNuxtApp"
+description: "介紹 useNuxtApp"
 tags:
   - nuxt
   - composable
-keywords:
-  [
-    nuxt,
-    js,
-    javascript,
-    composable,
-    composable api,
-    useNuxtApp,
-    seo,
-    nuxt useNuxtApp,
-  ]
+keywords: ["useNuxtApp", "Nuxt", "概念", "範例", "方法", "屬性"]
 ---
 
 # useNuxtApp

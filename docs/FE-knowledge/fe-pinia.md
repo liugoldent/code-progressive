@@ -1,8 +1,10 @@
 ---
-description: Pinia
+title: "前端 Pinia"
+description: "前端 Pinia 筆記，整理 Pinia 與 Vuex 的比較、Pinia 的基本用法 等重點。"
 tags: 
     - Pinia 
     - VueX
+keywords: ["前端", "Pinia", "FE-knowledge", "Vuex", "的比較", "的基本用法", "Getters", "Actions"]
 ---
 
 # [FE] Pinia

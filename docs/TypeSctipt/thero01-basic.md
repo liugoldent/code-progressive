@@ -1,8 +1,10 @@
 ---
-description: TS - TS Hero Beginner
+title: "[TS Hero] Beginner"
+description: "TS - TS Hero Beginner"
 tags:
   - TS
   - TypeScript
+keywords: ["TS", "Hero", "Beginner", "TypeSctipt", "Primitive", "Data", "Types", "Type"]
 ---
 
 # [TS Hero] Beginner

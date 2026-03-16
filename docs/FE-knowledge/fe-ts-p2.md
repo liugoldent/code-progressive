@@ -1,9 +1,13 @@
 ---
+title: "前端 TypeScript - p2"
+description: "前端 TypeScript - p2 筆記，整理 TS - 泛型、TS - 高級類型 等重點。"
 tags: 
     - javascript
     - Test
     - typescript
+keywords: ["前端", "TypeScript", "p2", "FE-knowledge", "TS", "泛型", "高級類型"]
 ---
+
 # [FE] TypeScript - p2
 
 ## TS - 泛型

@@ -1,10 +1,13 @@
 ---
+title: "[0020] Valid Parentheses"
+description: "[0020] Valid Parentheses 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Valid Parentheses
   - javascript
   - Python
+keywords: ["0020", "Valid", "Parentheses", "LeetCode", "Javascript", "-2", "Python"]
 ---
 
 # [0020] Valid Parentheses

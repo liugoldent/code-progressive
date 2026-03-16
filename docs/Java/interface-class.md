@@ -1,10 +1,12 @@
 ---
 sidebar_position: 0
-description: interface vs class
+title: "[JAVA 比較]接口 vs 類"
+description: "interface vs class"
 tags:
   - java
   - interface
   - class
+keywords: ["JAVA", "比較", "接口", "vs", "接口與類的相似之處", "接口與類的不同之處", "接口特性"]
 ---
 
 # [JAVA 比較]接口 vs 類

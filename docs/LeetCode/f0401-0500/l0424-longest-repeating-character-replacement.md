@@ -1,10 +1,13 @@
 ---
+title: "[0424] Longest Repeating Character Replacement"
+description: "[0424] Longest Repeating Character Replacement 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Sliding Window
   - javascript
   - Longest Repeating Character Replacement
+keywords: ["0424", "Longest", "Repeating", "Character", "Replacement", "LeetCode", "Javascript"]
 ---
 
 # [0424] Longest Repeating Character Replacement

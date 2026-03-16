@@ -1,9 +1,12 @@
 ---
+title: "[0209] Minimum Size Subarray Sum"
+description: "[0209] Minimum Size Subarray Sum 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - javascript
   - Sliding Window
+keywords: ["0209", "Minimum", "Size", "Subarray", "Sum", "LeetCode", "Javascript", "思路："]
 ---
 
 # [0209] Minimum Size Subarray Sum

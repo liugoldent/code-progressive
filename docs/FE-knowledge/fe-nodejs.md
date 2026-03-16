@@ -1,8 +1,12 @@
 ---
+title: "前端 Node.js"
+description: "前端 Node.js 筆記，整理 直接風格 vs CPS風格、為何一定要用CPS 等重點。"
 tags: 
     - Node.js
     - Test
+keywords: ["前端", "Node", "js", "FE-knowledge", "直接風格", "vs", "CPS風格", "為何一定要用CPS"]
 ---
+
 # [FE] Node.js
 
 ## 直接風格 vs CPS風格

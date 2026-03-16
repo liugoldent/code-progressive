@@ -1,10 +1,13 @@
 ---
+title: "[0167] Input Array Is Sorted"
+description: "[0167] Input Array Is Sorted 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Input Array Is Sorted
   - javascript
   - two pointers
+keywords: ["0167", "Input", "Array", "Is", "Sorted", "LeetCode", "Javascript", "好文連結"]
 ---
 
 # [0167] Input Array Is Sorted

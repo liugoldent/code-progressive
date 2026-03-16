@@ -1,9 +1,12 @@
 ---
+title: "[0053] Maximum Subarray"
+description: "[0053] Maximum Subarray 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Maximum Subarray
   - javascript
+keywords: ["0053", "Maximum", "Subarray", "LeetCode"]
 ---
 
 # [0053] Maximum Subarray

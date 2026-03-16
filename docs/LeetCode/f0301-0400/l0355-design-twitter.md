@@ -1,10 +1,13 @@
 ---
+title: "[0355] Design Twitter"
+description: "[0355] Design Twitter 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Design Twitter
   - javascript
   - Heap / Priority
+keywords: ["0355", "Design", "Twitter", "LeetCode", "Javascript"]
 ---
 
 # [0355] Design Twitter

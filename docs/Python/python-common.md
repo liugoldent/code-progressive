@@ -1,7 +1,9 @@
 ---
-description: python 常見問題
+title: "[Python] 常見問題"
+description: "[Python] 常見問題 筆記，整理 改變 ubuntu 預設python版本、使用ngork，讓外網連接我們的電腦 等重點。"
 tags:
   - Python
+keywords: ["Python", "常見問題", "<u>**In", "how", "do", "convert", "all", "of"]
 ---
 
 # [Python] 常見問題

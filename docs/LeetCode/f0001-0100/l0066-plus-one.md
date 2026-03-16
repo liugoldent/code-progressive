@@ -1,9 +1,12 @@
 ---
+title: "[0066] Plus One"
+description: "[0066] Plus One 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Plus One
   - javascript
+keywords: ["0066", "Plus", "One", "LeetCode", "Javascript", "Python"]
 ---
 
 # [0066] Plus One

@@ -1,5 +1,6 @@
 ---
-description: leetCode Top K Frequent Elements js 解答, python 解答
+title: "[0347] Top K Frequent Elements"
+description: "[0347] Top K Frequent Elements 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
@@ -7,29 +8,7 @@ tags:
   - python
   - interview
   - Hashing
-keywords:
-  [
-    facebook,
-    amazon,
-    apple,
-    netflix,
-    google,
-    faang interview,
-    leetCode,
-    js,
-    javascript,
-    interview,
-    js 面試,
-    js interview,
-    前端面試題,
-    frontend interview,
-    フロントエンドの面接質問,
-    프론트엔드 면접 문제,
-    software engineer,
-    Top K Frequent Elements,
-    Top K Frequent Elements js ans,
-    Top K Frequent Elements python ans,
-  ]
+keywords: ["0347", "Top", "Frequent", "Elements", "LeetCode", "Javascript", "Python"]
 ---
 
 # [0347] Top K Frequent Elements

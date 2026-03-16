@@ -1,9 +1,10 @@
 ---
-description: C++ 簡介
+title: "[C++] 簡介"
+description: "[C++] 簡介 筆記，整理 簡介、物件導向程式設計 等重點。"
 tags:
   - c++
   - backend
-keywords: [c++簡介]
+keywords: ["c++簡介"]
 ---
 
 # [C++] 簡介

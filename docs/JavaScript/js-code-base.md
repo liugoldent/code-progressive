@@ -1,7 +1,9 @@
 ---
-description: javascript base 
+title: "JavaScript JS 運算子"
+description: "javascript base"
 tags:
   - javascript
+keywords: ["JavaScript", "JS", "運算子", "算數運算子", "import", "export", "判斷物件中是否有該key"]
 ---
 
 # [JS] JS 運算子

@@ -1,9 +1,11 @@
 ---
-description: react router Lazy Loading
+title: "React React router Lazy Loading"
+description: "react router Lazy Loading"
 tags:
   - javascript
   - react
   - frontEnd
+keywords: ["React", "router", "Lazy", "Loading"]
 ---
 
 # [React] React router Lazy Loading

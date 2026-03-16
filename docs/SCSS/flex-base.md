@@ -1,10 +1,13 @@
 ---
-description: 一些flex的基本使用
+title: "[CSS] flex 的基本使用"
+description: "[CSS] flex 的基本使用 筆記，整理 參考文章、外元素 等重點。"
 tags:
   - SCSS
   - CSS
   - frontEnd
+keywords: ["CSS", "flex", "的基本使用", "SCSS", "參考文章", "外元素", "內元素", "align-items"]
 ---
+
 # [CSS] flex 的基本使用
 
 ## 參考文章

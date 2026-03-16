@@ -1,9 +1,12 @@
 ---
+title: "[0912] Sort an Array"
+description: "[0912] Sort an Array 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Sort an Array
   - javascript
+keywords: ["0912", "Sort", "an", "Array", "LeetCode", "Javascript"]
 ---
 
 # [0912] Sort an Array

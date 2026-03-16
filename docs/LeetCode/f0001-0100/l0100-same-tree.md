@@ -1,10 +1,13 @@
 ---
+title: "[0100] Same Tree"
+description: "[0100] Same Tree 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Tree
   - javascript
   - Same Tree
+keywords: ["0100", "Same", "Tree", "LeetCode", "Javascript"]
 ---
 
 # [0100] Same Tree

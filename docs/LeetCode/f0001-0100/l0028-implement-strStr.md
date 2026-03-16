@@ -1,9 +1,12 @@
 ---
+title: "[0028] Implement strStr()"
+description: "[0028] Implement strStr() 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Implement strStr()
   - javascript
+keywords: ["0028", "Implement", "strStr", "LeetCode", "Javascript"]
 ---
 
 # [0028] Implement strStr()

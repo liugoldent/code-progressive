@@ -1,9 +1,11 @@
 ---
-description: react useMemo
+title: "React useMemo"
+description: "react useMemo"
 tags:
   - javascript
   - react
   - frontEnd
+keywords: ["React", "useMemo", "概念", "使用", "程式", "useEffect", "的替換"]
 ---
 
 # [React] useMemo

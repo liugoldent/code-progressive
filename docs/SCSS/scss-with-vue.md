@@ -1,10 +1,13 @@
 ---
-description: 在vue中使用scss + module
+title: "[SCSS] SCSS module in Vue"
+description: "在vue中使用scss + module"
 tags:
   - SCSS
   - Vue
   - frontEnd
+keywords: ["SCSS", "module", "in", "Vue", "範例程式碼"]
 ---
+
 # [SCSS] SCSS module in Vue
 
 ## 範例程式碼

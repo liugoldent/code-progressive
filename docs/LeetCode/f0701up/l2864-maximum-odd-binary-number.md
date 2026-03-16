@@ -1,10 +1,13 @@
 ---
+title: "[2864] Maximum Odd Binary Number"
+description: "[2864] Maximum Odd Binary Number 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Maximum Odd Binary Number
   - String
   - Javascript
+keywords: ["2864", "Maximum", "Odd", "Binary", "Number", "LeetCode", "Javascript"]
 ---
 
 # [2864] Maximum Odd Binary Number

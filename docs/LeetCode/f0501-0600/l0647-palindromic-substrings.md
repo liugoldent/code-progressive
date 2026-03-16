@@ -1,7 +1,9 @@
 ---
-description: "深入解析 LeetCode 647 - Palindromic Substrings 題目，提供 JavaScript 中心擴展法與 DP 動態規劃雙解法，含時間空間複雜度、圖解與 SEO 關鍵字，幫助你快速掌握回文子字串技巧。"
 date: 2025-06-16
+title: "[0647] Palindromic Substrings"
+description: "深入解析 LeetCode 647 - Palindromic Substrings 題目，提供 JavaScript 中心擴展法與 DP 動態規劃雙解法，含時間空間複雜度、圖解與 SEO 關鍵字，幫助你快速掌握回文子字串技巧。"
 tags: [LeetCode, JavaScript, 回文, 演算法, 中心擴展法, 動態規劃, 字串處理]
+keywords: ["0647", "Palindromic", "Substrings", "LeetCode", "JavaScript", "回文", "演算法", "中心擴展法"]
 ---
 
 # [0647] Palindromic Substrings

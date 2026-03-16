@@ -1,9 +1,12 @@
 ---
+title: "[0101] Symmetric Tree"
+description: "[0101] Symmetric Tree 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Symmetric Tree
   - javascript
+keywords: ["0101", "Symmetric", "Tree", "LeetCode"]
 ---
 
 # [0101] Symmetric Tree

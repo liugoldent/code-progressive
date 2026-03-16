@@ -1,7 +1,9 @@
 ---
-description: "LeetCode 139 Word Break 解法：用動態規劃 (DP) 處理字串分割與字典匹配問題。本文提供 JavaScript 解法、圖解 dp[j] + s.slice(j, i) 判斷邏輯，以及實務效能優化技巧。"
 date: 2025-06-18
+title: "[0139] Word Break"
+description: "[0139] Word Break 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags: [LeetCode, JavaScript, Dynamic Programming, 字串切割, HashSet, Blind75]
+keywords: ["0139", "Word", "Break", "LeetCode", "JavaScript", "Dynamic", "Programming", "字串切割"]
 ---
 
 # [0139] Word Break

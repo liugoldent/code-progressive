@@ -1,4 +1,6 @@
 ---
+title: "[0225] Implement Stack using Queues"
+description: "[0225] Implement Stack using Queues 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
@@ -6,6 +8,7 @@ tags:
   - Implement Stack using Queues
   - Stack
   - Queue
+keywords: ["0225", "Implement", "Stack", "using", "Queues", "LeetCode", "Javascript"]
 ---
 
 # [0225] Implement Stack using Queues

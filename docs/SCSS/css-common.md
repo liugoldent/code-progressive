@@ -1,8 +1,10 @@
 ---
-description: css 常用操作
+title: "[CSS] CSS 常用操作"
+description: "[CSS] CSS 常用操作 筆記，整理 去掉button樣式、文字換行 等重點。"
 tags:
   - CSS
   - frontEnd
+keywords: ["CSS", "常用操作", "SCSS", "去掉button樣式", "文字換行", "分成三欄", "如何做出疊圖"]
 ---
 
 # [CSS] CSS 常用操作

@@ -1,19 +1,10 @@
 ---
-description: 介紹 useLazyAsyncData
+title: "useLazyAsyncData"
+description: "介紹 useLazyAsyncData"
 tags:
   - nuxt
   - composable
-keywords:
-  [
-    nuxt,
-    js,
-    javascript,
-    composable,
-    composable api,
-    useLazyAsyncData,
-    seo,
-    nuxt useLazyAsyncData,
-  ]
+keywords: ["useLazyAsyncData", "Nuxt", "概念", "範例", "參數", "返回值"]
 ---
 
 # useLazyAsyncData

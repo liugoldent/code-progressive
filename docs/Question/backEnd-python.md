@@ -1,9 +1,11 @@
 ---
-description: python 問題集
+title: "[Python]問題集"
+description: "[Python]問題集 筆記，整理 docSearch、python 等重點。"
 tags:
   - Python
   - Flask
   - docSearch
+keywords: ["Python", "問題集", "Question", "docSearch"]
 ---
 
 # [Python]問題集

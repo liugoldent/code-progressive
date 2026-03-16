@@ -1,8 +1,10 @@
 ---
-description: 在Mac上安裝nvm
+title: "如何在Mac 上安裝nvm"
+description: "如何在Mac 上安裝nvm 筆記，聚焦 Node.js 核心觀念與執行流程。"
 tags:
   - Node.js
   - nvm
+keywords: ["如何在Mac", "上安裝nvm", "Nodejs"]
 ---
 
 # 如何在Mac 上安裝nvm

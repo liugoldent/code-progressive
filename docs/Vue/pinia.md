@@ -1,8 +1,10 @@
 ---
-description: Pinia
+title: "Pinia 新一代的狀態管理工具"
+description: "Pinia 新一代的狀態管理工具 筆記，整理 概念、與 VueX 之差異 等重點。"
 tags:
   - Vue
   - Pinia
+keywords: ["Pinia", "新一代的狀態管理工具", "Vue", "概念", "VueX", "之差異", "導入兩個", "Demo"]
 ---
 
 # [Pinia] 新一代的狀態管理工具

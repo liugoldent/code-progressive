@@ -1,9 +1,10 @@
 ---
-description: C++ 規範
+title: "[C++] 基本規範"
+description: "[C++] 基本規範 筆記，整理 編寫架構、基本語句 等重點。"
 tags:
   - c++
   - backend
-keywords: [c++規範]
+keywords: ["c++規範"]
 ---
 
 # [C++] 基本規範

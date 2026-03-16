@@ -1,9 +1,11 @@
 ---
-description: react useRef
+title: "React useRef"
+description: "React useRef 筆記，整理 概念、程式 等重點。"
 tags:
   - javascript
   - react
   - frontEnd
+keywords: ["React", "useRef", "概念", "程式"]
 ---
 
 # [React] useRef

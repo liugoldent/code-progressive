@@ -1,9 +1,12 @@
 ---
-description: TS - Type Predicates
+title: "[TS] Type Predicates - 型別斷言"
+description: "TS - Type Predicates"
 tags:
   - TS
   - TypeScript
+keywords: ["TS", "Type", "Predicates", "型別斷言", "TypeSctipt", "概念", "使用", "文章來源"]
 ---
+
 # [TS] Type Predicates - 型別斷言
 ## 概念
 * 是一種用於運行時檢查類型的技巧，例如當變數聲明為聯合型別時，當要使用該變數特有屬性or方法時，TS編譯器會報錯。因為該變數的確切類型可能是多種可能之一

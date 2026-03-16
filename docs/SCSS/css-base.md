@@ -1,8 +1,10 @@
 ---
-description: css 選取器基本使用
+title: "[CSS] 選取器基本操作"
+description: "[CSS] 選取器基本操作 筆記，聚焦 CSS 與 SCSS 版面與樣式技巧。"
 tags:
   - CSS
   - frontEnd
+keywords: ["CSS", "選取器基本操作", "SCSS", "後代-子選取器", "nth-child"]
 ---
 
 # [CSS] 選取器基本操作

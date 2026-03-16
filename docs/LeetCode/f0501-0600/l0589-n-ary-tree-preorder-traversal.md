@@ -1,10 +1,13 @@
 ---
+title: "[0589] Next Greater Element I"
+description: "[0589] Next Greater Element I 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Stack
   - javascript
   - N-ary Tree Preorder Traversal
+keywords: ["0589", "Next", "Greater", "Element", "LeetCode", "Javascript"]
 ---
 
 # [0589] Next Greater Element I

@@ -1,8 +1,10 @@
 ---
-description: TS - 泛型
+title: "[TS] 泛型"
+description: "[TS] 泛型 筆記，整理 概念、範例 等重點。"
 tags:
   - TS
   - TypeScript
+keywords: ["TS", "泛型", "TypeSctipt", "概念", "範例", "泛型約束", "好的泛型寫法"]
 ---
 
 # [TS] 泛型

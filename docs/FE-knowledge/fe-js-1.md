@@ -1,7 +1,10 @@
 ---
+title: "前端 Javascript - 1"
+description: "前端 Javascript - 1 筆記，整理 typeof vs instanceof、new 建構子 等重點。"
 tags:
   - javascript
   - Test
+keywords: ["前端", "Javascript", "FE-knowledge", "typeof", "vs", "instanceof", "new", "建構子"]
 ---
 
 # [FE] Javascript - 1

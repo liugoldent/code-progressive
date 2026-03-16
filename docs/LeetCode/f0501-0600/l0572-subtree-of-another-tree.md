@@ -1,9 +1,12 @@
 ---
+title: "[0572] Subtree of Another Tree"
+description: "[0572] Subtree of Another Tree 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Tree
   - Subtree of Another Tree
+keywords: ["0572", "Subtree", "of", "Another", "Tree", "LeetCode", "Javascript"]
 ---
 
 # [0572] Subtree of Another Tree

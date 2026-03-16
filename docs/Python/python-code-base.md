@@ -1,7 +1,9 @@
 ---
-description: python 程式常用指令
+title: "[Python] Python 基礎"
+description: "python 程式常用指令"
 tags:
   - Python
+keywords: ["Python", "基礎", "在字串中塞入變數", "特性：", "實例化", "class", "的執行順序", "函數參數"]
 ---
 
 # [Python] Python 基礎

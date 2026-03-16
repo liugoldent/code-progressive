@@ -1,7 +1,9 @@
 ---
-description: python 觀念題
+title: "[Python] 觀念題"
+description: "[Python] 觀念題 筆記，聚焦 Python 開發基礎與常見實務。"
 tags:
   - Python
+keywords: ["Python", "觀念題"]
 ---
 
 # [Python] 觀念題

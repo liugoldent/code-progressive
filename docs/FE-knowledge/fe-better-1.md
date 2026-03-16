@@ -1,9 +1,13 @@
 ---
+title: "前端 前端效能優化-1"
+description: "前端 前端效能優化-1 筆記，整理 程式碼最佳化、圖片資源最佳化 等重點。"
 tags: 
     - javascript
     - Test
     - 前端效能優化
+keywords: ["前端", "前端效能優化-1", "FE-knowledge", "程式碼最佳化", "圖片資源最佳化", "檔案壓縮", "Adaptive", "Serving"]
 ---
+
 # [FE] 前端效能優化-1
 [Web前端效能優化大補帖筆記](https://www.books.com.tw/products/E050147683)
 

@@ -1,10 +1,13 @@
 ---
+title: "[0295] Find Median from Data Stream"
+description: "[0295] Find Median from Data Stream 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Hard
   - Find Median from Data Stream
   - javascript
   - Heap / Priority Queue
+keywords: ["0295", "Find", "Median", "from", "Data", "Stream", "LeetCode", "Javascript"]
 ---
 
 # [0295] Find Median from Data Stream

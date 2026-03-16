@@ -1,7 +1,9 @@
 ---
-description: Vue3 v-on
+title: "[Vue3] Vue3 v-on"
+description: "[Vue3] Vue3 v-on 筆記，整理 v-on、動作原理 等重點。"
 tags:
   - Vue
+keywords: ["Vue3", "v-on", "Vue", "動作原理", "demo"]
 ---
 
 # [Vue3] Vue3 v-on

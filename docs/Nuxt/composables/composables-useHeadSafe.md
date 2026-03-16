@@ -1,19 +1,10 @@
 ---
-description: 介紹useHeadSafe
+title: "useHeadSafe"
+description: "介紹useHeadSafe"
 tags:
   - nuxt
   - composable
-keywords:
-  [
-    nuxt,
-    js,
-    javascript,
-    composable,
-    composable api,
-    useHeadSafe,
-    seo,
-    nuxt useHeadSafe,
-  ]
+keywords: ["useHeadSafe", "Nuxt", "概念", "範例", "參數", "返回值"]
 ---
 
 # useHeadSafe

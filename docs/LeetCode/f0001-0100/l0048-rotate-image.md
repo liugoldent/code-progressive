@@ -1,7 +1,9 @@
 ---
-description: "LeetCode 48 Rotate Image：教你用 JavaScript 原地 (in-place) 把 n×n 矩陣順時針旋轉 90°。詳解轉置矩陣 + 反轉列的兩步技巧，含程式碼、複雜度、常見陷阱與 SEO 關鍵字。"
 date: 2025-06-18
+title: "[0048] Rotate Image"
+description: "[0048] Rotate Image 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags: [LeetCode, JavaScript, Matrix, In-place, Rotate, 轉置矩陣, 面試題]
+keywords: ["0048", "Rotate", "Image", "LeetCode", "JavaScript", "Matrix", "In-place", "轉置矩陣"]
 ---
 
 # [0048] Rotate Image

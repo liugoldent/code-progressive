@@ -1,9 +1,12 @@
 ---
+title: "[0169] Majority Element"
+description: "[0169] Majority Element 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Majority Element
   - javascript
+keywords: ["0169", "Majority", "Element", "LeetCode", "Javascript"]
 ---
 
 # [0169] Majority Element

@@ -1,9 +1,12 @@
 ---
-description: TS - TS 問題集
+title: "[TS] 問題集"
+description: "[TS] 問題集 筆記，整理 interface vs type、const vs readonly 等重點。"
 tags:
   - TS
   - TypeScript
+keywords: ["TS", "問題集", "TypeSctipt", "interface", "vs", "type", "const", "readonly"]
 ---
+
 # [TS] 問題集
 [ts面試-1](https://juejin.cn/post/6999985372440559624)
 ## interface vs type

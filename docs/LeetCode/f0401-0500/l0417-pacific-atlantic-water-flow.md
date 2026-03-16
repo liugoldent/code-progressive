@@ -1,7 +1,9 @@
 ---
-description: "LeetCode 417 Pacific Atlantic Water Flow 提供 JavaScript 解法與 DFS 思路。透過反向流動與 visited 矩陣處理，找出水能同時流向太平洋與大西洋的格子。包含時間複雜度、圖解與 SEO keywords。"
 date: 2025-06-18
+title: "[0417] Pacific Atlantic Water Flow"
+description: "[0417] Pacific Atlantic Water Flow 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags: [LeetCode, JavaScript, DFS, Graph, Matrix, Pacific Atlantic, Reverse DFS, Flood Fill]
+keywords: ["0417", "Pacific", "Atlantic", "Water", "Flow", "LeetCode", "JavaScript", "DFS"]
 ---
 
 # [0417] Pacific Atlantic Water Flow

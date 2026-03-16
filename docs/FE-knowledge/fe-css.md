@@ -1,7 +1,10 @@
 ---
+title: "前端 CSS"
+description: "前端 CSS 筆記，整理 CSS 權重、RWD 等重點。"
 tags:
   - CSS
   - Test
+keywords: ["前端", "CSS", "FE-knowledge", "權重", "RWD", "animate、keyframes", "title", "vs"]
 ---
 
 # [FE] CSS

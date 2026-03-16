@@ -1,9 +1,12 @@
 ---
-description: TS - Narrowing 
+title: "[TS] Narrowing - 型別狹義化"
+description: "TS - Narrowing"
 tags:
   - TS
   - TypeScript
+keywords: ["TS", "Narrowing", "型別狹義化", "TypeSctipt", "概念", "使用", "文章來源"]
 ---
+
 # [TS] Narrowing - 型別狹義化
 ## 概念
 * 可以做為「當型別為...才...的操作」

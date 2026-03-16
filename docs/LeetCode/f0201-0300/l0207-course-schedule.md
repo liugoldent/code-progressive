@@ -1,10 +1,12 @@
 ---
-description: "使用 DFS 深度優先搜尋判斷有向圖中是否存在環。LeetCode 207 Course Schedule 題目完整解析，含 JavaScript 程式碼與圖解。"
 date: 2025-06-12
-tags: [LeetCode, 演算法, Graph, DFS, JavaScript, 拓樸排序]
 robots: index, follow
 canonical: "https://yourdomain.com/leetcode/207-course-schedule"
 image: "https://yourdomain.com/assets/leetcode-course-schedule.png"
+title: "[0207] Course Schedule"
+description: "使用 DFS 深度優先搜尋判斷有向圖中是否存在環。LeetCode 207 Course Schedule 題目完整解析，含 JavaScript 程式碼與圖解。"
+tags: [LeetCode, 演算法, Graph, DFS, JavaScript, 拓樸排序]
+keywords: ["0207", "Course", "Schedule", "LeetCode", "演算法", "Graph", "DFS", "JavaScript"]
 ---
 
 # [0207] Course Schedule

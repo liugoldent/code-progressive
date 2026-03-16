@@ -1,9 +1,12 @@
 ---
+title: "[0206] Reverse Linked List"
+description: "[0206] Reverse Linked List 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - javascript
   - Linked List
+keywords: ["0206", "Reverse", "Linked", "List", "LeetCode", "Javascript", "思路："]
 ---
 
 # [0206] Reverse Linked List

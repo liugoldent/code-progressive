@@ -1,10 +1,13 @@
 ---
+title: "[0058] Length of Last Word"
+description: "[0058] Length of Last Word 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Length of Last Word
   - javascript
   - Python
+keywords: ["0058", "Length", "of", "Last", "Word", "LeetCode", "Javascript"]
 ---
 
 # [0058] Length of Last Word

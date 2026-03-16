@@ -1,10 +1,13 @@
 ---
-description: react router v6 詳解
+title: "React React Router v6 詳解"
+description: "react router v6 詳解"
 tags:
   - javascript
   - react
   - frontEnd
+keywords: ["React", "Router", "v6", "詳解", "參考文章"]
 ---
+
 # [React] React Router v6 詳解
 
 ## 參考文章

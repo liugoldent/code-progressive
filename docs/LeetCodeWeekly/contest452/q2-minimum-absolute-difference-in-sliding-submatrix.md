@@ -7,7 +7,10 @@ tags:
   - bst
   - sliding-window
   - leetcode
+keywords: ["LeetCode Weekly Contest 452", "sliding submatrix", "minimum absolute difference", "JavaScript", "BST"]
 ---
+
+# Minimum Absolute Difference in Sliding Submatrix
 
 ## 思路
 * 看到每個元素最小距離，會想到平衡二元樹

@@ -6,7 +6,10 @@ tags:
   - algorithm
   - partition
   - leetcode
+keywords: ["LeetCode Weekly Contest 452", "partition", "JavaScript", "equal product subsets", "algorithm"]
 ---
+
+# Check Equal Partitions in JavaScript
 
 ## 思路
 * 既然是會分成兩組，而兩組相乘都等於target，那麼就看乘起來是不是target的平方就好

@@ -1,8 +1,10 @@
 ---
-description: Flask Blueprint 操作
+title: "[Flask] router - Blueprint 操作"
+description: "Flask Blueprint 操作"
 tags:
   - Python
   - Flask
+keywords: ["Flask", "router", "Blueprint", "操作", "Python", "連結", "目的", "舉例"]
 ---
 
 # [Flask] router - Blueprint 操作

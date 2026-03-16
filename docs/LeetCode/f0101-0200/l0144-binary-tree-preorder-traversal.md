@@ -1,4 +1,6 @@
 ---
+title: "[0144] Binary Tree Preorder Traversal"
+description: "[0144] Binary Tree Preorder Traversal 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
@@ -6,6 +8,7 @@ tags:
   - javascript
   - Binary Search
   - Stack
+keywords: ["0144", "Binary", "Tree", "Preorder", "Traversal", "LeetCode", "Javascript"]
 ---
 
 # [0144] Binary Tree Preorder Traversal

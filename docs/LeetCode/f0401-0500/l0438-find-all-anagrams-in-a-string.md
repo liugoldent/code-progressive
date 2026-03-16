@@ -1,10 +1,13 @@
 ---
+title: "[0438] Find All Anagrams in a String"
+description: "[0438] Find All Anagrams in a String 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Sliding Window
   - javascript
   - Find All Anagrams in a String
+keywords: ["0438", "Find", "All", "Anagrams", "in", "String", "LeetCode", "Javascript"]
 ---
 
 # [0438] Find All Anagrams in a String

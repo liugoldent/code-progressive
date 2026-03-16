@@ -1,9 +1,11 @@
 ---
-description: Flask lxml 操作
+title: "[爬蟲]lxml的使用"
+description: "Flask lxml 操作"
 tags:
   - Python
   - Flask
   - lxml
+keywords: ["爬蟲", "lxml的使用", "Python", "參考文章", "基本使用"]
 ---
 
 # [爬蟲]lxml的使用

@@ -1,9 +1,11 @@
 ---
-description: react JSX
+title: "React JSX"
+description: "React JSX 筆記，整理 作用、基本範例 等重點。"
 tags:
   - javascript
   - react
   - frontEnd
+keywords: ["React", "JSX", "作用", "基本範例", "包含邏輯的範例", "使用ClassName"]
 ---
 
 # [React] JSX

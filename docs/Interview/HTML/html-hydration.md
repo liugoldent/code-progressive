@@ -1,24 +1,10 @@
 ---
-description: hydration是什麼、注水是什麼
+title: "談談 hydration"
+description: "hydration是什麼、注水是什麼"
 tags:
   - html
   - interview
-keywords:
-  [
-    hydration,
-    html,
-    css,
-    js,
-    javascript,
-    this,
-    interview,
-    js 面試,
-    js interview,
-    前端面試題,
-    frontend interview,
-    フロントエンドの面接質問,
-    프론트엔드 면접 문제,
-  ]
+keywords: ["談談", "hydration", "Interview", "概念", "podcast", "多聽一遍"]
 ---
 
 # 談談 hydration

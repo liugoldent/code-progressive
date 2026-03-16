@@ -1,10 +1,13 @@
 ---
+title: "[0014] Longest Common Prefix"
+description: "[0014] Longest Common Prefix 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Longest Common Prefix
   - javascript
   - Python
+keywords: ["0014", "Longest", "Common", "Prefix", "LeetCode", "Javascript", "Python"]
 ---
 
 # [0014] Longest Common Prefix

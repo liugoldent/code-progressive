@@ -1,9 +1,10 @@
 ---
-description: C++ 算術運算符
+title: "[C++] 運算符"
+description: "[C++] 運算符 筆記，整理 算數運算符、關係運算符 等重點。"
 tags:
   - c++
   - backend
-keywords: [c++算術運算符]
+keywords: ["c++算術運算符"]
 ---
 
 # [C++] 運算符

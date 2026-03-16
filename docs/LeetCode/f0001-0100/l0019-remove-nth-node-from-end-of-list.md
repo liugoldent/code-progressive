@@ -1,10 +1,13 @@
 ---
+title: "[0019] Remove Nth Node From End of List"
+description: "[0019] Remove Nth Node From End of List 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Remove Nth Node From End of List
   - javascript
   - Linked List
+keywords: ["0019", "Remove", "Nth", "Node", "From", "End", "of", "List"]
 ---
 
 # [0019] Remove Nth Node From End of List

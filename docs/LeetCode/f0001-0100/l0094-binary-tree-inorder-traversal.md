@@ -1,9 +1,12 @@
 ---
+title: "[0094] Binary Tree Inorder Traversal"
+description: "[0094] Binary Tree Inorder Traversal 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Binary Tree Inorder Traversal
   - javascript
+keywords: ["0094", "Binary", "Tree", "Inorder", "Traversal", "LeetCode"]
 ---
 
 # [0094] Binary Tree Inorder Traversal

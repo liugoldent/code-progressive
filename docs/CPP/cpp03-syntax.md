@@ -1,9 +1,10 @@
 ---
-description: C++ 型別
+title: "[C++] 基本型別"
+description: "[C++] 基本型別 筆記，整理 基本型別、typedef 等重點。"
 tags:
   - c++
   - backend
-keywords: [c++型別]
+keywords: ["c++型別"]
 ---
 
 # [C++] 基本型別

@@ -1,7 +1,9 @@
 ---
-description: Vue.js 一些小細節
+title: "[Vue] 關於Vue的一些小細節"
+description: "Vue.js 一些小細節"
 tags:
   - Vue
+keywords: ["Vue", "關於Vue的一些小細節", "語法糖：", "sync", "vue-router", "next", "vue-router的", "params"]
 ---
 
 # [Vue] 關於Vue的一些小細節

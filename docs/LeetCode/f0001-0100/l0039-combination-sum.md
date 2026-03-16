@@ -1,7 +1,9 @@
 ---
-description: "LeetCode 39 Combination Sum 題解：用回溯法找出所有能加總為 target 的組合。每個數字可重複使用，本文提供 JavaScript 解法、錯誤狀況解析與剪枝最佳化。"
 date: 2025-06-18
+title: "[0039] Combination Sum"
+description: "[0039] Combination Sum 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags: [LeetCode, JavaScript, Backtracking, Recursion, 組合問題, Blind75]
+keywords: ["0039", "Combination", "Sum", "LeetCode", "JavaScript", "Backtracking", "Recursion", "組合問題"]
 ---
 
 # [0039] Combination Sum

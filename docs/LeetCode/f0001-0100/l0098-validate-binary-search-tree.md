@@ -1,10 +1,13 @@
 ---
+title: "[0098] Validate Binary Search Tree"
+description: "[0098] Validate Binary Search Tree 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Validate Binary Search Tree
   - javascript
   - Tree
+keywords: ["0098", "Validate", "Binary", "Search", "Tree", "LeetCode"]
 ---
 
 # [0098] Validate Binary Search Tree

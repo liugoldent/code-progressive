@@ -1,3 +1,9 @@
+---
+title: "MongoDB"
+description: "MongoDB 筆記，整理 三大概念、為什麼要用 Model 等重點。"
+keywords: ["MongoDB", "DB", "三大概念", "但在", "Mongoose（Node", "js", "ODM）裡，「Model」是什麼？", "為什麼要用"]
+---
+
 # MongoDB
 
 ## 三大概念

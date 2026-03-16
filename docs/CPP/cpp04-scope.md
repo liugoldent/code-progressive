@@ -1,9 +1,10 @@
 ---
-description: C++ 作用域
+title: "[C++] 作用域"
+description: "[C++] 作用域 筆記，整理 定義變量的三個地方、自動初始化 等重點。"
 tags:
   - c++
   - backend
-keywords: [c++作用域]
+keywords: ["c++作用域"]
 ---
 
 # [C++] 作用域

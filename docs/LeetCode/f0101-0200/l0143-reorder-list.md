@@ -1,10 +1,13 @@
 ---
+title: "[0143] Reorder List"
+description: "[0143] Reorder List 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Reorder List
   - javascript
   - Linked List
+keywords: ["0143", "Reorder", "List", "LeetCode", "Javascript"]
 ---
 
 # [0143] Reorder List

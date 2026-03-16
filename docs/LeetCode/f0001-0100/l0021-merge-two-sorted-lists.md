@@ -1,10 +1,13 @@
 ---
+title: "[0021] Merge Two Sorted Lists"
+description: "[0021] Merge Two Sorted Lists 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Merge Two Sorted Lists
   - javascript
   - Python
+keywords: ["0021", "Merge", "Two", "Sorted", "Lists", "LeetCode", "Javascript"]
 ---
 
 # [0021] Merge Two Sorted Lists

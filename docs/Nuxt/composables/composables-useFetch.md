@@ -1,19 +1,10 @@
 ---
-description: 介紹useFetch
+title: "useFetch"
+description: "useFetch 筆記，整理 概念、範例 等重點。"
 tags:
   - nuxt
   - composable
-keywords:
-  [
-    nuxt,
-    js,
-    javascript,
-    composable,
-    composable api,
-    useFetch,
-    seo,
-    nuxt useFetch,
-  ]
+keywords: ["useFetch", "Nuxt", "概念", "範例", "參數", "返回值"]
 ---
 
 # useFetch

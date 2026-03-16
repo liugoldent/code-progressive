@@ -1,7 +1,9 @@
 ---
-description: Vue3 基本介紹
+title: "[Vue3] Vue3 基本介紹"
+description: "[Vue3] Vue3 基本介紹 筆記，整理 基本 Vite config js、main js 為進入點 等重點。"
 tags:
   - Vue
+keywords: ["Vue3", "基本介紹", "Vue", "基本", "Vite", "config", "js", "main"]
 ---
 
 # [Vue3] Vue3 基本介紹

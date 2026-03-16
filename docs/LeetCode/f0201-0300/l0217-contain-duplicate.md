@@ -1,5 +1,6 @@
 ---
-description: leetCode Contains Duplicate js 解答, python 解答
+title: "[0217] Contains Duplicate"
+description: "[0217] Contains Duplicate 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - easy
@@ -9,27 +10,7 @@ tags:
   - Array
   - And
   - Hashing
-keywords:
-  - facebook
-  - amazon
-  - apple
-  - netflix
-  - google
-  - faang interview
-  - leetCode
-  - js
-  - javascript
-  - interview
-  - js 面試
-  - js interview
-  - 前端面試題
-  - frontend interview
-  - フロントエンドの面接質問
-  - 프론트엔드 면접 문제
-  - software engineer
-  - Contains Duplicate
-  - Contains Duplicate js ans
-  - Contains Duplicate python ans
+keywords: ["0217", "Contains", "Duplicate", "LeetCode", "Javascript", "Python", "測試程式", "相關連結"]
 ---
 
 # [0217] Contains Duplicate

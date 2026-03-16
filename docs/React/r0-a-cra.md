@@ -1,10 +1,13 @@
 ---
-description: react CRA - create React App
+title: "React React CRA - create React App"
+description: "react CRA - create React App"
 tags:
   - javascript
   - react
   - frontEnd
+keywords: ["React", "CRA", "create", "App", "概念、關鍵字"]
 ---
+
 # [React] React CRA - create React App
 ## 概念、關鍵字
 ### CRA

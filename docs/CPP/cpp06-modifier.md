@@ -1,9 +1,10 @@
 ---
-description: C++ 修飾符類型
+title: "[C++] 修飾符類型"
+description: "[C++] 修飾符類型 筆記，整理 基本修飾符、程式範例 等重點。"
 tags:
   - c++
   - backend
-keywords: [c++修飾符類型]
+keywords: ["c++修飾符類型"]
 ---
 
 # [C++] 修飾符類型

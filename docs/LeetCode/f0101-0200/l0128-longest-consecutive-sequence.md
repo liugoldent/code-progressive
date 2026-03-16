@@ -1,7 +1,9 @@
 ---
-description: "LeetCode 128 題解：Longest Consecutive Sequence。使用 JavaScript 搭配 Set 判斷連續序列開頭，實現 O(n) 時間複雜度的高效解法，避免排序並優化重複處理。"
 date: 2025-06-16
+title: "[0128] Longest Consecutive Sequence"
+description: "[0128] Longest Consecutive Sequence 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags: [LeetCode, JavaScript, Set, 陣列處理, 最長序列, 面試題, 哈希]
+keywords: ["0128", "Longest", "Consecutive", "Sequence", "LeetCode", "JavaScript", "Set", "陣列處理"]
 ---
 
 # [0128] Longest Consecutive Sequence

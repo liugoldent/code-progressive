@@ -1,7 +1,9 @@
 ---
-description: "LeetCode 338 Counting Bits 題解：使用動態規劃 + 位元運算解法（JavaScript），詳細解釋 dp[i] = dp[i >> 1] + (i & 1) 的邏輯，並整理位元技巧與延伸題目。"
 date: 2025-06-18
+title: "[0338] Counting Bits"
+description: "[0338] Counting Bits 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags: [LeetCode, JavaScript, Bit Manipulation, DP, Dynamic Programming, 位元運算, Blind75]
+keywords: ["0338", "Counting", "Bits", "LeetCode", "JavaScript", "Bit", "Manipulation", "DP"]
 ---
 
 # [0338] Counting Bits

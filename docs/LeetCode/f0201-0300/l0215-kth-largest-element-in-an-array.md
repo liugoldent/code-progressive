@@ -1,4 +1,6 @@
 ---
+title: "[0215] Kth Largest Element in an Array"
+description: "[0215] Kth Largest Element in an Array 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
@@ -6,6 +8,7 @@ tags:
   - Kth Largest Element in an Array
   - Heap
   - PriorityQueue
+keywords: ["0215", "Kth", "Largest", "Element", "in", "an", "Array", "LeetCode"]
 ---
 
 # [0215] Kth Largest Element in an Array

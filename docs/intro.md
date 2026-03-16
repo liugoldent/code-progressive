@@ -1,11 +1,13 @@
 ---
 sidebar_position: 0
-description: 基本介紹
+title: "README"
+description: "README 筆記，整理 網站說明、日本環島日記 等重點。"
 tags:
   - javascript
   - python
   - leetcode
   - lt
+keywords: ["README", "intro", "md", "網站說明", "日本環島日記"]
 ---
 
 # README

@@ -1,9 +1,12 @@
 ---
+title: "[0024] Swap Nodes in Pairs"
+description: "[0024] Swap Nodes in Pairs 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Swap Nodes in Pairs
   - javascript
+keywords: ["0024", "Swap", "Nodes", "in", "Pairs", "LeetCode", "Javascript", "大師圖文講解"]
 ---
 
 # [0024] Swap Nodes in Pairs

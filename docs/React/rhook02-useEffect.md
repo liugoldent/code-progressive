@@ -1,9 +1,11 @@
 ---
-description: react useEffect
+title: "React useEffect"
+description: "react useEffect"
 tags:
   - javascript
   - react
   - frontEnd
+keywords: ["React", "useEffect", "概念", "使用", "類似生命週期的使用", "useEffect的async", "function"]
 ---
 
 # [React] useEffect

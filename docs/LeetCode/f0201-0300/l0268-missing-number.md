@@ -1,10 +1,12 @@
 ---
-description: leetCode Missing Number js 解答
+title: "[0268] Missing Number"
+description: "[0268] Missing Number 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Missing Number
   - javascript
+keywords: ["0268", "Missing", "Number", "LeetCode", "解法"]
 ---
 
 # [0268] Missing Number

@@ -1,11 +1,13 @@
 ---
-description: vue 面試常見問題
+title: "前端 Vue3"
+description: "前端 Vue3 筆記，整理 響應式系統的實現、性能優化技術 等重點。"
 tags:
   - javascript
   - Test
   - Vue
   - Vue2
   - Vue3
+keywords: ["前端", "Vue3", "FE-knowledge", "Composition", "API", "Options", "的優勢", "響應式系統的實現"]
 ---
 
 # [FE] Vue3

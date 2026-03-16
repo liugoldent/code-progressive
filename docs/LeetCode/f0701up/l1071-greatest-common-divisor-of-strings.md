@@ -1,9 +1,12 @@
 ---
+title: "[1071] Greatest Common Divisor of Strings"
+description: "[1071] Greatest Common Divisor of Strings 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Greatest Common Divisor of Strings
   - Javascript
+keywords: ["1071", "Greatest", "Common", "Divisor", "of", "Strings", "LeetCode", "Javascript"]
 ---
 
 # [1071] Greatest Common Divisor of Strings

@@ -1,9 +1,12 @@
 ---
-description: 使用docSearch，搜尋你的內容
+title: "[DocSearch] 基本配置"
+description: "使用docSearch，搜尋你的內容"
 tags:
   - docsearch
   - Docusaurus
+keywords: ["DocSearch", "基本配置", "好文連結", "相關指令複製"]
 ---
+
 # [DocSearch] 基本配置
 
 ## 好文連結

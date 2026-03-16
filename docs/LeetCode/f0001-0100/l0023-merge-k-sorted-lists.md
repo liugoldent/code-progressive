@@ -1,10 +1,13 @@
 ---
+title: "[0023] Merge k Sorted Lists"
+description: "[0023] Merge k Sorted Lists 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Hard
   - Merge k Sorted Lists
   - Linked List
   - javascript
+keywords: ["0023", "Merge", "Sorted", "Lists", "LeetCode", "Javascript"]
 ---
 
 # [0023] Merge k Sorted Lists

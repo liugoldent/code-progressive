@@ -1,7 +1,11 @@
 ---
+title: "Heap"
+description: "Heap 筆記，整理 heapifyDown、Leetcode題目 等重點。"
 tags:
   - 資料結構 / 演算法
+keywords: ["Heap", "DataStructure", "heapifyDown", "Leetcode題目", "js", "Code"]
 ---
+
 # Heap 
 ## heapifyDown() 
 * 是用於在最小堆或最大堆中維護堆的性質的方法之一。

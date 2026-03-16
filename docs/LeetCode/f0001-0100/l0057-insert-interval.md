@@ -1,7 +1,9 @@
 ---
-description: "LeetCode 57 Insert Interval：在已排序、互不重疊的區間陣列中插入一個新區間並合併。使用 O(n) 時間、O(1) 額外空間的貪婪掃描，附完整 JS 程式碼、思路圖解、常見陷阱與 SEO 關鍵字。"
 date: 2025-06-18
+title: "[0057] Insert Interval"
+description: "[0057] Insert Interval 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags: [LeetCode, JavaScript, Interval, Greedy, Insert Interval, 面試題]
+keywords: ["0057", "Insert", "Interval", "LeetCode", "JavaScript", "Greedy", "面試題", "📘"]
 ---
 
 # [0057] Insert Interval

@@ -1,9 +1,12 @@
 ---
+title: "[0027] Remove Element"
+description: "[0027] Remove Element 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Remove Element
   - javascript
+keywords: ["0027", "Remove", "Element", "LeetCode", "Javascript"]
 ---
 
 # [0027] Remove Element

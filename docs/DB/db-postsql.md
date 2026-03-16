@@ -1,10 +1,14 @@
 ---
+title: "[PostgreSQL] Heroku PostgreSQL 設定"
+description: "[PostgreSQL] Heroku PostgreSQL 設定 筆記，聚焦 技術筆記與核心概念整理。"
 tags: 
     - NodeJs
     - Express
     - Heroku
     - PostgreSQL
+keywords: ["PostgreSQL", "Heroku", "設定", "DB"]
 ---
+
 # [PostgreSQL] Heroku PostgreSQL 設定
 1. 首先要在電腦安裝postgresapp
     * [postgreapp](https://postgresapp.com/)

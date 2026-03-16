@@ -1,5 +1,6 @@
 ---
-description: Product of Array Except Self js 解,Product of Array Except Self python 解
+title: "[0238] Products of Array Except Self"
+description: "[0238] Products of Array Except Self 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
@@ -7,29 +8,7 @@ tags:
   - python
   - interview
   - Hashing
-keywords:
-  [
-    facebook,
-    amazon,
-    apple,
-    netflix,
-    google,
-    faang interview,
-    leetCode,
-    js,
-    javascript,
-    interview,
-    js 面試,
-    js interview,
-    前端面試題,
-    frontend interview,
-    フロントエンドの面接質問,
-    프론트엔드 면접 문제,
-    software engineer,
-    Product of Array Except Self,
-    Product of Array Except Self js ans,
-    Product of Array Except Self python ans,
-  ]
+keywords: ["0238", "Products", "of", "Array", "Except", "Self", "LeetCode", "Javascript"]
 ---
 
 # [0238] Products of Array Except Self

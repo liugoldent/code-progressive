@@ -1,9 +1,11 @@
 ---
-description: react useState
+title: "React useState"
+description: "react useState"
 tags:
   - javascript
   - react
   - frontEnd
+keywords: ["React", "useState", "概念", "基本程式", "useState的物件型別使用"]
 ---
 
 # [React] useState

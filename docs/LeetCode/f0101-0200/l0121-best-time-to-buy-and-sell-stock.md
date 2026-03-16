@@ -1,10 +1,13 @@
 ---
+title: "[0121] Best Time to Buy and Sell Stock"
+description: "[0121] Best Time to Buy and Sell Stock 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Best Time to Buy and Sell Stock
   - javascript
   - Sliding Window
+keywords: ["0121", "Best", "Time", "to", "Buy", "and", "Sell", "Stock"]
 ---
 
 # [0121] Best Time to Buy and Sell Stock

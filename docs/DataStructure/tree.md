@@ -1,7 +1,11 @@
 ---
+title: "Tree：樹"
+description: "Tree：樹 筆記，整理 核心遍歷、Leetcode題目 等重點。"
 tags:
   - 資料結構 / 演算法
+keywords: ["Tree：樹", "DataStructure", "核心遍歷", "Leetcode題目"]
 ---
+
 # Tree：樹
 
 ## 核心遍歷

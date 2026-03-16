@@ -1,9 +1,11 @@
 ---
-description: VueRouter知識點
+title: "前端 Vue Router"
+description: "VueRouter知識點"
 tags:
   - vue
   - vue router
   - frontend
+keywords: ["前端", "Vue", "Router", "FE-knowledge", "vue-router", "怎麼重新定向頁面", "如何配置", "404"]
 ---
 
 # [FE] Vue Router

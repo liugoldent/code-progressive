@@ -1,9 +1,11 @@
 ---
-description: 介紹flask 如何使用與連接mongo
+title: "[MongoDB] 連接 Mongo DB（使用Python）"
+description: "介紹flask 如何使用與連接mongo"
 tags:
   - Python
   - Flask
   - MongoDB
+keywords: ["MongoDB", "連接", "Mongo", "DB（使用Python）", "Python", "MnogoDB教學文章", "創建MongoDB（Free）", "基本概念"]
 ---
 
 # [MongoDB] 連接 Mongo DB（使用Python）

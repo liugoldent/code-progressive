@@ -4,14 +4,20 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
+import { File } from "node:buffer";
 import { themes as prismThemes } from "prism-react-renderer";
+
+if (!globalThis.File) {
+  globalThis.File = File;
+}
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "__yeah! Code",
-  tagline: "漸進一步-程式",
+  tagline: "前端、JavaScript、React、Vue、TypeScript 與演算法學習筆記",
   url: "https://code-progressive.netlify.app/",
   favicon: "img/code.png",
+  titleDelimiter: " | ",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
@@ -68,6 +74,18 @@ const config = {
     ({
       // Replace with your project's social card
       image: "img/code.png",
+      metadata: [
+        {
+          name: "description",
+          content:
+            "整理前端、JavaScript、React、Vue、TypeScript、Node.js 與 LeetCode 的學習筆記與實作紀錄。",
+        },
+        {
+          name: "keywords",
+          content:
+            "前端, JavaScript, React, Vue, TypeScript, Node.js, LeetCode, 技術筆記",
+        },
+      ],
       navbar: {
         title: "__yeah! Code",
         logo: {

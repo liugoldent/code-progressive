@@ -1,7 +1,9 @@
 ---
-description: "LeetCode 56 Merge Intervals：將重疊區間合併並輸出不重疊、按起點升冪的新序列。使用 JavaScript 排序 + 貪婪掃描，時間 O(n log n)。附完整程式碼、複雜度、常見陷阱與 SEO 關鍵字。"
 date: 2025-06-18
+title: "[0056] Merge Intervals"
+description: "[0056] Merge Intervals 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags: [LeetCode, JavaScript, Interval, Greedy, Sorting, 面試題]
+keywords: ["0056", "Merge", "Intervals", "LeetCode", "JavaScript", "Interval", "Greedy", "Sorting"]
 ---
 
 # [0056] Merge Intervals

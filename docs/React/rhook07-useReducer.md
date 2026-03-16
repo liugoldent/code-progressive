@@ -1,9 +1,11 @@
 ---
-description: react useReducer
+title: "React useReducer"
+description: "react useReducer"
 tags:
   - javascript
   - react
   - frontEnd
+keywords: ["React", "useReducer", "概念", "語法", "注意事項", "程式"]
 ---
 
 # [React] useReducer

@@ -1,10 +1,13 @@
 ---
+title: "[0211] Design Add and Search Words Data Structure"
+description: "[0211] Design Add and Search Words Data Structure 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - javascript
   - Tries
   - Design Add and Search Words Data Structure
+keywords: ["0211", "Design", "Add", "and", "Search", "Words", "Data", "Structure"]
 ---
 
 # [0211] Design Add and Search Words Data Structure

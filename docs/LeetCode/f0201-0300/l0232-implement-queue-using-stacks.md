@@ -1,10 +1,13 @@
 ---
+title: "[0232] Longest Common Prefix"
+description: "[0232] Longest Common Prefix 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Implement Queue using Stacks
   - javascript
   - Python
+keywords: ["0232", "Longest", "Common", "Prefix", "LeetCode", "Javascript", "stack", "queue"]
 ---
 
 # [0232] Longest Common Prefix

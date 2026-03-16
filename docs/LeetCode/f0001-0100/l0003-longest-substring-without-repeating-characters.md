@@ -1,11 +1,13 @@
 ---
-description: leetCode two sum js 解答 python 解答
+title: "[0003] Longest Substring Without Repeating Characters"
+description: "[0003] Longest Substring Without Repeating Characters 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Longest Substring Without Repeating Characters
   - javascript
   - Two Pointer
+keywords: ["0003", "Longest", "Substring", "Without", "Repeating", "Characters", "LeetCode", "Javascript"]
 ---
 
 # [0003] Longest Substring Without Repeating Characters

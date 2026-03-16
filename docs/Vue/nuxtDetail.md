@@ -1,8 +1,10 @@
 ---
-description: Nuxt.js 精讀
+title: "[Nuxt.js] 精讀"
+description: "[Nuxt.js] 精讀 筆記，整理 參考文章、概述 等重點。"
 tags:
   - Vue
   - Nuxt
+keywords: ["Nuxt", "js", "精讀", "Vue", "參考文章", "概述", "路由", "Nuxtjs"]
 ---
 
 # [Nuxt.js] 精讀

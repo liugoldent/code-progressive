@@ -1,10 +1,13 @@
 ---
+title: "[0035] Search Insert Position"
+description: "[0035] Search Insert Position 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Search Insert Position
   - javascript
   - Python
+keywords: ["0035", "Search", "Insert", "Position", "LeetCode", "Javascript", "Python"]
 ---
 
 # [0035] Search Insert Position

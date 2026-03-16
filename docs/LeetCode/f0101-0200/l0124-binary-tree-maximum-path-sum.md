@@ -1,10 +1,13 @@
 ---
+title: "[0124] Binary Tree Maximum Path Sum"
+description: "[0124] Binary Tree Maximum Path Sum 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Binary Tree Maximum Path Sum
   - javascript
   - Trees
+keywords: ["0124", "Binary", "Tree", "Maximum", "Path", "Sum", "LeetCode", "Javascript"]
 ---
 
 # [0124] Binary Tree Maximum Path Sum

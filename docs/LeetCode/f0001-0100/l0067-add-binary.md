@@ -1,10 +1,13 @@
 ---
+title: "[0067] Add Binary"
+description: "[0067] Add Binary 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Add Binary
   - javascript
   - Python
+keywords: ["0067", "Add", "Binary", "LeetCode", "Javascript"]
 ---
 
 # [0067] Add Binary

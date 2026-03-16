@@ -1,7 +1,9 @@
 ---
-description: python SQL
+title: "[Python] SQL"
+description: "[Python] SQL 筆記，整理 SQL、ORM 等重點。"
 tags:
   - Python
+keywords: ["Python", "SQL", "ORM", "索引原理比較", "索引類型"]
 ---
 
 # [Python] SQL

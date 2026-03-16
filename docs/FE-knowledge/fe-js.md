@@ -1,7 +1,10 @@
 ---
+title: "前端 Javascript - 2"
+description: "前端 Javascript - 2 筆記，整理 Difference、what is 等重點。"
 tags:
   - javascript
   - Test
+keywords: ["前端", "Javascript", "FE-knowledge", "Difference", "what", "is", "模塊觀念", "Decorator"]
 ---
 
 # [FE] Javascript - 2

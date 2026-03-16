@@ -1,23 +1,10 @@
 ---
-description: 關於this的考題
+title: "談談 this"
+description: "談談 this 筆記，整理 解釋、用法 等重點。"
 tags:
   - javascript
   - interview
-keywords:
-  [
-    html,
-    css,
-    js,
-    javascript,
-    this,
-    interview,
-    js 面試,
-    js interview,
-    前端面試題,
-    frontend interview,
-    フロントエンドの面接質問,
-    프론트엔드 면접 문제,
-  ]
+keywords: ["談談", "this", "Interview", "解釋", "用法", "相關考題"]
 ---
 
 # 談談 this

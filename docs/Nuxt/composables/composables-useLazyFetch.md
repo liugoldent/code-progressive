@@ -1,19 +1,10 @@
 ---
-description: 介紹 useLazyFetch
+title: "useLazyFetch"
+description: "介紹 useLazyFetch"
 tags:
   - nuxt
   - composable
-keywords:
-  [
-    nuxt,
-    js,
-    javascript,
-    composable,
-    composable api,
-    useLazyFetch,
-    seo,
-    nuxt useLazyFetch,
-  ]
+keywords: ["useLazyFetch", "Nuxt", "概念", "範例", "參數", "返回值"]
 ---
 
 # useLazyFetch

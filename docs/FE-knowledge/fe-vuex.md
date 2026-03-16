@@ -1,9 +1,11 @@
 ---
-description: VueX知識點
+title: "前端 VueX"
+description: "前端 VueX 筆記，聚焦 前端面試與開發知識整理。"
 tags: 
     - vue
     - vuex
     - frontend
+keywords: ["前端", "VueX", "FE-knowledge", "請說說actions", "mutations有什麼區別", "mutation", "vs", "action"]
 ---
 
 # [FE] VueX

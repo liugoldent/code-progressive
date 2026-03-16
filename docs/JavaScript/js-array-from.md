@@ -1,8 +1,11 @@
 ---
-description: javascript array from  
+title: "JavaScript Array From 常用語法"
+description: "javascript array from"
 tags:
   - javascript
+keywords: ["JavaScript", "Array", "From", "常用語法", "介紹", "用途1：將類數組轉換成數組", "淺拷貝數組", "填充數組"]
 ---
+
 # [JS] Array From 常用語法
 ## 介紹
 * arrayLike：必傳參數，想要轉換成數組的偽數組對象或可迭代對象

@@ -1,10 +1,13 @@
 ---
+title: "[0703] Kth Largest Element in a Stream"
+description: "[0703] Kth Largest Element in a Stream 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Heap / Priority Queue
   - javascript
   - Kth Largest Element in a Stream
+keywords: ["0703", "Kth", "Largest", "Element", "in", "Stream", "LeetCode", "一般"]
 ---
 
 # [0703] Kth Largest Element in a Stream

@@ -1,11 +1,12 @@
 ---
-description: 測試基本資訊
+title: "測試 - 關鍵字"
+description: "測試 - 關鍵字 筆記，整理 常用關鍵字與基本知識、常用匹配器 等重點。"
 tags:
   - learn
   - javascript
   - jest
+keywords: ["測試", "關鍵字", "Jest", "常用關鍵字與基本知識", "常用匹配器"]
 ---
-
 
 # 測試 - 關鍵字
 ## 常用關鍵字與基本知識

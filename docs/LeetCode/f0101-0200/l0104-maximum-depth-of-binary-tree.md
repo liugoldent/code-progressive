@@ -1,10 +1,13 @@
 ---
+title: "[0104] Maximum Depth of Binary Tree"
+description: "[0104] Maximum Depth of Binary Tree 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Tree
   - javascript
   - Maximum Depth of Binary Tree
+keywords: ["0104", "Maximum", "Depth", "of", "Binary", "Tree", "LeetCode", "Javascript"]
 ---
 
 # [0104] Maximum Depth of Binary Tree

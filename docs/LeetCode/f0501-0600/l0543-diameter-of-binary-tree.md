@@ -1,9 +1,12 @@
 ---
+title: "[0543] Diameter of Binary Tree"
+description: "[0543] Diameter of Binary Tree 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Tree
   - Diameter of Binary Tree
+keywords: ["0543", "Diameter", "of", "Binary", "Tree", "LeetCode", "Javascript"]
 ---
 
 # [0543] Diameter of Binary Tree

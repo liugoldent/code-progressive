@@ -1,19 +1,10 @@
 ---
-description: 介紹useAppConfig
+title: "useAppConfig"
+description: "介紹useAppConfig"
 tags:
   - nuxt
   - composable
-keywords:
-  [
-    nuxt,
-    js,
-    javascript,
-    composable,
-    composable api,
-    useAppConfig,
-    seo,
-    nuxt useAppConfig,
-  ]
+keywords: ["useAppConfig", "Nuxt", "概念", "範例"]
 ---
 
 # useAppConfig

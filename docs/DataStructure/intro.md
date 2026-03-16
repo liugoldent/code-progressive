@@ -1,8 +1,9 @@
 ---
-description: 描述資料結構有哪些、演算法有哪些
-keywords: [資料結構, javascript, data structure]
+title: "[DS]資料結構"
+description: "描述資料結構有哪些、演算法有哪些"
 tags:
   - 資料結構
+keywords: ["資料結構", "javascript", "data structure"]
 ---
 
 # [DS]資料結構

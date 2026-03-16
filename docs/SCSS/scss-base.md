@@ -1,10 +1,13 @@
 ---
-description: 一些scss的基本使用
+title: "[SCSS] SCSS的基本使用"
+description: "[SCSS] SCSS的基本使用 筆記，整理 為何需要預處理器、SASS vs SCSS 等重點。"
 tags:
   - SCSS
   - CSS
   - frontEnd
+keywords: ["SCSS", "SCSS的基本使用", "為何需要預處理器", "SASS", "vs", "特點", "總結"]
 ---
+
 # [SCSS] SCSS的基本使用
 ## 為何需要預處理器
 預處理器有著許多原生CSS沒有的功能，例如：mixin、變數、巢狀選擇器等，而這些功能可以使 CSS 結構的可讀性更高且更容易維護。

@@ -1,7 +1,9 @@
 ---
-description: "LeetCode 300 Longest Increasing Subsequence 提供 JavaScript 解法與 DP 思路。透過動態規劃找出最長遞增子序列，包含狀態轉移、範例拆解與時間複雜度說明，適合準備演算法面試與強化動態規劃技巧。"
 date: 2025-06-18
+title: "[0300] Longest Increasing Subsequence"
+description: "[0300] Longest Increasing Subsequence 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags: [LeetCode, JavaScript, DP, Dynamic Programming, Longest Increasing Subsequence, LIS, 演算法, 子序列, 面試題, 資料結構]
+keywords: ["0300", "Longest", "Increasing", "Subsequence", "LeetCode", "JavaScript", "DP", "Dynamic"]
 ---
 
 # [0300] Longest Increasing Subsequence

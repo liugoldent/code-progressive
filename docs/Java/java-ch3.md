@@ -1,9 +1,10 @@
 ---
 sidebar_position: 0
-description: java 基本課程
+title: "Java 基本 類別繼承 ch03"
+description: "Java 基本 類別繼承 ch03 筆記，整理 類別繼承、保護成員 等重點。"
 tags:
   - java
-keywords: [java]
+keywords: ["java"]
 ---
 
 # [JAVA 基本] 類別繼承 ch03

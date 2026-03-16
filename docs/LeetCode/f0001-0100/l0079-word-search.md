@@ -1,10 +1,13 @@
 ---
+title: "[0079] Word Search"
+description: "[0079] Word Search 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Word Search
   - javascript
   - Backtracking
+keywords: ["0079", "Word", "Search", "LeetCode"]
 ---
 
 # [0079] Word Search

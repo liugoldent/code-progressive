@@ -1,10 +1,13 @@
 ---
+title: "[0105] Construct Binary Tree from Preorder and Inorder Traversal"
+description: "[0105] Construct Binary Tree from Preorder and Inorder Traversal 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Tree
   - javascript
   - Construct Binary Tree from Preorder and Inorder Traversal
+keywords: ["0105", "Construct", "Binary", "Tree", "from", "Preorder", "and", "Inorder"]
 ---
 
 # [0105] Construct Binary Tree from Preorder and Inorder Traversal

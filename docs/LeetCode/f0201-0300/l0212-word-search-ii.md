@@ -1,10 +1,13 @@
 ---
+title: "[0212] Word Search II"
+description: "[0212] Word Search II 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - javascript
   - Tries
   - Word Search II
+keywords: ["0212", "Word", "Search", "II", "LeetCode"]
 ---
 
 # [0212] Word Search II

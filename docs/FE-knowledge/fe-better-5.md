@@ -1,8 +1,11 @@
 ---
+title: "前端 前端效能優化-5"
+description: "前端 前端效能優化-5 筆記，整理 DevTool Debugging & 節流、8-1 DevTool 等重點。"
 tags:
   - javascript
   - Test
   - 前端效能優化
+keywords: ["前端", "前端效能優化-5", "FE-knowledge", "DevTool", "Debugging", "節流", "8-1", "8-2"]
 ---
 
 # [FE] 前端效能優化-5

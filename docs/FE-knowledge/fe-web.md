@@ -1,8 +1,10 @@
 ---
-description: 資安問題
+title: "前端 Information security - 資安問題"
+description: "前端 Information security - 資安問題 筆記，整理 XSS 攻擊、CORS攻擊、CSRF攻擊 等重點。"
 tags: 
     - Information security
     - frontend
+keywords: ["前端", "Information", "security", "資安問題", "FE-knowledge", "XSS", "攻擊", "CORS攻擊、CSRF攻擊"]
 ---
 
 #  [FE] Information security - 資安問題

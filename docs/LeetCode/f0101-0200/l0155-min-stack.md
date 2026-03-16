@@ -1,10 +1,13 @@
 ---
+title: "[0155] Min Stack"
+description: "[0155] Min Stack 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Min Stack
   - javascript
   - Binary Search
+keywords: ["0155", "Min", "Stack", "LeetCode", "Javascript"]
 ---
 
 # [0155] Min Stack

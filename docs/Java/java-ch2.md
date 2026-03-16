@@ -1,9 +1,10 @@
 ---
 sidebar_position: 0
-description: java 基本課程
+title: "Java 基本 類別知識 ch02"
+description: "Java 基本 類別知識 ch02 筆記，整理 類別、建構元 等重點。"
 tags:
   - java
-keywords: [java]
+keywords: ["java"]
 ---
 
 # [JAVA 基本] 類別知識 ch02

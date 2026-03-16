@@ -1,9 +1,12 @@
 ---
-description: TS - Discriminated unions 
+title: "[TS] Discriminated Unions - 可辨識聯合"
+description: "TS - Discriminated unions"
 tags:
   - TS
   - TypeScript
+keywords: ["TS", "Discriminated", "Unions", "可辨識聯合", "TypeSctipt", "概念", "使用", "文章來源"]
 ---
+
 # [TS] Discriminated Unions - 可辨識聯合
 ## 概念
 * 是一種使用聯合型別和特定的共同屬性（discriminant property）來區別不同變數類型的技巧。

@@ -1,7 +1,9 @@
 ---
-description: "LeetCode 152 解法：Maximum Product Subarray。利用 JavaScript 維護當前最大與最小乘積，以處理負數翻轉狀況。完整解釋動態規劃技巧與陷阱，適合動態區間處理訓練。"
 date: 2025-06-18
+title: "[0152] Maximum Product Subarray"
+description: "[0152] Maximum Product Subarray 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags: [LeetCode, JavaScript, Dynamic Programming, Subarray, Sliding Window, Blind75]
+keywords: ["0152", "Maximum", "Product", "Subarray", "LeetCode", "JavaScript", "Dynamic", "Programming"]
 ---
 
 # [0152] Maximum Product Subarray

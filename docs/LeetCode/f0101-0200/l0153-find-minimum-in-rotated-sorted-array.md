@@ -1,10 +1,13 @@
 ---
+title: "[0153] Find Minimum in Rotated Sorted Array"
+description: "[0153] Find Minimum in Rotated Sorted Array 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Find Minimum in Rotated Sorted Array
   - javascript
   - Binary Search
+keywords: ["0153", "Find", "Minimum", "in", "Rotated", "Sorted", "Array", "LeetCode"]
 ---
 
 # [0153] Find Minimum in Rotated Sorted Array

@@ -1,7 +1,9 @@
 ---
-description: 對等連接詞筆記
+title: "[English]對等連接詞筆記"
+description: "[English]對等連接詞筆記 筆記，整理 參考文章、配對連接詞 等重點。"
 tags:
   - English
+keywords: ["English", "對等連接詞筆記", "參考文章", "配對連接詞"]
 ---
 
 # [English]對等連接詞筆記

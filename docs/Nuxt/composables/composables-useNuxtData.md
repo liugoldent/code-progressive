@@ -1,19 +1,10 @@
 ---
-description: 介紹 useNuxtData
+title: "useNuxtData"
+description: "介紹 useNuxtData"
 tags:
   - nuxt
   - composable
-keywords:
-  [
-    nuxt,
-    js,
-    javascript,
-    composable,
-    composable api,
-    useNuxtData,
-    seo,
-    nuxt useNuxtData,
-  ]
+keywords: ["useNuxtData", "Nuxt", "概念", "範例", "返回值", "類型參考"]
 ---
 
 # useNuxtData

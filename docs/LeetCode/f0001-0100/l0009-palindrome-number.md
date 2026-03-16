@@ -1,10 +1,13 @@
 ---
+title: "[0009] Palindrome Number"
+description: "[0009] Palindrome Number 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Palindrome Number
   - javascript
   - Python
+keywords: ["0009", "Palindrome", "Number", "LeetCode", "Javascript", "Python"]
 ---
 
 # [0009] Palindrome Number

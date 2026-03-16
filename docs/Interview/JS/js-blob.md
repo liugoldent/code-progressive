@@ -1,23 +1,10 @@
 ---
-description: 關於blob的考題
+title: "談談 blob"
+description: "談談 blob 筆記，整理 解釋、屬性 等重點。"
 tags:
   - javascript
   - interview
-keywords:
-  [
-    html,
-    css,
-    js,
-    javascript,
-    blob,
-    interview,
-    js 面試,
-    js interview,
-    前端面試題,
-    frontend interview,
-    フロントエンドの面接質問,
-    프론트엔드 면접 문제,
-  ]
+keywords: ["談談", "blob", "Interview", "解釋", "屬性", "方法", "綜合程式碼"]
 ---
 
 # 談談 blob

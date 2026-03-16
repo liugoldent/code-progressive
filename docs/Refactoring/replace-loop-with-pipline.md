@@ -1,9 +1,9 @@
 ---
 title: "[Rf]Replace Loop with Pipeline - 將迴圈改成流程"
 description: "學習如何使用Pipeline替代Loop，提升代碼的可讀性和效率。本文提供詳細的示例和最佳實踐。"
-keywords:
-  ["replace loop with pipeline", "代碼效率", "最佳實踐", "編程", "Pipeline"]
+keywords: ["replace loop with pipeline", "代碼效率", "最佳實踐", "編程", "Pipeline"]
 ---
+
 # [Rf]Replace Loop with Pipeline - 將迴圈改成流程
 
 ## 使用Pipeline代替Loop的優勢

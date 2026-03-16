@@ -1,19 +1,10 @@
 ---
-description: 介紹useAsyncData
+title: "useAsyncData"
+description: "介紹useAsyncData"
 tags:
   - nuxt
   - composable
-keywords:
-  [
-    nuxt,
-    js,
-    javascript,
-    composable,
-    composable api,
-    useAsyncData,
-    seo,
-    nuxt useAsyncData,
-  ]
+keywords: ["useAsyncData", "Nuxt", "概念", "範例", "參數", "返回值"]
 ---
 
 # useAsyncData

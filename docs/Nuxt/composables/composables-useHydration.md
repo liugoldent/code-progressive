@@ -1,19 +1,10 @@
 ---
-description: 介紹useHydration
+title: "useHydration"
+description: "介紹useHydration"
 tags:
   - nuxt
   - composable
-keywords:
-  [
-    nuxt,
-    js,
-    javascript,
-    composable,
-    composable api,
-    useHydration,
-    seo,
-    nuxt useHydration,
-  ]
+keywords: ["useHydration", "Nuxt", "概念", "範例", "參數", "返回值"]
 ---
 
 # useHydration

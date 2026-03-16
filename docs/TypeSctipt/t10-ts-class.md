@@ -1,9 +1,12 @@
 ---
-description: TS - TS Class
+title: "[TS] Class"
+description: "TS - TS Class"
 tags:
   - TS
   - TypeScript
+keywords: ["TS", "Class", "TypeSctipt", "概念", "封裝", "繼承（Inheritance）", "多型（Polymorphism）", "文章來源"]
 ---
+
 # [TS] Class
 ## 概念 - 封裝
 * 封裝是指將相關的資料（屬性）和行為（方法）包裝在一個單獨的單位中，並對外部隱藏內部實現的細節。這樣做可以避免外部直接訪問和修改物件的內部狀態，並提供公開的介面供外部使用

@@ -1,9 +1,12 @@
 ---
-description: TS - ES6 Class
+title: "[TS] ES6 Class"
+description: "TS - ES6 Class"
 tags:
   - TS
   - TypeScript
+keywords: ["TS", "ES6", "Class", "TypeSctipt", "概念", "程式碼", "關鍵字", "文章來源"]
 ---
+
 # [TS] ES6 Class 
 ## 概念
 * 在 ECMAScript 6（簡稱 ES6）標準中引入的一種新的物件導向程式設計語法。提供了更簡潔和方便的方式來定義和創建類別，並且更符合傳統物件導向程式設計的寫法。

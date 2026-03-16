@@ -1,10 +1,13 @@
 ---
-description: react useRef
+title: "React useContext"
+description: "React useContext 筆記，整理 概念、程式 等重點。"
 tags:
   - javascript
   - react
   - frontEnd
+keywords: ["React", "useContext", "概念", "程式"]
 ---
+
 # [React] useContext
 ## 概念
 * 由於Props是單向資料流，並且要一步一步往下傳，但傳遞太深會稍嫌麻煩，所以會使用到useContext

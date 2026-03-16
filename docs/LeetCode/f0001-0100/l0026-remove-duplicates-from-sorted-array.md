@@ -1,9 +1,12 @@
 ---
+title: "[0026] Remove Duplicates from Sorted Array"
+description: "[0026] Remove Duplicates from Sorted Array 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Remove Duplicates from Sorted Array
   - javascript
+keywords: ["0026", "Remove", "Duplicates", "from", "Sorted", "Array", "LeetCode", "Javascript"]
 ---
 
 # [0026] Remove Duplicates from Sorted Array

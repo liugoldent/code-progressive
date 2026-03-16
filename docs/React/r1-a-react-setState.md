@@ -1,10 +1,13 @@
 ---
-description: react setState 
+title: "React React setState(x) x的差異性"
+description: "react setState"
 tags:
   - javascript
   - react
   - frontEnd
+keywords: ["React", "setState", "x的差異性", "參考文章", "範例"]
 ---
+
 # [React] React setState(x) x的差異性
 
 ## 參考文章

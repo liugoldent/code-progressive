@@ -1,9 +1,13 @@
 ---
+title: "前端 TypeScript - p1"
+description: "前端 TypeScript - p1 筆記，整理 TS是什麼？、TS的數據類型有哪些？ 等重點。"
 tags: 
     - javascript
     - Test
     - typescript
+keywords: ["前端", "TypeScript", "p1", "FE-knowledge", "TS是什麼？", "TS的數據類型有哪些？", "說明對枚舉的理解", "使用"]
 ---
+
 # [FE] TypeScript - p1
 
 ## TS是什麼？

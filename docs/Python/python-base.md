@@ -1,9 +1,11 @@
 ---
-description: python 套件 基本使用
+title: "[Python] 基礎- 常用相關套件指令"
+description: "python 套件 基本使用"
 tags:
   - Python
   - mongodb
   - pymongo
+keywords: ["Python", "基礎-", "常用相關套件指令", "os", "管理套件"]
 ---
 
 # [Python] 基礎- 常用相關套件指令

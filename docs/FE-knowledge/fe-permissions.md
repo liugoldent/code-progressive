@@ -1,11 +1,13 @@
 ---
-description: vue 面試常見問題
+title: "前端 前端權限"
+description: "前端 前端權限 筆記，整理 觸發形式、最終目標 等重點。"
 tags:
   - javascript
   - Test
   - Vue
   - Vue2
   - Vue3
+keywords: ["前端", "前端權限", "FE-knowledge", "觸發形式", "最終目標", "四種權限", "接口權限（API", "權限）"]
 ---
 
 # [FE] 前端權限

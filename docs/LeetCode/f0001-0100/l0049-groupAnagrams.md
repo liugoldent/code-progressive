@@ -1,5 +1,6 @@
 ---
-description: leetCode Group Anagrams js 解答, python 解答
+title: "[0049] Group Anagrams"
+description: "[0049] Group Anagrams 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
@@ -7,29 +8,7 @@ tags:
   - python
   - interview
   - Hashing
-keywords:
-  [
-    facebook,
-    amazon,
-    apple,
-    netflix,
-    google,
-    faang interview,
-    leetCode,
-    js,
-    javascript,
-    interview,
-    js 面試,
-    js interview,
-    前端面試題,
-    frontend interview,
-    フロントエンドの面接質問,
-    프론트엔드 면접 문제,
-    software engineer,
-    Group Anagrams,
-    Group Anagrams js ans,
-    Group Anagrams python ans,
-  ]
+keywords: ["0049", "Group", "Anagrams", "LeetCode", "Javascript", "Python", "test", "case"]
 ---
 
 # [0049] Group Anagrams

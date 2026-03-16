@@ -1,23 +1,10 @@
 ---
-description: 關於buffer的考題
+title: "談談 buffer"
+description: "談談 buffer 筆記，整理 緣由、緩衝區 等重點。"
 tags:
   - javascript
   - interview
-keywords:
-  [
-    html,
-    css,
-    js,
-    javascript,
-    buffer,
-    interview,
-    js 面試,
-    js interview,
-    前端面試題,
-    frontend interview,
-    フロントエンドの面接質問,
-    프론트엔드 면접 문제,
-  ]
+keywords: ["談談", "buffer", "Interview", "緣由", "緩衝區", "方法", "綜合程式碼"]
 ---
 
 # 談談 buffer

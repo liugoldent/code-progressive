@@ -1,10 +1,13 @@
 ---
+title: "[0692] Top K Frequent Words"
+description: "[0692] Top K Frequent Words 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Heap / Priority Queue
   - javascript
   - Top K Frequent Words
+keywords: ["0692", "Top", "Frequent", "Words", "LeetCode", "js"]
 ---
 
 # [0692] Top K Frequent Words

@@ -1,10 +1,12 @@
 ---
 sidebar_position: 0
-description: constructor
+title: "[JAVA 介紹]建構子"
+description: "[JAVA 介紹]建構子 筆記，整理 Class 與 Instance、其他檔案使用此類 等重點。"
 tags:
   - java
   - constructor
   - class
+keywords: ["JAVA", "介紹", "建構子", "Class", "Instance", "Interface", "Polymorphism（接口與多態）", "其他檔案使用此類"]
 ---
 
 # [JAVA 介紹]建構子

@@ -1,8 +1,10 @@
 ---
-description: FE 面試
+title: "前端 面試題整理 V5"
+description: "前端 面試題整理 V5 筆記，整理 為何需要同源策略和跨域限制：、如何處理跨域問題： 等重點。"
 tags: 
     - JS
     - frontend
+keywords: ["前端", "面試題整理", "V5", "FE-knowledge", "web安全性議題中什麼是XSS、CSRF以及如何防止", "Browser中跨域問題什麼意思", "為何如此設計", "以及如何處理"]
 ---
 
 # [FE] Interview V5

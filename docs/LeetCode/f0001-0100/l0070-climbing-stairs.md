@@ -1,9 +1,12 @@
 ---
+title: "[0070] Climbing stairs"
+description: "[0070] Climbing stairs 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Easy
   - Climbing stairs
   - javascript
+keywords: ["0070", "Climbing", "stairs", "LeetCode", "Javascript"]
 ---
 
 # [0070] Climbing stairs

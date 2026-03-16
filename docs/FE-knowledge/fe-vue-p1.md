@@ -1,8 +1,10 @@
 ---
-description: Vue知識點
+title: "前端 Vue - p1"
+description: "前端 Vue - p1 筆記，整理 請說說 Vue use 的方法的作用及原理、vue 的模板語法，是使用那個模板引擎呢？ 等重點。"
 tags:
   - vue
   - frontend
+keywords: ["前端", "Vue", "p1", "FE-knowledge", "請說說", "use", "的方法的作用及原理", "自己架構一個"]
 ---
 
 # [FE] Vue - p1

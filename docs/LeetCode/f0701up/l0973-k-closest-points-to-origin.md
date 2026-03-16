@@ -1,9 +1,12 @@
 ---
+title: "[0973] K Closest Points to Origin"
+description: "[0973] K Closest Points to Origin 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - K Closest Points to Origin
   - javascript
+keywords: ["0973", "Closest", "Points", "to", "Origin", "LeetCode"]
 ---
 
 # [0973] K Closest Points to Origin

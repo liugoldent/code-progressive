@@ -1,7 +1,10 @@
 ---
+title: "前端 HTML"
+description: "前端 HTML 筆記，整理 DOCTYPE有什麼作用、行內元素有哪些，塊級元素有哪些？ 等重點。"
 tags: 
     - HTML
     - Test
+keywords: ["前端", "HTML", "FE-knowledge", "DOCTYPE有什麼作用", "HTML5", "為什麼只需要寫", "DOCTYPE", "HTML>"]
 ---
 
 # [FE] HTML

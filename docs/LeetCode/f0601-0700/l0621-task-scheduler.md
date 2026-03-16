@@ -1,10 +1,13 @@
 ---
+title: "[0621] Task Scheduler"
+description: "[0621] Task Scheduler 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Medium
   - Heap / Priority Queue
   - javascript
   - Task Scheduler
+keywords: ["0621", "Task", "Scheduler", "LeetCode", "數字解"]
 ---
 
 # [0621] Task Scheduler

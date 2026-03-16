@@ -1,26 +1,11 @@
 ---
-description: graphQL是什麼
+title: "GraphQL"
+description: "GraphQL 筆記，整理 介紹、好處 等重點。"
 tags:
   - sql
   - interview
-keywords:
-  [
-    hydration,
-    html,
-    css,
-    js,
-    javascript,
-    interview,
-    js 面試,
-    js interview,
-    前端面試題,
-    frontend interview,
-    フロントエンドの面接質問,
-    프론트엔드 면접 문제,
-    graphql
-  ]
+keywords: ["GraphQL", "介紹", "好處", "生態", "基本"]
 ---
-
 
 # GraphQL
 ## 介紹

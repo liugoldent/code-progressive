@@ -1,9 +1,11 @@
 ---
-description: react Props
+title: "React Props"
+description: "React Props 筆記，整理 概念、基本程式 等重點。"
 tags:
   - javascript
   - react
   - frontEnd
+keywords: ["React", "Props", "概念", "基本程式", "的slot使用方式"]
 ---
 
 # [React] Props

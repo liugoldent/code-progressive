@@ -1,10 +1,13 @@
 ---
+title: "[0042] Trapping Rain Water"
+description: "[0042] Trapping Rain Water 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
   - Hard
   - Trapping Rain Water
   - javascript
   - Two Pointers
+keywords: ["0042", "Trapping", "Rain", "Water", "LeetCode"]
 ---
 
 # [0042] Trapping Rain Water
