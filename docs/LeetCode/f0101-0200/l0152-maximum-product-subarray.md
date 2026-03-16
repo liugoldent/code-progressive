@@ -12,17 +12,12 @@ keywords: ["0152", "Maximum", "Product", "Subarray", "LeetCode", "JavaScript", "
 > 題型：**動態規劃 + 數學邏輯**  
 > 題目連結：[LeetCode 152 - Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)
 
----
-
-## 📘 題目描述
-
+## 題目描述
 給定一個整數陣列 `nums`，找出其中「**乘積最大**」的連續子陣列（subarray），並回傳該乘積的值。
 
 與 LeetCode 53（Maximum Subarray）不同，本題需處理負數與 0 的影響。
 
----
-
-## 🧠 解題思路：動態規劃（DP）+ 正負號翻轉處理
+## 解題思路
 
 當我們處理乘積時，會遇到這些特性：
 
@@ -35,10 +30,7 @@ keywords: ["0152", "Maximum", "Product", "Subarray", "LeetCode", "JavaScript", "
 - `maxSoFar`：目前為止最大的乘積
 - `minSoFar`：目前為止最小的乘積（可能變最大）
 
----
-
-## ✅ JavaScript 解法
-
+## JavaScript 解法
 ```js
 /**
  * @param {number[]} nums

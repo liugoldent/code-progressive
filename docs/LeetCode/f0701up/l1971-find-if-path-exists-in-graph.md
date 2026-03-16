@@ -11,7 +11,9 @@ keywords: ["1971", "Find", "if", "Path", "Exists", "in", "Graph", "LeetCode"]
 
 # [1971] Find if Path Exists in Graph
 
-## Javascript 解
+> 題號：**1971** | 難度：**Easy** | 主題：**Find if Path Exists in Graph**
+
+## JavaScript 解法
 ```js
 /**
  * @param {number} n

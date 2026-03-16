@@ -12,8 +12,9 @@ keywords: ["0104", "Maximum", "Depth", "of", "Binary", "Tree", "LeetCode", "Java
 
 # [0104] Maximum Depth of Binary Tree
 
-## Javascript 解
+> 題號：**0104** | 難度：**Easy** | 主題：**Tree, Maximum Depth of Binary Tree**
 
+## JavaScript 解法
 思路：
 
 - 一樣使用遞迴去找最深的深度
@@ -115,8 +116,7 @@ const depth = maxDepth(root);
 console.log(depth);
 ```
 
-## python 解
-
+## Python 解法
 ```py
 /**
  * Definition for a binary tree node.

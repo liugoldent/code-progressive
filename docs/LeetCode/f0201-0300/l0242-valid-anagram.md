@@ -13,8 +13,9 @@ keywords: ["0242", "Valid", "Anagram", "LeetCode", "Javascript", "Python"]
 
 # [0242] Valid Anagram
 
-## Javascript 解
+> 題號：**0242** | 難度：**Easy** | 主題：**Hashing**
 
+## JavaScript 解法
 思路：
 題意：問題是說，兩個字串是否是重組字
 
@@ -25,7 +26,7 @@ keywords: ["0242", "Valid", "Anagram", "LeetCode", "Javascript", "Python"]
 - 組成 HashSet 對，如：`{a:3,b:2}`，表示 a 字母有三個，b 字母有兩個
 - 最後跑 HashSet 對，看兩邊字母出現次數是否相同
 
-```javascript
+```js
 /**
  * @param {string} s
  * @param {string} t
@@ -52,15 +53,13 @@ var isAnagram = function (s, t) {
 module.exports = isAnagram;
 ```
 
-## Python 解
-
+## Python 解法
 ```python
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         if len(s) != len(t):
             return False
         return sorted(s) == sorted(t)
-
 
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
@@ -92,7 +91,7 @@ class Solution:
         return Counter(s) == Counter(t)
 ```
 
-```javascript
+```js
 // test code
 const isAnagram = require("./leetcode.js");
 

@@ -11,6 +11,8 @@ keywords: ["0973", "Closest", "Points", "to", "Origin", "LeetCode"]
 
 # [0973] K Closest Points to Origin
 
+> 題號：**0973** | 難度：**Medium** | 主題：**K Closest Points to Origin**
+
 - 思路：主要因為是跟原點取距離，所以直接將每個元素去計算距離，最後攤平，即可取得前面 k 項最接近的 points
 
 ```js

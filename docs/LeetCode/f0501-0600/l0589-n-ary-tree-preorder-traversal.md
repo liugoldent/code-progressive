@@ -12,8 +12,9 @@ keywords: ["0589", "Next", "Greater", "Element", "LeetCode", "Javascript"]
 
 # [0589] Next Greater Element I
 
-## Javascript 解
+> 題號：**0589** | 難度：**Easy** | 主題：**Stack, N-ary Tree Preorder Traversal**
 
+## JavaScript 解法
 ```js
 /**
  * // Definition for a Node.

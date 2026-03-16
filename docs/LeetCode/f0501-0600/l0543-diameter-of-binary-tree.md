@@ -11,8 +11,9 @@ keywords: ["0543", "Diameter", "of", "Binary", "Tree", "LeetCode", "Javascript"]
 
 # [0543] Diameter of Binary Tree
 
-## Javascript 解
+> 題號：**0543** | 難度：**Easy** | 主題：**Tree, Diameter of Binary Tree**
 
+## JavaScript 解法
 ```js
 /**
  * Definition for a binary tree node.

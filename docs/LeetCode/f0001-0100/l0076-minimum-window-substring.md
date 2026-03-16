@@ -12,6 +12,8 @@ keywords: ["0076", "Minimum", "Window", "Substring", "LeetCode"]
 
 # [0076] Minimum Window Substring
 
+> 題號：**0076** | 難度：**Hard** | 主題：**Minimum Window Substring, Sliding Window**
+
 ```js
 /**
  * @param {string} s

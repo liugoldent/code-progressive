@@ -12,8 +12,9 @@ keywords: ["0021", "Merge", "Two", "Sorted", "Lists", "LeetCode", "Javascript"]
 
 # [0021] Merge Two Sorted Lists
 
-## Javascript 解
+> 題號：**0021** | 難度：**Easy** | 主題：**Merge Two Sorted Lists**
 
+## JavaScript 解法
 思路：
 
 1. 首先要了解 linked list
@@ -22,7 +23,7 @@ keywords: ["0021", "Merge", "Two", "Sorted", "Lists", "LeetCode", "Javascript"]
 4. 如果到了一個 linked list 結束了，但是另一個還沒結束則另一個繼續往下
 5. 最後回傳 headNodeu 節點
 
-```javascript
+```js
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {

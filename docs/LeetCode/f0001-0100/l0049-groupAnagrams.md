@@ -13,6 +13,8 @@ keywords: ["0049", "Group", "Anagrams", "LeetCode", "Javascript", "Python", "tes
 
 # [0049] Group Anagrams
 
+> 題號：**0049** | 難度：**Medium** | 主題：**Hashing**
+
 題意：這題主要是在說，要把重組字的選項，變成陣列的群組
 思路：
 
@@ -22,8 +24,7 @@ keywords: ["0049", "Group", "Anagrams", "LeetCode", "Javascript", "Python", "tes
 4. 目前有則用 map.get 找到該 key 值的 value（這個 value 因為當初是設定為 result.length），所以可視為 index
 5. 最後 result[index].push(此次 for 循環的值)
 
-## Javascript 解
-
+## JavaScript 解法
 ```js
 // 筆者解
 /**
@@ -73,8 +74,7 @@ let groupAnagrams = function (strs) {
 };
 ```
 
-## Python 解
-
+## Python 解法
 ```python
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
@@ -104,8 +104,7 @@ class Solution:
         return list(argument.values())
 ```
 
-## test case
-
+## 測試案例
 ```js
 const groupAnagrams = require("./leetcode.js");
 

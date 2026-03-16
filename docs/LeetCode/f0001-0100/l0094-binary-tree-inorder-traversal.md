@@ -11,6 +11,8 @@ keywords: ["0094", "Binary", "Tree", "Inorder", "Traversal", "LeetCode"]
 
 # [0094] Binary Tree Inorder Traversal
 
+> 題號：**0094** | 難度：**Easy** | 主題：**Binary Tree Inorder Traversal**
+
 - [參考網誌](https://www.shubo.io/iterative-binary-tree-traversal/)
 - 中文敘述：中序遍歷
   - 先拜訪左子節點，再拜訪父節點，最後拜訪右子節點。我們需要盡量往左子節點前進，而途中經過的父節點們就先存在一個 stack 裡面，等到沒有更多左子節點時，就把 stack 中的父節點取出並拜訪其右子節點

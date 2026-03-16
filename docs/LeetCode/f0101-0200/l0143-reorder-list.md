@@ -12,14 +12,15 @@ keywords: ["0143", "Reorder", "List", "LeetCode", "Javascript"]
 
 # [0143] Reorder List
 
+> 題號：**0143** | 難度：**Medium** | 主題：**Reorder List, Linked List**
+
 這題大致分三個程序
 
 1. 先用快慢指針找到中間點
 2. 再將 linked list reverse
 3. 將兩個 linked list merge
 
-## Javascript 解
-
+## JavaScript 解法
 ```js
 /**
  * Definition for singly-linked list.

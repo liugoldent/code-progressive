@@ -12,8 +12,9 @@ keywords: ["0125", "Valid", "Palindrome", "LeetCode", "Javascript"]
 
 # [0125] Valid Palindrome
 
-## Javascript 解
+> 題號：**0125** | 主題：**East, Valid Palindrome, two Pointers**
 
+## JavaScript 解法
 思路
 
 1. 首先要針對字串做全部改小寫與去掉所有特殊符號
@@ -22,7 +23,7 @@ keywords: ["0125", "Valid", "Palindrome", "LeetCode", "Javascript"]
 4. 如果都一樣就(左右指針往前進)並一直 continue 下去
 5. 注意終止條件是 i < j（就是指針遍歷結束的概念）
 
-```javascript
+```js
 /**
  * @param {string} s
  * @return {boolean}

@@ -12,16 +12,11 @@ keywords: ["0139", "Word", "Break", "LeetCode", "JavaScript", "Dynamic", "Progra
 > 題型分類：`動態規劃（DP）`、`字串處理`、`HashSet 優化`  
 > 題目連結：[LeetCode 139 - Word Break](https://leetcode.com/problems/word-break/)
 
----
-
-## 📘 題目描述
-
+## 題目描述
 給定一個字串 `s` 與字典陣列 `wordDict`，判斷 `s` 是否可以被切成多個空格分隔的單字，這些單字皆存在於字典中。  
 可重複使用字典中的單字。
 
----
-
-## 🧠 解題思路：DP（Dynamic Programming）
+## 解題思路
 
 ### ✅ 狀態定義：
 - `dp[i]`：表示 `s[0...i-1]` 這段子字串是否可以被切分成功。
@@ -32,7 +27,7 @@ keywords: ["0139", "Word", "Break", "LeetCode", "JavaScript", "Dynamic", "Progra
 dp[i] = true ⟺ 存在 j，使得 dp[j] == true 且 s.slice(j, i) ∈ wordDict
 ```
 
-## ✅ JavaScript 解法
+## JavaScript 解法
 ```js
 /**
  * @param {string} s

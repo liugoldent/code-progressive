@@ -12,18 +12,13 @@ keywords: ["0039", "Combination", "Sum", "LeetCode", "JavaScript", "Backtracking
 > 題型分類：`回溯法（Backtracking）`、`組合問題`  
 > 題目連結：[LeetCode 39 - Combination Sum](https://leetcode.com/problems/combination-sum/)
 
----
-
-## 📘 題目說明
-
+## 題目描述
 給定一個**無重複的整數陣列** `candidates` 和一個整數 `target`，請找出所有組合，使這些數的總和等於 `target`。
 
 - 每個數字可以被「無限次使用」
 - 組合中的數字可以按任意順序出現
 
----
-
-## 🧠 解題思路：回溯法（Backtracking）
+## 解題思路
 
 這是一道標準的「組合總和」問題，我們用回溯法（DFS）來探索所有可能的組合：
 
@@ -32,8 +27,6 @@ keywords: ["0039", "Combination", "Sum", "LeetCode", "JavaScript", "Backtracking
 - 因為可以重複使用元素 → 遞迴時 **仍從當前 index 開始**（`i` 而不是 `i + 1`）
 - 若總和超過 `target` 就立即剪枝 return
 
----
-
 ## ❗ 常見錯誤解析
 
 錯誤寫法：
@@ -41,8 +34,7 @@ keywords: ["0039", "Combination", "Sum", "LeetCode", "JavaScript", "Backtracking
 ```js
 backtrack(target - num, path, i) // ❌ 錯：每次都從原始 target 減
 ```
-## 💻 JavaScript 解法
-
+## JavaScript 解法
 ```js
 var combinationSum = function(candidates, target) {
     const result = [];

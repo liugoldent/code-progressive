@@ -12,8 +12,9 @@ keywords: ["0153", "Find", "Minimum", "in", "Rotated", "Sorted", "Array", "LeetC
 
 # [0153] Find Minimum in Rotated Sorted Array
 
-## Javascript 解
+> 題號：**0153** | 難度：**Medium** | 主題：**Find Minimum in Rotated Sorted Array, Binary Search**
 
+## JavaScript 解法
 ```js
 /**
  * @param {number[]} nums

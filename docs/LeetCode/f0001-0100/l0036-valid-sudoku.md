@@ -13,10 +13,11 @@ keywords: ["0036", "Valid", "Sudoku", "LeetCode", "Javascript", "Python"]
 
 # [0036] Valid Sudoku
 
+> 題號：**0036** | 難度：**Medium** | 主題：**Hashing**
+
 [medium Ans](https://medium.com/codex/valid-sudoku-the-javascript-solution-2d1543f85410)
 
-## Javascript 解
-
+## JavaScript 解法
 題意：主要在說，要判斷這是不是一個數獨  
 思路：
 
@@ -60,8 +61,7 @@ function isValidSudoku(board) {
 }
 ```
 
-## Python 解
-
+## Python 解法
 ```python
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:

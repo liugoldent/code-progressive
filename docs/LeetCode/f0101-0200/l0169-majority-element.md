@@ -11,8 +11,9 @@ keywords: ["0169", "Majority", "Element", "LeetCode", "Javascript"]
 
 # [0169] Majority Element
 
-## Javascript 解
+> 題號：**0169** | 難度：**Easy** | 主題：**Majority Element**
 
+## JavaScript 解法
 - 此題以一般迴圈很好解，但有另一個「摩爾投票法」可以應用於此
 - [圖解算法](https://cloud.tencent.com/developer/article/1600607)
 

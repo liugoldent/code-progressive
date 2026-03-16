@@ -12,10 +12,7 @@ keywords: ["0417", "Pacific", "Atlantic", "Water", "Flow", "LeetCode", "JavaScri
 > 題型：圖論、矩陣走訪、DFS  
 > 題目連結：[LeetCode 417 - Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/)
 
----
-
-## 📘 題目說明
-
+## 題目描述
 給定一個 `m x n` 的整數矩陣 `heights`，每個格子表示該地的**海拔高度**。  
 水只能從**高處或等高**往**低處或等高**流，方向只能是上下左右。
 
@@ -24,17 +21,13 @@ keywords: ["0417", "Pacific", "Atlantic", "Water", "Flow", "LeetCode", "JavaScri
 
 請找出所有格子 `(r, c)`，使得水能從該格流向**太平洋與大西洋兩者**
 
----
-
-## 🧠 解題思路：反向 DFS 模擬海水倒灌
+## 解題思路
 
 ### ✅ 反向思考
 
 與其對每個格子模擬水是否能流向兩個海，不如反向操作：
 
 > **從兩個海邊出發，逆向 DFS，標記所有海水能「灌上來」的格子**
-
----
 
 ### ✅ 操作流程
 
@@ -46,8 +39,6 @@ keywords: ["0417", "Pacific", "Atlantic", "Water", "Flow", "LeetCode", "JavaScri
    - 只能往**相等或更高**的格子走（因為水只能從高地流）
 
 3. 最後遍歷矩陣，找出 `(r,c)` 同時在兩者為 `true` 的格子
-
----
 
 ## 💻 JavaScript 解法（DFS）
 

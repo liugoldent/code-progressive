@@ -12,6 +12,8 @@ keywords: ["0212", "Word", "Search", "II", "LeetCode"]
 
 # [0212] Word Search II
 
+> 題號：**0212** | 難度：**Medium** | 主題：**Tries, Word Search II**
+
 ```js
 // 一樣先定義字典樹的節點
 class TrieNode {
@@ -98,7 +100,6 @@ const findWords = function (board, words) {
   return result;
 };
 ```
-
 
 ```js
 /**

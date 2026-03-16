@@ -12,6 +12,8 @@ keywords: ["0703", "Kth", "Largest", "Element", "in", "Stream", "LeetCode", "一
 
 # [0703] Kth Largest Element in a Stream
 
+> 題號：**0703** | 難度：**Easy** | 主題：**Heap / Priority Queue, Kth Largest Element in a Stream**
+
 ## 一般 sort 解法
 
 ```js

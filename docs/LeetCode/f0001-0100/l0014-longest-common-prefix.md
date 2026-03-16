@@ -12,14 +12,15 @@ keywords: ["0014", "Longest", "Common", "Prefix", "LeetCode", "Javascript", "Pyt
 
 # [0014] Longest Common Prefix
 
-## Javascript 解
+> 題號：**0014** | 難度：**Easy** | 主題：**Longest Common Prefix**
 
+## JavaScript 解法
 思路：雖然不是最佳解，但看大部分解法都是
 
 1. 先取出第一個元素
 2. 跑一個 for loop 比較「每一個元素的第 i 個項目」是否等於「第一個元素的第 i 個項目」
 
-```javascript
+```js
 /**
  * @param {string[]} strs
  * @return {string}
@@ -38,8 +39,7 @@ var longestCommonPrefix = function (strs) {
 };
 ```
 
-## Python 解
-
+## Python 解法
 思路相同
 但是需要注意的點
 

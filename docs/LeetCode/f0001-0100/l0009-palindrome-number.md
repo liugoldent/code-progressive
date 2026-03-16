@@ -12,15 +12,16 @@ keywords: ["0009", "Palindrome", "Number", "LeetCode", "Javascript", "Python"]
 
 # [0009] Palindrome Number
 
-## Javascript 解
+> 題號：**0009** | 難度：**Easy** | 主題：**Palindrome Number**
 
+## JavaScript 解法
 思路：雖然不是最佳解，但看大部分解法都是
 
 1. 先轉型為 String
 2. 將頭尾做比較
 3. 得出結果
 
-```javascript
+```js
 /**
  * @param {number} x
  * @return {boolean}
@@ -41,8 +42,7 @@ var isPalindrome = function (x) {
 };
 ```
 
-## Python 解
-
+## Python 解法
 思路相同
 但是需要注意的點
 

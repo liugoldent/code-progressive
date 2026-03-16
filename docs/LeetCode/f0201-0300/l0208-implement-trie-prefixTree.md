@@ -11,13 +11,13 @@ keywords: ["0208", "Implement", "Trie", "Prefix", "Tree", "LeetCode", "Javascrip
 
 # [0208] Implement Trie (Prefix Tree)
 
-## Javascript 解
+> 題號：**0208** | 難度：**Medium** | 主題：**Tries**
 
-## 思路：
-
+## JavaScript 解法
+## 解題思路
 [賈考博講解](https://www.youtube.com/watch?v=1gR5FfipQXM&ab_channel=%E8%B4%BE%E8%80%83%E5%8D%9A)
 
-```javascript
+```js
 class TrieNode {
   constructor() {
     this.children = new Map(); // 每一個子層都是新的map（這樣可以保證只有一個key-value對）

@@ -12,15 +12,10 @@ keywords: ["0338", "Counting", "Bits", "LeetCode", "JavaScript", "Bit", "Manipul
 > 題型分類：`位元操作（Bit Manipulation）` + `動態規劃（DP）`  
 > 題目連結：[LeetCode 338 - Counting Bits](https://leetcode.com/problems/counting-bits/)
 
----
-
-## 📘 題目描述
-
+## 題目描述
 給定一個非負整數 `n`，請建立一個陣列 `ans`，其中：
 
 - `ans[i]` 表示整數 `i` 的**二進位表示中出現多少個 1**
-
----
 
 ### 🧪 範例
 
@@ -37,11 +32,10 @@ Output: [0,1,1,2,1,2]
 5 → 101 → 2 個 1
 ```
 
-## 🧠 解題思路：動態規劃（DP）+ 位元操作
+## 解題思路
 ### 為什麼可以用 DP？
 因為我們可以從小的數字推出大的數字。
 具體來說：dp[i] 可以從 dp[i >> 1]（也就是 i 的一半）演變出來！
-
 
 ## 📈 時間與空間複雜度分析
 

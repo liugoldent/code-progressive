@@ -12,8 +12,9 @@ keywords: ["0355", "Design", "Twitter", "LeetCode", "Javascript"]
 
 # [0355] Design Twitter
 
-## Javascript 解
+> 題號：**0355** | 難度：**Medium** | 主題：**Design Twitter, Heap / Priority**
 
+## JavaScript 解法
 [贾考博 LeetCode 355. Design Twitter - 马斯克你到底买不买? 给个准信儿](https://www.youtube.com/watch?v=vUGrlKvib1k&ab_channel=%E8%B4%BE%E8%80%83%E5%8D%9A)
 
 ```js

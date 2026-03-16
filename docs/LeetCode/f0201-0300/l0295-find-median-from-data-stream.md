@@ -12,12 +12,13 @@ keywords: ["0295", "Find", "Median", "from", "Data", "Stream", "LeetCode", "Java
 
 # [0295] Find Median from Data Stream
 
+> 題號：**0295** | 難度：**Hard** | 主題：**Find Median from Data Stream, Heap / Priority Queue**
+
 [堆的講解-youtube](https://www.youtube.com/watch?v=j-DqQcNPGbE&list=PLAnjpYDY-l8L7kiVvyYrYsM9pq9BflB2l&index=18&ab_channel=%E9%BB%84%E6%B5%A9%E6%9D%B0)
 [堆的講解-it](https://ithelp.ithome.com.tw/articles/10279678?sc=iThelpR)
 [推薦視頻](https://www.youtube.com/watch?v=cqhED6Xgy9Y&ab_channel=%E5%B1%B1%E6%99%AF%E5%9F%8E%E4%B8%80%E5%A7%90)
 
-## Javascript 解 - 1
-
+## JavaScript 解法
 ```js
 class MedianFinder {
   constructor() {
@@ -306,8 +307,7 @@ class MaxHeap {
 }
 ```
 
-## Javascript 解 - 2
-
+## JavaScript 解法
 ```js
 /**
  * 用于实现堆（优先队列）的通用类

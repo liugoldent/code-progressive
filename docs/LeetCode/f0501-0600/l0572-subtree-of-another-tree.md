@@ -11,8 +11,9 @@ keywords: ["0572", "Subtree", "of", "Another", "Tree", "LeetCode", "Javascript"]
 
 # [0572] Subtree of Another Tree
 
-## Javascript 解
+> 題號：**0572** | 難度：**Easy** | 主題：**Tree, Subtree of Another Tree**
 
+## JavaScript 解法
 - 這題要使用到 LeetCode 100 的 Same Tree
 - 首先判斷如果 root 是 null 就跳出
 - 再來判斷將根節點與子節點丟進去是否相同

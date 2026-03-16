@@ -11,6 +11,8 @@ keywords: ["0053", "Maximum", "Subarray", "LeetCode"]
 
 # [0053] Maximum Subarray
 
+> 題號：**0053** | 難度：**Medium** | 主題：**Maximum Subarray**
+
 ```js
 function maxSubArray(nums) {
     let maxSum = nums[0]

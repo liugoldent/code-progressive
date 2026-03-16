@@ -12,16 +12,16 @@ keywords: ["0226", "Invert", "Binary", "Tree", "LeetCode", "Javascript", "思路
 
 # [0226] Invert Binary Tree
 
-## Javascript 解
+> 題號：**0226** | 難度：**Easy** | 主題：**Invert Binary Tree, Trees**
 
-## 思路：
-
+## JavaScript 解法
+## 解題思路
 這題主要是做反轉 left / right 的節點
 所以我們只要將 left 節點存起來
 讓其等於 right 節點即可
 （但是也要在注意往下反轉後會有遞迴，要重複 call 自己這個 function）
 
-```javascript
+```js
 /**
  * Definition for a binary tree node.
  * function TreeNode(val, left, right) {
@@ -57,7 +57,7 @@ var invertTree = function (root) {
 };
 ```
 
-```javascript
+```js
 // demo
 // 創建一棵樹
 const root = new TreeNode(4);
@@ -74,7 +74,6 @@ const invertedTree = invertTree(root);
 // 輸出反轉後的二元樹
 console.log(invertedTree);
 ```
-
 
 ```js
 /**

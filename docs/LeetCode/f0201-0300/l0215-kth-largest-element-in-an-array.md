@@ -13,6 +13,8 @@ keywords: ["0215", "Kth", "Largest", "Element", "in", "an", "Array", "LeetCode"]
 
 # [0215] Kth Largest Element in an Array
 
+> 題號：**0215** | 難度：**Medium** | 主題：**Kth Largest Element in an Array, Heap, PriorityQueue**
+
 - 思路：
 - 此題有一種最簡單解法：先排序後，直接取值，沒什麼複雜度，但可以試試看快速排序法。（看第二種解法）
 
@@ -140,7 +142,6 @@ class MaxHeap {
         }
     }
 }
-
 
 /**
  * @param {number[]} nums

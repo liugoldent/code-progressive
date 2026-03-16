@@ -12,8 +12,9 @@ keywords: ["0167", "Input", "Array", "Is", "Sorted", "LeetCode", "Javascript", "
 
 # [0167] Input Array Is Sorted
 
-## Javascript 解
+> 題號：**0167** | 難度：**Medium** | 主題：**Input Array Is Sorted, two pointers**
 
+## JavaScript 解法
 思路：
 跟 two sum 很像
 基本上也是給定目標值，你去取得相對應的位置
@@ -22,7 +23,7 @@ keywords: ["0167", "Input", "Array", "Is", "Sorted", "LeetCode", "Javascript", "
 condition1：當總和比目標值大則 j--
 condition2：當總和比目標值小則 i++
 
-```javascript
+```js
 /**
  * @param {number[]} numbers
  * @param {number} target

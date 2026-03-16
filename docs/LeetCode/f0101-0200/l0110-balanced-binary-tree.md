@@ -12,8 +12,9 @@ keywords: ["0110", "Balanced", "Binary", "Tree", "LeetCode", "Javascript"]
 
 # [0110] Balanced Binary Tree
 
-## Javascript 解
+> 題號：**0110** | 難度：**Medium** | 主題：**Tree, Balanced Binary Tree**
 
+## JavaScript 解法
 思路：
 
 ```js

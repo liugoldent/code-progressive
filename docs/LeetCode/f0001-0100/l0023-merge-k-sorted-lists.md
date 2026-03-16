@@ -12,17 +12,18 @@ keywords: ["0023", "Merge", "Sorted", "Lists", "LeetCode", "Javascript"]
 
 # [0023] Merge k Sorted Lists
 
+> 題號：**0023** | 難度：**Hard** | 主題：**Merge k Sorted Lists, Linked List**
+
 [LeetCode problem #23–Merge k sorted lists (JavaScript)](https://duncan-mcardle.medium.com/leetcode-problem-23-merge-k-sorted-lists-javascript-59d9bb998fd)
 [Leetcode No.23(Merge k Sorted Lists) 心得(Hard)](https://medium.com/@ChYuan/leetcode-no-23-merge-k-sorted-lists-%E5%BF%83%E5%BE%97-hard-495d0991c99a)
 
-## Javascript 解
-
+## JavaScript 解法
 - 思考：
   - 在這邊我們先將 Linked List 改成 Array 形式
   - 然後對 Array 進行排序之後
   - 再倒序(畫圖就知道為何倒序了)排列成新的 new ListNode
 
-```javascript
+```js
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {

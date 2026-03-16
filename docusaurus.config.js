@@ -37,6 +37,20 @@ const config = {
     defaultLocale: "zh-TW",
     locales: ["zh-TW"],
   },
+  headTags: [
+    {
+      tagName: "script",
+      attributes: {},
+      innerHTML: `
+        window.dataLayer = window.dataLayer || [];
+        window.gtag =
+          window.gtag ||
+          function gtag() {
+            window.dataLayer.push(arguments);
+          };
+      `,
+    },
+  ],
   scripts: [
     {
       async: true,

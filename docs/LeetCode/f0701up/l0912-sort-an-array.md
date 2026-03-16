@@ -11,8 +11,9 @@ keywords: ["0912", "Sort", "an", "Array", "LeetCode", "Javascript"]
 
 # [0912] Sort an Array
 
-## Javascript 解
+> 題號：**0912** | 難度：**Medium** | 主題：**Sort an Array**
 
+## JavaScript 解法
 思路：
 
 1. 定義一個 quicksort function
@@ -28,7 +29,7 @@ keywords: ["0912", "Sort", "an", "Array", "LeetCode", "Javascript"]
 5. 分為左陣列與右陣列
 6. 再次呼叫 quicksort，但是傳入值為新的左右邊界。
 
-```javascript
+```js
 /**
  2  * @param {number[]} nums
  3  * @return {number[]}

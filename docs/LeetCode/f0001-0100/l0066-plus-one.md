@@ -11,8 +11,9 @@ keywords: ["0066", "Plus", "One", "LeetCode", "Javascript", "Python"]
 
 # [0066] Plus One
 
-## Javascript 解
+> 題號：**0066** | 難度：**Easy** | 主題：**Plus One**
 
+## JavaScript 解法
 要注意到此題你如果用 js 的強制轉型，會導致溢位
 所以正解要從最後一個 index 去做迴圈
 然後判斷是否為 9
@@ -21,7 +22,7 @@ keywords: ["0066", "Plus", "One", "LeetCode", "Javascript", "Python"]
 若有下一位子，則繼續進位
 若無則跳出迴圈 return 解構
 
-```javascript
+```js
 /**
  * @param {number[]} digits
  * @return {number[]}
@@ -39,8 +40,7 @@ var plusOne = function (digits) {
 };
 ```
 
-## Python 解
-
+## Python 解法
 在這邊有比較特別的「reversed」語法
 是我在 js 中比較沒有用到的
 如果不想寫 reversed 也可以用 range 的方式寫起來

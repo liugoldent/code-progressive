@@ -12,10 +12,7 @@ keywords: ["0048", "Rotate", "Image", "LeetCode", "JavaScript", "Matrix", "In-pl
 > **題型**：矩陣操作、原地演算法  
 > **題目連結**：[LeetCode 48](https://leetcode.com/problems/rotate-image/)
 
----
-
-## 📘 題目說明
-
+## 題目描述
 給定一個 `n × n` 的整數矩陣 `matrix`，**請原地（in-place）將矩陣順時針旋轉 90°**。  
 不允許使用另一個 2D 陣列來儲存結果。
 
@@ -34,7 +31,7 @@ keywords: ["0048", "Rotate", "Image", "LeetCode", "JavaScript", "Matrix", "In-pl
 ]
 ```
 
-## 🧠 解題思路：**轉置 + 水平反轉**
+## 解題思路
 
 1. **轉置矩陣**：將 `matrix[i][j]` 與 `matrix[j][i]` 交換（對主對角線鏡射）。  
 2. **水平反轉**：對每一列執行 `reverse()`，即可完成 90° 旋轉。
@@ -42,9 +39,7 @@ keywords: ["0048", "Rotate", "Image", "LeetCode", "JavaScript", "Matrix", "In-pl
 > 直覺對照  
 > `原始 → 轉置 → 每列反轉 = 順時針 90°`
 
----
-## 💻 JavaScript 參考實作
-
+## JavaScript 解法
 ```js
 /**
  * @param {number[][]} matrix

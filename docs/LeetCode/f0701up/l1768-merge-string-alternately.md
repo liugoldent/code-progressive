@@ -11,8 +11,9 @@ keywords: ["1768", "Merge", "Strings", "Alternately", "LeetCode", "Javascript"]
 
 # [1768] Merge Strings Alternately
 
-## Javascript 解
+> 題號：**1768** | 難度：**Easy** | 主題：**Merge Strings Alternately**
 
+## JavaScript 解法
 ```js
 /**
  * @param {string} word1

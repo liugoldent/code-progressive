@@ -7,10 +7,10 @@ keywords: ["0300", "Longest", "Increasing", "Subsequence", "LeetCode", "JavaScri
 ---
 
 # [0300] Longest Increasing Subsequence
+
 > 難度：中等 類型：動態規劃（DP） / 演算法經典題
 
-## 🧠 題目說明
-
+## 題目描述
 給定一個整數陣列 `nums`，找出其中最長的 **嚴格遞增子序列（Longest Increasing Subsequence, LIS）** 的長度。
 
 子序列不需要是連續的，但元素的順序必須保持一致。
@@ -22,8 +22,6 @@ Input: nums = [10, 9, 2, 5, 3, 7, 101, 18]
 Output: 4
 Explanation: 最長遞增子序列為 [2, 3, 7, 101]
 ```
-
----
 
 ## ✅ 解法一：動態規劃 DP（O(n^2)）
 
@@ -42,8 +40,6 @@ if (nums[i] > nums[j]) {
   dp[i] = Math.max(dp[i], dp[j] + 1)
 }
 ```
-
----
 
 ### 🔁 完整程式碼：
 
@@ -78,21 +74,15 @@ j=2 → nums[2]=2 < 3 → dp[4]=2
 ...
 ```
 
----
-
 ## ❌ 為何不能用 Sliding Window？
 
 因為 LIS 是 **子序列（不需連續）** 問題，而 sliding window 適合處理 **連續子陣列或子字串**，例如最長子陣列和、重複字元等場景。
-
----
 
 ## 📌 延伸解法（二分搜尋優化至 O(n log n)）
 
 這裡只求長度而不還原路徑，可使用 tails\[] 陣列與 binary search 優化。
 
 若需，歡迎補充優化版本！
-
----
 
 ## 📚 總結
 
@@ -102,5 +92,3 @@ j=2 → nums[2]=2 < 3 → dp[4]=2
 | Binary Search | O(n log n) | O(n)  | ❌     |
 
 這題屬於經典 DP 題，常出現在演算法與面試筆試中。
-
----

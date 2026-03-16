@@ -12,12 +12,13 @@ keywords: ["0235", "Lowest", "Common", "Ancestor", "of", "Binary", "Search", "Le
 
 # [0235] Lowest Common Ancestor of a Binary Search
 
-## Javascript 解
+> 題號：**0235** | 難度：**Medium** | 主題：**Lowest Common Ancestor of a Binary Search, Tree**
 
+## JavaScript 解法
 目的：找到兩個節點的最低共同節點
 名詞：LCA（在樹結構中，每個節點都有一個父節點（除了根節點）。根據樹的定義，從根節點開始，可以通過父節點指針沿著路徑向上或向下移動。給定樹中的兩個節點，它們的最近公共祖先是指在樹中同時作為這兩個節點的後代的最深節點。）
 
-```javascript
+```js
 /**
  * Definition for a binary tree node.
  * function TreeNode(val) {

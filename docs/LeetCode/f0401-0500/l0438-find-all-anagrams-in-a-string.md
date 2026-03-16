@@ -12,8 +12,9 @@ keywords: ["0438", "Find", "All", "Anagrams", "in", "String", "LeetCode", "Javas
 
 # [0438] Find All Anagrams in a String
 
-## Javascript 解
+> 題號：**0438** | 難度：**Medium** | 主題：**Sliding Window, Find All Anagrams in a String**
 
+## JavaScript 解法
 ```js
 /**
  * @param {string} s

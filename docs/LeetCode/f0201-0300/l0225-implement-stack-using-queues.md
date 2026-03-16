@@ -13,8 +13,9 @@ keywords: ["0225", "Implement", "Stack", "using", "Queues", "LeetCode", "Javascr
 
 # [0225] Implement Stack using Queues
 
-## Javascript 解
+> 題號：**0225** | 難度：**Easy** | 主題：**Implement Stack using Queues, Stack, Queue**
 
+## JavaScript 解法
 這題個人覺得是觀念而已，所以基本上只直接 array 原生的方法去解出
 
 ```js

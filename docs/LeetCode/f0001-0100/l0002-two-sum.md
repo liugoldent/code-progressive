@@ -13,9 +13,10 @@ keywords: ["0002", "Two", "Sum", "LeetCode", "Javascript", "Python", "cpp", "tes
 
 # [0002] Two Sum
 
-## Javascript 解
+> 題號：**0002** | 難度：**Easy** | 主題：**Hashing**
 
-```javascript
+## JavaScript 解法
+```js
 /**
  * @param {number[]} nums
  * @param {number} target
@@ -40,8 +41,7 @@ var twoSum = function (nums, target) {
 };
 ```
 
-## Python 解
-
+## Python 解法
 ```python
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
@@ -67,8 +67,7 @@ class Solution:
         return []
 ```
 
-## cpp 解
-
+## C++ 解法
 ```cpp
 class Solution {
 public:
@@ -90,8 +89,7 @@ public:
 };
 ```
 
-## test case
-
+## 測試案例
 ```js
 const twoSum = require("./leetcode.js");
 

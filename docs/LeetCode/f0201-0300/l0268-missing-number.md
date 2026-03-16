@@ -11,6 +11,8 @@ keywords: ["0268", "Missing", "Number", "LeetCode", "解法"]
 
 # [0268] Missing Number
 
+> 題號：**0268** | 難度：**Easy** | 主題：**Missing Number**
+
 ## 解法
 
 * 使用等差數列去解

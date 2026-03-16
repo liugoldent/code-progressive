@@ -12,6 +12,8 @@ keywords: ["0621", "Task", "Scheduler", "LeetCode", "數字解"]
 
 # [0621] Task Scheduler
 
+> 題號：**0621** | 難度：**Medium** | 主題：**Heap / Priority Queue, Task Scheduler**
+
 ## 數字解
 
 其實這題應該算是公式解，看別人的影片比較好理解

@@ -12,10 +12,10 @@ keywords: ["0230", "Kth", "Smallest", "Element", "in", "BST", "LeetCode", "Javas
 
 # [0230] Kth Smallest Element in a BST
 
-## Javascript 解
+> 題號：**0230** | 難度：**Medium** | 主題：**Kth Smallest Element in a BST, Trees**
 
-## 思路：
-
+## JavaScript 解法
+## 解題思路
 - 比較不正確的想法:先全部遍歷一遍後再 sort，因為這樣會喪失 BST 的特性，左節點比右節點小
 - 比較正確的是：先左邊全部遍歷完之後，push node.val，然後再右邊遍歷
 - 這題其實就是遍歷完之後，不管怎麼跑，只要跑到全部的數字都出來，再排序過，或是依照特性不排序，返回值就 ok 了

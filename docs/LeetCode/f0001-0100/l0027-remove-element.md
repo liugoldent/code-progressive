@@ -11,14 +11,15 @@ keywords: ["0027", "Remove", "Element", "LeetCode", "Javascript"]
 
 # [0027] Remove Element
 
-## Javascript 解
+> 題號：**0027** | 難度：**Easy** | 主題：**Remove Element**
 
+## JavaScript 解法
 思路：
 
 1. 因為不能再多使用一個空間來得出答案，所以只能對原陣列動手腳
 2. 所以我們一樣設定一個 count，來計算說不為 val 的位子到哪了
 
-```javascript
+```js
 /**
  * @param {number[]} nums
  * @param {number} val

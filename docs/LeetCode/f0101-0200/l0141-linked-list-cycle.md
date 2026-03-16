@@ -12,10 +12,11 @@ keywords: ["0141", "Linked", "List", "Cycle", "LeetCode", "Javascript"]
 
 # [0141] Linked List Cycle
 
+> 題號：**0141** | 難度：**Easy** | 主題：**Linked List Cycle, Linked List**
+
 - 遍歷一個 linked list，並且給他一個 flag 註解是否有被遍歷過
 
-## Javascript 解
-
+## JavaScript 解法
 ```js
 /**
  * Definition for singly-linked list.

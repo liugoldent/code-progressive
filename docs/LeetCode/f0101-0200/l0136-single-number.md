@@ -13,12 +13,13 @@ keywords: ["0136", "Single", "Number", "LeetCode", "Javascript"]
 
 # [0136] Single Number
 
-## Javascript 解
+> 題號：**0136** | 難度：**Medium** | 主題：**Hashing**
 
+## JavaScript 解法
 1. 這題可以直接用XOR的邏輯去解
 2. XOR：不同為1。相同為0
 
-```javascript
+```js
 /**
  * @param {number[]} nums
  * @return {number}

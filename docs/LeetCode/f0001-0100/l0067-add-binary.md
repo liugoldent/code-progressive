@@ -12,8 +12,9 @@ keywords: ["0067", "Add", "Binary", "LeetCode", "Javascript"]
 
 # [0067] Add Binary
 
-## Javascript 解
+> 題號：**0067** | 難度：**Easy** | 主題：**Add Binary**
 
+## JavaScript 解法
 ### 解 1：傳統邏輯
 
 兩個小重點
@@ -22,7 +23,7 @@ keywords: ["0067", "Add", "Binary", "LeetCode", "Javascript"]
 2. 真正的 res：是用 %2 去取得
 3. 因為有長短問題，所以 val 的那行要使用 || 0
 
-```javascript
+```js
 /**
  * @param {string} a
  * @param {string} b
@@ -50,7 +51,7 @@ var addBinary = function (a, b) {
 
 ### 解 2. 轉型
 
-```javascript
+```js
 /**
  * @param {string} a
  * @param {string} b

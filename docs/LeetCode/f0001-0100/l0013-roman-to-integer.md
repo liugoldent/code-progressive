@@ -12,15 +12,16 @@ keywords: ["0013", "Roman", "to", "Integer", "LeetCode", "Javascript", "Python"]
 
 # [0013] Roman to Integer
 
-## Javascript 解
+> 題號：**0013** | 難度：**Easy** | 主題：**Roman to Integer**
 
+## JavaScript 解法
 思路：製作出一個 for loop
 
 1. 若左邊的數字 >= 右邊的數字則將**加上**此 index 數字
 2. 若左邊的數字 < 右邊的數字則將**減掉**此 index 數字
 3. 若跑到最後一個英文字母，則無條件加上最後一個 index 數字
 
-```javascript
+```js
 /**
  * @param {string} s
  * @return {number}
@@ -49,8 +50,7 @@ var romanToInt = function (s) {
 };
 ```
 
-## Python 解
-
+## Python 解法
 ```python
 class Solution:
     def romanToInt(self, s: str) -> int:

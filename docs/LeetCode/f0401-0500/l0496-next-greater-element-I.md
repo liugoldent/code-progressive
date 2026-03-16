@@ -12,8 +12,9 @@ keywords: ["0496", "Next", "Greater", "Element", "LeetCode", "Javascript"]
 
 # [0496] Next Greater Element I
 
-## Javascript 解
+> 題號：**0496** | 難度：**Easy** | 主題：**Stack, Next Greater Element I**
 
+## JavaScript 解法
 ```js
 var nextGreaterElement = function (nums1, nums2) {
   const stack = [];

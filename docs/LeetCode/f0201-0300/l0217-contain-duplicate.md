@@ -15,8 +15,9 @@ keywords: ["0217", "Contains", "Duplicate", "LeetCode", "Javascript", "Python", 
 
 # [0217] Contains Duplicate
 
-## Javascript 解
+> 題號：**0217** | 難度：**easy** | 主題：**Array, And, Hashing**
 
+## JavaScript 解法
 首先我們可以用暴力解，做兩次 for 循環，其 BigO = O(nlogn)
 但是可以藉由放入 hashSet 的方式去解出這題
 
@@ -29,7 +30,7 @@ keywords: ["0217", "Contains", "Duplicate", "LeetCode", "Javascript", "Python", 
 1. 如果跑完都沒有 return true
 1. 最後 return false
 
-```javascript
+```js
 /**
  * @param {number[]} nums
  * @return {boolean}
@@ -51,8 +52,7 @@ var containsDuplicate = function (nums) {
 module.exports = containsDuplicate;
 ```
 
-## Python 解
-
+## Python 解法
 ```python
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
@@ -71,9 +71,8 @@ class Solution:
         return len(nums) != len(set(nums))
 ```
 
-## 測試程式
-
-```javascript
+## 測試案例
+```js
 // test case
 const containsDuplicate = require("./leetcode.js");
 

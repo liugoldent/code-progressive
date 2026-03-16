@@ -13,8 +13,9 @@ keywords: ["0238", "Products", "of", "Array", "Except", "Self", "LeetCode", "Jav
 
 # [0238] Products of Array Except Self
 
-## Javascript 解
+> 題號：**0238** | 難度：**Medium** | 主題：**Hashing**
 
+## JavaScript 解法
 #### 演算法：「左右乘積」或「前綴和後綴」的演算法
 
 題意：找出除了自己以外的乘積
@@ -27,7 +28,7 @@ keywords: ["0238", "Products", "of", "Array", "Except", "Self", "LeetCode", "Jav
    ![step2](https://pic.pimg.tw/englishandcoding/1617012835-27634056-g_n.png)
    ![step3](https://pic.pimg.tw/englishandcoding/1617012901-1785488147-g_n.png)
 
-```javascript
+```js
 /**
  * @param {number[]} nums
  * @return {number[]}
@@ -49,8 +50,7 @@ var productExceptSelf = function (nums) {
 };
 ```
 
-## Python 解
-
+## Python 解法
 ```python
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:

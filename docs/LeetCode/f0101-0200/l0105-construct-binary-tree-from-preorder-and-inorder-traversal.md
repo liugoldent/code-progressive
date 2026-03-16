@@ -12,8 +12,9 @@ keywords: ["0105", "Construct", "Binary", "Tree", "from", "Preorder", "and", "In
 
 # [0105] Construct Binary Tree from Preorder and Inorder Traversal
 
-## Javascript 解
+> 題號：**0105** | 難度：**Medium** | 主題：**Tree, Construct Binary Tree from Preorder and Inorder Traversal**
 
+## JavaScript 解法
 思路：
 
 - 一樣使用遞迴去找最深的深度

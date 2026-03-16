@@ -11,14 +11,15 @@ keywords: ["0026", "Remove", "Duplicates", "from", "Sorted", "Array", "LeetCode"
 
 # [0026] Remove Duplicates from Sorted Array
 
-## Javascript 解
+> 題號：**0026** | 難度：**Easy** | 主題：**Remove Duplicates from Sorted Array**
 
+## JavaScript 解法
 思路：
 
 1. 因為不能再多使用一個空間來得出答案，所以只能對原陣列動手腳
 2. 使用雙指針方法來解決
 
-```javascript
+```js
 /**
  * @param {number[]} nums
  * @return {number}

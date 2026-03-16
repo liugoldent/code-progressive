@@ -12,17 +12,12 @@ keywords: ["0128", "Longest", "Consecutive", "Sequence", "LeetCode", "JavaScript
 > **難度：** Hard  
 > **題目連結：** [LeetCode 128 - Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)
 
----
-
-## 📘 題目描述
-
+## 題目描述
 給定一個整數陣列 `nums`，請你找出其中最長的**連續元素序列**（順序可打亂），並回傳該序列的長度。
 
 **你必須設計一個時間複雜度為 O(n)** 的演算法解決此問題。
 
----
-
-## 🧠 解題思路（使用 Set 判斷序列開頭）
+## 解題思路
 
 這題不能用排序（O(n log n)），我們可以使用 `Set` 搭配以下邏輯：
 
@@ -33,8 +28,6 @@ keywords: ["0128", "Longest", "Consecutive", "Sequence", "LeetCode", "JavaScript
 3. 每次更新最大長度。
 
 透過這種方式，每個數最多只被處理一次，達成 O(n)。
-
----
 
 ## ✅ JavaScript 實作
 

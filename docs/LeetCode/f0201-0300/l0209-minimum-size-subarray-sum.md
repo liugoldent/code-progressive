@@ -11,11 +11,11 @@ keywords: ["0209", "Minimum", "Size", "Subarray", "Sum", "LeetCode", "Javascript
 
 # [0209] Minimum Size Subarray Sum
 
-## Javascript 解
+> 題號：**0209** | 難度：**Medium** | 主題：**Sliding Window**
 
-## 思路：
-
-```javascript
+## JavaScript 解法
+## 解題思路
+```js
 /**
  * @param {number} target
  * @param {number[]} nums

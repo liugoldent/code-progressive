@@ -12,8 +12,9 @@ keywords: ["0020", "Valid", "Parentheses", "LeetCode", "Javascript", "-2", "Pyth
 
 # [0020] Valid Parentheses
 
-## Javascript 解 - 1
+> 題號：**0020** | 難度：**Easy** | 主題：**Valid Parentheses**
 
+## JavaScript 解法
 思路：
 
 1. 先將反向括號設定成一個物件
@@ -23,7 +24,7 @@ keywords: ["0020", "Valid", "Parentheses", "LeetCode", "Javascript", "-2", "Pyth
 5. 若不相等則 false
 6. 最後迴圈跑完，若長度為 0，則代表全部相等
 
-```javascript
+```js
 /**
  * @param {string} s
  * @return {boolean}
@@ -52,8 +53,7 @@ var isValid = function (s) {
 };
 ```
 
-## Javascript 解 -2
-
+## JavaScript 解法
 ```js
 /**
  * @param {string} s
@@ -86,8 +86,7 @@ var isValid = function (s) {
 };
 ```
 
-## Python 解
-
+## Python 解法
 ```python
 class Solution:
     def isValid(self, s: str) -> bool:

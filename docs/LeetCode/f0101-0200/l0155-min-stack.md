@@ -12,8 +12,9 @@ keywords: ["0155", "Min", "Stack", "LeetCode", "Javascript"]
 
 # [0155] Min Stack
 
-## Javascript 解
+> 題號：**0155** | 難度：**Medium** | 主題：**Min Stack, Binary Search**
 
+## JavaScript 解法
 ```js
 /**
  * initialize your data structure here.

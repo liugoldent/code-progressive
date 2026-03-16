@@ -12,8 +12,9 @@ keywords: ["0100", "Same", "Tree", "LeetCode", "Javascript"]
 
 # [0100] Same Tree
 
-## Javascript 解
+> 題號：**0100** | 難度：**Easy** | 主題：**Tree, Same Tree**
 
+## JavaScript 解法
 思路：
 
 - 先定義好一開始的條件

@@ -12,11 +12,12 @@ keywords: ["0035", "Search", "Insert", "Position", "LeetCode", "Javascript", "Py
 
 # [0035] Search Insert Position
 
-## Javascript 解
+> 題號：**0035** | 難度：**Easy** | 主題：**Search Insert Position**
 
+## JavaScript 解法
 1. 最容易想的方法：跑一個 for loop 看何時 nums[i] >= target 就是答案了
 
-```javascript
+```js
 /**
  * @param {number[]} nums
  * @param {number} target
@@ -37,7 +38,7 @@ var searchInsert = function (nums, target) {
 
 2. 二分搜尋法
 
-```javascript
+```js
 /**
  * @param {number[]} nums
  * @param {number} target
@@ -63,8 +64,7 @@ var searchInsert = function (nums, target) {
 };
 ```
 
-## Python 解
-
+## Python 解法
 ```python
 class Solution:
     def searchInsert(self, nums: List[int], target: int) -> int:

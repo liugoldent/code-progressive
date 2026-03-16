@@ -7,29 +7,22 @@ keywords: ["0133", "Clone", "Graph", "LeetCode", "JavaScript", "DFS", "深拷貝
 
 # [0133] Clone Graph
 
+> 題號：**0133** | 主題：**Graph, DFS, Clone Graph**
+
 > 使用 DFS 遞迴演算法實作無向圖的深層複製，這題目是典型的圖遍歷應用。支援有環的圖，避免重複拷貝。
 
----
-
-## 題目簡述
-
+## 題目描述
 Clone an undirected graph. Each node contains a `val` and a list of `neighbors`.
 
 傳入圖的一個節點，請回傳該圖的深拷貝副本（複製整張圖的所有節點與連線）。
 
----
-
-## 解題思路（DFS）
-
+## 解題思路
 - 使用 `Map` 儲存已訪問過的節點，避免進入死循環（處理有環的圖）。
 - 每次遇到一個新節點，就建立新節點的實例。
 - 然後對其每個鄰居遞迴進行深拷貝，並加入新節點的 `neighbors` 陣列。
 
----
-
-## JavaScript 實作
-
-```javascript
+## JavaScript 解法
+```js
 /**
  * // Definition for a Node.
  * function Node(val, neighbors) {

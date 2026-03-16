@@ -12,17 +12,12 @@ keywords: ["0033", "Search", "in", "Rotated", "Sorted", "Array", "LeetCode", "Bi
 > 題型：**二分搜尋變形（Binary Search in Rotated Array）**  
 > 題目連結：[LeetCode 33 - Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)
 
----
-
-## 📘 題目描述
-
+## 題目描述
 給定一個整數陣列 `nums`，該陣列為升序排序後被旋轉過一次（可能是部分陣列被移動到最前面），再給一個整數 `target`。請在陣列中搜尋 `target`，若存在，返回其索引，否則返回 `-1`。
 
 - 時間複雜度要求：`O(log n)`。
 
----
-
-## 🧠 解題思路：二分搜尋法 + 區段判斷
+## 解題思路
 
 雖然整體陣列已被旋轉，但每次切一半時，仍能保證「**一半一定是有序的**」。
 
@@ -33,17 +28,12 @@ keywords: ["0033", "Search", "in", "Rotated", "Sorted", "Array", "LeetCode", "Bi
 
 接著依照 `target` 是否在有序區間內，決定往左或往右搜尋。
 
----
-
 ## ⚠ 常見陷阱
 
 > 🔥 `while (left < right)` ❌ 錯誤！  
 > ✅ 應使用 `while (left <= right)`，否則會漏檢最後一個元素。
 
----
-
-## 💻 JavaScript 解法
-
+## JavaScript 解法
 ```js
 /**
  * @param {number[]} nums

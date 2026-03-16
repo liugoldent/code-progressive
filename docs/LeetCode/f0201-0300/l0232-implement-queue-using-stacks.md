@@ -12,11 +12,12 @@ keywords: ["0232", "Longest", "Common", "Prefix", "LeetCode", "Javascript", "sta
 
 # [0232] Longest Common Prefix
 
-## Javascript 解
+> 題號：**0232** | 難度：**Easy** | 主題：**Implement Queue using Stacks**
 
+## JavaScript 解法
 思路：這題主要是說，你只能用 stack 去做出 Queue
 
-```javascript
+```js
 var MyQueue = function () {
   this.stack = [];
   this.helpStack = [];

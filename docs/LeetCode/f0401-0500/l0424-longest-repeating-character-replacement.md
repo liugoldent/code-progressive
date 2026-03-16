@@ -12,8 +12,9 @@ keywords: ["0424", "Longest", "Repeating", "Character", "Replacement", "LeetCode
 
 # [0424] Longest Repeating Character Replacement
 
-## Javascript 解
+> 題號：**0424** | 難度：**Easy** | 主題：**Sliding Window, Longest Repeating Character Replacement**
 
+## JavaScript 解法
 ```js
 /**
  * @param {string} s

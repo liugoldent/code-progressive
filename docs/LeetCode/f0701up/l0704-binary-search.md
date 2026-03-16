@@ -11,9 +11,10 @@ keywords: ["0704", "Binary", "Search", "LeetCode", "Javascript"]
 
 # [0704] Binary Search
 
-## Javascript 解
+> 題號：**0704** | 難度：**Easy** | 主題：**Binary Search**
 
-```javascript
+## JavaScript 解法
+```js
 /**
  * @param {number[]} nums
  * @param {number} target

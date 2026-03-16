@@ -13,13 +13,14 @@ keywords: ["0144", "Binary", "Tree", "Preorder", "Traversal", "LeetCode", "Javas
 
 # [0144] Binary Tree Preorder Traversal
 
+> 題號：**0144** | 難度：**Easy** | 主題：**Binary Tree Preorder Traversal, Binary Search, Stack**
+
 - 知識：
   - 前序排列：根節點 -> 左節點 -> 右節點
   - 中序排列：左節點 -> 根節點 -> 右節點
   - 後序排列：左節點 -> 右節點 -> 根節點
 
-## Javascript 解
-
+## JavaScript 解法
 ```js
 /**
  * Definition for a binary tree node.
@@ -53,7 +54,6 @@ var preorderTraversal = function (root) {
   return result;
 };
 ```
-
 
 ```js
 // BFS 解

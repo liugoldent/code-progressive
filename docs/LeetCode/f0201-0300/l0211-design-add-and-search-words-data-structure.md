@@ -12,8 +12,9 @@ keywords: ["0211", "Design", "Add", "and", "Search", "Words", "Data", "Structure
 
 # [0211] Design Add and Search Words Data Structure
 
-## Javascript 解
+> 題號：**0211** | 難度：**Medium** | 主題：**Tries, Design Add and Search Words Data Structure**
 
+## JavaScript 解法
 - 主要講述 searchNode 的部分（insert 可以去 208 看）
 
 ```js

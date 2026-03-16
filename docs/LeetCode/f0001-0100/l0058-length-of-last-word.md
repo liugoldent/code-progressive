@@ -12,11 +12,12 @@ keywords: ["0058", "Length", "of", "Last", "Word", "LeetCode", "Javascript"]
 
 # [0058] Length of Last Word
 
-## Javascript 解
+> 題號：**0058** | 難度：**Easy** | 主題：**Length of Last Word**
 
+## JavaScript 解法
 題解：請解出最後一個單字的長度
 
-```javascript
+```js
 /**
  * @param {string} s
  * @return {number}

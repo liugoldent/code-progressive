@@ -12,8 +12,9 @@ keywords: ["0011", "Container", "With", "Most", "Water", "LeetCode", "Javascript
 
 # [0011] Container With Most Water
 
-## Javascript 解
+> 題號：**0011** | 難度：**Medium** | 主題：**Container With Most Water, two pointers**
 
+## JavaScript 解法
 - 思路：同樣使用雙指針去找尋最大的面積
 
 ```js

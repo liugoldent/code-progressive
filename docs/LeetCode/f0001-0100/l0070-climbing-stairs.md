@@ -11,8 +11,9 @@ keywords: ["0070", "Climbing", "stairs", "LeetCode", "Javascript"]
 
 # [0070] Climbing stairs
 
-## Javascript 解
+> 題號：**0070** | 難度：**Easy** | 主題：**Climbing stairs**
 
+## JavaScript 解法
 ### 解：動態回歸
 
 1. 首先小於 2 階的就是 return n 就好
@@ -46,7 +47,7 @@ keywords: ["0070", "Climbing", "stairs", "LeetCode", "Javascript"]
 
 - 當遍歷結束時，dp[n]就是爬到第 n 階樓梯的方法數，返回該值即可。
 
-```javascript
+```js
 /**
  * @param {number} n
  * @return {number}

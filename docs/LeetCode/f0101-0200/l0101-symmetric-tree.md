@@ -11,6 +11,8 @@ keywords: ["0101", "Symmetric", "Tree", "LeetCode"]
 
 # [0101] Symmetric Tree
 
+> 題號：**0101** | 難度：**Easy** | 主題：**Symmetric Tree**
+
 - 這題主要在說，看一個 tree 是否為鏡像（所以.left 要等於.right）
 
 ```js

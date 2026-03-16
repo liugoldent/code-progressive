@@ -10,6 +10,9 @@ keywords: ["1046", "Last", "Stone", "Weight", "LeetCode"]
 ---
 
 # [1046] Last Stone Weight
+
+> 題號：**1046** | 難度：**Easy** | 主題：**Last Stone Weight**
+
 * 這題其實可以用Heap / Priority Queue去解
   不過因為這邊思路比較簡單，所以使用簡單解法去解決問題
 ```js

@@ -12,12 +12,13 @@ keywords: ["0297", "Serialize", "and", "Deserialize", "Binary", "Tree", "LeetCod
 
 # [0297] Serialize and Deserialize Binary Tree
 
-## Javascript 解
+> 題號：**0297** | 難度：**Medium** | 主題：**Trees, Serialize and Deserialize Binary Tree**
 
+## JavaScript 解法
 思路：
 將樹轉成序列後，再轉回來
 
-```javascript
+```js
 /**
  * Definition for a binary tree node.
  * function TreeNode(val) {

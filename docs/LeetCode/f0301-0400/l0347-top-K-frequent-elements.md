@@ -13,8 +13,9 @@ keywords: ["0347", "Top", "Frequent", "Elements", "LeetCode", "Javascript", "Pyt
 
 # [0347] Top K Frequent Elements
 
-## Javascript 解
+> 題號：**0347** | 難度：**Medium** | 主題：**Hashing**
 
+## JavaScript 解法
 思路：
 
 1. 首先一樣要做出 key-value 對（並且要計算個各元素出現次數）
@@ -52,7 +53,7 @@ var topKFrequent = function (nums, k) {
 };
 ```
 
-```javascript
+```js
 // 最佳解
 /**
  * @param {number[]} nums
@@ -111,8 +112,7 @@ var topKFrequent = function(nums, k) {
 };
 ```
 
-## Python 解
-
+## Python 解法
 ```python
 from collections import Counter
 

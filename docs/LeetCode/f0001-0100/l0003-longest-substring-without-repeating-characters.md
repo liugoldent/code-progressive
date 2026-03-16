@@ -12,8 +12,9 @@ keywords: ["0003", "Longest", "Substring", "Without", "Repeating", "Characters",
 
 # [0003] Longest Substring Without Repeating Characters
 
-## Javascript 解
+> 題號：**0003** | 難度：**Medium** | 主題：**Longest Substring Without Repeating Characters, Two Pointer**
 
+## JavaScript 解法
 ### 思路：
 
 - 首先設定左指針、new Map、maxLen
@@ -59,8 +60,6 @@ var lengthOfLongestSubstring = function(s) {
 
     return maxLen
 };
-
-
 
 test("基本測試", () => {
   expect(lengthOfLongestSubstring("abcabcbb")).toEqual(3);

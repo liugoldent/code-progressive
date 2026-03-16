@@ -12,8 +12,9 @@ keywords: ["0121", "Best", "Time", "to", "Buy", "and", "Sell", "Stock"]
 
 # [0121] Best Time to Buy and Sell Stock
 
-## Javascript 解
+> 題號：**0121** | 難度：**Easy** | 主題：**Best Time to Buy and Sell Stock, Sliding Window**
 
+## JavaScript 解法
 思路：
 
 - 定義最小值與最大收益
