@@ -1,0 +1,10 @@
+{
+  "label": "FrontEnd",
+  "position": 2,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "FrontEnd",
+    "description": "整理原本分散在 FE-knowledge、JavaScript、Interview 的前端筆記，依主題重新分類。"
+  }
+}

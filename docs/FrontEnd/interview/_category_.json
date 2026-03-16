@@ -1,0 +1,9 @@
+{
+  "label": "Interview",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "title": "FrontEnd Interview",
+    "description": "前端面試題、綜合知識整理與常見考點筆記。"
+  }
+}
