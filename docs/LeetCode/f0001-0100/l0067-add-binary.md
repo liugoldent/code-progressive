@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Add Binary
-  - javascript
+  - JavaScript
   - Python
 keywords: ["0067", "Add", "Binary", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0067] Add Binary
 

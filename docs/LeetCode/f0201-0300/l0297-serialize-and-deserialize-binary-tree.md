@@ -4,11 +4,14 @@ description: "[0297] Serialize and Deserialize Binary Tree 題解，整理解題
 tags:
   - LeetCode
   - Medium
-  - Trees
-  - javascript
+  - Tree
+  - JavaScript
   - Serialize and Deserialize Binary Tree
 keywords: ["0297", "Serialize", "and", "Deserialize", "Binary", "Tree", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0297] Serialize and Deserialize Binary Tree
 

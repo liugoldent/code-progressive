@@ -3,12 +3,15 @@ title: "[0125] Valid Palindrome"
 description: "[0125] Valid Palindrome 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
-  - East
+  - Easy
   - Valid Palindrome
-  - javascript
-  - two Pointers
+  - JavaScript
+  - Two Pointers
 keywords: ["0125", "Valid", "Palindrome", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0125] Valid Palindrome
 

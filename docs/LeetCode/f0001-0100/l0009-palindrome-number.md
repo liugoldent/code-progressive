@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Palindrome Number
-  - javascript
+  - JavaScript
   - Python
 keywords: ["0009", "Palindrome", "Number", "LeetCode", "Javascript", "Python"]
 ---
+
+
+
 
 # [0009] Palindrome Number
 

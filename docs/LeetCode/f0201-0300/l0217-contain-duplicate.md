@@ -3,15 +3,18 @@ title: "[0217] Contains Duplicate"
 description: "[0217] Contains Duplicate 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
 tags:
   - LeetCode
-  - easy
-  - javascript
-  - python
-  - interview
+  - Easy
+  - JavaScript
+  - Python
+  - Interview
   - Array
   - And
   - Hashing
 keywords: ["0217", "Contains", "Duplicate", "LeetCode", "Javascript", "Python", "測試程式", "相關連結"]
 ---
+
+
+
 
 # [0217] Contains Duplicate
 

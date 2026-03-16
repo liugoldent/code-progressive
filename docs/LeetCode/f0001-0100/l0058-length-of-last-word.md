@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Length of Last Word
-  - javascript
+  - JavaScript
   - Python
 keywords: ["0058", "Length", "of", "Last", "Word", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0058] Length of Last Word
 

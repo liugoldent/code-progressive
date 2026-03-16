@@ -2,10 +2,13 @@
 title: "useLazyAsyncData"
 description: "介紹 useLazyAsyncData"
 tags:
-  - nuxt
-  - composable
+  - Nuxt
+  - Composable
 keywords: ["useLazyAsyncData", "Nuxt", "概念", "範例", "參數", "返回值"]
 ---
+
+
+
 
 # useLazyAsyncData
 ## 概念

@@ -4,10 +4,13 @@ description: "[0208] Implement Trie (Prefix Tree) 題解，整理解題思路、
 tags:
   - LeetCode
   - Medium
-  - javascript
-  - Tries
+  - JavaScript
+  - Trie
 keywords: ["0208", "Implement", "Trie", "Prefix", "Tree", "LeetCode", "Javascript", "思路："]
 ---
+
+
+
 
 # [0208] Implement Trie (Prefix Tree)
 

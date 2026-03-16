@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Medium
   - Input Array Is Sorted
-  - javascript
-  - two pointers
+  - JavaScript
+  - Two Pointers
 keywords: ["0167", "Input", "Array", "Is", "Sorted", "LeetCode", "Javascript", "好文連結"]
 ---
+
+
+
 
 # [0167] Input Array Is Sorted
 

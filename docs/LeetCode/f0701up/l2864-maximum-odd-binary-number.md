@@ -6,9 +6,12 @@ tags:
   - Easy
   - Maximum Odd Binary Number
   - String
-  - Javascript
+  - JavaScript
 keywords: ["2864", "Maximum", "Odd", "Binary", "Number", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [2864] Maximum Odd Binary Number
 

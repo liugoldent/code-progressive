@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Easy
   - Merge Strings Alternately
-  - Javascript
+  - JavaScript
 keywords: ["1768", "Merge", "Strings", "Alternately", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [1768] Merge Strings Alternately
 

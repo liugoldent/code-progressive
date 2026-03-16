@@ -3,9 +3,12 @@ sidebar_position: 0
 title: "Java 基本 基本知識 ch01"
 description: "Java 基本 基本知識 ch01 筆記，整理 變數與資料型態、型態轉換 等重點。"
 tags:
-  - java
+  - Java
 keywords: ["java"]
 ---
+
+
+
 
 # [JAVA 基本] 基本知識 ch01
 

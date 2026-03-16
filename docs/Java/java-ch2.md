@@ -3,9 +3,12 @@ sidebar_position: 0
 title: "Java 基本 類別知識 ch02"
 description: "Java 基本 類別知識 ch02 筆記，整理 類別、建構元 等重點。"
 tags:
-  - java
+  - Java
 keywords: ["java"]
 ---
+
+
+
 
 # [JAVA 基本] 類別知識 ch02
 

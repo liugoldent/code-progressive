@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Search Insert Position
-  - javascript
+  - JavaScript
   - Python
 keywords: ["0035", "Search", "Insert", "Position", "LeetCode", "Javascript", "Python"]
 ---
+
+
+
 
 # [0035] Search Insert Position
 

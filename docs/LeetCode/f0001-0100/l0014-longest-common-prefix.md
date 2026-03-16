@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Longest Common Prefix
-  - javascript
+  - JavaScript
   - Python
 keywords: ["0014", "Longest", "Common", "Prefix", "LeetCode", "Javascript", "Python"]
 ---
+
+
+
 
 # [0014] Longest Common Prefix
 

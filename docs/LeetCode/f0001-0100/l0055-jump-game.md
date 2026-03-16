@@ -2,9 +2,18 @@
 date: 2025-06-18
 title: "[0055] Jump Game"
 description: "[0055] Jump Game 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
-tags: [LeetCode, JavaScript, Greedy, Array, Jump Game, 面試題]
+tags:
+  - LeetCode
+  - JavaScript
+  - Greedy
+  - Array
+  - Jump Game
+  - 面試題
 keywords: ["0055", "Jump", "Game", "LeetCode", "JavaScript", "Greedy", "Array", "面試題"]
 ---
+
+
+
 
 # [0055] Jump Game
 

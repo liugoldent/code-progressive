@@ -3,11 +3,14 @@ sidebar_position: 0
 title: "[JAVA 比較]Array vs ArrayList"
 description: "array vs arrayList"
 tags:
-  - java
-  - array
-  - arrayList
+  - Java
+  - Array
+  - ArrayList
 keywords: ["java", "array", "arrayList"]
 ---
+
+
+
 
 # [JAVA 比較]Array vs ArrayList
 

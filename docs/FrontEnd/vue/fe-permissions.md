@@ -3,13 +3,16 @@ slug: "/FE-knowledge/fe-permissions"
 title: "前端 前端權限"
 description: "前端 前端權限 筆記，整理 觸發形式、最終目標 等重點。"
 tags:
-  - javascript
-  - Test
+  - JavaScript
+  - Testing
   - Vue
-  - Vue2
-  - Vue3
+  - Vue 2
+  - Vue 3
 keywords: ["前端", "前端權限", "FE-knowledge", "觸發形式", "最終目標", "四種權限", "接口權限（API", "權限）"]
 ---
+
+
+
 
 # [FE] 前端權限
 

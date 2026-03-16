@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Easy
   - Greatest Common Divisor of Strings
-  - Javascript
+  - JavaScript
 keywords: ["1071", "Greatest", "Common", "Divisor", "of", "Strings", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [1071] Greatest Common Divisor of Strings
 

@@ -4,11 +4,14 @@ description: "[0212] Word Search II 題解，整理解題思路、JavaScript 實
 tags:
   - LeetCode
   - Medium
-  - javascript
-  - Tries
+  - JavaScript
+  - Trie
   - Word Search II
 keywords: ["0212", "Word", "Search", "II", "LeetCode"]
 ---
+
+
+
 
 # [0212] Word Search II
 

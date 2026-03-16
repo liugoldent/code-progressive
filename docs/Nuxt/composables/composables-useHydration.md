@@ -2,10 +2,13 @@
 title: "useHydration"
 description: "介紹useHydration"
 tags:
-  - nuxt
-  - composable
+  - Nuxt
+  - Composable
 keywords: ["useHydration", "Nuxt", "概念", "範例", "參數", "返回值"]
 ---
+
+
+
 
 # useHydration
 

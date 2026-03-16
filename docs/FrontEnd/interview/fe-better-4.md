@@ -3,11 +3,14 @@ slug: "/FE-knowledge/fe-better-4"
 title: "前端 前端效能優化-4"
 description: "前端 前端效能優化-4 筆記，整理 6-1 web workers、6-2 WebAssembly 等重點。"
 tags:
-  - javascript
-  - Test
+  - JavaScript
+  - Testing
   - 前端效能優化
 keywords: ["前端", "前端效能優化-4", "FE-knowledge", "web", "workers", "webAssembly", "6-1", "6-2"]
 ---
+
+
+
 
 # [FE] 前端效能優化-4
 

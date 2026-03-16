@@ -1,13 +1,16 @@
 ---
 title: "[1046] Last Stone Weight"
 description: "[1046] Last Stone Weight 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
-tags: 
-    - LeetCode
-    - Easy
-    - Last Stone Weight
-    - Javascript
+tags:
+  - LeetCode
+  - Easy
+  - Last Stone Weight
+  - JavaScript
 keywords: ["1046", "Last", "Stone", "Weight", "LeetCode"]
 ---
+
+
+
 
 # [1046] Last Stone Weight
 

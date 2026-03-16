@@ -2,11 +2,14 @@
 title: "React React router Hook"
 description: "react router Hook"
 tags:
-  - javascript
-  - react
-  - frontEnd
+  - JavaScript
+  - React
+  - Frontend
 keywords: ["React", "router", "Hook", "useLoaction", "useParams", "useNavigate", "useRoutes"]
 ---
+
+
+
 
 # [React] React router Hook
 ## useLoaction

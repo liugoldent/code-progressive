@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Medium
   - Design Twitter
-  - javascript
-  - Heap / Priority
+  - JavaScript
+  - Heap / Priority Queue
 keywords: ["0355", "Design", "Twitter", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0355] Design Twitter
 

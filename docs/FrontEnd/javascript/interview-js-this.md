@@ -3,10 +3,13 @@ slug: "/Interview/JS/js-this"
 title: "談談 this"
 description: "談談 this 筆記，整理 解釋、用法 等重點。"
 tags:
-  - javascript
-  - interview
+  - JavaScript
+  - Interview
 keywords: ["談談", "this", "Interview", "解釋", "用法", "相關考題"]
 ---
+
+
+
 
 # 談談 this
 

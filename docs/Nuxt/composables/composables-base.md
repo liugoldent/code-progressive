@@ -2,10 +2,13 @@
 title: "base"
 description: "介紹composable"
 tags:
-  - nuxt
-  - composable
+  - Nuxt
+  - Composable
 keywords: ["nuxt", "js", "javascript", "composable", "composable api", "seo", "nuxt composable api"]
 ---
+
+
+
 
 # base
 

@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Medium
   - Reorder List
-  - javascript
+  - JavaScript
   - Linked List
 keywords: ["0143", "Reorder", "List", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0143] Reorder List
 

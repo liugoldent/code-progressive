@@ -2,10 +2,13 @@
 title: "useHead"
 description: "useHead 筆記，整理 概念、範例 等重點。"
 tags:
-  - nuxt
-  - composable
+  - Nuxt
+  - Composable
 keywords: ["nuxt", "js", "javascript", "composable", "composable api", "useHead", "seo", "nuxt useHead"]
 ---
+
+
+
 
 # useHead
 

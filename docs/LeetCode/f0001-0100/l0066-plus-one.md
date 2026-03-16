@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Easy
   - Plus One
-  - javascript
+  - JavaScript
 keywords: ["0066", "Plus", "One", "LeetCode", "Javascript", "Python"]
 ---
+
+
+
 
 # [0066] Plus One
 

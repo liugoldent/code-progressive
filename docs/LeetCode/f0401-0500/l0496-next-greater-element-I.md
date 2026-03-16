@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Stack
-  - javascript
+  - JavaScript
   - Next Greater Element I
 keywords: ["0496", "Next", "Greater", "Element", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0496] Next Greater Element I
 

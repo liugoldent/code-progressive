@@ -2,10 +2,13 @@
 title: "useRequestEvent"
 description: "介紹 useRequestEvent"
 tags:
-  - nuxt
-  - composable
+  - Nuxt
+  - Composable
 keywords: ["useRequestEvent", "Nuxt", "概念", "範例", "返回值", "類型參考"]
 ---
+
+
+
 
 # useRequestEvent
 ## 概念

@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Valid Parentheses
-  - javascript
+  - JavaScript
   - Python
 keywords: ["0020", "Valid", "Parentheses", "LeetCode", "Javascript", "-2", "Python"]
 ---
+
+
+
 
 # [0020] Valid Parentheses
 

@@ -2,12 +2,15 @@
 title: "Check Equal Partitions in JavaScript"
 description: "JavaScript function to verify whether each element in an array divides a target and if the overall product equals the square of that target."
 tags:
-  - javascript
-  - algorithm
+  - JavaScript
+  - Algorithm
   - partition
-  - leetcode
+  - LeetCode
 keywords: ["LeetCode Weekly Contest 452", "partition", "JavaScript", "equal product subsets", "algorithm"]
 ---
+
+
+
 
 # Check Equal Partitions in JavaScript
 

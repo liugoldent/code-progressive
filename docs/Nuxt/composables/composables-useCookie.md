@@ -2,10 +2,13 @@
 title: "useCookie"
 description: "useCookie 筆記，整理 概念、注意事項 等重點。"
 tags:
-  - nuxt
-  - composable
+  - Nuxt
+  - Composable
 keywords: ["useCookie", "Nuxt", "概念", "注意事項", "範例", "選項參數"]
 ---
+
+
+
 
 # useCookie
 

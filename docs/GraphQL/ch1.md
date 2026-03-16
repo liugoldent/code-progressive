@@ -2,10 +2,13 @@
 title: "GraphQL"
 description: "GraphQL 筆記，整理 介紹、好處 等重點。"
 tags:
-  - sql
-  - interview
+  - SQL
+  - Interview
 keywords: ["GraphQL", "介紹", "好處", "生態", "基本"]
 ---
+
+
+
 
 # GraphQL
 ## 介紹

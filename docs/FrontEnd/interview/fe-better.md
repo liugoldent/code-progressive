@@ -2,11 +2,14 @@
 slug: "/FE-knowledge/fe-better"
 title: "前端 前端效能優化"
 description: "前端 前端效能優化 筆記，整理 重構、大量圖片，導致載入網站很慢該怎麼解決？ 等重點。"
-tags: 
-    - javascript
-    - Test
+tags:
+  - JavaScript
+  - Testing
 keywords: ["前端", "前端效能優化", "FE-knowledge", "重構", "大量圖片，導致載入網站很慢該怎麼解決？", "對JS的優化", "CSS", "優化"]
 ---
+
+
+
 
 # [FE] 前端效能優化
 ## 重構

@@ -2,10 +2,13 @@
 title: "useNuxtData"
 description: "介紹 useNuxtData"
 tags:
-  - nuxt
-  - composable
+  - Nuxt
+  - Composable
 keywords: ["useNuxtData", "Nuxt", "概念", "範例", "返回值", "類型參考"]
 ---
+
+
+
 
 # useNuxtData
 ## 概念

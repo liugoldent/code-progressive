@@ -3,10 +3,13 @@ slug: "/FE-knowledge/fe-mix2"
 title: "前端 面試題整理 V3"
 description: "前端 面試題整理 V3 筆記，整理 簡單說明 SSR 原理、JS 中的 Promise 是什麼 等重點。"
 tags:
-  - JS
-  - frontend
+  - JavaScript
+  - Frontend
 keywords: ["前端", "面試題整理", "V3", "FE-knowledge", "簡單說明", "SSR", "原理", "JS"]
 ---
+
+
+
 
 # [FE] Interview V3
 

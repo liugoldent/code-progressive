@@ -3,11 +3,14 @@ slug: "/FE-knowledge/fe-vue-p3"
 title: "前端 Vue - p3"
 description: "前端 Vue - p3 筆記，整理 slot、object freeze 等重點。"
 tags:
-  - javascript
-  - Test
+  - JavaScript
+  - Testing
   - Vue
 keywords: ["前端", "Vue", "p3", "FE-knowledge", "slot", "object", "freeze", "什麼是虛擬DOM"]
 ---
+
+
+
 
 # [FE] Vue - p3
 

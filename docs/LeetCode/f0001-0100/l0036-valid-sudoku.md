@@ -4,12 +4,15 @@ description: "[0036] Valid Sudoku 題解，整理解題思路、JavaScript 實�
 tags:
   - LeetCode
   - Medium
-  - javascript
-  - python
-  - interview
+  - JavaScript
+  - Python
+  - Interview
   - Hashing
 keywords: ["0036", "Valid", "Sudoku", "LeetCode", "Javascript", "Python"]
 ---
+
+
+
 
 # [0036] Valid Sudoku
 

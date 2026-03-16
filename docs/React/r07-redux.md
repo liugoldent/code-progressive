@@ -2,11 +2,14 @@
 title: "React 「React Redux」"
 description: "React 「React Redux」 筆記，整理 概念 - React Redux、程式 等重點。"
 tags:
-  - javascript
-  - react
-  - frontEnd
+  - JavaScript
+  - React
+  - Frontend
 keywords: ["React", "「React", "Redux」", "概念", "Redux", "程式"]
 ---
+
+
+
 
 # [React] 「React Redux」
 ## 概念 - React Redux

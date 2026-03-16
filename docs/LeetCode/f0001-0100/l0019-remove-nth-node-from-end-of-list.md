@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Medium
   - Remove Nth Node From End of List
-  - javascript
+  - JavaScript
   - Linked List
 keywords: ["0019", "Remove", "Nth", "Node", "From", "End", "of", "List"]
 ---
+
+
+
 
 # [0019] Remove Nth Node From End of List
 

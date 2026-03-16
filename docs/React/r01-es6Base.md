@@ -2,11 +2,14 @@
 title: "React ES6 必備語法"
 description: "react ES6必備語法"
 tags:
-  - javascript
-  - react
-  - frontEnd
+  - JavaScript
+  - React
+  - Frontend
 keywords: ["React", "ES6", "必備語法", "Template", "Literals", "模板語法", "Arrow", "Functions"]
 ---
+
+
+
 
 # [React] ES6 必備語法
 ## Template Literals 模板語法

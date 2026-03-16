@@ -4,11 +4,14 @@ description: "[0226] Invert Binary Tree 題解，整理解題思路、JavaScript
 tags:
   - LeetCode
   - Easy
-  - javascript
+  - JavaScript
   - Invert Binary Tree
-  - Trees
+  - Tree
 keywords: ["0226", "Invert", "Binary", "Tree", "LeetCode", "Javascript", "思路："]
 ---
+
+
+
 
 # [0226] Invert Binary Tree
 

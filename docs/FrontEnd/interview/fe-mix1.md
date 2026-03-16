@@ -3,10 +3,13 @@ slug: "/FE-knowledge/fe-mix1"
 title: "前端 面試題整理 V2"
 description: "前端 面試題整理 V2 筆記，整理 說明 CSS 的層級、說明 RWD 跟 AWD 的差異 等重點。"
 tags:
-  - JS
-  - frontend
+  - JavaScript
+  - Frontend
 keywords: ["前端", "面試題整理", "V2", "FE-knowledge", "說明", "CSS", "的層級", "display:none"]
 ---
+
+
+
 
 # [FE] Interview V2
 

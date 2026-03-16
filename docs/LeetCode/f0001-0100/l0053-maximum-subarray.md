@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Medium
   - Maximum Subarray
-  - javascript
+  - JavaScript
 keywords: ["0053", "Maximum", "Subarray", "LeetCode"]
 ---
+
+
+
 
 # [0053] Maximum Subarray
 

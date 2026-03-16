@@ -2,10 +2,12 @@
 title: "[TS] Class"
 description: "TS - TS Class"
 tags:
-  - TS
   - TypeScript
 keywords: ["TS", "Class", "TypeSctipt", "概念", "封裝", "繼承（Inheritance）", "多型（Polymorphism）", "文章來源"]
 ---
+
+
+
 
 # [TS] Class
 ## 概念 - 封裝

@@ -2,11 +2,14 @@
 slug: "/FE-knowledge/fe-code-base"
 title: "前端 程式基礎知識"
 description: "前端 程式基礎知識 筆記，整理 SOLID、GET vs post 等重點。"
-tags: 
-    - javascript
-    - Test
+tags:
+  - JavaScript
+  - Testing
 keywords: ["前端", "程式基礎知識", "FE-knowledge", "SOLID", "GET", "vs", "post", "websocket"]
 ---
+
+
+
 
 # [FE] 程式基礎知識
 ## SOLID

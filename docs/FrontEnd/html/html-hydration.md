@@ -3,10 +3,13 @@ slug: "/Interview/HTML/html-hydration"
 title: "談談 hydration"
 description: "hydration是什麼、注水是什麼"
 tags:
-  - html
-  - interview
+  - HTML
+  - Interview
 keywords: ["談談", "hydration", "Interview", "概念", "podcast", "多聽一遍"]
 ---
+
+
+
 
 # 談談 hydration
 ## 概念

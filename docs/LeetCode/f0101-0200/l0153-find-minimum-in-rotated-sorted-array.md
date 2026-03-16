@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Medium
   - Find Minimum in Rotated Sorted Array
-  - javascript
+  - JavaScript
   - Binary Search
 keywords: ["0153", "Find", "Minimum", "in", "Rotated", "Sorted", "Array", "LeetCode"]
 ---
+
+
+
 
 # [0153] Find Minimum in Rotated Sorted Array
 

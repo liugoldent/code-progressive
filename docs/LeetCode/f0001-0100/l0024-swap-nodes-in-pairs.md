@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Medium
   - Swap Nodes in Pairs
-  - javascript
+  - JavaScript
 keywords: ["0024", "Swap", "Nodes", "in", "Pairs", "LeetCode", "Javascript", "大師圖文講解"]
 ---
+
+
+
 
 # [0024] Swap Nodes in Pairs
 

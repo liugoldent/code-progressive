@@ -3,9 +3,12 @@ sidebar_position: 0
 title: "[JAVA 介紹]Java 基本知識"
 description: "[JAVA 介紹]Java 基本知識 筆記，整理 推薦資源、常見關鍵字 等重點。"
 tags:
-  - java
+  - Java
 keywords: ["JAVA", "介紹", "基本知識", "推薦資源", "常見關鍵字"]
 ---
+
+
+
 
 # [JAVA 介紹]Java 基本知識
 ## 推薦資源

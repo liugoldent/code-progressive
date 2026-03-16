@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Easy
   - Binary Tree Inorder Traversal
-  - javascript
+  - JavaScript
 keywords: ["0094", "Binary", "Tree", "Inorder", "Traversal", "LeetCode"]
 ---
+
+
+
 
 # [0094] Binary Tree Inorder Traversal
 

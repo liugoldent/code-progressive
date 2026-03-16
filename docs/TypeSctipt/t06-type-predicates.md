@@ -2,10 +2,12 @@
 title: "[TS] Type Predicates - 型別斷言"
 description: "TS - Type Predicates"
 tags:
-  - TS
   - TypeScript
 keywords: ["TS", "Type", "Predicates", "型別斷言", "TypeSctipt", "概念", "使用", "文章來源"]
 ---
+
+
+
 
 # [TS] Type Predicates - 型別斷言
 ## 概念

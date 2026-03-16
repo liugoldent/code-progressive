@@ -2,11 +2,14 @@
 title: "React React router"
 description: "react router"
 tags:
-  - javascript
-  - react
-  - frontEnd
+  - JavaScript
+  - React
+  - Frontend
 keywords: ["React", "router", "概念", "HashRouter", "使用", "path", "elment", "巢狀路由"]
 ---
+
+
+
 
 # [React] React router
 

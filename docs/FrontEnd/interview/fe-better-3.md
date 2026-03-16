@@ -2,12 +2,15 @@
 slug: "/FE-knowledge/fe-better-3"
 title: "前端 前端效能優化-3"
 description: "前端 前端效能優化-3 筆記，整理 快取與網路機制、5-1 Http Cache 等重點。"
-tags: 
-    - javascript
-    - Test
-    - 前端效能優化
+tags:
+  - JavaScript
+  - Testing
+  - 前端效能優化
 keywords: ["前端", "前端效能優化-3", "FE-knowledge", "快取與網路機制", "5-1", "Http", "Cache", "5-2"]
 ---
+
+
+
 
 # [FE] 前端效能優化-3
 [Web前端效能優化大補帖筆記](https://www.books.com.tw/products/E050147683)

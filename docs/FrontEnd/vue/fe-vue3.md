@@ -3,13 +3,16 @@ slug: "/FE-knowledge/fe-vue3"
 title: "前端 Vue3"
 description: "前端 Vue3 筆記，整理 響應式系統的實現、性能優化技術 等重點。"
 tags:
-  - javascript
-  - Test
+  - JavaScript
+  - Testing
   - Vue
-  - Vue2
-  - Vue3
+  - Vue 2
+  - Vue 3
 keywords: ["前端", "Vue3", "FE-knowledge", "Composition", "API", "Options", "的優勢", "響應式系統的實現"]
 ---
+
+
+
 
 # [FE] Vue3
 

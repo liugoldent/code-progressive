@@ -2,11 +2,14 @@
 slug: "/FE-knowledge/fe-vite"
 title: "前端 Vite"
 description: "前端 Vite 筆記，整理 概念、過往的JS開發 - 各種模組化標準 等重點。"
-tags: 
-    - Vite
-    - frontend
+tags:
+  - Vite
+  - Frontend
 keywords: ["前端", "Vite", "FE-knowledge", "概念", "過往的JS開發", "各種模組化標準", "Vite主要技術", "文章來源"]
 ---
+
+
+
 
 #  [FE] Vite
 ## 概念

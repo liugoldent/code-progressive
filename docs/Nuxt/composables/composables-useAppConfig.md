@@ -2,10 +2,13 @@
 title: "useAppConfig"
 description: "介紹useAppConfig"
 tags:
-  - nuxt
-  - composable
+  - Nuxt
+  - Composable
 keywords: ["useAppConfig", "Nuxt", "概念", "範例"]
 ---
+
+
+
 
 # useAppConfig
 

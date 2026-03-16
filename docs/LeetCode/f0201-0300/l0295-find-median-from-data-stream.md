@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Hard
   - Find Median from Data Stream
-  - javascript
+  - JavaScript
   - Heap / Priority Queue
 keywords: ["0295", "Find", "Median", "from", "Data", "Stream", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0295] Find Median from Data Stream
 

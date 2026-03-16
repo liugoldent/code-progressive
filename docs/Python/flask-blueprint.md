@@ -7,6 +7,9 @@ tags:
 keywords: ["Flask", "router", "Blueprint", "操作", "Python", "連結", "目的", "舉例"]
 ---
 
+
+
+
 # [Flask] router - Blueprint 操作
 
 ## 連結

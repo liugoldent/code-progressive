@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Linked List Cycle
-  - javascript
+  - JavaScript
   - Linked List
 keywords: ["0141", "Linked", "List", "Cycle", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0141] Linked List Cycle
 

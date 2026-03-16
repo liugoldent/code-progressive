@@ -2,10 +2,12 @@
 title: "[TS] ES6 Class"
 description: "TS - ES6 Class"
 tags:
-  - TS
   - TypeScript
 keywords: ["TS", "ES6", "Class", "TypeSctipt", "概念", "程式碼", "關鍵字", "文章來源"]
 ---
+
+
+
 
 # [TS] ES6 Class 
 ## 概念

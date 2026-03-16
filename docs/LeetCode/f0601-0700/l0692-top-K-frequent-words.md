@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Medium
   - Heap / Priority Queue
-  - javascript
+  - JavaScript
   - Top K Frequent Words
 keywords: ["0692", "Top", "Frequent", "Words", "LeetCode", "js"]
 ---
+
+
+
 
 # [0692] Top K Frequent Words
 

@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Stack
-  - javascript
+  - JavaScript
   - N-ary Tree Preorder Traversal
 keywords: ["0589", "Next", "Greater", "Element", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0589] Next Greater Element I
 

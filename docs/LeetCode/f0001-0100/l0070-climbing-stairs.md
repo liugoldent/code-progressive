@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Easy
   - Climbing stairs
-  - javascript
+  - JavaScript
 keywords: ["0070", "Climbing", "stairs", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0070] Climbing stairs
 

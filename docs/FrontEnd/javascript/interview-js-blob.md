@@ -3,10 +3,13 @@ slug: "/Interview/JS/js-blob"
 title: "談談 blob"
 description: "談談 blob 筆記，整理 解釋、屬性 等重點。"
 tags:
-  - javascript
-  - interview
+  - JavaScript
+  - Interview
 keywords: ["談談", "blob", "Interview", "解釋", "屬性", "方法", "綜合程式碼"]
 ---
+
+
+
 
 # 談談 blob
 

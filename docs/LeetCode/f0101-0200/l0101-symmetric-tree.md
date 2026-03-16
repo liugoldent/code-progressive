@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Easy
   - Symmetric Tree
-  - javascript
+  - JavaScript
 keywords: ["0101", "Symmetric", "Tree", "LeetCode"]
 ---
+
+
+
 
 # [0101] Symmetric Tree
 

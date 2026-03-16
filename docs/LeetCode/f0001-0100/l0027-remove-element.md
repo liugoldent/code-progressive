@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Easy
   - Remove Element
-  - javascript
+  - JavaScript
 keywords: ["0027", "Remove", "Element", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0027] Remove Element
 

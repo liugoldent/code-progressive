@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Easy
   - Majority Element
-  - javascript
+  - JavaScript
 keywords: ["0169", "Majority", "Element", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0169] Majority Element
 

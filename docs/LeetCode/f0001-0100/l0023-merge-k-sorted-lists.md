@@ -6,9 +6,12 @@ tags:
   - Hard
   - Merge k Sorted Lists
   - Linked List
-  - javascript
+  - JavaScript
 keywords: ["0023", "Merge", "Sorted", "Lists", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0023] Merge k Sorted Lists
 

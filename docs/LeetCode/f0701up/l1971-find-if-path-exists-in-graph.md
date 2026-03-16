@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Easy
   - Find if Path Exists in Graph
-  - Javascript
+  - JavaScript
 keywords: ["1971", "Find", "if", "Path", "Exists", "in", "Graph", "LeetCode"]
 ---
+
+
+
 
 # [1971] Find if Path Exists in Graph
 

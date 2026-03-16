@@ -3,9 +3,12 @@ title: "Node.js Event Loop 筆記"
 description: "node.js event loop 圖解"
 tags:
   - Node.js
-  - event loop
+  - Event Loop
 keywords: ["Node", "js", "Event", "Loop", "筆記", "Nodejs", "參考文章", "基本知識"]
 ---
+
+
+
 
 # [Node.js] Event Loop 筆記
 

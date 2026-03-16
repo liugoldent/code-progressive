@@ -2,11 +2,14 @@
 slug: "/FE-knowledge/fe-nodejs"
 title: "前端 Node.js"
 description: "前端 Node.js 筆記，整理 直接風格 vs CPS風格、為何一定要用CPS 等重點。"
-tags: 
-    - Node.js
-    - Test
+tags:
+  - Node.js
+  - Testing
 keywords: ["前端", "Node", "js", "FE-knowledge", "直接風格", "vs", "CPS風格", "為何一定要用CPS"]
 ---
+
+
+
 
 # [FE] Node.js
 

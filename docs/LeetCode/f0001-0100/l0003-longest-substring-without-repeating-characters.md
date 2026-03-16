@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Medium
   - Longest Substring Without Repeating Characters
-  - javascript
-  - Two Pointer
+  - JavaScript
+  - Two Pointers
 keywords: ["0003", "Longest", "Substring", "Without", "Repeating", "Characters", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0003] Longest Substring Without Repeating Characters
 

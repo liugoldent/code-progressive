@@ -2,12 +2,15 @@
 slug: "/FE-knowledge/fe-react"
 title: "前端 React"
 description: "前端 React 筆記，整理 React特點、什麼是JSX 等重點。"
-tags: 
-    - javascript
-    - Test
-    - React
+tags:
+  - JavaScript
+  - Testing
+  - React
 keywords: ["前端", "React", "FE-knowledge", "React特點", "什麼是JSX", "Virtual", "DOM", "原理"]
 ---
+
+
+
 
 # [FE] React
 

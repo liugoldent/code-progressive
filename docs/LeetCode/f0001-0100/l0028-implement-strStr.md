@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Easy
   - Implement strStr()
-  - javascript
+  - JavaScript
 keywords: ["0028", "Implement", "strStr", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0028] Implement strStr()
 

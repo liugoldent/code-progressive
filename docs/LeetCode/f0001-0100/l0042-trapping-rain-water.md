@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Hard
   - Trapping Rain Water
-  - javascript
+  - JavaScript
   - Two Pointers
 keywords: ["0042", "Trapping", "Rain", "Water", "LeetCode"]
 ---
+
+
+
 
 # [0042] Trapping Rain Water
 

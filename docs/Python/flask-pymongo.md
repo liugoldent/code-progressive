@@ -3,10 +3,13 @@ title: "[Python] 基礎- Pymongo 套件使用"
 description: "pymongo 基本使用"
 tags:
   - Python
-  - mongodb
-  - pymongo
+  - MongoDB
+  - PyMongo
 keywords: ["Python", "基礎-", "Pymongo", "套件使用", "官方文件", "相關常用指令"]
 ---
+
+
+
 
 # [Python] 基礎- Pymongo 套件使用
 

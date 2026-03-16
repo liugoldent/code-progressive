@@ -2,13 +2,16 @@
 title: "Minimum Absolute Difference in Sliding Submatrix"
 description: "JavaScript implementation using a simple BST (ignoring duplicate values) to compute the minimum absolute difference among any two distinct values in every k×k sliding submatrix of a given grid."
 tags:
-  - javascript
-  - algorithm
-  - bst
-  - sliding-window
-  - leetcode
+  - JavaScript
+  - Algorithm
+  - BST
+  - Sliding Window
+  - LeetCode
 keywords: ["LeetCode Weekly Contest 452", "sliding submatrix", "minimum absolute difference", "JavaScript", "BST"]
 ---
+
+
+
 
 # Minimum Absolute Difference in Sliding Submatrix
 

@@ -2,12 +2,15 @@
 title: "學習資源"
 description: "學習資源 筆記，整理 FrontEnd、BackEnd 等重點。"
 tags:
-  - learn
-  - javascript
-  - python
-  - leetCode
+  - Learning
+  - JavaScript
+  - Python
+  - LeetCode
 keywords: ["學習資源", "Learn", "FrontEnd", "BackEnd", "code", "Stock"]
 ---
+
+
+
 
 # 學習資源
 

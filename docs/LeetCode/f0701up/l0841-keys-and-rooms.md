@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Medium
   - Keys and Rooms
-  - Javascript
+  - JavaScript
 keywords: ["0841", "Keys", "and", "Rooms", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0841] Keys and Rooms
 

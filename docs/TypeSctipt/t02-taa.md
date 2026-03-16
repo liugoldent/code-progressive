@@ -2,10 +2,12 @@
 title: "[TS] 指定型別的方式"
 description: "[TS] 指定型別的方式 筆記，整理 Type Inference、Type Annotation 等重點。"
 tags:
-  - TS
   - TypeScript
 keywords: ["TS", "指定型別的方式", "TypeSctipt", "Type", "Inference", "Annotation", "Assertions", "文章來源"]
 ---
+
+
+
 
 # [TS] 指定型別的方式
 ## Type Inference

@@ -3,11 +3,14 @@ slug: "/FE-knowledge/fe-vue-p2"
 title: "前端 Vue - p2"
 description: "前端 Vue - p2 筆記，整理 MVVM、生命週期 等重點。"
 tags:
-  - javascript
-  - Test
+  - JavaScript
+  - Testing
   - Vue
 keywords: ["前端", "Vue", "p2", "FE-knowledge", "MVVM", "生命週期", "雙向綁定的原理：defineProperty", "雙向綁定是什麼"]
 ---
+
+
+
 
 # [FE] Vue - p2
 

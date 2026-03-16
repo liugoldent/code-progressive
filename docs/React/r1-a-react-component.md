@@ -2,11 +2,14 @@
 title: "React React Component"
 description: "react Component"
 tags:
-  - javascript
-  - react
-  - frontEnd
+  - JavaScript
+  - React
+  - Frontend
 keywords: ["React", "Component", "Class", "Function"]
 ---
+
+
+
 
 # [React] React Component
 ## Class Component

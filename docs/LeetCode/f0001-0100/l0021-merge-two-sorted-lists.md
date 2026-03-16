@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Merge Two Sorted Lists
-  - javascript
+  - JavaScript
   - Python
 keywords: ["0021", "Merge", "Two", "Sorted", "Lists", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0021] Merge Two Sorted Lists
 

@@ -2,11 +2,14 @@
 slug: "/FE-knowledge/fe-mix5"
 title: "前端 面試題整理 V6"
 description: "前端 面試題整理 V6 筆記，整理 HTTP OPTIONS 什麼時候發送、Cache 機制 等重點。"
-tags: 
-    - JS
-    - frontend
+tags:
+  - JavaScript
+  - Frontend
 keywords: ["前端", "面試題整理", "V6", "FE-knowledge", "HTTP", "OPTIONS", "什麼時候發送", "Cache"]
 ---
+
+
+
 
 # [FE] Interview V6
 

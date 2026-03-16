@@ -2,9 +2,22 @@
 date: 2025-06-18
 title: "[0300] Longest Increasing Subsequence"
 description: "[0300] Longest Increasing Subsequence 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
-tags: [LeetCode, JavaScript, DP, Dynamic Programming, Longest Increasing Subsequence, LIS, 演算法, 子序列, 面試題, 資料結構]
+tags:
+  - LeetCode
+  - JavaScript
+  - DP
+  - Dynamic Programming
+  - Longest Increasing Subsequence
+  - LIS
+  - 演算法
+  - 子序列
+  - 面試題
+  - 資料結構
 keywords: ["0300", "Longest", "Increasing", "Subsequence", "LeetCode", "JavaScript", "DP", "Dynamic"]
 ---
+
+
+
 
 # [0300] Longest Increasing Subsequence
 

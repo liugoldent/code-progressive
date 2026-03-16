@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Tree
-  - javascript
+  - JavaScript
   - Same Tree
 keywords: ["0100", "Same", "Tree", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0100] Same Tree
 

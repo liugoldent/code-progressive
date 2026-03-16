@@ -2,10 +2,13 @@
 title: "Django安裝"
 description: "python如何安裝django"
 tags:
-  - python
-  - django
+  - Python
+  - Django
 keywords: ["Django安裝", "Python", "簡易流程", "參考"]
 ---
+
+
+
 
 # Django安裝
 

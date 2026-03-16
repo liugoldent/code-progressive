@@ -4,12 +4,15 @@ description: "[0242] Valid Anagram 題解，整理解題思路、JavaScript 實�
 tags:
   - LeetCode
   - Easy
-  - javascript
-  - python
-  - interview
+  - JavaScript
+  - Python
+  - Interview
   - Hashing
 keywords: ["0242", "Valid", "Anagram", "LeetCode", "Javascript", "Python"]
 ---
+
+
+
 
 # [0242] Valid Anagram
 

@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Implement Queue using Stacks
-  - javascript
+  - JavaScript
   - Python
 keywords: ["0232", "Longest", "Common", "Prefix", "LeetCode", "Javascript", "stack", "queue"]
 ---
+
+
+
 
 # [0232] Longest Common Prefix
 

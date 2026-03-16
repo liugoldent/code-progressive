@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Medium
   - Sort an Array
-  - javascript
+  - JavaScript
 keywords: ["0912", "Sort", "an", "Array", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0912] Sort an Array
 

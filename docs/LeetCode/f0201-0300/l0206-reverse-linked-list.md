@@ -4,10 +4,13 @@ description: "[0206] Reverse Linked List 題解，整理解題思路、JavaScrip
 tags:
   - LeetCode
   - Easy
-  - javascript
+  - JavaScript
   - Linked List
 keywords: ["0206", "Reverse", "Linked", "List", "LeetCode", "Javascript", "思路："]
 ---
+
+
+
 
 # [0206] Reverse Linked List
 

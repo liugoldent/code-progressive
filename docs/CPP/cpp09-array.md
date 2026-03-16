@@ -2,10 +2,13 @@
 title: "[C++] 陣列"
 description: "[C++] 陣列 筆記，整理 聲明陣列與使用、指向指針的陣列 等重點。"
 tags:
-  - c++
-  - backend
+  - C++
+  - Backend
 keywords: ["c++陣列"]
 ---
+
+
+
 
 # [C++] 陣列
 

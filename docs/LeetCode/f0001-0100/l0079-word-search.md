@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Medium
   - Word Search
-  - javascript
+  - JavaScript
   - Backtracking
 keywords: ["0079", "Word", "Search", "LeetCode"]
 ---
+
+
+
 
 # [0079] Word Search
 

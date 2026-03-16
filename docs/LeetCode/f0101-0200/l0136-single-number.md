@@ -4,12 +4,15 @@ description: "[0136] Single Number 題解，整理解題思路、JavaScript 實�
 tags:
   - LeetCode
   - Medium
-  - javascript
-  - python
-  - interview
+  - JavaScript
+  - Python
+  - Interview
   - Hashing
 keywords: ["0136", "Single", "Number", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0136] Single Number
 

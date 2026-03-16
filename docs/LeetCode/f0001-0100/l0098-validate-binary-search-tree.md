@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Medium
   - Validate Binary Search Tree
-  - javascript
+  - JavaScript
   - Tree
 keywords: ["0098", "Validate", "Binary", "Search", "Tree", "LeetCode"]
 ---
+
+
+
 
 # [0098] Validate Binary Search Tree
 

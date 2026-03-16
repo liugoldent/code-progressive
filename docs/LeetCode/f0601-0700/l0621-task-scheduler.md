@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Medium
   - Heap / Priority Queue
-  - javascript
+  - JavaScript
   - Task Scheduler
 keywords: ["0621", "Task", "Scheduler", "LeetCode", "數字解"]
 ---
+
+
+
 
 # [0621] Task Scheduler
 

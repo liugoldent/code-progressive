@@ -2,9 +2,18 @@
 date: 2025-06-18
 title: "[0139] Word Break"
 description: "[0139] Word Break 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
-tags: [LeetCode, JavaScript, Dynamic Programming, 字串切割, HashSet, Blind75]
+tags:
+  - LeetCode
+  - JavaScript
+  - Dynamic Programming
+  - 字串切割
+  - HashSet
+  - Blind75
 keywords: ["0139", "Word", "Break", "LeetCode", "JavaScript", "Dynamic", "Programming", "字串切割"]
 ---
+
+
+
 
 # [0139] Word Break
 

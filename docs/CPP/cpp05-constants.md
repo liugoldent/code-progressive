@@ -2,10 +2,13 @@
 title: "[C++] 常量與數字"
 description: "[C++] 常量與數字 筆記，整理 字面值常量（Literal Constants）、enum 常量（Enum Constants） 等重點。"
 tags:
-  - c++
-  - backend
+  - C++
+  - Backend
 keywords: ["c++常量與數字"]
 ---
+
+
+
 
 # [C++] 常量與數字
 * 不可變的數值或表示式，它們在程式運行期間保持不變

@@ -2,9 +2,18 @@
 date: 2025-06-18
 title: "[0057] Insert Interval"
 description: "[0057] Insert Interval 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
-tags: [LeetCode, JavaScript, Interval, Greedy, Insert Interval, 面試題]
+tags:
+  - LeetCode
+  - JavaScript
+  - Interval
+  - Greedy
+  - Insert Interval
+  - 面試題
 keywords: ["0057", "Insert", "Interval", "LeetCode", "JavaScript", "Greedy", "面試題", "📘"]
 ---
+
+
+
 
 # [0057] Insert Interval
 

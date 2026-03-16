@@ -2,11 +2,14 @@
 title: "React useReducer"
 description: "react useReducer"
 tags:
-  - javascript
-  - react
-  - frontEnd
+  - JavaScript
+  - React
+  - Frontend
 keywords: ["React", "useReducer", "概念", "語法", "注意事項", "程式"]
 ---
+
+
+
 
 # [React] useReducer
 ## 概念

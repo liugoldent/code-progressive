@@ -2,10 +2,13 @@
 title: "useLazyFetch"
 description: "介紹 useLazyFetch"
 tags:
-  - nuxt
-  - composable
+  - Nuxt
+  - Composable
 keywords: ["useLazyFetch", "Nuxt", "概念", "範例", "參數", "返回值"]
 ---
+
+
+
 
 # useLazyFetch
 ## 概念

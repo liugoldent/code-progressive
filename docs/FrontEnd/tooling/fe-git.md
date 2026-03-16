@@ -4,9 +4,12 @@ title: "前端 Git"
 description: "前端 Git 筆記，整理 請解釋 Git 游離分支是什麼，以及怎麼解決、fork 等重點。"
 tags:
   - Git
-  - frontend
+  - Frontend
 keywords: ["前端", "Git", "FE-knowledge", "請解釋", "游離分支是什麼，以及怎麼解決", "Log", "reflog", "區別在哪"]
 ---
+
+
+
 
 # [FE] Git
 

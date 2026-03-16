@@ -2,9 +2,18 @@
 date: 2025-06-18
 title: "[0033] Search in Rotated Sorted Array"
 description: "[0033] Search in Rotated Sorted Array 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
-tags: [LeetCode, Binary Search, Rotated Array, JavaScript, 搜尋演算法, Blind75]
+tags:
+  - LeetCode
+  - Binary Search
+  - Rotated Array
+  - JavaScript
+  - 搜尋演算法
+  - Blind75
 keywords: ["0033", "Search", "in", "Rotated", "Sorted", "Array", "LeetCode", "Binary"]
 ---
+
+
+
 
 # [0033] Search in Rotated Sorted Array
 

@@ -7,6 +7,9 @@ tags:
 keywords: ["python", "套件管理", "python3", "os", "pipenv"]
 ---
 
+
+
+
 # [Python] 基礎- Python 套件管理
 
 ## 好文連結

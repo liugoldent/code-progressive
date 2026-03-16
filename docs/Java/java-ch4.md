@@ -3,9 +3,12 @@ sidebar_position: 0
 title: "Java 基本 抽象類別與介面 ch04"
 description: "Java 基本 抽象類別與介面 ch04 筆記，整理 抽象類別與介面、介面 等重點。"
 tags:
-  - java
+  - Java
 keywords: ["java"]
 ---
+
+
+
 
 # [JAVA 基本] 抽象類別與介面 ch04
 

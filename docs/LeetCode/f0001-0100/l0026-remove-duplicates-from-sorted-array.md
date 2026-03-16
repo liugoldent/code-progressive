@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Easy
   - Remove Duplicates from Sorted Array
-  - javascript
+  - JavaScript
 keywords: ["0026", "Remove", "Duplicates", "from", "Sorted", "Array", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0026] Remove Duplicates from Sorted Array
 

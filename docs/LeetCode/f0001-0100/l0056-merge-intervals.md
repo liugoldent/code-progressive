@@ -2,9 +2,18 @@
 date: 2025-06-18
 title: "[0056] Merge Intervals"
 description: "[0056] Merge Intervals 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。"
-tags: [LeetCode, JavaScript, Interval, Greedy, Sorting, 面試題]
+tags:
+  - LeetCode
+  - JavaScript
+  - Interval
+  - Greedy
+  - Sorting
+  - 面試題
 keywords: ["0056", "Merge", "Intervals", "LeetCode", "JavaScript", "Interval", "Greedy", "Sorting"]
 ---
+
+
+
 
 # [0056] Merge Intervals
 

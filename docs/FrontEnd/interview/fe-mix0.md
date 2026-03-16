@@ -2,11 +2,14 @@
 slug: "/FE-knowledge/fe-mix0"
 title: "前端 面試題整理 V1"
 description: "前端 面試題整理 V1 筆記，整理 請說明js的作用域、JS生命週期 等重點。"
-tags: 
-    - JS
-    - frontend
+tags:
+  - JavaScript
+  - Frontend
 keywords: ["前端", "面試題整理", "V1", "FE-knowledge", "請說明js的作用域", "JS生命週期", "請說明什麼是提升", "Hoisting"]
 ---
+
+
+
 
 # [FE] Interview V1
 

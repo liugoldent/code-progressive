@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Easy
   - Missing Number
-  - javascript
+  - JavaScript
 keywords: ["0268", "Missing", "Number", "LeetCode", "解法"]
 ---
+
+
+
 
 # [0268] Missing Number
 

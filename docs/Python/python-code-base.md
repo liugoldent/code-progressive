@@ -6,6 +6,9 @@ tags:
 keywords: ["Python", "基礎", "在字串中塞入變數", "特性：", "實例化", "class", "的執行順序", "函數參數"]
 ---
 
+
+
+
 # [Python] Python 基礎
 
 [python 面試-1](https://hackmd.io/@_FqBW8dGS8a5ZqhdMwvpuA/ByYoWaxfD)

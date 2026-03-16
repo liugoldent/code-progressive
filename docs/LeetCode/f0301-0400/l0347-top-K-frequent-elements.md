@@ -4,12 +4,15 @@ description: "[0347] Top K Frequent Elements 題解，整理解題思路、JavaS
 tags:
   - LeetCode
   - Medium
-  - javascript
-  - python
-  - interview
+  - JavaScript
+  - Python
+  - Interview
   - Hashing
 keywords: ["0347", "Top", "Frequent", "Elements", "LeetCode", "Javascript", "Python"]
 ---
+
+
+
 
 # [0347] Top K Frequent Elements
 

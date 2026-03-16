@@ -4,11 +4,14 @@ description: "[0230] Kth Smallest Element in a BST 題解，整理解題思路�
 tags:
   - LeetCode
   - Medium
-  - javascript
+  - JavaScript
   - Kth Smallest Element in a BST
-  - Trees
+  - Tree
 keywords: ["0230", "Kth", "Smallest", "Element", "in", "BST", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0230] Kth Smallest Element in a BST
 

@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Easy
   - Binary Search
-  - javascript
+  - JavaScript
 keywords: ["0704", "Binary", "Search", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0704] Binary Search
 

@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Sliding Window
-  - javascript
+  - JavaScript
   - Longest Repeating Character Replacement
 keywords: ["0424", "Longest", "Repeating", "Character", "Replacement", "LeetCode", "Javascript"]
 ---
+
+
+
 
 # [0424] Longest Repeating Character Replacement
 

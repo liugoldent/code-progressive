@@ -5,10 +5,13 @@ tags:
   - LeetCode
   - Easy
   - Best Time to Buy and Sell Stock
-  - javascript
+  - JavaScript
   - Sliding Window
 keywords: ["0121", "Best", "Time", "to", "Buy", "and", "Sell", "Stock"]
 ---
+
+
+
 
 # [0121] Best Time to Buy and Sell Stock
 

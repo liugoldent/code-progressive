@@ -5,9 +5,12 @@ tags:
   - LeetCode
   - Medium
   - K Closest Points to Origin
-  - javascript
+  - JavaScript
 keywords: ["0973", "Closest", "Points", "to", "Origin", "LeetCode"]
 ---
+
+
+
 
 # [0973] K Closest Points to Origin
 

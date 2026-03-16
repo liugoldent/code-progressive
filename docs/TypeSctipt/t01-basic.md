@@ -2,10 +2,12 @@
 title: "[TS] 基本型別"
 description: "[TS] 基本型別 筆記，整理 資料型別 - 總覽與基本型別、資料型別 - 物件型別 等重點。"
 tags:
-  - TS
   - TypeScript
 keywords: ["TS", "基本型別", "TypeSctipt", "資料型別", "總覽與基本型別", "物件型別", "特殊型別", "特殊：Union"]
 ---
+
+
+
 
 # [TS] 基本型別
 

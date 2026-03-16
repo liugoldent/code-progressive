@@ -6,6 +6,9 @@ tags:
 keywords: ["Vue", "關於Vue的一些小細節", "語法糖：", "sync", "vue-router", "next", "vue-router的", "params"]
 ---
 
+
+
+
 # [Vue] 關於Vue的一些小細節
 
 ## 語法糖：`.sync`
