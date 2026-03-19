@@ -568,3 +568,147 @@ Vue 3 的核心不是 API 比較多，而是它把「可維護性、效能、工
 - TypeScript / Vite / Nuxt 3
 
 把這幾個觀念串起來，你對 Vue 3 的理解就不會只停留在 API 層。
+
+## 補充面試問答
+
+### 為什麼需要 dynamic import
+
+`dynamic import()` 的核心價值是把原本一次載入的程式碼，改成在真正需要時才載入。
+
+這通常是為了幾個目的：
+
+- 降低首屏 bundle 體積，減少初次下載與解析成本
+- 避免把低頻功能和首頁主流程一起打包
+- 搭配路由切分或元件切分，讓載入策略更細
+- 對重型第三方套件做延後載入，例如圖表、編輯器、地圖、SDK
+
+如果用面試口吻回答，可以這樣講：
+
+「dynamic import 主要是為了 code splitting。把非首屏、低頻或重量級模組延後到需要時才載入，可以有效降低首屏阻塞，改善初始效能，也讓資源分配更符合使用者實際操作路徑。」
+
+### 為什麼需要 i18n
+
+i18n 不只是多語切換，它本質上是在把產品文案與程式邏輯解耦。
+
+導入 i18n 常見原因有：
+
+- 支援多語系市場
+- 同一套產品快速切換品牌或客戶版本
+- 降低文案寫死在元件中的維護成本
+- 讓翻譯、文案調整與功能開發分離
+
+如果從工程角度說，i18n 的價值在於：
+
+- 文案集中管理
+- key 命名有規則，維護成本更低
+- 前端畫面邏輯不需要因為文字調整而頻繁改版
+- 更容易支援未來擴充，例如地區化格式、日期、幣別
+
+面試時可以回答：
+
+「我會把 i18n 視為產品內容抽離機制，而不只是翻譯功能。它讓文案、品牌與畫面邏輯分開管理，對多客戶、多市場或白牌產品特別有幫助。」
+
+### 有使用過哪些 Nuxt 生態系套件
+
+如果是 Nuxt 專案，常見且實務上容易被問到的生態系套件有這些：
+
+- `@nuxtjs/i18n`：處理多語系路由、語系切換與文案管理
+- `@pinia/nuxt`：在 Nuxt 中整合 Pinia 狀態管理
+- `@vueuse/nuxt`：把 VueUse composable 以 Nuxt 方式整合進專案
+- `@nuxt/image`：圖片最佳化、格式轉換與 responsive image
+- `@nuxt/devtools`：開發期除錯與狀態觀察
+- `@nuxtjs/tailwindcss`：整合 Tailwind CSS
+- `@nuxt/icon`：統一 icon 使用方式
+
+如果你要回答自己實際用過哪些，可以優先講你真的碰過的，再補一句：
+
+「我選 Nuxt 套件的標準通常是看它能不能跟 SSR、route、runtime config 和 auto-import 流程自然整合，而不是只看功能本身。」
+
+### Nuxt 動態載入是為什麼
+
+Nuxt 做動態載入，核心原因和 Vue 一樣，也是為了降低初始載入成本，但在 Nuxt 裡還多了 route-based code splitting 與 SSR/CSR 邊界管理的考量。
+
+常見目的有：
+
+- 讓不同頁面只載入各自需要的程式碼
+- 降低首屏 bundle，改善初始渲染速度
+- 避免不必要的 client-side library 在一開始就進來
+- 針對只在 client 端使用的功能延後載入，例如圖表、地圖、瀏覽器 SDK
+- 減少 Hydration 時間：Vue 在客戶端「注水」時需要執行組件邏輯，延後加載非必要組件可以讓頁面更快達到可互動狀態（TTI）。
+- 節省流量：如果使用者沒點開某個功能，他們就不需要下載那部分程式碼。
+
+在 Nuxt 裡常見情境包括：
+
+- 頁面層級 lazy load
+- 元件層級 lazy load
+- 第三方套件在 `onMounted` 或 client-only 情境才動態載入
+
+面試時可以這樣回答：
+
+「Nuxt 的動態載入主要是把資源依照路由、元件與執行環境拆開。這樣可以減少首屏壓力，也能避免某些只適合瀏覽器端的套件提早進入 SSR 流程，增加錯誤風險。」
+
+### Component cache 是什麼
+
+如果你說的 `Component catch` 是指 `component cache`，在 Vue / Nuxt 裡通常是在講 `KeepAlive`。
+
+`KeepAlive` 的作用是快取元件實例，讓元件在切換離開後不會直接被銷毀，下次回來時可以保留先前的狀態。
+
+典型保留的內容包括：
+
+- 表單輸入內容
+- 捲動位置
+- 分頁或篩選條件
+- 已初始化的元件內部狀態
+
+它適合用在：
+
+- tab 切換頁
+- 列表頁與詳情頁來回切換
+- 希望減少重複初始化成本的頁面
+
+但也有代價：
+
+- 快取太多會增加記憶體佔用
+- 若資料需要即時更新，快取可能導致狀態過舊
+- 需要搭配 `activated` / `deactivated` 處理重新整理時機
+
+面試時可回答：
+
+「component cache 在 Vue 裡通常是用 KeepAlive 來做，本質上是保留元件實例，避免頁面切換時反覆銷毀與重建。它適合提升切換體驗，但也要控制快取範圍，避免狀態過舊或記憶體浪費。」
+
+### component catch vs component cache
+
+這兩個詞很容易聽起來像同一件事，但在前端語境裡意思完全不同，而且實務上比較常見的是 `component cache`，`component catch` 反而不是標準術語。
+
+`component cache` 通常是在講元件快取，也就是透過 `KeepAlive` 之類的機制保留元件實例，避免切換頁面或 tab 時被重新建立。
+
+它的重點是：
+
+- 保留元件狀態
+- 減少重複初始化
+- 提升頁面切換體驗
+
+而 `component catch` 如果單看字面，比較像是：
+
+- 想表達元件錯誤攔截，接近 error catching
+- 或只是把 cache 拼錯
+
+如果面試官講的是 `catch`，你可以先確認他是不是在問這兩類事情：
+
+- 是不是在問元件快取，也就是 `KeepAlive` / component cache
+- 還是在問元件錯誤處理，例如 `onErrorCaptured()`、error boundary 類型的概念
+
+Vue 3 裡如果是錯誤攔截，比較接近這種寫法：
+
+```js
+import { onErrorCaptured } from "vue";
+
+onErrorCaptured((err, instance, info) => {
+  console.error(err, info);
+  return false;
+});
+```
+
+所以面試時最安全的回答方式是：
+
+「如果是 component cache，我會聯想到 KeepAlive，主要是做元件狀態快取；如果你指的是 component catch，那比較像是元件錯誤捕捉，在 Vue 3 會用 onErrorCaptured 這類機制處理。這兩件事的目的完全不同，一個是效能與體驗，一個是錯誤處理。」
