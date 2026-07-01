@@ -198,16 +198,44 @@ Senior 面試可以主動提：
 - Web Vitals。
 - feature flag 與灰度發布。
 
-## 高機率口試題
+## 高機率口試題與答案
 
-- 如果 order book 一直更新造成畫面卡頓，你怎麼查？
-- 什麼情況會用 virtual list？
-- 如何降低 bundle size？
-- React Profiler 看到某元件一直 render，你怎麼處理？
-- Trading dashboard 的 state 要怎麼分層？
-- WebSocket 斷線重連要注意什麼？
-- 你會怎麼設計前端測試策略？
-- Unit test 和 integration test 分別測什麼？
-- 如何避免 layout shift？
-- 如何監控 production 前端錯誤？
+### 如果 order book 一直更新造成畫面卡頓，你怎麼查？
 
+我會先用 Chrome Performance 和 React Profiler 確認瓶頸是在 JavaScript 計算、React render、DOM layout/paint，還是資料處理。接著看 WebSocket message 頻率、每次是否重建整個 order book、row key 是否穩定、selector 是否回傳新 reference。修法通常是 batching updates、只顯示前 N 檔、避免整表重建、row memoization、virtual list，必要時把 merge/sort 移到 Web Worker。
+
+### 什麼情況會用 virtual list？
+
+當列表資料量大，但使用者同時只看得到一小段時，就適合 virtual list，例如交易紀錄、order history、幾百幾千筆列表。它只渲染 viewport 附近的 row，降低 DOM 節點數、layout 和 paint 成本。注意 row 高度若不固定會增加實作複雜度；如果資料只有十幾筆，virtualization 反而增加複雜度，不一定值得。
+
+### 如何降低 bundle size？
+
+我會先用 bundle analyzer 找最大依賴，不先盲目優化。常見手段是 route-level code splitting、lazy load heavy library、只 import 需要的函式、移除未用 polyfill、確保 tree shaking 生效、替換過大的套件、圖片和字體最佳化。交易頁的大型 chart library 可以只在進交易頁時載入，避免影響首頁、登入頁或其他低依賴頁面。
+
+### React Profiler 看到某元件一直 render，你怎麼處理？
+
+先看 render 的原因：是 parent render 傳下來、props reference 每次變、context value 變、state 放太高、還是 selector 每次回新 object。修法可能是 state colocate、拆 context、memo child、`useMemo/useCallback` 穩定 props、memoized selector，或把高頻資料區域獨立出去。優化後要再 profiler 一次，確認不是只增加 memo 成本。
+
+### Trading dashboard 的 state 要怎麼分層？
+
+我會分成 server state、client state、local UI state、realtime stream state。Server state 包含 symbol metadata、balances、open orders、order book snapshot，可由 React Query 管；client state 包含 current symbol、layout preference、selected interval，可由 Redux 或 URL state 管；local UI state 包含 modal、tab、input focus；realtime stream state 包含 WebSocket connection、delta buffer、reconnect status。分層的目標是避免所有資料都塞進同一個 store。
+
+### WebSocket 斷線重連要注意什麼？
+
+要處理 heartbeat、斷線偵測、exponential backoff、最大重試、頁面離開 cleanup、重連後 resubscribe。交易資料還要處理 sequence gap：斷線期間可能漏 delta，所以重連後通常要重新抓 snapshot，再套用新的增量。UI 也要顯示 reconnecting 或 data stale 狀態，避免使用者以為看到的是最新行情。
+
+### 你會怎麼設計前端測試策略？
+
+我會用金字塔分層。Pure function、formatter、reducer、order book merge 用 unit test；表單 validation、loading/error/empty state 用 component test；React Query + mutation invalidation 用 integration test；登入、切換 symbol、送出模擬訂單用 e2e test。交易產品的核心風險是資料與操作正確性，所以價格格式、精度、錯誤提示、防重複提交要優先測。
+
+### Unit test 和 integration test 分別測什麼？
+
+Unit test 測小而純的邏輯，例如 price formatter、decimal calculation、reducer、selector、order book delta merge。Integration test 測多個模組串起來後是否正確，例如 component mount 後觸發 query、loading 變 success、mutation 成功後 invalidate list、API error 顯示錯誤訊息。簡單說，unit test 確認零件正確，integration test 確認資料流和使用者互動正確。
+
+### 如何避免 layout shift？
+
+先為固定格式區塊預留尺寸，例如 chart container 高度、表格 row 高度、圖片 aspect ratio。Loading skeleton 尺寸要接近實際內容，字體載入要避免突然換字造成跳動，數字欄位可用等寬字體或固定寬度。交易頁數字頻繁更新時，不應讓欄位寬度隨數字長度一直變，否則 order book 和 ticker 會抖動。
+
+### 如何監控 production 前端錯誤？
+
+我會收集 runtime error、unhandled promise rejection、API error、WebSocket reconnect/failure、核心流程 latency、Web Vitals。錯誤要帶上 release version、route、user/session id、feature flag、browser、network 狀態，但避免上傳敏感資訊。對交易產品，還要監控下單流程錯誤率、資產查詢錯誤、行情延遲和資料 stale 次數，讓 incident 能被快速定位。
