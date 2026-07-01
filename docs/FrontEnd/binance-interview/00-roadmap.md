@@ -49,6 +49,7 @@ sidebar_position: 1
 
 - React render 和 hooks 的運作方式。
 - Redux 和 React Query 各自負責什麼，不要混用概念。
+- 如果你原本寫 Vue，要能清楚比較 Vue reactivity 與 React render/state model。
 - 如何避免 race condition、重複請求、過期資料覆蓋新資料。
 - 如何設計一個即時價格 / order book / K 線元件。
 - 如何讓 UI 在大量資料更新時仍然順。
@@ -106,3 +107,4 @@ sidebar_position: 1
 - [JavaScript event loop](../javascript/eventLoop.md)
 - [TypeScript 基礎](../typescript/t01-basic.md)
 - [Redux 筆記](../../React/r07-redux.md)
+- [Vue 轉 React 生態面試題](./07-vue-to-react-ecosystem-qna.md)
