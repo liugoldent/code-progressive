@@ -108,3 +108,4 @@ sidebar_position: 1
 - [TypeScript 基礎](../typescript/t01-basic.md)
 - [Redux 筆記](../../React/r07-redux.md)
 - [Vue 轉 React 生態面試題](./07-vue-to-react-ecosystem-qna.md)
+- [React 術語中文對照與交易頁範例](./08-react-terms-code-examples.md)
