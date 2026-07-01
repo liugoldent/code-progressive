@@ -7,7 +7,7 @@ tags:
   - React
   - JavaScript
 keywords: ["frontend interview questions", "Binance interview", "behavioral interview", "React questions"]
-sidebar_position: 7
+sidebar_position: 10
 ---
 
 # 面試題庫與回答模板

@@ -77,10 +77,24 @@ sidebar_position: 1
 
 | 週次 | 目標 | 產出 |
 | --- | --- | --- |
-| 第 1 週 | 補齊 JS / TS / React 基礎 | 每天 3 題口述題，整理 1 篇 React Query vs Redux 筆記 |
+| 第 1 週 | 補齊 JS / TS / React 基礎 | 先讀 Vue 對照版 React 基礎，每天 3 題口述題，整理 1 篇 React Query vs Redux 筆記 |
 | 第 2 週 | 深入狀態管理與非同步資料 | 做一個 mock trading dashboard，含 query cache、mutation、error state |
 | 第 3 週 | 強化 UI 品質與效能 | 加上 order book / ticker 即時更新、virtual list、responsive layout |
 | 第 4 週 | 面試實戰 | 練 system design、behavioral story、LeetCode 高频題、英文口說 |
+
+## 建議閱讀順序
+
+| 順序 | 文件 | 先學這個的原因 |
+| --- | --- | --- |
+| 1 | [React 基礎：Vue 對照版](./01-react-basics-vue-comparison.md) | 先用你熟悉的 Vue 對照 React 基礎語法與思考模型。 |
+| 2 | [React 術語中文對照與交易頁範例](./02-react-terms-code-examples.md) | 把常見英文術語翻成中文，再用交易頁範例看懂程式碼。 |
+| 3 | [Vue 轉 React 生態面試題](./03-vue-to-react-ecosystem-qna.md) | 準備面試官追問「你本來寫 Vue，怎麼接 React」。 |
+| 4 | [JavaScript / TypeScript 面試重點](./04-javascript-typescript.md) | 補 production JavaScript、TypeScript 與非同步基礎。 |
+| 5 | [React / Redux / React Query](./05-react-state-data.md) | 進入 React 職缺核心：狀態管理與 API 資料流。 |
+| 6 | [UI 品質 / Responsive / Tooling](./06-ui-responsive-tooling.md) | 補職缺要求的 responsive UI、Webpack、Tailwind、a11y。 |
+| 7 | [效能 / 測試 / 前端系統設計](./07-quality-performance-system.md) | 準備 Senior 常問的效能、測試與架構題。 |
+| 8 | [交易產品前端情境題](./08-crypto-product-case.md) | 把 React 能力套到 Binance Futures / 交易頁場景。 |
+| 9 | [面試題庫與回答模板](./09-interview-drills.md) | 最後用題庫整理口述答案與行為面試。 |
 
 ## 面試回答框架
 
@@ -107,5 +121,6 @@ sidebar_position: 1
 - [JavaScript event loop](../javascript/eventLoop.md)
 - [TypeScript 基礎](../typescript/t01-basic.md)
 - [Redux 筆記](../../React/r07-redux.md)
-- [Vue 轉 React 生態面試題](./07-vue-to-react-ecosystem-qna.md)
-- [React 術語中文對照與交易頁範例](./08-react-terms-code-examples.md)
+- [React 基礎：Vue 對照版](./01-react-basics-vue-comparison.md)
+- [React 術語中文對照與交易頁範例](./02-react-terms-code-examples.md)
+- [Vue 轉 React 生態面試題](./03-vue-to-react-ecosystem-qna.md)

@@ -7,7 +7,7 @@ tags:
   - React Query
   - Interview
 keywords: ["React", "Redux", "Flux", "React Query", "state management", "async data"]
-sidebar_position: 3
+sidebar_position: 6
 ---
 
 # React / Redux / React Query

@@ -6,7 +6,7 @@ tags:
   - TypeScript
   - Interview
 keywords: ["JavaScript", "TypeScript", "event loop", "Promise", "production code"]
-sidebar_position: 2
+sidebar_position: 5
 ---
 
 # JavaScript / TypeScript 面試重點

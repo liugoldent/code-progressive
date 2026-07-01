@@ -7,7 +7,7 @@ tags:
   - Binance
   - Interview
 keywords: ["React 中文", "React Query 範例", "Redux 範例", "Binance trading UI", "Vue 轉 React"]
-sidebar_position: 9
+sidebar_position: 3
 ---
 
 # React 術語中文對照與交易頁範例
