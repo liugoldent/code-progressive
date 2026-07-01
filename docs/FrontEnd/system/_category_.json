@@ -1,0 +1,9 @@
+{
+  "label": "System",
+  "position": 9,
+  "link": {
+    "type": "generated-index",
+    "title": "FrontEnd System",
+    "description": "前端系統設計、瀏覽器運作機制、渲染流程與效能筆記。"
+  }
+}
