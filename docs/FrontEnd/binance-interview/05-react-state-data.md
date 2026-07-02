@@ -371,11 +371,33 @@ function LatestPricePanel({ price }: { price: string }) {
 7. interval callback 每秒讀 `latestPriceRef.current`，所以可以讀到最新 price。
 8. 修改 `latestPriceRef.current` 不會觸發 render。
 
+這段可以類比成 Vue 的 `onMounted`，但要注意它分成兩條資料流：
+
+1. 畫面更新：父層傳新的 `price` 進來，`LatestPricePanel` 重新 render，`return <div>{price}</div>` 才會顯示新價格。
+2. interval 讀值：component mount 後建立一次 interval，之後 interval 不重建，只是每秒讀 `latestPriceRef.current`。
+
+所以不是「初始化後都靠 interval 更新畫面」。interval 只是定時執行 callback，這裡用來印出最新價格；真正讓畫面變新的仍然是 props / state 變化造成的 render。
+
+這裡為什麼需要 ref？因為如果直接在只跑一次的 effect 裡讀 `price`，容易讀到第一次 render 的舊值：
+
+```tsx
+useEffect(() => {
+  const timer = window.setInterval(() => {
+    console.log(price);
+  }, 1000);
+
+  return () => window.clearInterval(timer);
+}, []);
+```
+
+上面這段 effect 的 dependency array 是 `[]`，代表 interval callback 是 mount 時建立的 function，裡面捕捉到的 `price` 可能一直是第一次 render 的 price。把最新值同步到 `latestPriceRef.current`，就是為了讓這個長期存在的 interval callback 每次都能讀到最新值。
+
 重點：
 
 - `useRef` 適合保存不需要直接顯示到畫面的資料。
 - 常見用途是 DOM node、timer id、WebSocket instance、latest value。
 - 如果資料變了要更新畫面，用 `useState`；如果只是保存 mutable value，用 `useRef`。
+- `useEffect(..., [])` 很像 mount 後做一次 setup；如果 setup 出來的 callback 需要讀最新 props / state，可以用 ref 避免 stale closure。
 
 ### `useContext`：讀取上層 Provider 提供的值
 
