@@ -26,6 +26,440 @@ sidebar_position: 6
 - hooks 只能在 component / custom hook 最上層呼叫。
 - effect 用來同步外部系統，不是所有資料計算都該放進 effect。
 
+## Hooks 心智模型：看到 use 系列怎麼走
+
+先抓一個核心觀念：React 不是「看到 `useMemo` 這個字就魔法式知道要做什麼」，而是 component function 每次 render 時，React 會依照 hooks 的呼叫順序，去目前 component 對應的 hook slot 讀取或更新資料。
+
+所以 hooks 有兩個共同規則：
+
+- hooks 要在 component 或 custom hook 的最上層呼叫。
+- hooks 不能放在 `if`、`for`、callback 裡，因為這會讓每次 render 的 hook 順序不一致。
+
+讀任何 `useXxx` 時，先問五件事：
+
+1. 這個 hook 有沒有保存跨 render 的資料？
+2. 這個 hook 回傳的值改變時，會不會讓 component 重新 render？
+3. 它的 dependency array 或 key 是什麼？
+4. 它是在 render 階段算東西，還是在 commit 後做副作用？
+5. cleanup、取消訂閱、race condition 要不要處理？
+
+### `useState`：保存會影響畫面的 local state
+
+```tsx
+function PriceInput() {
+  const [price, setPrice] = useState("65000");
+
+  return (
+    <input
+      value={price}
+      onChange={(event) => setPrice(event.target.value)}
+    />
+  );
+}
+```
+
+這段 `useState` 的執行流程：
+
+1. `PriceInput` 被 render。
+2. 執行到 `useState("65000")`。
+3. 如果是第一次 render，React 建立一個 state slot，初始值是 `"65000"`。
+4. 如果不是第一次 render，React 不會再拿 `"65000"` 當新值，而是拿這個 state slot 裡目前保存的 `price`。
+5. React 回傳 `[price, setPrice]`。
+6. JSX 用 `price` 當 input 的 `value`，所以畫面顯示目前價格。
+7. 使用者輸入時，`onChange` 執行 `setPrice(event.target.value)`。
+8. `setPrice` 不是立刻改現在這一次 render 裡的 `price` 變數，而是通知 React：「下一次 render 請用新的 price」。
+9. React 排程更新，重新執行 `PriceInput`。
+10. 新一輪 render 中，`useState` 回傳更新後的 `price`，JSX 重新產生新的 input value。
+
+重點：
+
+- `price` 是某一次 render 的快照。
+- `setPrice` 會觸發下一次 render。
+- 如果下一個 state 依賴上一個 state，優先用 updater function：
+
+```tsx
+setCount((prev) => prev + 1);
+```
+
+### `useReducer`：把狀態轉移集中到 reducer
+
+```tsx
+type State = {
+  side: "buy" | "sell";
+  price: string;
+  quantity: string;
+};
+
+type Action =
+  | { type: "change_side"; side: "buy" | "sell" }
+  | { type: "change_price"; price: string }
+  | { type: "change_quantity"; quantity: string };
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case "change_side":
+      return { ...state, side: action.side };
+    case "change_price":
+      return { ...state, price: action.price };
+    case "change_quantity":
+      return { ...state, quantity: action.quantity };
+    default:
+      return state;
+  }
+}
+
+function OrderForm() {
+  const [state, dispatch] = useReducer(reducer, {
+    side: "buy",
+    price: "",
+    quantity: "",
+  });
+
+  return (
+    <button onClick={() => dispatch({ type: "change_side", side: "sell" })}>
+      Sell
+    </button>
+  );
+}
+```
+
+這段 `useReducer` 的執行流程：
+
+1. `OrderForm` 被 render。
+2. 執行到 `useReducer(reducer, initialState)`。
+3. 第一次 render 時，React 建立 reducer state slot，保存初始表單狀態。
+4. React 回傳目前的 `state` 和穩定的 `dispatch` function。
+5. 使用者點 Sell，事件 handler 呼叫 `dispatch({ type: "change_side", side: "sell" })`。
+6. React 把目前 state 和 action 丟進 `reducer(state, action)`。
+7. reducer 回傳新的 state object。
+8. React 用新的 state 觸發下一次 render。
+9. 下一次 render 時，`state.side` 會變成 `"sell"`。
+
+重點：
+
+- `useState` 是「直接設定下一個值」。
+- `useReducer` 是「描述發生什麼事件，再由 reducer 決定下一個 state」。
+- 下單表單、連線狀態、複雜 filter 很適合用 reducer，因為狀態轉移有明確 domain rule。
+
+### `useEffect`：render 完後同步外部系統
+
+```tsx
+function TickerSocket({ symbol }: { symbol: string }) {
+  useEffect(() => {
+    const ws = new WebSocket(makeTickerUrl(symbol));
+
+    ws.onmessage = (event) => {
+      console.log(JSON.parse(event.data));
+    };
+
+    return () => {
+      ws.close();
+    };
+  }, [symbol]);
+
+  return <div>{symbol}</div>;
+}
+```
+
+這段 `useEffect` 的執行流程：
+
+1. `TickerSocket` 被 render，拿到 props：`symbol`。
+2. render 階段執行到 `useEffect`，React 記住這個 effect callback 和 dependency array：`[symbol]`。
+3. React 先完成 JSX 計算，並把結果 commit 到 DOM。
+4. commit 後，React 才執行 effect callback。
+5. effect 裡建立 WebSocket，訂閱目前 `symbol` 的行情。
+6. 如果下一次 render 時 `symbol` 沒變，React 不重新執行這個 effect。
+7. 如果下一次 render 時 `symbol` 變了，React 會先執行上一輪 cleanup：`ws.close()`。
+8. cleanup 完，再用新的 `symbol` 執行新的 effect callback，建立新連線。
+9. component unmount 時，React 也會執行 cleanup，關掉 WebSocket。
+
+重點：
+
+- `useEffect` 不是拿來算 derived data 的。
+- `useEffect` 是同步外部系統，例如 WebSocket、API request、DOM event、storage。
+- dependency array 不是「想監聽誰」而已，更精準是「這個 effect 使用了哪些 render scope 的值」。
+- React Strict Mode 在開發環境可能會讓 effect setup / cleanup 多跑一次，用來檢查 cleanup 是否正確。
+
+### `useMemo`：在 render 階段快取計算結果
+
+```tsx
+function OrderBookSide({ bids }: { bids: Level[] }) {
+  const visibleBids = useMemo(() => {
+    return bids.filter((item) => item.quantity !== "0");
+  }, [bids]);
+
+  return (
+    <ul>
+      {visibleBids.map((item) => (
+        <li key={item.price}>{item.price}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+這段 `useMemo` 的執行流程：
+
+1. `OrderBookSide` 被 render，從 props 拿到 `bids`。
+2. 執行到 `useMemo` 時，React 會比較 dependency array 裡的 `bids`。
+3. 如果這次的 `bids` 和上次是同一個 array reference，React 直接回傳上次快取的 `visibleBids`。
+4. 如果 `bids` 是新的 array reference，React 才重新執行 callback：
+
+```ts
+bids.filter((item) => item.quantity !== "0");
+```
+
+5. `filter` 會把 quantity 是 `"0"` 的價位過濾掉，只留下真正要顯示的 bid levels。
+6. JSX 再用 `visibleBids.map(...)` 產生 `<li>` 列表。
+
+重點：
+
+- `useMemo` 發生在 render 階段。
+- `useMemo` 是效能優化，不是資料來源。
+- dependency array 看的是 reference equality，不會深層比較 array 裡每個物件。
+- 簡單計算可以直接寫，不一定要包 `useMemo`。
+
+### `useCallback`：快取 function reference
+
+```tsx
+function OrderBookRow({ price, onSelect }: OrderBookRowProps) {
+  return <button onClick={() => onSelect(price)}>{price}</button>;
+}
+
+const MemoOrderBookRow = React.memo(OrderBookRow);
+
+function OrderBookSide({ bids }: { bids: Level[] }) {
+  const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
+
+  const handleSelect = useCallback((price: string) => {
+    setSelectedPrice(price);
+  }, []);
+
+  return (
+    <ul>
+      {bids.map((item) => (
+        <MemoOrderBookRow
+          key={item.price}
+          price={item.price}
+          onSelect={handleSelect}
+        />
+      ))}
+    </ul>
+  );
+}
+```
+
+這段 `useCallback` 的執行流程：
+
+1. `OrderBookSide` 被 render。
+2. 執行到 `useCallback`，React 比較 dependency array：`[]`。
+3. 第一次 render 時，React 建立 `handleSelect` function 並快取起來。
+4. 之後 render 時，因為 dependency 沒變，React 回傳同一個 function reference。
+5. `MemoOrderBookRow` 收到的 `onSelect` reference 沒變，配合 `React.memo` 時比較容易避免不必要 render。
+6. 使用者點 row 時，`handleSelect(price)` 執行，呼叫 `setSelectedPrice(price)`。
+7. `setSelectedPrice` 觸發 `OrderBookSide` 下一次 render。
+
+重點：
+
+- `useCallback(fn, deps)` 大致等於 `useMemo(() => fn, deps)`。
+- `useCallback` 快取的是 function 本身，不是 function 的執行結果。
+- 沒有傳給 memo child、effect dependency、subscription API 時，不一定需要 `useCallback`。
+- dependency array 寫錯會造成 stale closure，function 會讀到舊 render 的變數。
+
+### `useRef`：保存跨 render 的可變容器，但不觸發 render
+
+```tsx
+function LatestPricePanel({ price }: { price: string }) {
+  const latestPriceRef = useRef(price);
+
+  useEffect(() => {
+    latestPriceRef.current = price;
+  }, [price]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      console.log(latestPriceRef.current);
+    }, 1000);
+
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, []);
+
+  return <div>{price}</div>;
+}
+```
+
+這段 `useRef` 的執行流程：
+
+1. `LatestPricePanel` 被 render，拿到 props：`price`。
+2. 執行到 `useRef(price)`。
+3. 第一次 render 時，React 建立一個 ref object：`{ current: price }`。
+4. 之後每次 render，React 都回傳同一個 ref object。
+5. 第一個 effect 在 `price` 改變後，把最新 price 寫進 `latestPriceRef.current`。
+6. 第二個 effect 只在 mount 後建立一次 interval。
+7. interval callback 每秒讀 `latestPriceRef.current`，所以可以讀到最新 price。
+8. 修改 `latestPriceRef.current` 不會觸發 render。
+
+重點：
+
+- `useRef` 適合保存不需要直接顯示到畫面的資料。
+- 常見用途是 DOM node、timer id、WebSocket instance、latest value。
+- 如果資料變了要更新畫面，用 `useState`；如果只是保存 mutable value，用 `useRef`。
+
+### `useContext`：讀取上層 Provider 提供的值
+
+```tsx
+const TradingContext = createContext<{ symbol: string } | null>(null);
+
+function SymbolText() {
+  const trading = useContext(TradingContext);
+
+  return <span>{trading?.symbol}</span>;
+}
+```
+
+這段 `useContext` 的執行流程：
+
+1. `SymbolText` 被 render。
+2. 執行到 `useContext(TradingContext)`。
+3. React 往 component tree 上層找最近的 `<TradingContext.Provider>`。
+4. 如果找得到，回傳 Provider 的 `value`。
+5. 如果找不到，回傳 `createContext` 的 default value，這裡是 `null`。
+6. JSX 用 `trading?.symbol` 顯示目前交易對。
+7. 如果 Provider 的 `value` reference 改變，所有讀取這個 context 的 component 都可能重新 render。
+
+重點：
+
+- context 適合放 theme、locale、auth user、目前交易環境這類跨層級資料。
+- 不適合把高頻 order book delta 直接塞進大 context，容易造成大範圍重渲染。
+- Provider value 如果每次 render 都建立新 object，會讓 consumer 更容易重渲染，必要時用 `useMemo` 穩定 value。
+
+### `useLayoutEffect`：DOM 更新後、瀏覽器繪製前同步處理
+
+```tsx
+function PriceColumn() {
+  const listRef = useRef<HTMLUListElement | null>(null);
+
+  useLayoutEffect(() => {
+    const height = listRef.current?.getBoundingClientRect().height ?? 0;
+    console.log(height);
+  }, []);
+
+  return <ul ref={listRef} />;
+}
+```
+
+這段 `useLayoutEffect` 的執行流程：
+
+1. component render，產生 `<ul ref={listRef} />`。
+2. React commit DOM，讓 `listRef.current` 指到真實 DOM。
+3. 瀏覽器繪製畫面前，React 執行 `useLayoutEffect` callback。
+4. callback 可以同步讀 layout，例如高度、寬度、位置。
+5. 如果在這裡同步 setState，React 會先補一次 render，再讓瀏覽器繪製。
+
+重點：
+
+- 大部分情況用 `useEffect`。
+- 只有需要在畫面繪製前讀寫 layout，才用 `useLayoutEffect`。
+- 過度使用會阻塞瀏覽器繪製。
+
+### custom hook：把一組 hook 流程包成可重用邏輯
+
+```tsx
+function useTickerSocket(symbol: string) {
+  const [ticker, setTicker] = useState<Ticker | null>(null);
+
+  useEffect(() => {
+    const ws = new WebSocket(makeTickerUrl(symbol));
+
+    ws.onmessage = (event) => {
+      setTicker(JSON.parse(event.data));
+    };
+
+    return () => {
+      ws.close();
+    };
+  }, [symbol]);
+
+  return ticker;
+}
+
+function TickerPanel({ symbol }: { symbol: string }) {
+  const ticker = useTickerSocket(symbol);
+
+  return <div>{ticker?.lastPrice ?? "Loading"}</div>;
+}
+```
+
+這段 custom hook 的執行流程：
+
+1. `TickerPanel` 被 render，拿到 `symbol`。
+2. 執行 `useTickerSocket(symbol)`。
+3. 進入 custom hook 內部，照順序執行 `useState` 和 `useEffect`。
+4. custom hook 回傳 `ticker`。
+5. `TickerPanel` 用 `ticker` render 畫面。
+6. WebSocket 收到資料後，custom hook 內部呼叫 `setTicker`。
+7. `setTicker` 觸發使用這個 custom hook 的 component 重新 render。
+
+重點：
+
+- custom hook 不是新的 React 特權語法，它只是把 hooks 組合起來的 function。
+- custom hook 名稱要以 `use` 開頭，讓 lint 規則可以檢查 hooks 使用方式。
+- 讀 custom hook 時，要進去看它內部用了哪些 state、effect、ref、memo。
+
+### React Query 的 `useQuery`：用 query key 訂閱 server state
+
+```tsx
+function OpenOrders({ symbol }: { symbol: string }) {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["openOrders", symbol],
+    queryFn: () => fetchOpenOrders(symbol),
+  });
+
+  if (isLoading) return <div>Loading</div>;
+  if (error) return <div>Error</div>;
+
+  return <OrderList orders={data ?? []} />;
+}
+```
+
+這段 `useQuery` 的執行流程：
+
+1. `OpenOrders` 被 render，拿到 `symbol`。
+2. 執行到 `useQuery`。
+3. React Query 用 `queryKey: ["openOrders", symbol]` 判斷這份 server state 的身份。
+4. 如果 cache 裡已有資料，先回傳 cache data 和目前狀態。
+5. 如果沒有資料、資料 stale，或設定要求 refetch，React Query 會執行 `queryFn`。
+6. component 先根據 `isLoading`、`error`、`data` render 畫面。
+7. request 完成後，React Query 更新 cache。
+8. 這個 query 的 subscriber 被通知，`OpenOrders` 重新 render。
+9. 如果 `symbol` 改變，query key 改變，React Query 會切到另一份 cache identity。
+
+重點：
+
+- `queryKey` 是 server state 的身份，不是隨便取的名字。
+- 不同交易對、不同 filter、不同分頁條件，都應該反映在 query key。
+- React Query 管 API cache；不要把所有 API response 再塞一份進 Redux。
+
+### 讀 hooks 時的總結口訣
+
+看到 `useState`：這裡有 local state，`setState` 會觸發下一次 render。
+
+看到 `useReducer`：這裡有一組狀態轉移規則，事件會被 dispatch 到 reducer。
+
+看到 `useEffect`：這裡在同步外部系統，要檢查 dependency 和 cleanup。
+
+看到 `useMemo`：這裡在 render 階段快取計算結果，要檢查 dependency 和計算是否真的貴。
+
+看到 `useCallback`：這裡在穩定 function reference，要檢查是不是傳給 memo child 或 effect。
+
+看到 `useRef`：這裡保存跨 render 的 mutable value，改 `.current` 不會 render。
+
+看到 `useContext`：這裡讀 Provider 的值，要注意 Provider value reference 和重渲染範圍。
+
+看到 custom hook：進去看它包了哪些 hooks，真正的資料流在裡面。
+
 ## useState / useReducer
 
 `useState` 適合簡單 local state：
