@@ -893,11 +893,63 @@ function OrderBookSide({ bids }: { bids: Level[] }) {
 }
 ```
 
+這段 React `useMemo` 的執行流程：
+
+1. `OrderBookSide` 被 render，從 props 拿到 `bids`。
+2. 執行到 `useMemo` 時，React 會比較 dependency array 裡的 `bids`。
+3. 如果這次的 `bids` 和上次是同一個 array reference，React 直接回傳上次快取的 `visibleBids`。
+4. 如果 `bids` 是新的 array reference，React 才重新執行 callback：
+
+```ts
+bids.filter((item) => item.quantity !== "0");
+```
+
+5. `filter` 會把 quantity 是 `"0"` 的價位過濾掉，只留下真正要顯示的 bid levels。
+6. JSX 再用 `visibleBids.map(...)` 產生 `<li>` 列表。
+
+也就是說，這段本質上仍然是在 render 過程中推導資料：
+
+```tsx
+const visibleBids = bids.filter((item) => item.quantity !== "0");
+```
+
+只是加上 `useMemo` 之後，當 `bids` reference 沒變時，可以省掉重新 `filter` 的成本。
+
+### 跟 Vue computed 的差異
+
+| 比較點 | React `useMemo` | Vue `computed` |
+| --- | --- | --- |
+| 依賴怎麼判斷 | 手動寫 dependency array，例如 `[bids]` | Vue 自動追蹤 computed 裡讀到的 reactive data |
+| 什麼時候重算 | component render 時，dependency 變了才重算 | dependency 變了會讓 computed 失效，下次被讀取時重算 |
+| 主要用途 | render 期間的計算快取、穩定 reference、效能優化 | 宣告 derived state，讓資料跟 reactive dependency 綁在一起 |
+| 是否自動追蹤欄位 | 不會，只看 dependency array 裡放什麼 | 會，因為 Vue reactivity 會追蹤讀取 |
+| 變化判斷 | 看 `bids` reference 是否改變 | 看 reactive dependency 是否改變 |
+
+React 這裡最容易踩的點是：`useMemo([bids])` 看的是 `bids` 這個 array 的 reference，不是深層檢查每一筆 order book level。
+
+如果直接改原本的 array：
+
+```ts
+bids.push(newBid);
+```
+
+`bids` reference 沒變，`useMemo` 可能會繼續拿舊的 `visibleBids`。React 裡應該用 immutable update，建立新的 array reference：
+
+```ts
+setBids((prev) => [...prev, newBid]);
+```
+
+面試說法：
+
+> Vue `computed` 是 reactive system 裡的 derived state，Vue 會自動追蹤 computed 讀了哪些 reactive 資料。React `useMemo` 比較像 render 階段的快取，它不會自動追蹤 `bids` 裡面哪個欄位被讀取，只會根據 dependency array 判斷要不要重算。像 order book 這種列表，如果只是簡單 filter，可以直接在 render 算；如果資料量大、排序或聚合成本高，或結果要傳給 memoized child，才會用 `useMemo`。
+
 重點：
 
-- 簡單計算可以直接寫在元件內。
-- 計算很重、或要傳給 memo child 時，再用 `useMemo`。
-- `useMemo` 依賴 array，Vue computed 依賴響應式追蹤。
+- 簡單 derived data 可以直接寫在元件內，不一定要 `useMemo`。
+- 計算很重、或要傳給 `React.memo` child 時，再用 `useMemo`。
+- `useMemo` 是效能優化，不是資料響應式系統。
+- React dependency 要自己列清楚；Vue `computed` 會自動追蹤 reactive dependency。
+- React state 要避免直接 mutate，否則 reference 不變時 memo 和 render 判斷都容易出問題。
 
 ## watch 對照：useEffect
 
