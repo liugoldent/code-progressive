@@ -26,6 +26,35 @@ sidebar_position: 6
 - hooks 只能在 component / custom hook 最上層呼叫。
 - effect 用來同步外部系統，不是所有資料計算都該放進 effect。
 
+### reconciliation 是什麼？
+
+reconciliation 可以理解成 React 的「新舊畫面比對」流程。
+
+當 state 或 props 改變時，React 會重新執行 component function，產生一棵新的 React element tree。React 不會因此直接把整個 DOM 全部重建，而是把新的 tree 跟上一輪的 tree 做比較，判斷哪些節點可以沿用、哪些 props 要更新、哪些 component 要保留 state、哪些節點需要新增、移除或替換。這個比對過程就是 reconciliation。
+
+簡化流程：
+
+1. state / props 更新後，React 進入 render 階段。
+2. component function 被重新呼叫，產生新的 React element tree。
+3. React 用 reconciliation 比對新舊 tree。
+4. 如果 element type 一樣，例如都是 `<PriceRow />`，React 傾向沿用同一個 component instance，保留它的 state，再更新 props。
+5. 如果 element type 不一樣，例如 `<PriceRow />` 變成 `<EmptyRow />`，React 會把舊 subtree 拆掉，建立新的 subtree。
+6. 如果是 list，React 會用 `key` 判斷每個 item 的 identity；穩定的 key 可以讓 React 正確保留 row 狀態，錯誤的 key 可能造成 remount 或狀態錯位。
+7. 比對完後，React 進入 commit 階段，只把必要變更套用到 DOM。
+
+用交易頁來看：order book 每秒可能收到很多價格檔位更新。React 重新 render order book 時，reconciliation 會比對前後的 rows；如果某個 price level 的 quantity 改了，React 只需要更新那一列的文字或樣式，而不是整張表都重建。這也是為什麼 `key` 不應該亂用 array index，order book 這種資料通常會用 price level 或穩定 id 當 key。
+
+面試回答可以這樣說：
+
+> Reconciliation is React's process of comparing the previous React element tree with the next one. When state or props change, React re-renders components to compute a new tree, then uses reconciliation to decide what can be reused and what needs to change. The actual DOM update happens later in the commit phase. Keys are important for lists because they tell React which items keep the same identity.
+
+重點：
+
+- reconciliation 比的是 React element tree，不是你手動操作 DOM。
+- render 不等於 DOM 全部重建；commit 才是真正改 DOM。
+- `key` 不是只為了消除 warning，而是幫 React 判斷 list item identity。
+- 不穩定的 key，例如 array index 搭配可插入、刪除、排序的列表，容易造成 component state 對錯資料。
+
 ## Hooks 心智模型：看到 use 系列怎麼走
 
 先抓一個核心觀念：React 不是「看到 `useMemo` 這個字就魔法式知道要做什麼」，而是 component function 每次 render 時，React 會依照 hooks 的呼叫順序，去目前 component 對應的 hook slot 讀取或更新資料。
