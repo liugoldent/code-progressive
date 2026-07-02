@@ -37,6 +37,7 @@ sidebar_position: 1
 | Redux / Flux | 你是否能管理複雜 UI 狀態 | single source of truth、action/reducer、selector、middleware、normalization、避免過度全域化 |
 | React Query | 你是否能處理 API server state | query key、cache、stale time、invalidation、retry、mutation、optimistic update、pagination |
 | 非同步與即時資料 | 交易產品的核心能力 | request cancellation、race condition、WebSocket、重連、節流、防抖、資料一致性 |
+| Realtime Governance | 高併發交易頁是否能控制成本 | 多分頁 owner/follower、BroadcastChannel control plane、K 線 history 接 realtime、refetch storm、policy quota |
 | UI / Responsive | 能不能交付精準、高品質畫面 | RWD、CSS layout、accessibility、表單、表格、狀態提示、Loading / Error / Empty |
 | Tooling | 能不能維護大型前端專案 | Webpack / Vite、Babel、tree shaking、code splitting、ESLint、Prettier、CI |
 | Performance | 能不能處理高頻更新 UI | render profiling、virtual list、memo、batching、bundle 優化、影像與字體載入 |
@@ -60,6 +61,7 @@ sidebar_position: 1
 
 - 用 TypeScript 設計交易資料型別，避免把 price / quantity 都當普通 number。
 - WebSocket 斷線重連、心跳、快照加增量同步。
+- 多分頁 realtime owner / follower、BroadcastChannel control plane、refetch storm 防護。
 - React Profiler 分析重渲染問題。
 - 用 selector / memoized selector 降低 Redux 訂閱成本。
 - bundle splitting、lazy route、vendor chunk、tree shaking。
@@ -95,6 +97,7 @@ sidebar_position: 1
 | 7 | [效能 / 測試 / 前端系統設計](./07-quality-performance-system.md) | 準備 Senior 常問的效能、測試與架構題。 |
 | 8 | [交易產品前端情境題](./08-crypto-product-case.md) | 把 React 能力套到 Binance Futures / 交易頁場景。 |
 | 9 | [面試題庫與回答模板](./09-interview-drills.md) | 最後用題庫整理口述答案與行為面試。 |
+| 10 | [Realtime Socket Governance](./10-realtime-socket-governance.md) | 準備高併發、多分頁、K 線 realtime 與 refetch storm 的系統設計題。 |
 
 ## 面試回答框架
 
@@ -124,3 +127,4 @@ sidebar_position: 1
 - [React 基礎：Vue 對照版](./01-react-basics-vue-comparison.md)
 - [React 術語中文對照與交易頁範例](./02-react-terms-code-examples.md)
 - [Vue 轉 React 生態面試題](./03-vue-to-react-ecosystem-qna.md)
+- [Realtime Socket Governance](./10-realtime-socket-governance.md)
