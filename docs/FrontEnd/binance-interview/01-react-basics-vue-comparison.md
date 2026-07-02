@@ -344,6 +344,113 @@ function add() {
 
 這也是 React 面試很常問的點：React 比較重視「資料不可變（immutability）」和「render 是 state 的結果」。你不要直接改舊資料，而是建立下一份 state，交給 React 重新 render。
 
+### setState 後：function 會重跑，但 DOM 只更新差異
+
+`setState` 或 `setCount` 觸發的是 React 的 render 流程，不是直接把整個瀏覽器畫面砍掉重建。
+
+可以分成兩個階段理解：
+
+1. render 階段：React 重新執行相關 component function，算出這次新的 JSX。
+2. commit 階段：React 比對新舊結果，只把真的有差異的地方更新到 DOM。
+
+所以比較精準的說法是：
+
+```txt
+state 改變
+-> component function 重新執行
+-> 普通變數與推導資料重新計算
+-> React 比對新舊 JSX
+-> DOM 只更新真的變動的部分
+```
+
+範例：
+
+```tsx
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  console.log("Counter render");
+
+  const double = count * 2;
+
+  return (
+    <div>
+      <h1>Binance Interview Notes</h1>
+
+      <button onClick={() => setCount((prev) => prev + 1)}>
+        count: {count}
+      </button>
+
+      <p>double: {double}</p>
+
+      <StaticPanel />
+    </div>
+  );
+}
+
+function StaticPanel() {
+  console.log("StaticPanel render");
+
+  return <section>固定內容</section>;
+}
+```
+
+第一次 render 會看到：
+
+```txt
+Counter render
+StaticPanel render
+```
+
+點擊 button 後，因為 `setCount` 讓 `Counter` 重新 render，通常也會看到：
+
+```txt
+Counter render
+StaticPanel render
+```
+
+這代表 component function 重新執行了，所以這些東西都會重新計算：
+
+```tsx
+const double = count * 2;
+
+<h1>Binance Interview Notes</h1>
+<button>count: {count}</button>
+<p>double: {double}</p>
+<StaticPanel />
+```
+
+但真實 DOM 不會全部重建。React 比對後會發現：
+
+- `h1` 文字一樣，不需要改 DOM。
+- `section` 文字一樣，不需要改 DOM。
+- button 文字從 `count: 0` 變 `count: 1`，需要更新。
+- `p` 文字從 `double: 0` 變 `double: 2`，需要更新。
+
+這就是為什麼 React 裡很多普通變數看起來像 Vue computed：
+
+```tsx
+const double = count * 2;
+```
+
+它不是 state，也不會自己觸發 render；但只要它依賴的 state 改了，component function 重新執行時，它就會重新被算出來。
+
+如果子元件真的很重，且 props 沒有變，可以用 `React.memo` 讓它在父層 render 時被跳過：
+
+```tsx
+const StaticPanel = React.memo(function StaticPanel() {
+  console.log("StaticPanel render");
+
+  return <section>固定內容</section>;
+});
+```
+
+但面試時不要一開始就說全部都要 `memo`。比較好的說法是：先理解 render 原因，真的有效能問題再用 Profiler 和 memoization 優化。
+
+面試說法：
+
+> 呼叫 setter 後，React 會重新執行相關 component function 來計算新的 UI 描述，這是 render 階段；接著 React 會做新舊結果比對，commit 階段只更新真正有差異的 DOM。一般變數只是在 render 過程中重新計算，不會自己觸發更新；真正觸發 render 的來源是 state、props、context 或 store 訂閱變化。
+
 ## State 更新要用 function 寫法的時機
 
 如果下一個 state 依賴上一個 state，建議用 function 寫法。
@@ -601,6 +708,59 @@ function TradeForm() {
 - React 的 input value 由 state 控制，所以叫受控元件。
 - 使用者輸入時觸發 `onChange`，再用 setter 更新 state。
 - 交易產品正式環境不要用 `Number` 做精準金融計算，這裡只是基礎語法示範。
+
+### React 表單不是雙向綁定
+
+React 的受控表單和 Vue `v-model` 看起來很像，但本質不同。
+
+Vue `v-model` 會幫你把「資料進 input」和「input 改資料」包成一個語法：
+
+```vue
+<input v-model="price" />
+```
+
+可以理解成：
+
+```vue
+<input
+  :value="price"
+  @input="price = $event.target.value"
+/>
+```
+
+React 沒有自動雙向綁定，要自己明確寫出資料流：
+
+```tsx
+<input
+  value={price}
+  onChange={(event) => setPrice(event.target.value)}
+/>
+```
+
+資料流是：
+
+```txt
+state.price -> input.value -> 使用者輸入 -> onChange -> setState/dispatch -> 新 state -> 重新 render -> input.value
+```
+
+所以更精準的說法是：
+
+- 使用者操作 UI 會觸發事件。
+- 事件裡呼叫 `setState` 或 `dispatch`。
+- state 被更新後，React 重新執行 component function。
+- JSX 依照新的 state 重新算出畫面。
+
+也就是「state 是 UI 的資料來源，UI 是 state 的結果」。React 是單向資料流，不是 Vue 那種語法層級的雙向綁定。
+
+如果要把整個 state 顯示在畫面上，不能直接寫 `{state}`，因為 object 不能直接當 React child。要轉成字串：
+
+```tsx
+<pre>{JSON.stringify(state, null, 2)}</pre>
+```
+
+面試說法：
+
+> React 表單通常用 controlled component。input 的 value 來自 state，使用者輸入時透過 onChange 呼叫 setState 或 dispatch。它看起來像雙向綁定，但資料流仍然是單向的：state 產生 UI，event 再把使用者操作轉成下一個 state。
 
 ## useReducer：表單欄位多時更清楚
 
