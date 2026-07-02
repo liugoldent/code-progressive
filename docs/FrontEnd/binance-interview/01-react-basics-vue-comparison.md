@@ -227,9 +227,146 @@ function Counter() {
 - 不要寫 `count++`，因為 React 不會知道你改了。
 - state 更新後，元件 function 會重新執行。
 
+### setCount 為什麼要這樣寫？
+
+React 的 `count` 不是 Vue `ref` 那種「可直接被追蹤的響應式容器」，而是這次 render 拿到的 state 快照（snapshot）。
+
+```tsx
+const [count, setCount] = useState(0);
+```
+
+這行可以拆成兩個角色來看：
+
+- `count`：目前這次 render 讀到的值。
+- `setCount`：通知 React「下一次 render 請使用新的 count」的更新函式。
+
+所以 `setCount(count + 1)` 不是在原地修改 `count`，而是在告訴 React：
+
+1. 下一個 `count` 應該變成 `count + 1`。
+2. 請安排元件重新 render。
+3. 重新執行 `Counter()`，拿到新的 `count`。
+4. 比對新的 JSX 結果，更新畫面上真的需要變動的 DOM。
+
+也就是說，React 重新畫畫面的入口是 setter，不是變數本身。
+
+錯誤理解：
+
+```tsx
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  function add() {
+    // 錯：count 是這次 render 的快照，不是響應式 ref
+    // count++;
+  }
+
+  return <button onClick={add}>{count}</button>;
+}
+```
+
+`count++` 會有兩個問題：
+
+- `count` 是 `const`，本來就不能直接改。
+- 即使是物件 state，你直接改內部欄位，React 也不會因為你改了某個屬性就知道要重新 render。
+
+物件 state 更容易踩雷：
+
+```tsx
+type TradeForm = {
+  price: string;
+  quantity: string;
+};
+
+function TradePanel() {
+  const [form, setForm] = useState<TradeForm>({
+    price: "",
+    quantity: "",
+  });
+
+  function wrongChangePrice(price: string) {
+    // 錯：直接改舊物件，React 不會因為這行就收到更新通知
+    form.price = price;
+  }
+
+  function changePrice(price: string) {
+    // 對：建立新物件，並透過 setter 通知 React 更新
+    setForm((prev) => ({
+      ...prev,
+      price,
+    }));
+  }
+
+  return (
+    <input
+      value={form.price}
+      onChange={(event) => changePrice(event.target.value)}
+    />
+  );
+}
+```
+
+這裡的 `setForm((prev) => ({ ...prev, price }))` 有三個重點：
+
+- `prev` 是 React 提供的最新 state，不一定等於目前 render 裡的 `form`。
+- `{ ...prev, price }` 是建立新物件，不是修改舊物件。
+- React 收到 setter 後，才會排程更新並重新 render。
+
+### 和 Vue 的差異
+
+Vue 的 `ref` 本身是響應式容器，所以你寫：
+
+```vue
+<script setup>
+import { ref } from "vue";
+
+const count = ref(0);
+
+function add() {
+  count.value++;
+}
+</script>
+```
+
+Vue 能追蹤 `count.value` 被改變，因為 `ref` 內部幫你包了一層 getter / setter。
+
+React 則是把更新動作明確交給你：
+
+```tsx
+function add() {
+  setCount((prev) => prev + 1);
+}
+```
+
+可以把它想成：
+
+- Vue：改 `ref.value`，框架幫你追蹤依賴。
+- React：呼叫 setter，明確通知框架更新狀態。
+
+這也是 React 面試很常問的點：React 比較重視「資料不可變（immutability）」和「render 是 state 的結果」。你不要直接改舊資料，而是建立下一份 state，交給 React 重新 render。
+
 ## State 更新要用 function 寫法的時機
 
 如果下一個 state 依賴上一個 state，建議用 function 寫法。
+
+先看容易誤會的寫法：
+
+```tsx
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  function addThreeWrong() {
+    setCount(count + 1);
+    setCount(count + 1);
+    setCount(count + 1);
+  }
+
+  return <button onClick={addThreeWrong}>{count}</button>;
+}
+```
+
+如果一開始 `count` 是 `0`，這三行讀到的都是同一次 render 的 `count = 0`，所以它們送出的下一個值都是 `1`。React 可能會把同一個事件裡的更新批次處理（batching），最後畫面通常只會變成 `1`，不是 `3`。
+
+這時要改成 functional update：
 
 ```tsx
 function Counter() {
@@ -245,9 +382,75 @@ function Counter() {
 }
 ```
 
+`prev` 不是你自己從外面閉包抓到的舊 `count`，而是 React 在處理更新佇列時，依序傳進來的最新值。所以上面三次更新會變成：
+
+1. `prev = 0`，回傳 `1`。
+2. `prev = 1`，回傳 `2`。
+3. `prev = 2`，回傳 `3`。
+
+實務判斷：
+
+- 如果下一個值只是來自輸入事件，可以直接傳值：`setKeyword(event.target.value)`。
+- 如果下一個值依賴上一個 state，用 callback：`setCount((prev) => prev + 1)`。
+- 如果更新 object / array，建立新資料，不要原地修改。
+
+幣安前端常見情境：
+
+```tsx
+type Order = {
+  symbol: string;
+  side: "BUY" | "SELL";
+  price: string;
+  quantity: string;
+};
+
+function OrderForm() {
+  const [order, setOrder] = useState<Order>({
+    symbol: "BTCUSDT",
+    side: "BUY",
+    price: "",
+    quantity: "",
+  });
+
+  function changeSide(side: Order["side"]) {
+    setOrder((prev) => ({
+      ...prev,
+      side,
+    }));
+  }
+
+  function resetPriceAndQuantity() {
+    setOrder((prev) => ({
+      ...prev,
+      price: "",
+      quantity: "",
+    }));
+  }
+
+  return (
+    <form>
+      <button type="button" onClick={() => changeSide("BUY")}>
+        Buy
+      </button>
+      <button type="button" onClick={() => changeSide("SELL")}>
+        Sell
+      </button>
+      <button type="button" onClick={resetPriceAndQuantity}>
+        Reset
+      </button>
+    </form>
+  );
+}
+```
+
+這種寫法能避免兩個問題：
+
+- 多個 state 更新被批次處理時，讀到舊 closure 裡的值。
+- 直接修改 object，造成 React 沒有拿到新的 state reference。
+
 面試說法：
 
-> 當下一個 state 依賴上一個 state，我會使用 functional update，避免讀到同一次 render 裡的舊值。
+> `useState` 回傳的是目前 render 的 state 快照和更新函式。React 不會追蹤你直接改變變數或 object 欄位；呼叫 setter 才是通知 React 排程更新的方式。當下一個 state 依賴上一個 state，我會使用 functional update，避免 batching 或同一次 render 的 snapshot 造成舊值問題。
 
 ## 事件處理
 
