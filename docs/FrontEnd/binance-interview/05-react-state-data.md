@@ -170,6 +170,47 @@ function OrderForm() {
 - `useReducer` 是「描述發生什麼事件，再由 reducer 決定下一個 state」。
 - 下單表單、連線狀態、複雜 filter 很適合用 reducer，因為狀態轉移有明確 domain rule。
 
+#### `useReducer` 的固定寫法與型態
+
+`useReducer` 的結構通常固定長這樣：
+
+```tsx
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+
+要分清楚兩組「第一個、第二個」：
+
+- `useReducer(reducer, initialState)`：第一個參數是 reducer function，第二個參數是初始 state。
+- `const [state, dispatch] = ...`：回傳陣列的第一個值是目前 state，第二個值是 dispatch function。
+- `reducer(state, action)`：reducer 的第一個參數是目前 state，第二個參數是 action，最後一定要回傳下一個 state。
+
+`state` 不一定要是物件，型態是由 `initialState` 和 reducer 回傳值決定。簡單 counter 也可以用 number：
+
+```tsx
+function reducer(count: number, action: "add" | "minus") {
+  if (action === "add") return count + 1;
+  if (action === "minus") return count - 1;
+  return count;
+}
+
+const [count, dispatch] = useReducer(reducer, 0);
+
+dispatch("add");
+```
+
+只是實務上常把 `state` 和 `action` 寫成物件，因為複雜狀態比較好擴充，也比較容易描述「發生了什麼事」：
+
+```tsx
+dispatch({ type: "change_price", price: "65000" });
+```
+
+使用時機：
+
+- 單一 input、toggle、tab 這種簡單狀態，用 `useState` 就夠。
+- 多個 state 欄位彼此有關，例如下單表單的 side、price、quantity，可以考慮 `useReducer`。
+- 下一個 state 需要根據上一個 state 和 action 做規則判斷時，適合 `useReducer`。
+- 同一組狀態會被很多事件更新，例如 change price、change quantity、reset form、submit success、submit failed，用 `useReducer` 會比散落多個 `setState` 更好讀。
+
 ### `useEffect`：render 完後同步外部系統
 
 ```tsx
