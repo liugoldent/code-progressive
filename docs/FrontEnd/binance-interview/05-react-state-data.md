@@ -411,6 +411,40 @@ function SymbolText() {
 }
 ```
 
+這裡可以把 context 想成一條資料通道。`createContext(null)` 建立通道，`Provider` 在上層放資料，`useContext` 在下層讀資料。
+
+如果外層這樣提供 value：
+
+```tsx
+function App() {
+  return (
+    <TradingContext.Provider value={{ symbol: "BTCUSDT" }}>
+      <Layout />
+    </TradingContext.Provider>
+  );
+}
+
+function Layout() {
+  return <SymbolText />;
+}
+```
+
+`SymbolText` 不需要從 `App -> Layout -> SymbolText` 一層一層接 `symbol` props，也能透過 `useContext(TradingContext)` 讀到：
+
+```tsx
+{ symbol: "BTCUSDT" }
+```
+
+所以畫面會顯示 `BTCUSDT`。如果外層沒有包 `<TradingContext.Provider>`，`useContext(TradingContext)` 會拿到 `createContext` 的 default value，也就是 `null`。
+
+這行用的是 optional chaining：
+
+```tsx
+return <span>{trading?.symbol}</span>;
+```
+
+意思是 `trading` 不是 `null` 時才讀 `trading.symbol`；如果是 `null`，就回傳 `undefined`，畫面不顯示內容，也不會因為讀取 `null.symbol` 而報錯。
+
 這段 `useContext` 的執行流程：
 
 1. `SymbolText` 被 render。
@@ -442,19 +476,108 @@ function PriceColumn() {
 }
 ```
 
+這段是在做一件事：等 `<ul>` 真正被放到 DOM 後，立刻量它的高度。
+
+```tsx
+const listRef = useRef<HTMLUListElement | null>(null);
+```
+
+這裡建立一個 ref，用來保存真實 DOM element。型別是 `HTMLUListElement | null`，代表一開始還沒有 DOM，所以是 `null`；等 React 把 `<ul>` commit 到 DOM 後，才會把真實的 `<ul>` 放到 `listRef.current`。
+
+```tsx
+return <ul ref={listRef} />;
+```
+
+這行把 `listRef` 掛到 `<ul>` 上。render 階段只是產生 React element；真正的 DOM 會在 commit 階段建立，建立完成後 React 才會設定：
+
+```tsx
+listRef.current = 真實的 ul DOM
+```
+
+所以不要在 render 階段直接讀 DOM 尺寸。render 時 DOM 還不一定存在，而且 render 應該保持純粹。
+
+```tsx
+const height = listRef.current?.getBoundingClientRect().height ?? 0;
+```
+
+這行分成兩段看：
+
+1. `listRef.current?.getBoundingClientRect()`：如果 `listRef.current` 有 DOM，就取得它在畫面上的尺寸和位置。
+2. `.height ?? 0`：如果量得到高度就用高度；如果 `listRef.current` 還是 `null`，就用 `0` 當 fallback。
+
+`getBoundingClientRect()` 會回傳類似這樣的資料：
+
+```tsx
+{
+  width,
+  height,
+  top,
+  left,
+  right,
+  bottom
+}
+```
+
+這裡只取 `height`，所以它是在量 `<ul>` 的實際高度。
+
 這段 `useLayoutEffect` 的執行流程：
 
-1. component render，產生 `<ul ref={listRef} />`。
-2. React commit DOM，讓 `listRef.current` 指到真實 DOM。
-3. 瀏覽器繪製畫面前，React 執行 `useLayoutEffect` callback。
-4. callback 可以同步讀 layout，例如高度、寬度、位置。
-5. 如果在這裡同步 setState，React 會先補一次 render，再讓瀏覽器繪製。
+1. `PriceColumn` 第一次 render。
+2. `useRef(null)` 建立 ref object，這時 `listRef.current` 還是 `null`。
+3. `return <ul ref={listRef} />`，React 知道這個 DOM 之後要接到 `listRef`。
+4. React commit DOM，把真實 `<ul>` 放進頁面。
+5. React 設定 `listRef.current` 指向真實的 `<ul>` DOM。
+6. 瀏覽器繪製畫面前，React 執行 `useLayoutEffect` callback。
+7. callback 讀 `listRef.current.getBoundingClientRect().height`，印出高度。
+8. 瀏覽器才把畫面繪製出來。
+
+`useLayoutEffect` 和 `useEffect` 最大差別是執行時機：
+
+```txt
+useEffect:
+React 更新 DOM
+-> 瀏覽器先繪製畫面
+-> useEffect 執行
+```
+
+```txt
+useLayoutEffect:
+React 更新 DOM
+-> useLayoutEffect 執行
+-> 瀏覽器繪製畫面
+```
+
+所以如果只是打 API、訂閱 WebSocket、印 log、同步 localStorage，通常用 `useEffect`。如果是量 DOM 尺寸、設定 scroll position、依照高度修正位置，並且不想讓使用者先看到錯的位置或閃一下，就會用 `useLayoutEffect`。
+
+例如量完高度後要立刻更新畫面：
+
+```tsx
+function PriceColumn() {
+  const listRef = useRef<HTMLUListElement | null>(null);
+  const [height, setHeight] = useState(0);
+
+  useLayoutEffect(() => {
+    const nextHeight = listRef.current?.getBoundingClientRect().height ?? 0;
+    setHeight(nextHeight);
+  }, []);
+
+  return (
+    <>
+      <ul ref={listRef} />
+      <div>height: {height}</div>
+    </>
+  );
+}
+```
+
+這種情況如果用 `useEffect`，瀏覽器可能先畫出 `height: 0`，effect 後才改成真正高度，畫面就可能閃一下。`useLayoutEffect` 會在瀏覽器繪製前先完成量測和同步更新，比較適合處理 layout。
 
 重點：
 
 - 大部分情況用 `useEffect`。
 - 只有需要在畫面繪製前讀寫 layout，才用 `useLayoutEffect`。
 - 過度使用會阻塞瀏覽器繪製。
+- `useRef` 負責拿 DOM；`ref={listRef}` 負責把 DOM 存進 ref；`useLayoutEffect` 負責在繪製前讀 DOM 尺寸。
 
 ### custom hook：把一組 hook 流程包成可重用邏輯
 
