@@ -165,11 +165,13 @@ React 官方把 state 描述成每次 render 的 snapshot，Rules of Hooks 的�
 | 10 | [交易產品前端情境題](./08-crypto-product-case.md) | 把 React 能力套到 Binance Futures / 交易頁場景。 |
 | 11 | [面試題庫與回答模板](./09-interview-drills.md) | 最後用題庫整理口述答案與行為面試。 |
 | 12 | [Realtime Socket Governance](./10-realtime-socket-governance.md) | 準備高併發、多分頁、K 線 realtime 與 refetch storm 的系統設計題。 |
-| 13 | [React 現場實戰題系列](./13-react-live-interview-series.md) | 每回六題，集中練 state、effect、identity、render、realtime 與 concurrent UI 的現場推導。 |
+| 13 | [React 現場實戰題系列](./13-react-live-interview-series.md) | 用多回現場題集中練 state、effect、identity、render、realtime 與 concurrent UI 的推導。 |
 | 14 | [React 現場實戰題入門篇](./15-react-foundations-live-demo.md) | 從 event、props、state、form、state owner 到 effect cleanup，先建立 React 基本反射。 |
 | 15 | [React 現場實戰題第一回](./11-react-state-effect-live-demo.md) | 從 state snapshot、effect、closure、race 與 WebSocket 錯誤版本推到正確答案。 |
-| 16 | [React 現場實戰題第二回](./14-react-render-identity-live-demo.md) | 用 list key、state ownership、memo、Context、external store 與 Transition 深入 render correctness。 |
-| 17 | [極致前端行動路線](./12-frontend-mastery-action-plan.md) | 把瀏覽器底層、React 轉化與 Nuxt / Next 全端渲染收斂成六週可驗收的行動與作品。 |
+| 16 | [React 現場實戰題第一回補強](./16-react-state-effect-reinforcement.md) | 用六題組合題補強 derived state、async race、subscription 與 WebSocket lifecycle。 |
+| 17 | [React 現場實戰題第二回](./14-react-render-identity-live-demo.md) | 用 list key、state ownership、memo、Context、external store 與 Transition 深入 render correctness。 |
+| 18 | [極致前端行動路線](./12-frontend-mastery-action-plan.md) | 把瀏覽器底層、React 轉化與 Nuxt / Next 全端渲染收斂成六週可驗收的行動與作品。 |
+| 19 | [React Hooks 六題反射題庫](./17-react-hooks-six-drills-index.md) | 30 種 React 內建與第三方 Hook，每種固定六題，共 180 題；用來按 Hook 補洞與複習。 |
 
 ## 面試回答框架
 
@@ -205,5 +207,7 @@ React 官方把 state 描述成每次 render 的 snapshot，Rules of Hooks 的�
 - [React 現場實戰題系列](./13-react-live-interview-series.md)
 - [React 現場實戰題入門篇](./15-react-foundations-live-demo.md)
 - [React 現場實戰題第一回](./11-react-state-effect-live-demo.md)
+- [React 現場實戰題第一回補強](./16-react-state-effect-reinforcement.md)
 - [React 現場實戰題第二回](./14-react-render-identity-live-demo.md)
 - [極致前端行動路線](./12-frontend-mastery-action-plan.md)
+- [React Hooks 六題反射題庫](./17-react-hooks-six-drills-index.md)

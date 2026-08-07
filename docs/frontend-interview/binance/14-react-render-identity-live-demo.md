@@ -1,5 +1,5 @@
 ---
-sidebar_position: 17
+sidebar_position: 18
 title: "React 現場實戰題（第二回）：Identity / Render / Concurrent UI"
 description: "六題深入 React list key、prop 初始化 state、React.memo reference、Context render、useSyncExternalStore 與 Transition，從錯誤行為推導正確資料流。"
 tags:
@@ -14,7 +14,7 @@ keywords: ["React key 面試題", "React.memo 面試題", "React Context render"
 
 :::tip 系列導覽
 
-[回到系列總覽](./13-react-live-interview-series.md) · [入門篇：Props / State / Form / Effect](./15-react-foundations-live-demo.md) · [第一回：State / Effect / Realtime](./11-react-state-effect-live-demo.md) · **第二回：Identity / Render / Concurrent UI**
+[回到系列總覽](./13-react-live-interview-series.md) · [入門篇：Props / State / Form / Effect](./15-react-foundations-live-demo.md) · [第一回：State / Effect / Realtime](./11-react-state-effect-live-demo.md) · [第一回補強：State / Effect / Async 組合題](./16-react-state-effect-reinforcement.md) · **第二回：Identity / Render / Concurrent UI**
 
 :::
 
@@ -801,7 +801,8 @@ Transition 沒有固定等待時間，也不保證只執行最後一次意圖，
 
 ## 下一步
 
-- 回到 [系列總覽](./13-react-live-interview-series.md)，混合抽考三回的十八題。
+- 回到 [系列總覽](./13-react-live-interview-series.md)，混合抽考各篇題目。
 - 想補 render / commit 基礎：閱讀 [React / Redux / React Query](./05-react-state-data.md)。
 - 想把 render 問題放進 production 效能情境：閱讀 [效能 / 測試 / 前端系統設計](./07-quality-performance-system.md)。
 - 想複習 request race 與 realtime correctness：重做 [React 現場實戰題第一回](./11-react-state-effect-live-demo.md)。
+- 想用六題組合題銜接第一、二回：前往 [React 現場實戰題第一回補強](./16-react-state-effect-reinforcement.md)。

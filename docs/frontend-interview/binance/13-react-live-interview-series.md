@@ -30,11 +30,13 @@ keywords: ["React 現場題", "React 面試實戰題", "React debug 題", "React
 | --- | --- | --- |
 | [入門篇：Props / State / Form / Effect](./15-react-foundations-live-demo.md) | event handler、唯讀 props、immutable state、controlled input、state owner、effect cleanup | 剛學 React 時先建立正確資料流與基本除錯順序 |
 | [第一回：State / Effect / Realtime](./11-react-state-effect-live-demo.md) | 十題：state snapshot、derived state、stale closure、request race、WebSocket dependency、StrictMode cleanup、order book batching、安全重連 | 建立 Hooks 與即時資料的基本 correctness，再挑戰 production lifecycle |
+| [第一回補強：State / Effect / Async 組合題](./16-react-state-effect-reinforcement.md) | 六題：state consistency、derived state、debounce race、loading ownership、subscription closure、WebSocket lifecycle | 把第一回觀念兩兩組合，每題多推導一個 edge case，再銜接第二回 |
 | [第二回：Identity / Render / Concurrent UI](./14-react-render-identity-live-demo.md) | list key、prop 初始化 state、memo reference、Context render、external store、Transition | 看懂「程式沒報錯，但 UI 狀態或效能不對」的進階問題 |
+| [Hooks 六題反射題庫](./17-react-hooks-six-drills-index.md) | 30 種 React 內建與第三方 Hook，每種固定六題，共 180 題 | 按 Hook 補洞，從輸出預測一路練到 production edge case 與面試口述 |
 
-剛開始學 React，建議不要依建立日期作答；先做入門篇，再進第一回，最後才做第二回。
+剛開始學 React，建議不要依建立日期作答；先做入門篇，再進第一回與第一回補強，最後才做第二回。
 
-## 三回的觀念地圖
+## 系列觀念地圖
 
 | 遇到的症狀 | 優先檢查 |
 | --- | --- |
@@ -53,11 +55,11 @@ keywords: ["React 現場題", "React 面試實戰題", "React debug 題", "React
 
 ## 完成標準
 
-做完三回後，應該能在沒看到標準答案時完成這四件事：
+做完入門篇、第一回補強與兩回實戰後，應該能在沒看到標準答案時完成這四件事：
 
 - 先定義哪一份資料是 source of truth，以及誰擁有它。
 - 沿著 render、commit、effect、async callback 的時間順序找 bug。
 - 分辨 correctness 問題與 performance 問題，不用 memo 掩蓋錯誤資料流。
 - 說清楚修正方案的限制，例如 key reset 會丟掉 local state、Transition 不等於 debounce。
 
-第一次請照「入門篇 → 第一回 → 第二回」；下一次複習可以倒著做，換一個順序確認自己不是只記住答案位置。
+第一次請照「入門篇 → 第一回 → 第一回補強 → 第二回」；下一次複習可以倒著做，換一個順序確認自己不是只記住答案位置。

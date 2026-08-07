@@ -16,7 +16,7 @@ import OrderBookExecutionDemo from "@site/src/components/OrderBookExecutionDemo"
 
 :::tip 系列導覽
 
-[回到系列總覽](./13-react-live-interview-series.md) · [入門篇：Props / State / Form / Effect](./15-react-foundations-live-demo.md) · **第一回：State / Effect / Realtime** · [第二回：Identity / Render / Concurrent UI](./14-react-render-identity-live-demo.md)
+[回到系列總覽](./13-react-live-interview-series.md) · [入門篇：Props / State / Form / Effect](./15-react-foundations-live-demo.md) · **第一回：State / Effect / Realtime** · [第一回補強：State / Effect / Async 組合題](./16-react-state-effect-reinforcement.md) · [第二回：Identity / Render / Concurrent UI](./14-react-render-identity-live-demo.md)
 
 :::
 
@@ -1300,7 +1300,8 @@ export function useReconnectingTicker(symbol: string) {
 
 ## 下一步
 
-- 想接著挑戰 identity、render 與 concurrent UI：前往 [React 現場實戰題第二回](./14-react-render-identity-live-demo.md)。
+- 想先用組合題鞏固 state、effect 與 async：前往 [React 現場實戰題第一回補強](./16-react-state-effect-reinforcement.md)。
+- 第一回補強能自行推導後，再挑戰 [React 現場實戰題第二回](./14-react-render-identity-live-demo.md) 的 identity、render 與 concurrent UI。
 - 想繼續練 React 基礎判斷：回到 [Vue 轉 React：30 次反射訓練](./02-react-reflex-drills.md)。
 - 想深入 snapshot + delta：閱讀 [交易產品前端情境題](./08-crypto-product-case.md)。
 - 想深入高併發、多分頁與 refetch storm：回到 [Realtime Socket Governance](./10-realtime-socket-governance.md)。

@@ -14,7 +14,7 @@ keywords: ["React 初學者面試題", "React 入門考題", "React props state"
 
 :::tip 系列導覽
 
-[回到系列總覽](./13-react-live-interview-series.md) · **入門篇：Props / State / Form / Effect** · [第一回：State / Effect / Realtime](./11-react-state-effect-live-demo.md) · [第二回：Identity / Render / Concurrent UI](./14-react-render-identity-live-demo.md)
+[回到系列總覽](./13-react-live-interview-series.md) · **入門篇：Props / State / Form / Effect** · [第一回：State / Effect / Realtime](./11-react-state-effect-live-demo.md) · [第一回補強：State / Effect / Async 組合題](./16-react-state-effect-reinforcement.md) · [第二回：Identity / Render / Concurrent UI](./14-react-render-identity-live-demo.md)
 
 :::
 
