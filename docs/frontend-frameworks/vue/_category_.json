@@ -1,0 +1,9 @@
+{
+  "label": "Vue",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "title": "Vue",
+    "description": "Vue 2、Vue 3、Vue Router、Vuex、Pinia 與權限控制筆記。"
+  }
+}

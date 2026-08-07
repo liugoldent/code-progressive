@@ -2,6 +2,24 @@
 
 This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
+## Documentation structure
+
+The sidebar is generated from seven focused top-level topic folders. Frontend
+notes are split into separate sections so no single category becomes too large:
+
+```text
+docs/
+├── frontend-core/          # HTML, CSS, JavaScript, TypeScript
+├── frontend-frameworks/    # React, Vue, Nuxt
+├── frontend-engineering/   # Tooling, system design, refactoring
+├── frontend-interview/     # General and role-focused interview notes
+├── backend/                # Node.js, Python
+├── algorithms/             # LeetCode solutions grouped by problem number
+└── resources/              # Curated learning links
+```
+
+Add new notes to the matching topic folder so the generated sidebar stays organized.
+
 ### Installation
 
 ```

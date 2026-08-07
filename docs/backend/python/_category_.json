@@ -1,0 +1,9 @@
+{
+  "label": "Python",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "title": "Python",
+    "description": "Python、Flask、Django、資料庫與疑難排解筆記。"
+  }
+}

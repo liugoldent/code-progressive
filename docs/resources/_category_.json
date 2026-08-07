@@ -1,0 +1,10 @@
+{
+  "label": "學習資源",
+  "position": 7,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "學習資源",
+    "description": "前端、後端、演算法、測試與其他延伸學習連結。"
+  }
+}

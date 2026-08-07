@@ -1,0 +1,9 @@
+{
+  "label": "Composables API",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "title": "Nuxt Composables API",
+    "description": "Nuxt 常用 Composables 的用途、參數與範例。"
+  }
+}

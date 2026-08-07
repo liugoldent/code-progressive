@@ -200,7 +200,7 @@ function generateDescription({ title, headings, relativePath }) {
     .filter((heading) => heading.length <= 24)
     .slice(0, 3);
 
-  if (/LeetCode/.test(relativePath)) {
+  if (/leetcode/i.test(relativePath)) {
     return `${title} 題解，整理解題思路、JavaScript 實作與複雜度分析，方便面試與刷題複習。`;
   }
 
@@ -219,6 +219,13 @@ function generateDescription({ title, headings, relativePath }) {
     Java: "Java 基礎語法與物件導向重點",
     Python: "Python 開發基礎與常見實務",
     SCSS: "CSS 與 SCSS 版面與樣式技巧",
+    "frontend-core": "HTML、CSS、JavaScript 與 TypeScript 核心知識",
+    "frontend-frameworks": "React、Vue、Nuxt 與前端框架生態",
+    "frontend-engineering": "前端工具、架構與重構實務",
+    "frontend-interview": "前端面試與職缺準備",
+    backend: "後端開發核心與常見實務",
+    algorithms: "資料結構、演算法與解題思路",
+    resources: "延伸學習資源",
   };
 
   const categoryText = categoryMap[category] || "技術筆記與核心概念整理";

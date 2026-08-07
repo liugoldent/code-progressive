@@ -1,0 +1,10 @@
+{
+  "label": "演算法練習",
+  "position": 6,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "演算法練習",
+    "description": "依題號整理的 LeetCode 解題筆記。"
+  }
+}

@@ -1,9 +1,0 @@
-{
-  "label": "HTML",
-  "position": 2,
-  "link": {
-    "type": "generated-index",
-    "title": "HTML",
-    "description": "HTML、語意化標籤與 hydration 等前端頁面結構筆記。"
-  }
-}

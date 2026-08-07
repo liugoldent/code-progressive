@@ -1,0 +1,10 @@
+{
+  "label": "前端開發－框架生態",
+  "position": 2,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "前端開發－框架生態",
+    "description": "React、Vue 與 Nuxt 的使用方式和核心觀念。"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "label": "系統與架構",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "title": "前端系統與架構",
+    "description": "前端系統設計、瀏覽器運作機制、渲染流程與效能筆記。"
+  }
+}

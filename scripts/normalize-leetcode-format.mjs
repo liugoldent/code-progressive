@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-const ROOT = path.resolve("docs/LeetCode");
+const ROOT = path.resolve("docs/algorithms/leetcode");
 
 const HEADING_REPLACEMENTS = [
   [/^##\s+Javascript 解(?:\s*-\s*\d+)?\s*$/gim, "## JavaScript 解法"],
