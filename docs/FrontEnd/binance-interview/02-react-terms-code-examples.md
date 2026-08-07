@@ -1,16 +1,18 @@
 ---
-title: "React 術語中文對照與交易頁範例"
-description: "把 Binance React 前端面試常見術語翻成中文，並用交易頁程式碼示範 React、Redux、React Query、WebSocket 與下單表單。"
+title: "React 面試術語中文對照：交易頁程式碼範例"
+description: "整理 Binance React 前端面試常見術語中文解釋，包含 render、commit、reconciliation、state、props、React Query、Redux、WebSocket、order book 與下單表單範例。"
 tags:
   - React
   - Vue
   - Binance
   - Interview
-keywords: ["React 中文", "React Query 範例", "Redux 範例", "Binance trading UI", "Vue 轉 React"]
-sidebar_position: 3
+keywords: ["React 術語中文", "React 面試術語", "React render commit", "reconciliation 中文", "React Query 範例", "Redux 範例", "WebSocket 範例", "Binance trading UI", "交易頁前端", "order book component", "Vue 轉 React", "前端面試題"]
+sidebar_position: 5
 ---
 
 # React 術語中文對照與交易頁範例
+
+> 如果你還不熟悉 `useQuery`、`useMutation`、`useQueryClient` 等第三方 Hooks，建議先讀 [React 常用第三方 Hooks 入門](./02-react-third-party-hooks.md)，再回來看這篇的交易頁範例。
 
 ## 常見術語中英對照
 
@@ -165,6 +167,8 @@ function TickerPanel({ symbol }: { symbol: string }) {
 
 ## 範例四：React Query 抓伺服器資料狀態
 
+這個範例把「呼叫 API、保存結果、處理載入與錯誤、判斷資料是否過期」交給 React Query。以下程式假設應用程式最外層已經設定好 `QueryClientProvider`。
+
 ```tsx
 import { useQuery } from "@tanstack/react-query";
 
@@ -187,7 +191,7 @@ export function TickerCard({ symbol }: { symbol: string }) {
     staleTime: 3_000,
   });
 
-  if (query.isLoading) return <div>行情載入中</div>;
+  if (query.isPending) return <div>行情載入中</div>;
   if (query.isError) return <div>行情載入失敗</div>;
 
   return (
@@ -200,13 +204,113 @@ export function TickerCard({ symbol }: { symbol: string }) {
 }
 ```
 
-重點：
+### 三個核心設定
 
 - `queryKey: ["ticker", symbol]` 是快取身份。
-- 不同 symbol 要有不同快取，避免 BTC 和 ETH 資料混在一起。
-- `staleTime` 是資料新鮮時間，不是多久輪詢一次。
+- `queryFn` 是 React Query 判斷需要取資料時才會執行的非同步函式。
+- `staleTime: 3_000` 表示成功取得資料後，3 秒內視為 fresh（新鮮）。
+
+`queryKey` 不只像 `useEffect` 的 dependency array 一樣能反映 `symbol` 變化，也是這份資料在快取中的地址。例如：
+
+```ts
+["ticker", "BTCUSDT"];
+["ticker", "ETHUSDT"];
+```
+
+兩個 key 代表兩份獨立快取，避免 BTC 和 ETH 行情混在一起。
+
+### 第一次載入的實際流程
+
+假設畫面使用 `<TickerCard symbol="BTCUSDT" />`，而快取裡還沒有 BTC 行情：
+
+```text
+TickerCard 開始 render
+  → useQuery 訂閱 ["ticker", "BTCUSDT"]
+  → React Query 檢查快取，發現沒有資料
+  → 執行 queryFn
+  → queryFn 呼叫 fetchTicker("BTCUSDT")
+  → query.isPending 為 true，畫面顯示「行情載入中」
+  → API 成功回傳，React Query 把資料寫進對應的 cache
+  → React Query 通知 TickerCard 重新 render
+  → query.data 有資料，畫面顯示 symbol、價格與漲跌幅
+```
+
+如果 `fetchTicker` 因為 HTTP 錯誤而 `throw`，React Query 會接住錯誤並依設定重試；最終仍失敗時，`query.isError` 會變成 `true`，畫面顯示「行情載入失敗」。
+
+### `symbol` 改變時
+
+當 props 從 `BTCUSDT` 變成 `ETHUSDT`：
+
+```text
+["ticker", "BTCUSDT"]
+  → ["ticker", "ETHUSDT"]
+  → React Query 改為訂閱 ETHUSDT 的 cache
+  → 有 fresh cache 就直接使用
+  → 沒有 cache 就執行 fetchTicker("ETHUSDT")
+```
+
+舊的 BTC 請求即使比較晚完成，也只會寫入 BTC 的 cache，不會覆蓋 ETH 的資料。這就是為什麼會影響請求結果的 `symbol` 必須放進 `queryKey`。
+
+### `staleTime: 3_000` 不是每 3 秒輪詢
+
+資料成功取得後的 3 秒內，React Query 會把它視為 fresh。超過 3 秒只代表資料成為 stale（可能過期），不會在第 3 秒一到就立刻送出請求。
+
+stale 資料通常會在下列時機觸發背景重新取得：
+
+- 同一個 query 的元件重新掛載。
+- 使用者重新聚焦瀏覽器視窗。
+- 網路斷線後重新連線。
+- 程式呼叫 `refetch()` 或讓 query invalidated。
+
+背景重新取得時，既有的 `query.data` 可以繼續顯示，並以 `query.isFetching` 判斷背景更新狀態。如果需求是真的每 3 秒更新一次行情，應另外設定：
+
+```tsx
+refetchInterval: 3_000,
+```
+
+### 和 `useEffect` 的關係
+
+可以先用這個心智模型理解，但兩者不是完全相同的 API：
+
+| React Query | 手寫 `useEffect` 時的概念 |
+| --- | --- |
+| `queryKey: ["ticker", symbol]` | `[symbol]` dependency，加上資料的快取身份 |
+| `queryFn` | effect 裡呼叫的非同步函式 |
+| `query.data` | 自己建立的 data state |
+| `query.isPending` | 自己建立的首次載入 state |
+| `query.isError` / `query.error` | 自己 catch 並保存的 error state |
+
+如果使用 `useEffect`，快取、重試、重複請求、背景更新和 stale 判斷都要自己處理；`useQuery` 則把這些 server state 生命週期集中管理。
+
+補充狀態差異：`isPending` 表示目前還沒有成功資料；`isLoading` 是「第一次請求正在執行」，相當於 `isPending && isFetching`；`isFetching` 則包含第一次請求和背景重新取得。因此這裡使用 `isPending`，可以確保進入成功畫面時 `query.data` 已存在。
 
 ## 範例五：下單 mutation 後讓列表重新抓
+
+先抓住這個範例的核心：**畫面上原本已經有「未成交訂單」和「餘額」兩份查詢；送出新訂單成功後，這兩份舊資料可能不準了，所以要通知 React Query 重新取得。**
+
+`useQuery` 和 `useMutation` 在這裡扮演不同角色：
+
+| API | 用途 | 這個範例中的工作 |
+| --- | --- | --- |
+| `useQuery` | 讀取伺服器資料 | 取得未成交訂單、餘額 |
+| `useMutation` | 主動修改伺服器資料 | 新增一張買單或賣單 |
+| `invalidateQueries` | 宣告某份 query cache 已過期 | 下單成功後，讓相關畫面取得最新資料 |
+
+假設其他元件已經用下面的 query key 讀取資料：
+
+```tsx
+useQuery({
+  queryKey: ["openOrders", symbol],
+  queryFn: () => fetchOpenOrders(symbol),
+});
+
+useQuery({
+  queryKey: ["balances"],
+  queryFn: fetchBalances,
+});
+```
+
+下單成功後必須 invalidate 相同的 key，React Query 才知道哪些快取受到影響。
 
 ```tsx
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -234,18 +338,103 @@ function useSubmitOrder() {
 
   return useMutation({
     mutationFn: submitOrder,
-    onSuccess: (_data, input) => {
-      queryClient.invalidateQueries({ queryKey: ["openOrders", input.symbol] });
-      queryClient.invalidateQueries({ queryKey: ["balances"] });
+    onSuccess: async (_data, input) => {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ["openOrders", input.symbol],
+        }),
+        queryClient.invalidateQueries({ queryKey: ["balances"] }),
+      ]);
     },
   });
 }
 ```
 
-重點：
+### 呼叫 `useSubmitOrder()` 不會立刻下單
 
-- mutation 是會改伺服器資料的請求。
-- 下單成功後，未成交訂單和餘額都可能變，所以標記快取失效。
+`useSubmitOrder()` 只是建立一個 mutation controller，真正送出 `POST` 的時機是元件呼叫 `mutate(input)`：
+
+```tsx
+function SubmitOrderButton() {
+  const orderMutation = useSubmitOrder();
+
+  function handleSubmit() {
+    orderMutation.mutate({
+      symbol: "BTCUSDT",
+      side: "buy",
+      price: "65000",
+      quantity: "0.01",
+    });
+  }
+
+  return (
+    <div>
+      <button disabled={orderMutation.isPending} onClick={handleSubmit}>
+        {orderMutation.isPending ? "下單中..." : "買入 BTC"}
+      </button>
+
+      {orderMutation.isError && (
+        <p role="alert">{orderMutation.error.message}</p>
+      )}
+    </div>
+  );
+}
+```
+
+因此下面兩段資料其實是同一份 `input`：
+
+```text
+orderMutation.mutate({ symbol: "BTCUSDT", side: "buy", ... });
+                         │
+                         └── 傳給 mutationFn，也就是 submitOrder(input)
+```
+
+`onSuccess` 的第二個參數也是這次 `mutate(...)` 傳入的資料，所以可以取得 `input.symbol`，只更新這次交易對的未成交訂單。
+
+### 一次成功下單的完整流程
+
+```text
+使用者點擊「買入 BTC」
+  → handleSubmit 呼叫 orderMutation.mutate(input)
+  → React Query 將 mutation 狀態改成 pending
+  → mutationFn 執行 submitOrder(input)
+  → submitOrder 發送 POST /api/orders
+  → 後端建立訂單並回傳成功結果
+  → 執行 onSuccess(data, input)
+  → ["openOrders", "BTCUSDT"] 被標記為 stale
+  → ["balances"] 被標記為 stale
+  → 正在畫面上使用這些 key 的 query 會在背景重新取得
+  → 新資料寫入 cache，訂單列表與餘額元件重新 render
+```
+
+注意：`invalidateQueries` 不是再送一次下單請求，也不是直接把訂單塞進列表。它做的是「這份快取可能舊了」的標記；符合條件且正在使用中的 query 預設會重新執行自己的 `queryFn`。
+
+### 為什麼要等 `Promise.all`？
+
+兩個 `invalidateQueries` 可以同時執行。因為 `onSuccess` 回傳的 Promise 會被 mutation 等待，所以在未成交訂單和餘額完成重新整理前，`orderMutation.isPending` 仍是 `true`，按鈕可以繼續保持 disabled，避免使用者太早重複下單。
+
+如果不需要等待列表刷新，也可以不寫 `await`；訂單仍會成功送出，只是 mutation 會更早離開 pending 狀態。
+
+### 失敗時會怎樣？
+
+如果 `/api/orders` 回傳非 2xx 狀態，`submitOrder` 會 `throw new Error("下單失敗")`：
+
+```text
+submitOrder throw
+  → mutation 進入 error 狀態
+  → orderMutation.isError 變成 true
+  → onSuccess 不會執行
+  → 不會 invalidate 未成交訂單與餘額
+```
+
+最後整理：
+
+- `mutationFn`：定義「如何送出下單請求」。
+- `mutate(input)`：真正開始執行下單，`input` 會傳給 `mutationFn`。
+- `isPending`：從送出請求到 `onSuccess` 的 Promise 完成前都是 `true`。
+- `onSuccess(_data, input)`：只有下單成功才執行；`_data` 是 API 結果，`input` 是原本的下單參數。
+- `queryClient`：React Query 的快取管理器。
+- `invalidateQueries`：將符合 key 的資料標記為 stale，並讓使用中的 query 重新取得。
 - 交易類功能不要亂做「假裝成功」的 optimistic update，最終狀態以後端和訂單推送為準。
 
 ## 範例六：用 useReducer 管下單表單

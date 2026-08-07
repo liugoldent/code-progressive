@@ -1,13 +1,13 @@
 ---
-title: "UI 品質 / Responsive / Tooling"
-description: "高品質 UI、響應式版面、CSS 架構、Webpack 與現代前端工具鏈面試筆記。"
+title: "前端 UI 品質面試：Responsive / CSS / Tooling"
+description: "整理 Binance 前端面試常問的高品質 UI、responsive web application、CSS 架構、Tailwind CSS、styled-system、Webpack、Vite、bundle optimization 與前端工具鏈。"
 tags:
   - CSS
   - Responsive
   - Tooling
   - Webpack
-keywords: ["Responsive UI", "Tailwind CSS", "styled-system", "Webpack", "UI quality"]
-sidebar_position: 7
+keywords: ["前端 UI 面試", "Responsive UI", "responsive web application", "高品質 UI", "CSS 架構", "Tailwind CSS", "styled-system", "Webpack 面試", "Vite", "bundle optimization", "frontend tooling", "Binance 前端面試"]
+sidebar_position: 9
 ---
 
 # UI 品質 / Responsive / Tooling

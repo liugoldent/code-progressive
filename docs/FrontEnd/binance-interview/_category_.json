@@ -1,9 +1,9 @@
 {
-  "label": "Binance Interview",
+  "label": "Binance Frontend Interview",
   "position": 4,
   "link": {
     "type": "generated-index",
-    "title": "Binance Frontend Interview",
-    "description": "針對 Binance 前端工程師職缺整理的技能地圖、面試攻略與複習筆記。"
+    "title": "Binance Frontend Interview：React 前端面試攻略",
+    "description": "給 Vue 工程師準備 Binance Frontend / Senior Front-end Developer 面試的 React 反射訓練、現場實戰題、JavaScript、TypeScript、狀態管理、WebSocket、交易產品系統設計與前端面試題庫。"
   }
 }

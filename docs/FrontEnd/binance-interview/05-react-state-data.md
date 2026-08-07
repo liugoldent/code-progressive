@@ -1,13 +1,13 @@
 ---
-title: "React / Redux / React Query"
-description: "React、Redux 狀態管理、React Query server state 與非同步資料處理面試筆記。"
+title: "React 狀態管理面試：Redux / React Query"
+description: "Binance 前端面試中的 React 狀態管理與資料流筆記，整理 render、reconciliation、Hooks、Redux / Flux、React Query server state、快取、mutation、invalidation 與非同步資料處理。"
 tags:
   - React
   - Redux
   - React Query
   - Interview
-keywords: ["React", "Redux", "Flux", "React Query", "state management", "async data"]
-sidebar_position: 6
+keywords: ["React 狀態管理", "React 面試", "Redux 面試", "Flux architecture", "React Query 面試", "TanStack Query", "server state", "client state", "state management", "async data", "query invalidation", "Binance frontend interview"]
+sidebar_position: 8
 ---
 
 # React / Redux / React Query
@@ -54,6 +54,170 @@ reconciliation 可以理解成 React 的「新舊畫面比對」流程。
 - render 不等於 DOM 全部重建；commit 才是真正改 DOM。
 - `key` 不是只為了消除 warning，而是幫 React 判斷 list item identity。
 - 不穩定的 key，例如 array index 搭配可插入、刪除、排序的列表，容易造成 component state 對錯資料。
+
+## React 一次畫面更新：Trigger → Render → Commit
+
+`commit` 不是 `useEffect` 專屬名詞，也不是 Git commit。它是 React 把 render 結果套用到真實 DOM 的更新階段。
+
+React 一次畫面更新可以先用這個流程理解：
+
+```txt
+Trigger
+→ Render
+→ Commit
+→ Browser Paint
+→ useEffect（常見情況）
+```
+
+這是一個方便建立心智模型的簡化順序。最重要的界線是：
+
+```txt
+Render：計算下一個畫面
+Commit：把差異套用到 DOM
+Paint：瀏覽器把結果畫到螢幕
+Effect：讓 React 與外部系統同步
+```
+
+### 1. Trigger：觸發更新
+
+React component 主要在兩種情況開始 render：
+
+- Initial render：應用程式第一次建立畫面。
+- Re-render：component 自己或 ancestor 的 state 更新，或訂閱的 props、context、external store snapshot 改變。
+
+最常見的 trigger 是 state setter：
+
+```tsx
+setQuantity("2");
+```
+
+Setter 的意思是「把更新排入 React，請安排下一次 render」，不是立刻修改目前 render scope 裡的 `quantity` 變數。
+
+### 2. Render：計算下一個 UI
+
+React 呼叫 component function，根據這次 render 的 props、state、context 計算新的 JSX：
+
+```tsx
+function OrderForm() {
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const notional = Number(price) * Number(quantity);
+
+  return <output>{notional}</output>;
+}
+```
+
+Render 階段會：
+
+- 重新執行相關 component function。
+- 取得這次 render 的 state snapshot。
+- 計算普通變數與 derived data。
+- 建立新的 React element tree。
+- 透過 reconciliation 判斷和上一輪有什麼差異。
+
+Render 階段不應該：
+
+- 修改既有 props / state object。
+- 建立 WebSocket、timer 或 DOM event subscription。
+- 呼叫會影響外部世界的 side effect。
+- 依賴「component function 只會被呼叫一次」。
+
+Render 必須保持 pure，因為 React 可以重新執行、暫停，或放棄尚未 commit 的 render work。
+
+### 3. Commit：把差異套用到 DOM
+
+Render 算完下一個 UI 後，React 才進入 commit，把必要差異套用到瀏覽器 DOM。
+
+例如：
+
+```txt
+上一輪：<output>0</output>
+這一輪：<output>20</output>
+```
+
+Commit 時才真正把文字從 `0` 更新為 `20`。
+
+React 不會因為 component function 重新執行，就把整個頁面 DOM 全部重建。它只會 commit reconciliation 判斷出的必要變更；如果前後結果相同，可能不需要修改任何 DOM。
+
+Refs 的連接 / 移除與 layout effect 的 setup / cleanup 也和 commit 時機相關，因此 render 階段不能假設 DOM 已經更新完成。
+
+### 4. Browser Paint：瀏覽器畫到螢幕
+
+React 修改 DOM 後，瀏覽器還要進行 style calculation、layout、paint 等工作，使用者才會看到像素變化。
+
+不要混淆兩種 render：
+
+- React render：React 呼叫 component，計算 JSX。
+- Browser rendering / paint：瀏覽器依 DOM / CSS 計算 layout 並畫出像素。
+
+### 5. `useLayoutEffect` 與 `useEffect` 的位置
+
+需要量測 DOM 並在使用者看到畫面前同步修正 layout 時，可以使用 `useLayoutEffect`：
+
+```txt
+Render
+→ Commit DOM changes
+→ useLayoutEffect
+→ Browser Paint
+```
+
+`useLayoutEffect` 會阻擋 paint，所以只應用在必須同步量測 / 調整 DOM、避免閃爍的情況。
+
+一般 `useEffect` 則是在 component commit 後執行，用來同步 WebSocket、timer、event listener、network 或第三方 widget 等外部系統：
+
+```txt
+Render
+→ Commit
+→ Browser Paint
+→ useEffect（非互動更新的常見情況）
+```
+
+更精準地說，`useEffect` 保證和 commit 後的 component 狀態相連，但不能一律背成「永遠在 paint 後」。React 可能因為更新是否由 interaction 觸發等因素調整 effect 與 paint 的相對時機。若邏輯必須在 paint 前完成，應明確使用 `useLayoutEffect`。
+
+### 套回 derived state 的錯誤範例
+
+```tsx
+const [price, setPrice] = useState("");
+const [quantity, setQuantity] = useState("");
+const [notional, setNotional] = useState(0);
+
+useEffect(() => {
+  setNotional(Number(price) * Number(quantity));
+}, [price, quantity]);
+```
+
+使用者輸入 quantity 時會變成：
+
+```txt
+setQuantity("2")
+→ Render 1：quantity 已是 "2"，notional 還是舊值 0
+→ Commit 1：DOM 暫時使用 notional 0
+→ Effect：setNotional(20)
+→ Render 2：notional 變成 20
+→ Commit 2：DOM 更新成 20
+```
+
+因為 `notional` 可以在 render 直接推導，應該寫成：
+
+```tsx
+const notional = Number(price) * Number(quantity);
+```
+
+流程就只需要：
+
+```txt
+setQuantity("2")
+→ Render：直接算出 notional 20
+→ Commit：DOM 直接更新成 20
+```
+
+這不是因為 setter 本身不好，而是這個 setter 在 commit 後同步一份不必要的 derived state，造成 cascading render。
+
+### 面試最短回答
+
+> A React update has a render phase and a commit phase. During render, React calls components and calculates the next UI. During commit, it applies the necessary changes to the DOM. Rendering does not mean rebuilding the whole DOM. Effects are related to committed UI: `useLayoutEffect` runs after DOM changes but before paint, while `useEffect` runs after commit and is used to synchronize with external systems.
+
+延伸實作與逐步時序見 [React 現場實戰題：State / Effect / Realtime](./11-react-state-effect-live-demo.md)。
 
 ## Hooks 心智模型：看到 use 系列怎麼走
 

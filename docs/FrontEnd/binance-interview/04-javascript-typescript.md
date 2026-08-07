@@ -1,12 +1,12 @@
 ---
-title: "JavaScript / TypeScript 面試重點"
-description: "Binance 前端面試常見的 JavaScript 與 TypeScript production code 考點。"
+title: "JavaScript / TypeScript 前端面試重點"
+description: "整理 Binance 前端面試常考的 JavaScript 與 TypeScript production code 重點，包含 event loop、Promise、async/await、closure、this、module、型別設計、泛型與 narrowing。"
 tags:
   - JavaScript
   - TypeScript
   - Interview
-keywords: ["JavaScript", "TypeScript", "event loop", "Promise", "production code"]
-sidebar_position: 5
+keywords: ["JavaScript 面試", "TypeScript 面試", "Binance 前端面試", "event loop", "Promise", "async await", "closure", "this binding", "TypeScript generics", "type narrowing", "production JavaScript", "frontend interview"]
+sidebar_position: 7
 ---
 
 # JavaScript / TypeScript 面試重點

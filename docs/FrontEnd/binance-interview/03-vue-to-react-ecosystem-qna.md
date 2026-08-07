@@ -1,13 +1,13 @@
 ---
-title: "Vue 轉 React 生態面試題"
-description: "給 Vue 背景工程師準備 Binance React 前端職缺的高機率面試題與口述答案。"
+title: "Vue 轉 React 面試題：React 生態系 Q&A"
+description: "給 Vue 工程師準備 Binance React 前端面試的高頻問答，涵蓋 React 心智模型、Hooks、Redux、React Query、React Router、狀態管理、效能與交易產品情境。"
 tags:
   - Vue
   - React
   - Interview
   - Binance
-keywords: ["Vue to React", "React interview", "Binance frontend", "Redux", "React Query", "Hooks"]
-sidebar_position: 4
+keywords: ["Vue 轉 React 面試", "Vue to React", "React interview questions", "Binance frontend", "React 生態系", "React Hooks", "Redux 面試", "React Query 面試", "React Router", "前端面試問答", "交易產品前端", "Vue React 差異"]
+sidebar_position: 6
 ---
 
 # Vue 轉 React 生態面試題

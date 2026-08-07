@@ -1,12 +1,12 @@
 ---
-title: "React 基礎：Vue 對照版"
-description: "給 Vue 背景工程師補 React 基礎，使用 Vue 與 React 程式碼對照理解 JSX、元件、props、state、事件、列表、表單、effect 與 hooks。"
+title: "React 基礎教學：Vue 轉 React 對照筆記"
+description: "給 Vue 背景工程師準備 React 與 Binance 前端面試，對照 JSX、component、props、useState、useEffect、事件、列表、表單、computed 與 Vue reactivity 差異。"
 tags:
   - React
   - Vue
   - Interview
   - Binance
-keywords: ["React 基礎", "Vue 對照 React", "JSX", "useState", "useEffect", "React interview"]
+keywords: ["React 基礎", "Vue 轉 React", "Vue 對照 React", "React useState", "useEffect", "JSX 教學", "React component", "React props state", "React interview", "Binance 前端面試", "Vue reactivity", "controlled component"]
 sidebar_position: 2
 ---
 
@@ -220,6 +220,26 @@ function Counter() {
   );
 }
 ```
+
+心智模型：
+
+```txt
+畫面 = f(state)
+```
+
+React 寫 `useState` 時，不是直接想「我要把 button 文字改掉」，而是想：
+
+> 現在 state 是這樣，那下一次 component render 出來的畫面應該長怎樣？
+
+所以流程會像這樣：
+
+1. 事件裡呼叫 `setCount(count + 1)`。
+2. React 安排下一次 render。
+3. `Counter()` 重新執行，拿到新的 `count`。
+4. JSX 重新描述「下一次畫面」。
+5. React 比對前後差異，只更新真的變動的 DOM。
+
+Vue 的感覺比較像「我改了 reactive data，用到它的地方會跟著更新」；React 的感覺比較像「state 改了，component function 重新執行，重新算出下一個 UI」。
 
 重點：
 

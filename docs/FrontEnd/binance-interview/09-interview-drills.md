@@ -1,26 +1,30 @@
 ---
-title: "面試題庫與回答模板"
-description: "Binance 前端面試練習題、回答模板、英文口說與行為面試準備。"
+title: "Binance 前端面試題庫與回答模板"
+description: "整理 Binance 前端面試練習題、React / JavaScript / TypeScript 回答模板、英文口說、自我介紹、行為面試 STAR 範例與交易產品專案經驗說法。"
 tags:
   - Interview
   - Behavioral
   - React
   - JavaScript
-keywords: ["frontend interview questions", "Binance interview", "behavioral interview", "React questions"]
-sidebar_position: 10
+keywords: ["Binance 前端面試題", "frontend interview questions", "Binance interview", "React 面試題", "JavaScript 面試題", "TypeScript 面試題", "behavioral interview", "STAR interview", "英文面試自我介紹", "前端面試回答模板", "React questions", "交易產品面試"]
+sidebar_position: 12
 ---
 
 # 面試題庫與回答模板
 
 ## 自我介紹模板
 
-中文：
+不要把 Vue production 經驗改寫成尚未具備的 React production 經驗。面試官更在意你能不能誠實說清楚可轉移能力、已完成的 React 實作，以及還在補強什麼。
 
-> 我主要做前端工程，核心經驗是 React / JavaScript / TypeScript，熟悉狀態管理、API 資料流、responsive UI 和前端工程化。我過去比較重視 production code 的穩定性，例如錯誤處理、loading/error state、元件拆分、效能優化與可維護性。如果面對交易產品，我會特別注意即時資料、數字精度、使用者操作風險，以及大量資料更新下的 UI 效能。
+中文（Vue 主力、轉 React 版本）：
 
-英文：
+> 我主要使用 Vue、JavaScript 與 TypeScript 開發 production 前端，熟悉元件架構、狀態管理、API 資料流、responsive UI 和工程化。最近我有系統地把這些能力轉到 React，除了基本 Hooks，也特別練 render snapshot、effect 生命週期、server/client state 分層與高頻資料更新。我不會把 Vue 寫法逐字翻成 React，而是會依 React 的資料流重新決定 state owner、derived data 和 side effect。面對交易產品，我也會特別注意即時資料正確性、數字精度、錯誤恢復與操作風險。
 
-> I am a frontend engineer focused on React, JavaScript, and TypeScript. My production experience is around building maintainable UI, managing complex state, integrating asynchronous APIs, and improving runtime performance. For trading products, I pay special attention to realtime data, precision, error handling, and keeping the interface responsive under frequent updates.
+英文（Vue 主力、轉 React 版本）：
+
+> I am a frontend engineer with production experience primarily in Vue, JavaScript, and TypeScript. My transferable strengths include component architecture, state management, asynchronous data flows, responsive UI, and frontend tooling. I have been systematically applying these skills in React, with particular focus on render snapshots, effect lifecycles, state ownership, and realtime data updates. I do not translate Vue patterns mechanically; I redesign the data flow around React's model and validate the result through testing and profiling.
+
+如果投遞時已經完成本章的 trading dashboard，可以再補一句可驗證的作品經驗；不要只把「讀過 React」換成「熟悉 React」。
 
 ## 專案經驗回答模板
 

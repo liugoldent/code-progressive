@@ -1,13 +1,13 @@
 ---
-title: "效能 / 測試 / 前端系統設計"
-description: "Binance Senior Front-end 面試常見的效能優化、測試策略與前端系統設計整理。"
+title: "前端效能與系統設計面試：React / Testing"
+description: "Binance Senior Front-end 面試的效能優化、React runtime performance、測試策略、前端系統設計與高頻行情 UI 設計筆記，包含 memo、virtualization、Profiler、E2E 與監控。"
 tags:
   - Performance
   - Testing
   - System Design
   - Frontend
-keywords: ["frontend performance", "testing", "system design", "React performance"]
-sidebar_position: 8
+keywords: ["前端效能面試", "frontend performance", "React performance", "React Profiler", "memoization", "virtualization", "高頻行情 UI", "frontend system design", "testing strategy", "E2E testing", "Binance Senior Front-end", "前端系統設計"]
+sidebar_position: 10
 ---
 
 # 效能 / 測試 / 前端系統設計
