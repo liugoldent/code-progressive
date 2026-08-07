@@ -10,9 +10,6 @@ tags:
 keywords: ["0058", "Length", "of", "Last", "Word", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0058] Length of Last Word
 
 > 題號：**0058** | 難度：**Easy** | 主題：**Length of Last Word**

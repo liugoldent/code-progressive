@@ -9,9 +9,6 @@ tags:
 keywords: ["0704", "Binary", "Search", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0704] Binary Search
 
 > 題號：**0704** | 難度：**Easy** | 主題：**Binary Search**

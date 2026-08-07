@@ -10,9 +10,6 @@ tags:
 keywords: ["0020", "Valid", "Parentheses", "LeetCode", "Javascript", "-2", "Python"]
 ---
 
-
-
-
 # [0020] Valid Parentheses
 
 > 題號：**0020** | 難度：**Easy** | 主題：**Valid Parentheses**

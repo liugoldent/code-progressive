@@ -1,4 +1,5 @@
 ---
+sidebar_position: 2
 title: "React 基礎教學：Vue 轉 React 對照筆記"
 description: "給 Vue 背景工程師準備 React 與 Binance 前端面試，對照 JSX、component、props、useState、useEffect、事件、列表、表單、computed 與 Vue reactivity 差異。"
 tags:
@@ -7,7 +8,6 @@ tags:
   - Interview
   - Binance
 keywords: ["React 基礎", "Vue 轉 React", "Vue 對照 React", "React useState", "useEffect", "JSX 教學", "React component", "React props state", "React interview", "Binance 前端面試", "Vue reactivity", "controlled component"]
-sidebar_position: 2
 ---
 
 # React 基礎：Vue 對照版

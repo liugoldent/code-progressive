@@ -9,9 +9,6 @@ tags:
 keywords: ["前端", "Vue", "Router", "FE-knowledge", "vue-router", "怎麼重新定向頁面", "如何配置", "404"]
 ---
 
-
-
-
 # [FE] Vue Router
 
 ![vue router分類](https://www.leyeah.com/upload/images/2022/12/01/63889748cd28e.jpg)

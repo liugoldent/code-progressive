@@ -9,9 +9,6 @@ tags:
 keywords: ["0101", "Symmetric", "Tree", "LeetCode"]
 ---
 
-
-
-
 # [0101] Symmetric Tree
 
 > 題號：**0101** | 難度：**Easy** | 主題：**Symmetric Tree**

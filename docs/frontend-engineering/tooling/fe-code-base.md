@@ -8,9 +8,6 @@ tags:
 keywords: ["前端", "程式基礎知識", "FE-knowledge", "SOLID", "GET", "vs", "post", "websocket"]
 ---
 
-
-
-
 # [FE] 程式基礎知識
 ## SOLID
 * SRP -> 單一職責原則：讓一個類去做一件事，如果有要做更多事，請解構。降低單一功能或類別被「改變」所影響的機會。

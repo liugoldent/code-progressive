@@ -7,9 +7,6 @@ tags:
 keywords: ["TS", "Function", "函數的進階使用", "TypeSctipt", "基本用法", "進階用法", "文章來源"]
 ---
 
-
-
-
 # [TS] Function - 函數的進階使用
 ## 基本用法
 ```ts

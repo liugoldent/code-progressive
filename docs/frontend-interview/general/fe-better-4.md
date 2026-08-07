@@ -9,9 +9,6 @@ tags:
 keywords: ["前端", "前端效能優化-4", "FE-knowledge", "web", "workers", "webAssembly", "6-1", "6-2"]
 ---
 
-
-
-
 # [FE] 前端效能優化-4
 
 [Web 前端效能優化大補帖筆記](https://www.books.com.tw/products/E050147683)

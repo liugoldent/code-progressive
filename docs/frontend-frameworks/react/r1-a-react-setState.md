@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "setState", "x的差異性", "參考文章", "範例"]
 ---
 
-
-
-
 # [React] React setState(x) x的差異性
 
 ## 參考文章

@@ -10,9 +10,6 @@ tags:
 keywords: ["0011", "Container", "With", "Most", "Water", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0011] Container With Most Water
 
 > 題號：**0011** | 難度：**Medium** | 主題：**Container With Most Water, two pointers**

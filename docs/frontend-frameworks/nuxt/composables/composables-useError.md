@@ -7,9 +7,6 @@ tags:
 keywords: ["useError", "Nuxt", "概念", "範例", "返回值"]
 ---
 
-
-
-
 # useError
 
 ## 概念

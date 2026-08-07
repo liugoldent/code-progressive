@@ -9,9 +9,6 @@ tags:
 keywords: ["0066", "Plus", "One", "LeetCode", "Javascript", "Python"]
 ---
 
-
-
-
 # [0066] Plus One
 
 > 題號：**0066** | 難度：**Easy** | 主題：**Plus One**

@@ -10,9 +10,6 @@ tags:
 keywords: ["0013", "Roman", "to", "Integer", "LeetCode", "Javascript", "Python"]
 ---
 
-
-
-
 # [0013] Roman to Integer
 
 > 題號：**0013** | 難度：**Easy** | 主題：**Roman to Integer**

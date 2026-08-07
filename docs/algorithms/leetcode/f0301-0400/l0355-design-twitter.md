@@ -10,9 +10,6 @@ tags:
 keywords: ["0355", "Design", "Twitter", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0355] Design Twitter
 
 > 題號：**0355** | 難度：**Medium** | 主題：**Design Twitter, Heap / Priority**

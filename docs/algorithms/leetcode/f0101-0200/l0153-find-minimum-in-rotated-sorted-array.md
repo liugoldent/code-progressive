@@ -10,9 +10,6 @@ tags:
 keywords: ["0153", "Find", "Minimum", "in", "Rotated", "Sorted", "Array", "LeetCode"]
 ---
 
-
-
-
 # [0153] Find Minimum in Rotated Sorted Array
 
 > 題號：**0153** | 難度：**Medium** | 主題：**Find Minimum in Rotated Sorted Array, Binary Search**

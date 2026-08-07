@@ -9,9 +9,6 @@ tags:
 keywords: ["0912", "Sort", "an", "Array", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0912] Sort an Array
 
 > 題號：**0912** | 難度：**Medium** | 主題：**Sort an Array**

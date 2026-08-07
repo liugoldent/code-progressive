@@ -7,9 +7,6 @@ tags:
 keywords: ["useCookie", "Nuxt", "概念", "注意事項", "範例", "選項參數"]
 ---
 
-
-
-
 # useCookie
 
 ## 概念

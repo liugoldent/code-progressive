@@ -1,4 +1,5 @@
 ---
+sidebar_position: 8
 title: "React 狀態管理面試：Redux / React Query"
 description: "Binance 前端面試中的 React 狀態管理與資料流筆記，整理 render、reconciliation、Hooks、Redux / Flux、React Query server state、快取、mutation、invalidation 與非同步資料處理。"
 tags:
@@ -7,7 +8,6 @@ tags:
   - React Query
   - Interview
 keywords: ["React 狀態管理", "React 面試", "Redux 面試", "Flux architecture", "React Query 面試", "TanStack Query", "server state", "client state", "state management", "async data", "query invalidation", "Binance frontend interview"]
-sidebar_position: 8
 ---
 
 # React / Redux / React Query

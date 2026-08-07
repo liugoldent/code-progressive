@@ -7,9 +7,6 @@ tags:
 keywords: ["useAppConfig", "Nuxt", "概念", "範例"]
 ---
 
-
-
-
 # useAppConfig
 
 ## 概念

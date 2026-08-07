@@ -8,9 +8,6 @@ tags:
 keywords: ["談談", "buffer", "Interview", "緣由", "緩衝區", "方法", "綜合程式碼"]
 ---
 
-
-
-
 # 談談 buffer
 
 ## 緣由

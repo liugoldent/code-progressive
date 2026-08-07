@@ -1,3 +1,9 @@
+---
+title: "前端面試重點整理"
+description: "前端面試重點整理 筆記，整理 API 請求生命週期管理、路由資源拆分與預載策略 等重點。"
+keywords: ["前端面試重點整理", "frontend-interview", "API", "請求生命週期管理", "路由資源拆分與預載策略", "Infinite", "Scroll", "Debounce"]
+---
+
 # 前端面試重點整理
 
 專案：影音文字論壇

@@ -9,9 +9,6 @@ tags:
 keywords: ["前端", "TypeScript", "p2", "FE-knowledge", "TS", "泛型", "高級類型"]
 ---
 
-
-
-
 # [FE] TypeScript - p2
 
 ## TS - 泛型

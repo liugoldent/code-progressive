@@ -11,9 +11,6 @@ tags:
 keywords: ["0215", "Kth", "Largest", "Element", "in", "an", "Array", "LeetCode"]
 ---
 
-
-
-
 # [0215] Kth Largest Element in an Array
 
 > 題號：**0215** | 難度：**Medium** | 主題：**Kth Largest Element in an Array, Heap, PriorityQueue**

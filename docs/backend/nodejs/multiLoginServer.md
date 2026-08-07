@@ -1,3 +1,9 @@
+---
+title: "MultiLogin Server"
+description: "MultiLogin Server 筆記，整理 入口與怎麼啟動、啟動後的整體順序 等重點。"
+keywords: ["MultiLogin", "Server", "backend", "入口與怎麼啟動", "啟動後的整體順序", "三個核心檔案各自負責什麼", "schedule", "資料怎麼流"]
+---
+
 # MultiLogin Server
 
 這份筆記整理的是 `/Users/kt/Desktop/work/wow/multilogin/schedule` 這組排程服務的整體流程。

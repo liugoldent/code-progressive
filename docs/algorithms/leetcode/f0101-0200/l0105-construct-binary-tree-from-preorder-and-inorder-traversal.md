@@ -10,9 +10,6 @@ tags:
 keywords: ["0105", "Construct", "Binary", "Tree", "from", "Preorder", "and", "Inorder"]
 ---
 
-
-
-
 # [0105] Construct Binary Tree from Preorder and Inorder Traversal
 
 > 題號：**0105** | 難度：**Medium** | 主題：**Tree, Construct Binary Tree from Preorder and Inorder Traversal**

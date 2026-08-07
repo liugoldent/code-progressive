@@ -8,9 +8,6 @@ tags:
 keywords: ["前端", "面試題整理", "V1", "FE-knowledge", "請說明js的作用域", "JS生命週期", "請說明什麼是提升", "Hoisting"]
 ---
 
-
-
-
 # [FE] Interview V1
 
 ## 請說明js的作用域?

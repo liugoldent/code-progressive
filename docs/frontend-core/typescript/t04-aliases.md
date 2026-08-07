@@ -7,9 +7,6 @@ tags:
 keywords: ["TS", "Interface", "vs", "Type", "Aliases", "用法與差別", "TypeSctipt", "基本運用"]
 ---
 
-
-
-
 # [TS] Interface vs Type Aliases 用法與差別
 
 ## 基本運用

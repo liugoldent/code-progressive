@@ -8,9 +8,6 @@ tags:
 keywords: ["談談", "this", "Interview", "解釋", "用法", "相關考題"]
 ---
 
-
-
-
 # 談談 this
 
 ## 解釋

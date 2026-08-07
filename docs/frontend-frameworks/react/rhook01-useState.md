@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "useState", "概念", "基本程式", "useState的物件型別使用"]
 ---
 
-
-
-
 # [React] useState
 ## 概念
 * useState 是 React 中的一個 Hook，用於在 Function Component 中添加狀態（state）。它允許您在無需使用類別組件的情況下，在 Function Component 中添加內部狀態

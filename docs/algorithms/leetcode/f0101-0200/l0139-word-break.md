@@ -12,9 +12,6 @@ tags:
 keywords: ["0139", "Word", "Break", "LeetCode", "JavaScript", "Dynamic", "Programming", "字串切割"]
 ---
 
-
-
-
 # [0139] Word Break
 
 > 題目難度：**Medium**  

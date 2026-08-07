@@ -12,9 +12,6 @@ tags:
 keywords: ["0055", "Jump", "Game", "LeetCode", "JavaScript", "Greedy", "Array", "面試題"]
 ---
 
-
-
-
 # [0055] Jump Game
 
 > **難度**：Medium  

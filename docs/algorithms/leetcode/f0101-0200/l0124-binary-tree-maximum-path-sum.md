@@ -10,9 +10,6 @@ tags:
 keywords: ["0124", "Binary", "Tree", "Maximum", "Path", "Sum", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0124] Binary Tree Maximum Path Sum
 
 > 題號：**0124** | 難度：**Medium** | 主題：**Binary Tree Maximum Path Sum, Trees**

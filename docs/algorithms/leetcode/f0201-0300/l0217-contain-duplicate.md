@@ -13,9 +13,6 @@ tags:
 keywords: ["0217", "Contains", "Duplicate", "LeetCode", "Javascript", "Python", "測試程式", "相關連結"]
 ---
 
-
-
-
 # [0217] Contains Duplicate
 
 > 題號：**0217** | 難度：**easy** | 主題：**Array, And, Hashing**

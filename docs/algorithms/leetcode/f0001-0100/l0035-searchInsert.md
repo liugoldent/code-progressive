@@ -10,9 +10,6 @@ tags:
 keywords: ["0035", "Search", "Insert", "Position", "LeetCode", "Javascript", "Python"]
 ---
 
-
-
-
 # [0035] Search Insert Position
 
 > 題號：**0035** | 難度：**Easy** | 主題：**Search Insert Position**

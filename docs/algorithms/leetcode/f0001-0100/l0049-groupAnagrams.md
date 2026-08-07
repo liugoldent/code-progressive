@@ -11,9 +11,6 @@ tags:
 keywords: ["0049", "Group", "Anagrams", "LeetCode", "Javascript", "Python", "test", "case"]
 ---
 
-
-
-
 # [0049] Group Anagrams
 
 > 題號：**0049** | 難度：**Medium** | 主題：**Hashing**

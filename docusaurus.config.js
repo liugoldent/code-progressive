@@ -11,13 +11,17 @@ if (!globalThis.File) {
   globalThis.File = File;
 }
 
+const siteUrl = "https://code-progressive.netlify.app";
+const siteDescription =
+  "整理前端、JavaScript、React、Vue、TypeScript、Node.js 與 LeetCode 的學習筆記與實作紀錄。";
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "__yeah! Code",
   tagline: "前端、JavaScript、React、Vue、TypeScript 與演算法學習筆記",
-  url: "https://code-progressive.netlify.app/",
+  url: siteUrl,
   favicon: "img/code.png",
-  titleDelimiter: " | ",
+  titleDelimiter: "|",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
@@ -76,6 +80,16 @@ const config = {
         docs: {
           sidebarPath: "./sidebars.js",
         },
+        blog: {
+          blogTitle: "__yeah! Code 技術文章",
+          blogDescription:
+            "整理技術學習、開發實作與數位內容觀察的文章。",
+        },
+        sitemap: {
+          changefreq: "weekly",
+          priority: 0.5,
+          lastmod: "date",
+        },
         theme: {
           customCss: "./src/css/custom.css",
         },
@@ -91,19 +105,30 @@ const config = {
       metadata: [
         {
           name: "description",
-          content:
-            "整理前端、JavaScript、React、Vue、TypeScript、Node.js 與 LeetCode 的學習筆記與實作紀錄。",
+          content: siteDescription,
         },
         {
           name: "keywords",
           content:
             "前端, JavaScript, React, Vue, TypeScript, Node.js, LeetCode, 技術筆記",
         },
+        {
+          property: "og:description",
+          content: siteDescription,
+        },
+        {
+          property: "og:site_name",
+          content: "__yeah! Code",
+        },
+        {
+          property: "og:type",
+          content: "website",
+        },
       ],
       navbar: {
         title: "__yeah! Code",
         logo: {
-          alt: "My Site Logo",
+          alt: "__yeah! Code 首頁",
           src: "img/code.png",
         },
         items: [

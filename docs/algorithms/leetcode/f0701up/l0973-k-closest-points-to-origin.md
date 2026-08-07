@@ -9,9 +9,6 @@ tags:
 keywords: ["0973", "Closest", "Points", "to", "Origin", "LeetCode"]
 ---
 
-
-
-
 # [0973] K Closest Points to Origin
 
 > 題號：**0973** | 難度：**Medium** | 主題：**K Closest Points to Origin**

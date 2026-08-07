@@ -7,9 +7,6 @@ tags:
 keywords: ["useNuxtApp", "Nuxt", "概念", "範例", "方法", "屬性"]
 ---
 
-
-
-
 # useNuxtApp
 ## 概念
 * 是 Nuxt.js 中提供的一個 Composables 函數，用於在組件中獲取 Nuxt 應用程序實例。通過 useNuxtApp，您可以在組件中訪問 Nuxt 應用程序實例的各種功能和屬性，例如路由、插件、配置等。

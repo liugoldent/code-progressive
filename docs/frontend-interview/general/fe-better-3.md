@@ -9,9 +9,6 @@ tags:
 keywords: ["前端", "前端效能優化-3", "FE-knowledge", "快取與網路機制", "5-1", "Http", "Cache", "5-2"]
 ---
 
-
-
-
 # [FE] 前端效能優化-3
 [Web前端效能優化大補帖筆記](https://www.books.com.tw/products/E050147683)
 

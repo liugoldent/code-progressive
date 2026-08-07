@@ -10,9 +10,6 @@ tags:
 keywords: ["0110", "Balanced", "Binary", "Tree", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0110] Balanced Binary Tree
 
 > 題號：**0110** | 難度：**Medium** | 主題：**Tree, Balanced Binary Tree**

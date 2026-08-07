@@ -10,9 +10,6 @@ tags:
 keywords: ["0692", "Top", "Frequent", "Words", "LeetCode", "js"]
 ---
 
-
-
-
 # [0692] Top K Frequent Words
 
 > 題號：**0692** | 難度：**Medium** | 主題：**Heap / Priority Queue, Top K Frequent Words**

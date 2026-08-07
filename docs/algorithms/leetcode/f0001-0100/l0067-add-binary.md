@@ -10,9 +10,6 @@ tags:
 keywords: ["0067", "Add", "Binary", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0067] Add Binary
 
 > 題號：**0067** | 難度：**Easy** | 主題：**Add Binary**

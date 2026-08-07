@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "CRA", "create", "App", "概念、關鍵字"]
 ---
 
-
-
-
 # [React] React CRA - create React App
 ## 概念、關鍵字
 ### CRA

@@ -11,9 +11,6 @@ tags:
 keywords: ["0136", "Single", "Number", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0136] Single Number
 
 > 題號：**0136** | 難度：**Medium** | 主題：**Hashing**

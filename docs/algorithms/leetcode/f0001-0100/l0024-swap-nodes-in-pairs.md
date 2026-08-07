@@ -9,9 +9,6 @@ tags:
 keywords: ["0024", "Swap", "Nodes", "in", "Pairs", "LeetCode", "Javascript", "大師圖文講解"]
 ---
 
-
-
-
 # [0024] Swap Nodes in Pairs
 
 > 題號：**0024** | 難度：**Medium** | 主題：**Swap Nodes in Pairs**

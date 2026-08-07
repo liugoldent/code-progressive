@@ -11,9 +11,6 @@ tags:
 keywords: ["0036", "Valid", "Sudoku", "LeetCode", "Javascript", "Python"]
 ---
 
-
-
-
 # [0036] Valid Sudoku
 
 > 題號：**0036** | 難度：**Medium** | 主題：**Hashing**

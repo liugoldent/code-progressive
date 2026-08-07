@@ -9,9 +9,6 @@ tags:
 keywords: ["1768", "Merge", "Strings", "Alternately", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [1768] Merge Strings Alternately
 
 > 題號：**1768** | 難度：**Easy** | 主題：**Merge Strings Alternately**

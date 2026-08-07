@@ -8,9 +8,6 @@ tags:
 keywords: ["前端", "面試題整理", "V2", "FE-knowledge", "說明", "CSS", "的層級", "display:none"]
 ---
 
-
-
-
 # [FE] Interview V2
 
 ## 說明 CSS 的層級

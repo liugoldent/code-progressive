@@ -7,9 +7,6 @@ tags:
 keywords: ["nuxt", "js", "javascript", "composable", "composable api", "useHead", "seo", "nuxt useHead"]
 ---
 
-
-
-
 # useHead
 
 ## 概念

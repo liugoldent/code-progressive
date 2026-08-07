@@ -11,9 +11,6 @@ tags:
 keywords: ["0002", "Two", "Sum", "LeetCode", "Javascript", "Python", "cpp", "test"]
 ---
 
-
-
-
 # [0002] Two Sum
 
 > 題號：**0002** | 難度：**Easy** | 主題：**Hashing**

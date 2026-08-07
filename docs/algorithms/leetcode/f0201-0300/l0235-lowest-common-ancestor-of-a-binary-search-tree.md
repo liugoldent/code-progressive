@@ -10,9 +10,6 @@ tags:
 keywords: ["0235", "Lowest", "Common", "Ancestor", "of", "Binary", "Search", "LeetCode"]
 ---
 
-
-
-
 # [0235] Lowest Common Ancestor of a Binary Search
 
 > 題號：**0235** | 難度：**Medium** | 主題：**Lowest Common Ancestor of a Binary Search, Tree**

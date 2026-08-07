@@ -1,4 +1,5 @@
 ---
+sidebar_position: 14
 title: "React 現場實戰題系列"
 description: "集中整理 React 現場 debug 與面試實戰題；從預測輸出、定位根因、修正程式到面試口述，逐步建立 React 除錯反射。"
 tags:
@@ -6,7 +7,6 @@ tags:
   - Interview
   - Debugging
 keywords: ["React 現場題", "React 面試實戰題", "React debug 題", "React Hooks 面試", "React 前端面試"]
-sidebar_position: 14
 ---
 
 # React 現場實戰題系列

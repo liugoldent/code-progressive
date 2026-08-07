@@ -9,9 +9,6 @@ tags:
 keywords: ["0070", "Climbing", "stairs", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0070] Climbing stairs
 
 > 題號：**0070** | 難度：**Easy** | 主題：**Climbing stairs**

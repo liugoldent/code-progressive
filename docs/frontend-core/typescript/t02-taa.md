@@ -7,9 +7,6 @@ tags:
 keywords: ["TS", "指定型別的方式", "TypeSctipt", "Type", "Inference", "Annotation", "Assertions", "文章來源"]
 ---
 
-
-
-
 # [TS] 指定型別的方式
 ## Type Inference
 * 型別推斷：ts幫你推斷是什麼型別

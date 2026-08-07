@@ -1,4 +1,5 @@
 ---
+sidebar_position: 11
 title: "交易產品前端面試情境題：Order Book / WebSocket"
 description: "針對 Binance Futures 與交易產品前端面試整理 order book、WebSocket snapshot / delta、金融數字精度、下單表單、錯誤處理、交易頁 UX 與系統設計考點。"
 tags:
@@ -7,7 +8,6 @@ tags:
   - Trading
   - System Design
 keywords: ["交易產品前端", "Binance Futures", "trading UI", "order book", "order book design", "WebSocket snapshot delta", "financial precision", "decimal precision", "下單表單", "交易頁 UX", "frontend system design", "Binance 面試"]
-sidebar_position: 11
 ---
 
 # 交易產品前端情境題

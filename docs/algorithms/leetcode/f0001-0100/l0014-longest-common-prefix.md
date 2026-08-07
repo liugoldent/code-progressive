@@ -10,9 +10,6 @@ tags:
 keywords: ["0014", "Longest", "Common", "Prefix", "LeetCode", "Javascript", "Python"]
 ---
 
-
-
-
 # [0014] Longest Common Prefix
 
 > 題號：**0014** | 難度：**Easy** | 主題：**Longest Common Prefix**

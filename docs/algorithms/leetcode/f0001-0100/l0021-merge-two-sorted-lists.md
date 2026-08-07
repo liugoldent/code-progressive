@@ -10,9 +10,6 @@ tags:
 keywords: ["0021", "Merge", "Two", "Sorted", "Lists", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0021] Merge Two Sorted Lists
 
 > 題號：**0021** | 難度：**Easy** | 主題：**Merge Two Sorted Lists**

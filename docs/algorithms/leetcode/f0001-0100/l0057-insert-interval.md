@@ -12,9 +12,6 @@ tags:
 keywords: ["0057", "Insert", "Interval", "LeetCode", "JavaScript", "Greedy", "面試題", "📘"]
 ---
 
-
-
-
 # [0057] Insert Interval
 
 > **難度**：Medium  

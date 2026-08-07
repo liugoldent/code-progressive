@@ -8,9 +8,6 @@ tags:
 keywords: ["談談", "blob", "Interview", "解釋", "屬性", "方法", "綜合程式碼"]
 ---
 
-
-
-
 # 談談 blob
 
 ## 解釋

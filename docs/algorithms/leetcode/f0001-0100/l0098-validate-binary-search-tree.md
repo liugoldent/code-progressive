@@ -10,9 +10,6 @@ tags:
 keywords: ["0098", "Validate", "Binary", "Search", "Tree", "LeetCode"]
 ---
 
-
-
-
 # [0098] Validate Binary Search Tree
 
 > 題號：**0098** | 難度：**Medium** | 主題：**Validate Binary Search Tree, Tree**

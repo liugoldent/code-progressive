@@ -1,4 +1,5 @@
 ---
+sidebar_position: 13
 title: "Realtime Socket Governance：交易頁 WebSocket 系統設計"
 description: "Binance 交易頁 realtime socket governance 系統設計筆記，整理多分頁 owner/follower、BroadcastChannel、WebSocket data plane / control plane、K 線 realtime、React Query refetch storm 與資源治理。"
 tags:
@@ -7,7 +8,6 @@ tags:
   - System Design
   - Realtime
 keywords: ["Realtime Socket Governance", "Binance WebSocket", "WebSocket 系統設計", "多分頁同步", "BroadcastChannel", "leader follower", "owner follower", "React Query refetch storm", "Kline realtime", "trading realtime data", "前端系統設計", "Binance 前端面試"]
-sidebar_position: 13
 ---
 
 # Realtime Socket Governance

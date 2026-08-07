@@ -11,9 +11,6 @@ tags:
 keywords: ["0144", "Binary", "Tree", "Preorder", "Traversal", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0144] Binary Tree Preorder Traversal
 
 > 題號：**0144** | 難度：**Easy** | 主題：**Binary Tree Preorder Traversal, Binary Search, Stack**

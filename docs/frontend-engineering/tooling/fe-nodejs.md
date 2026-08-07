@@ -8,9 +8,6 @@ tags:
 keywords: ["前端", "Node", "js", "FE-knowledge", "直接風格", "vs", "CPS風格", "為何一定要用CPS"]
 ---
 
-
-
-
 # [FE] Node.js
 
 ## 直接風格 vs CPS風格

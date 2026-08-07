@@ -13,9 +13,6 @@ tags:
 keywords: ["0338", "Counting", "Bits", "LeetCode", "JavaScript", "Bit", "Manipulation", "DP"]
 ---
 
-
-
-
 # [0338] Counting Bits
 
 > 難度：Easy  

@@ -10,9 +10,6 @@ tags:
 keywords: ["2864", "Maximum", "Odd", "Binary", "Number", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [2864] Maximum Odd Binary Number
 
 > 題號：**2864** | 難度：**Easy** | 主題：**Maximum Odd Binary Number, String**

@@ -8,9 +8,6 @@ tags:
 keywords: ["前端", "Normal", "FE-knowledge", "當前端使用者併發多個請求，如果只送一個（例如防抖）", "如何實現無感刷新", "token", "如何得到", "localStorage、sessionStorage"]
 ---
 
-
-
-
 # [FE] Normal
 
 ## 當前端使用者併發多個請求，如果只送一個（例如防抖）

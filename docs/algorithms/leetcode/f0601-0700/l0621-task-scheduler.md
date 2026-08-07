@@ -10,9 +10,6 @@ tags:
 keywords: ["0621", "Task", "Scheduler", "LeetCode", "數字解"]
 ---
 
-
-
-
 # [0621] Task Scheduler
 
 > 題號：**0621** | 難度：**Medium** | 主題：**Heap / Priority Queue, Task Scheduler**

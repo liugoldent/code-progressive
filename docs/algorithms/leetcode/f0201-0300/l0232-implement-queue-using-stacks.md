@@ -10,9 +10,6 @@ tags:
 keywords: ["0232", "Longest", "Common", "Prefix", "LeetCode", "Javascript", "stack", "queue"]
 ---
 
-
-
-
 # [0232] Longest Common Prefix
 
 > 題號：**0232** | 難度：**Easy** | 主題：**Implement Queue using Stacks**

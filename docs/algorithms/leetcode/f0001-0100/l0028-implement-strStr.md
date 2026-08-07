@@ -9,9 +9,6 @@ tags:
 keywords: ["0028", "Implement", "strStr", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0028] Implement strStr()
 
 > 題號：**0028** | 難度：**Easy** | 主題：**Implement strStr()**

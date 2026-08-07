@@ -8,9 +8,6 @@ tags:
 keywords: ["前端", "面試題整理", "V5", "FE-knowledge", "web安全性議題中什麼是XSS、CSRF以及如何防止", "Browser中跨域問題什麼意思", "為何如此設計", "以及如何處理"]
 ---
 
-
-
-
 # [FE] Interview V5
 
 ## web安全性議題中什麼是XSS、CSRF以及如何防止?

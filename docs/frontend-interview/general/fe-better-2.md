@@ -9,9 +9,6 @@ tags:
 keywords: ["前端", "前端效能優化-2", "FE-knowledge", "build", "process", "optimization（組建流程優化）", "4-1", "拆分應用的bundle"]
 ---
 
-
-
-
 # [FE] 前端效能優化-2
 [Web前端效能優化大補帖筆記](https://www.books.com.tw/products/E050147683)
 

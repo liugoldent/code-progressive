@@ -11,9 +11,6 @@ tags:
 keywords: ["0242", "Valid", "Anagram", "LeetCode", "Javascript", "Python"]
 ---
 
-
-
-
 # [0242] Valid Anagram
 
 > 題號：**0242** | 難度：**Easy** | 主題：**Hashing**

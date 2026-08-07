@@ -12,9 +12,6 @@ tags:
 keywords: ["0033", "Search", "in", "Rotated", "Sorted", "Array", "LeetCode", "Binary"]
 ---
 
-
-
-
 # [0033] Search in Rotated Sorted Array
 
 > 題目難度：**Medium**  

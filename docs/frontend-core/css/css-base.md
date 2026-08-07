@@ -7,9 +7,6 @@ tags:
 keywords: ["CSS", "選取器基本操作", "SCSS", "後代-子選取器", "nth-child"]
 ---
 
-
-
-
 # [CSS] 選取器基本操作
 
 ## 後代-子選取器 nth-child

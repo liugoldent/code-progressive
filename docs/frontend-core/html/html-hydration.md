@@ -8,9 +8,6 @@ tags:
 keywords: ["談談", "hydration", "Interview", "概念", "podcast", "多聽一遍"]
 ---
 
-
-
-
 # 談談 hydration
 ## 概念
 在 Web 開發中，「hydration」是指在服務器端渲染（SSR）後，在客戶端將服務器生成的 HTML 元素轉換為可交互的動態元素的過程。簡單來說，它是將靜態的 HTML 元素轉換為具有動態行為的元素的過程。

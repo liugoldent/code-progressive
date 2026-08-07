@@ -10,9 +10,6 @@ tags:
 keywords: ["0155", "Min", "Stack", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0155] Min Stack
 
 > 題號：**0155** | 難度：**Medium** | 主題：**Min Stack, Binary Search**

@@ -9,9 +9,6 @@ tags:
 keywords: ["前端", "VueX", "FE-knowledge", "請說說actions", "mutations有什麼區別", "mutation", "vs", "action"]
 ---
 
-
-
-
 # [FE] VueX
 
 ## 請說說actions 與 mutations有什麼區別

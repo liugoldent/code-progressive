@@ -7,9 +7,6 @@ tags:
 keywords: ["如何在Mac", "上安裝nvm", "Nodejs"]
 ---
 
-
-
-
 # 如何在Mac 上安裝nvm
 
 1. 安裝Homebrew

@@ -10,9 +10,6 @@ tags:
 keywords: ["0125", "Valid", "Palindrome", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0125] Valid Palindrome
 
 > 題號：**0125** | 主題：**East, Valid Palindrome, two Pointers**

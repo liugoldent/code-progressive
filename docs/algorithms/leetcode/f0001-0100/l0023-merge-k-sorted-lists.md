@@ -10,9 +10,6 @@ tags:
 keywords: ["0023", "Merge", "Sorted", "Lists", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0023] Merge k Sorted Lists
 
 > 題號：**0023** | 難度：**Hard** | 主題：**Merge k Sorted Lists, Linked List**

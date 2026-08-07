@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "「React", "Redux」", "概念", "Redux", "程式"]
 ---
 
-
-
-
 # [React] 「React Redux」
 ## 概念 - React Redux
 * redux：可以讓我們在不同頁面或是不同元件之間共享狀態

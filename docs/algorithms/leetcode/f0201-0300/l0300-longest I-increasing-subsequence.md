@@ -16,9 +16,6 @@ tags:
 keywords: ["0300", "Longest", "Increasing", "Subsequence", "LeetCode", "JavaScript", "DP", "Dynamic"]
 ---
 
-
-
-
 # [0300] Longest Increasing Subsequence
 
 > 難度：中等 類型：動態規劃（DP） / 演算法經典題

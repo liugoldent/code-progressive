@@ -10,9 +10,6 @@ tags:
 keywords: ["0589", "Next", "Greater", "Element", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0589] Next Greater Element I
 
 > 題號：**0589** | 難度：**Easy** | 主題：**Stack, N-ary Tree Preorder Traversal**

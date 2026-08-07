@@ -1,4 +1,5 @@
 ---
+sidebar_position: 15
 title: "React 現場實戰題（入門篇）：Props / State / Form / Effect"
 description: "給 React 初學者的六題現場實戰：JSX event handler、唯讀 props、immutable state、controlled input、state owner 與 useEffect cleanup。"
 tags:
@@ -7,7 +8,6 @@ tags:
   - Beginner
   - Interview
 keywords: ["React 初學者面試題", "React 入門考題", "React props state", "React controlled input", "React useEffect cleanup", "React 面試題"]
-sidebar_position: 15
 ---
 
 # React 現場實戰題（入門篇）：Props / State / Form / Effect

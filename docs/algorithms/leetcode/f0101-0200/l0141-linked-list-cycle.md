@@ -10,9 +10,6 @@ tags:
 keywords: ["0141", "Linked", "List", "Cycle", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0141] Linked List Cycle
 
 > 題號：**0141** | 難度：**Easy** | 主題：**Linked List Cycle, Linked List**

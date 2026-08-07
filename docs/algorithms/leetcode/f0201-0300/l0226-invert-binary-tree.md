@@ -10,9 +10,6 @@ tags:
 keywords: ["0226", "Invert", "Binary", "Tree", "LeetCode", "Javascript", "思路："]
 ---
 
-
-
-
 # [0226] Invert Binary Tree
 
 > 題號：**0226** | 難度：**Easy** | 主題：**Invert Binary Tree, Trees**

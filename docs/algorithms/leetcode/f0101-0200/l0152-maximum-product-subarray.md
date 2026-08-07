@@ -12,9 +12,6 @@ tags:
 keywords: ["0152", "Maximum", "Product", "Subarray", "LeetCode", "JavaScript", "Dynamic", "Programming"]
 ---
 
-
-
-
 # [0152] Maximum Product Subarray
 
 > 題目難度：**Medium**  

@@ -13,9 +13,6 @@ tags:
 keywords: ["0647", "Palindromic", "Substrings", "LeetCode", "JavaScript", "回文", "演算法", "中心擴展法"]
 ---
 
-
-
-
 # [0647] Palindromic Substrings
 
 > 題號：**0647** | 主題：**回文, 演算法, 中心擴展法**

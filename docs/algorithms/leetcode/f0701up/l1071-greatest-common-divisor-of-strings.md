@@ -9,9 +9,6 @@ tags:
 keywords: ["1071", "Greatest", "Common", "Divisor", "of", "Strings", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [1071] Greatest Common Divisor of Strings
 
 > 題號：**1071** | 難度：**Easy** | 主題：**Greatest Common Divisor of Strings**

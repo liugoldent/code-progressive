@@ -10,9 +10,6 @@ tags:
 keywords: ["0042", "Trapping", "Rain", "Water", "LeetCode"]
 ---
 
-
-
-
 # [0042] Trapping Rain Water
 
 > 題號：**0042** | 難度：**Hard** | 主題：**Trapping Rain Water, Two Pointers**

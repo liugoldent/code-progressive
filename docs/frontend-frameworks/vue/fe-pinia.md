@@ -8,9 +8,6 @@ tags:
 keywords: ["前端", "Pinia", "FE-knowledge", "Vuex", "的比較", "的基本用法", "Getters", "Actions"]
 ---
 
-
-
-
 # [FE] Pinia
 
 ## Pinia 與 Vuex 的比較

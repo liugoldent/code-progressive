@@ -9,9 +9,6 @@ tags:
 keywords: ["前端", "前端效能優化-5", "FE-knowledge", "DevTool", "Debugging", "節流", "8-1", "8-2"]
 ---
 
-
-
-
 # [FE] 前端效能優化-5
 
 [Web 前端效能優化大補帖筆記](https://www.books.com.tw/products/E050147683)

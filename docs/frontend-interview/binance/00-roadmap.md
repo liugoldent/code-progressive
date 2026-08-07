@@ -1,4 +1,5 @@
 ---
+sidebar_position: 1
 title: "Binance 前端面試攻略：Vue 轉 React 技能地圖"
 description: "給 Vue 工程師準備 Binance Frontend / Senior Front-end Developer 面試的 React 轉職路線，整理 React 心智模型、JavaScript、TypeScript、狀態管理、WebSocket、交易產品情境與 30 次訓練計畫。"
 tags:
@@ -7,7 +8,6 @@ tags:
   - Binance
   - React
 keywords: ["Binance 前端面試", "Binance Frontend Interview", "Vue 轉 React", "Senior Front-end Developer", "React 面試", "JavaScript 面試", "TypeScript 面試", "Redux", "React Query", "WebSocket", "交易產品前端", "frontend interview roadmap"]
-sidebar_position: 1
 ---
 
 # Binance 前端面試攻略總覽

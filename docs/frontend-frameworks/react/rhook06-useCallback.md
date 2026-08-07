@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "useCallback", "概念", "程式"]
 ---
 
-
-
-
 # [React] useCallback
 ## 概念
 * 回傳（緩存）（暫存）記憶的函式

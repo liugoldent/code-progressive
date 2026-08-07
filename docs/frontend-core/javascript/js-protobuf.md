@@ -9,9 +9,6 @@ tags:
 keywords: ["JavaScript", "Protocol", "Buffers", "是什麼", "主要元素", "proto檔案", "gRPC連接"]
 ---
 
-
-
-
 # [JS] Protocol Buffers
 ## 是什麼
 * 是一種由 Google 開發的輕量級、高效的「數據交換格式」。它提供了一種結構化的方法來序列化結構化數據，並使其易於存儲和傳輸。ProtoBuf 主要用於跨平台和跨語言的數據交換，特別是在分佈式系統中，如客戶端-服務器通信、網絡通信等場景。

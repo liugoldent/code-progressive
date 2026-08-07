@@ -8,9 +8,6 @@ tags:
 keywords: ["前端", "Javascript", "FE-knowledge", "typeof", "vs", "instanceof", "new", "建構子"]
 ---
 
-
-
-
 # [FE] Javascript - 1
 
 ## typeof vs instanceof

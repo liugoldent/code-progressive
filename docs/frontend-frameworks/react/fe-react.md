@@ -9,9 +9,6 @@ tags:
 keywords: ["前端", "React", "FE-knowledge", "React特點", "什麼是JSX", "Virtual", "DOM", "原理"]
 ---
 
-
-
-
 # [FE] React
 
 ## React特點

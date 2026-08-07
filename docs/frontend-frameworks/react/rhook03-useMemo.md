@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "useMemo", "概念", "使用", "程式", "useEffect", "的替換"]
 ---
 
-
-
-
 # [React] useMemo
 
 ## 概念

@@ -10,9 +10,6 @@ tags:
 keywords: ["0079", "Word", "Search", "LeetCode"]
 ---
 
-
-
-
 # [0079] Word Search
 
 > 題號：**0079** | 難度：**Medium** | 主題：**Word Search, Backtracking**

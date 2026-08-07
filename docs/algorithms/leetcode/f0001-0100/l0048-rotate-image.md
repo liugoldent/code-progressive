@@ -13,9 +13,6 @@ tags:
 keywords: ["0048", "Rotate", "Image", "LeetCode", "JavaScript", "Matrix", "In-place", "轉置矩陣"]
 ---
 
-
-
-
 # [0048] Rotate Image
 
 > **難度**：Medium  

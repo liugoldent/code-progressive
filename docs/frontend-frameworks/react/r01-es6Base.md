@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "ES6", "必備語法", "Template", "Literals", "模板語法", "Arrow", "Functions"]
 ---
 
-
-
-
 # [React] ES6 必備語法
 ## Template Literals 模板語法
 * 可以方便我們在字串中帶入JS表達式

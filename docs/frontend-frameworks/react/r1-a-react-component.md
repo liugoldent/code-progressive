@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "Component", "Class", "Function"]
 ---
 
-
-
-
 # [React] React Component
 ## Class Component
 ### 基本程式

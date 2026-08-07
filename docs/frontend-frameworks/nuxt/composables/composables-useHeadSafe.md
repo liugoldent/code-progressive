@@ -7,9 +7,6 @@ tags:
 keywords: ["useHeadSafe", "Nuxt", "概念", "範例", "參數", "返回值"]
 ---
 
-
-
-
 # useHeadSafe
 
 ## 概念

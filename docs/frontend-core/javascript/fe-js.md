@@ -8,9 +8,6 @@ tags:
 keywords: ["前端", "Javascript", "FE-knowledge", "Difference", "what", "is", "模塊觀念", "Decorator"]
 ---
 
-
-
-
 # [FE] Javascript - 2
 
 ## Difference

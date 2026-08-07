@@ -7,9 +7,6 @@ tags:
 keywords: ["useLazyFetch", "Nuxt", "概念", "範例", "參數", "返回值"]
 ---
 
-
-
-
 # useLazyFetch
 ## 概念
 * 默認情況下，`useFetch`在其異步處理程序解析之前會阻止導航。`useLazyFetch`提供了一個包裝器，將`useFetch`包裝起來，通過將`lazy`選項設置為`true`來在處理程序解析之前觸發導航。

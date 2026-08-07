@@ -9,9 +9,6 @@ tags:
 keywords: ["0027", "Remove", "Element", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0027] Remove Element
 
 > 題號：**0027** | 難度：**Easy** | 主題：**Remove Element**

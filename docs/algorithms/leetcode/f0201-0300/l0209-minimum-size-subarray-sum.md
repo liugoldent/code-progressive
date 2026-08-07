@@ -9,9 +9,6 @@ tags:
 keywords: ["0209", "Minimum", "Size", "Subarray", "Sum", "LeetCode", "Javascript", "思路："]
 ---
 
-
-
-
 # [0209] Minimum Size Subarray Sum
 
 > 題號：**0209** | 難度：**Medium** | 主題：**Sliding Window**

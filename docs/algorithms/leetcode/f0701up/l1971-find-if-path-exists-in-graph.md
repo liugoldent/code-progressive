@@ -9,9 +9,6 @@ tags:
 keywords: ["1971", "Find", "if", "Path", "Exists", "in", "Graph", "LeetCode"]
 ---
 
-
-
-
 # [1971] Find if Path Exists in Graph
 
 > 題號：**1971** | 難度：**Easy** | 主題：**Find if Path Exists in Graph**

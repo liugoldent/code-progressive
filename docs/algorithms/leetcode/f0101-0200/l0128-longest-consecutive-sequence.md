@@ -13,9 +13,6 @@ tags:
 keywords: ["0128", "Longest", "Consecutive", "Sequence", "LeetCode", "JavaScript", "Set", "陣列處理"]
 ---
 
-
-
-
 # [0128] Longest Consecutive Sequence
 
 > **Tags:** `HashSet`, `陣列`, `JavaScript`, `LeetCode`, `面試常考`, `連續子序列`  

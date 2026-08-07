@@ -8,9 +8,6 @@ tags:
 keywords: ["Python", "問題集", "Question", "docSearch"]
 ---
 
-
-
-
 # [Python]問題集
 ## docSearch
 ### <u>*zsh: command not found: jq*</u>

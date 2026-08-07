@@ -9,9 +9,6 @@ tags:
 keywords: ["0169", "Majority", "Element", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0169] Majority Element
 
 > 題號：**0169** | 難度：**Easy** | 主題：**Majority Element**

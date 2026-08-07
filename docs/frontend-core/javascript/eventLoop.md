@@ -8,9 +8,6 @@ tags:
 keywords: ["JavaScript", "Event", "Loop", "筆記", "參考文章", "基本分類", "程式碼參考", "gpt解釋"]
 ---
 
-
-
-
 # [JS] Event Loop 筆記
 
 ## 參考文章

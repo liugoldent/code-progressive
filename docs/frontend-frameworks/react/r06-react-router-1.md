@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "router", "概念", "HashRouter", "使用", "path", "elment", "巢狀路由"]
 ---
 
-
-
-
 # [React] React router
 
 ## 概念

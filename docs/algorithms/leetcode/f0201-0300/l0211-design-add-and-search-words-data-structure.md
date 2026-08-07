@@ -10,9 +10,6 @@ tags:
 keywords: ["0211", "Design", "Add", "and", "Search", "Words", "Data", "Structure"]
 ---
 
-
-
-
 # [0211] Design Add and Search Words Data Structure
 
 > 題號：**0211** | 難度：**Medium** | 主題：**Tries, Design Add and Search Words Data Structure**

@@ -1,4 +1,5 @@
 ---
+sidebar_position: 3
 title: "Vue 轉 React：30 次反射訓練"
 description: "給已會 Vue、知道基本 React Hooks 但還不熟練的工程師，透過閉卷實作、debug、口述與交易頁小題建立 React render、state、effect、closure 與資料流反射。"
 tags:
@@ -7,7 +8,6 @@ tags:
   - Practice
   - Interview
 keywords: ["Vue 轉 React 練習", "React Hooks 練習", "React 面試實作", "React stale closure", "React useEffect 練習", "React debug", "Binance frontend interview"]
-sidebar_position: 3
 ---
 
 # Vue 轉 React：30 次反射訓練

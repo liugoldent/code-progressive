@@ -10,9 +10,6 @@ tags:
 keywords: ["0295", "Find", "Median", "from", "Data", "Stream", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0295] Find Median from Data Stream
 
 > 題號：**0295** | 難度：**Hard** | 主題：**Find Median from Data Stream, Heap / Priority Queue**

@@ -9,9 +9,6 @@ tags:
 keywords: ["1046", "Last", "Stone", "Weight", "LeetCode"]
 ---
 
-
-
-
 # [1046] Last Stone Weight
 
 > 題號：**1046** | 難度：**Easy** | 主題：**Last Stone Weight**

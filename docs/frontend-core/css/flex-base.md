@@ -8,9 +8,6 @@ tags:
 keywords: ["CSS", "flex", "的基本使用", "SCSS", "參考文章", "外元素", "內元素", "align-items"]
 ---
 
-
-
-
 # [CSS] flex 的基本使用
 
 ## 參考文章

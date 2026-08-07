@@ -1,4 +1,5 @@
 ---
+sidebar_position: 16
 title: "React 現場實戰題（第一回）：State / Effect / Realtime"
 description: "十題 React 現場實戰：從 state snapshot、effect 邊界、stale closure、request race，一路練到 WebSocket dependency、StrictMode cleanup、batching 與安全重連。"
 tags:
@@ -7,7 +8,6 @@ tags:
   - Realtime
   - Interview
 keywords: ["React 實戰題", "React state snapshot", "useEffect 邊界", "stale closure", "React request race", "WebSocket React", "React StrictMode", "WebSocket 重連", "React 面試題示範"]
-sidebar_position: 16
 ---
 
 import OrderBookExecutionDemo from "@site/src/components/OrderBookExecutionDemo";

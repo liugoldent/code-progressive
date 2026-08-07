@@ -10,9 +10,6 @@ tags:
 keywords: ["0143", "Reorder", "List", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0143] Reorder List
 
 > 題號：**0143** | 難度：**Medium** | 主題：**Reorder List, Linked List**

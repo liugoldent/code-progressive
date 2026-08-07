@@ -9,9 +9,6 @@ tags:
 keywords: ["0841", "Keys", "and", "Rooms", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0841] Keys and Rooms
 
 > 題號：**0841** | 難度：**Medium** | 主題：**Keys and Rooms**

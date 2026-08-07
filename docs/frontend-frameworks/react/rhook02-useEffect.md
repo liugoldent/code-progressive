@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "useEffect", "render", "commit", "state snapshot", "畫面更新流程", "使用", "類似生命週期的使用", "useEffect的async", "function"]
 ---
 
-
-
-
 # [React] useEffect
 ## 概念
 * `useEffect` 會在 React 將畫面更新提交（commit）之後執行。

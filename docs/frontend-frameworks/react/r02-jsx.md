@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "JSX", "作用", "基本範例", "包含邏輯的範例", "使用ClassName"]
 ---
 
-
-
-
 # [React] JSX
 ## 作用
 * 結合 JavaScript 和 HTML： JSX 允許您在 JavaScript 中直接使用 HTML 標記。這樣，您可以在 React 元件中直接編寫結構化的使用者介面，而不需要在 JavaScript 中拼接字串或使用其他模板語言。

@@ -1,4 +1,5 @@
 ---
+sidebar_position: 5
 title: "React 面試術語中文對照：交易頁程式碼範例"
 description: "整理 Binance React 前端面試常見術語中文解釋，包含 render、commit、reconciliation、state、props、React Query、Redux、WebSocket、order book 與下單表單範例。"
 tags:
@@ -7,7 +8,6 @@ tags:
   - Binance
   - Interview
 keywords: ["React 術語中文", "React 面試術語", "React render commit", "reconciliation 中文", "React Query 範例", "Redux 範例", "WebSocket 範例", "Binance trading UI", "交易頁前端", "order book component", "Vue 轉 React", "前端面試題"]
-sidebar_position: 5
 ---
 
 # React 術語中文對照與交易頁範例

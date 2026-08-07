@@ -7,9 +7,6 @@ tags:
 keywords: ["useRequestEvent", "Nuxt", "概念", "範例", "返回值", "類型參考"]
 ---
 
-
-
-
 # useRequestEvent
 ## 概念
 * 用於在 Nuxt.js 應用程序中處理 HTTP 請求事件。這是一個 Nuxt.js 提供的 hook 函數，它允許您在發送 HTTP 請求之前或之後進行某些操作，比如在發送請求之前添加一些特定的 headers，或者在收到響應之後處理返回的數據。

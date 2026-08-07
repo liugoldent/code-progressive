@@ -11,9 +11,6 @@ tags:
 keywords: ["0225", "Implement", "Stack", "using", "Queues", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0225] Implement Stack using Queues
 
 > 題號：**0225** | 難度：**Easy** | 主題：**Implement Stack using Queues, Stack, Queue**

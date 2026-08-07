@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "useContext", "概念", "程式"]
 ---
 
-
-
-
 # [React] useContext
 ## 概念
 * 由於Props是單向資料流，並且要一步一步往下傳，但傳遞太深會稍嫌麻煩，所以會使用到useContext

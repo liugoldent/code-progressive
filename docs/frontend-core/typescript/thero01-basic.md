@@ -7,9 +7,6 @@ tags:
 keywords: ["TS", "Hero", "Beginner", "TypeSctipt", "Primitive", "Data", "Types", "Type"]
 ---
 
-
-
-
 # [TS Hero] Beginner
 ## 1. Primitive Data Types
 [换个角度理解 Typescript 的 type 和 interface](https://zhuanlan.zhihu.com/p/351213183)

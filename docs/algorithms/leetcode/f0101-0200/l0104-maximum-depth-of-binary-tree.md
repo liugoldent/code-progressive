@@ -10,9 +10,6 @@ tags:
 keywords: ["0104", "Maximum", "Depth", "of", "Binary", "Tree", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0104] Maximum Depth of Binary Tree
 
 > 題號：**0104** | 難度：**Easy** | 主題：**Tree, Maximum Depth of Binary Tree**

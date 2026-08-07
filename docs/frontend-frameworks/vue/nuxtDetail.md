@@ -7,9 +7,6 @@ tags:
 keywords: ["Nuxt", "js", "精讀", "Vue", "參考文章", "概述", "路由", "Nuxtjs"]
 ---
 
-
-
-
 # [Nuxt.js] 精讀
 
 ## 參考文章

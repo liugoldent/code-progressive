@@ -1,4 +1,5 @@
 ---
+sidebar_position: 17
 title: "React 現場實戰題（第二回）：Identity / Render / Concurrent UI"
 description: "六題深入 React list key、prop 初始化 state、React.memo reference、Context render、useSyncExternalStore 與 Transition，從錯誤行為推導正確資料流。"
 tags:
@@ -7,7 +8,6 @@ tags:
   - Performance
   - Interview
 keywords: ["React key 面試題", "React.memo 面試題", "React Context render", "useSyncExternalStore", "useTransition", "React concurrent rendering", "React 實戰題"]
-sidebar_position: 17
 ---
 
 # React 現場實戰題（第二回）：Identity / Render / Concurrent UI

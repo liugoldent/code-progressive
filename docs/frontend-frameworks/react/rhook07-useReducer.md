@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "useReducer", "概念", "語法", "注意事項", "程式"]
 ---
 
-
-
-
 # [React] useReducer
 ## 概念
 * 算是`useState`的進階版

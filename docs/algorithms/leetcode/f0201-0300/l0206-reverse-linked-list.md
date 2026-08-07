@@ -9,9 +9,6 @@ tags:
 keywords: ["0206", "Reverse", "Linked", "List", "LeetCode", "Javascript", "思路："]
 ---
 
-
-
-
 # [0206] Reverse Linked List
 
 > 題號：**0206** | 難度：**Easy** | 主題：**Linked List**

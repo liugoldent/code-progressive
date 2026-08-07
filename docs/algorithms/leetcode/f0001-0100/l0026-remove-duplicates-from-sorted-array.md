@@ -9,9 +9,6 @@ tags:
 keywords: ["0026", "Remove", "Duplicates", "from", "Sorted", "Array", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0026] Remove Duplicates from Sorted Array
 
 > 題號：**0026** | 難度：**Easy** | 主題：**Remove Duplicates from Sorted Array**

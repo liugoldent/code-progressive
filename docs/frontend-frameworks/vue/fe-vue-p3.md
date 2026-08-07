@@ -9,9 +9,6 @@ tags:
 keywords: ["前端", "Vue", "p3", "FE-knowledge", "slot", "object", "freeze", "什麼是虛擬DOM"]
 ---
 
-
-
-
 # [FE] Vue - p3
 
 ## slot

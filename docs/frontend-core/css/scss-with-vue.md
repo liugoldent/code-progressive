@@ -8,9 +8,6 @@ tags:
 keywords: ["SCSS", "module", "in", "Vue", "範例程式碼"]
 ---
 
-
-
-
 # [SCSS] SCSS module in Vue
 
 ## 範例程式碼

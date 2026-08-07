@@ -7,9 +7,6 @@ tags:
 keywords: ["useFetch", "Nuxt", "概念", "範例", "參數", "返回值"]
 ---
 
-
-
-
 # useFetch
 
 ## 概念

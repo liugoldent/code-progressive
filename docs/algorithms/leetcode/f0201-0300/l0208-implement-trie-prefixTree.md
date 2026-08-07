@@ -9,9 +9,6 @@ tags:
 keywords: ["0208", "Implement", "Trie", "Prefix", "Tree", "LeetCode", "Javascript", "思路："]
 ---
 
-
-
-
 # [0208] Implement Trie (Prefix Tree)
 
 > 題號：**0208** | 難度：**Medium** | 主題：**Tries**

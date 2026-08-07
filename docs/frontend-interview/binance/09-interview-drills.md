@@ -1,4 +1,5 @@
 ---
+sidebar_position: 12
 title: "Binance 前端面試題庫與回答模板"
 description: "整理 Binance 前端面試練習題、React / JavaScript / TypeScript 回答模板、英文口說、自我介紹、行為面試 STAR 範例與交易產品專案經驗說法。"
 tags:
@@ -7,7 +8,6 @@ tags:
   - React
   - JavaScript
 keywords: ["Binance 前端面試題", "frontend interview questions", "Binance interview", "React 面試題", "JavaScript 面試題", "TypeScript 面試題", "behavioral interview", "STAR interview", "英文面試自我介紹", "前端面試回答模板", "React questions", "交易產品面試"]
-sidebar_position: 12
 ---
 
 # 面試題庫與回答模板

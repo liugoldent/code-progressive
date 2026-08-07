@@ -10,9 +10,6 @@ tags:
 keywords: ["0424", "Longest", "Repeating", "Character", "Replacement", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0424] Longest Repeating Character Replacement
 
 > 題號：**0424** | 難度：**Easy** | 主題：**Sliding Window, Longest Repeating Character Replacement**

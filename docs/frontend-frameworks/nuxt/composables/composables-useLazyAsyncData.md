@@ -7,9 +7,6 @@ tags:
 keywords: ["useLazyAsyncData", "Nuxt", "概念", "範例", "參數", "返回值"]
 ---
 
-
-
-
 # useLazyAsyncData
 ## 概念
 * 默認情況下，`useLazyAsyncData`會阻塞導航，直到非同步處理程序解析完成。`useLazyAsyncData`在`useAsyncData`周圍提供一個包裝氣，通過將`lazy`設定為`true`，在處理程序解析之前觸發導航。

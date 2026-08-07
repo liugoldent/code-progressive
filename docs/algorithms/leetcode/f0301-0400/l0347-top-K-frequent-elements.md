@@ -11,9 +11,6 @@ tags:
 keywords: ["0347", "Top", "Frequent", "Elements", "LeetCode", "Javascript", "Python"]
 ---
 
-
-
-
 # [0347] Top K Frequent Elements
 
 > 題號：**0347** | 難度：**Medium** | 主題：**Hashing**

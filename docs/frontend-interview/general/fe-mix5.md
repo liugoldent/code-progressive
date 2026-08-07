@@ -8,9 +8,6 @@ tags:
 keywords: ["前端", "面試題整理", "V6", "FE-knowledge", "HTTP", "OPTIONS", "什麼時候發送", "Cache"]
 ---
 
-
-
-
 # [FE] Interview V6
 
 ## HTTP OPTIONS 什麼時候發送

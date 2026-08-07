@@ -10,9 +10,6 @@ tags:
 keywords: ["0009", "Palindrome", "Number", "LeetCode", "Javascript", "Python"]
 ---
 
-
-
-
 # [0009] Palindrome Number
 
 > 題號：**0009** | 難度：**Easy** | 主題：**Palindrome Number**

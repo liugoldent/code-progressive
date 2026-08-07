@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "router", "Hook", "useLoaction", "useParams", "useNavigate", "useRoutes"]
 ---
 
-
-
-
 # [React] React router Hook
 ## useLoaction
 * 如果我們想要取得Link內的參數時，可以使用useLocation來取得相關訊息

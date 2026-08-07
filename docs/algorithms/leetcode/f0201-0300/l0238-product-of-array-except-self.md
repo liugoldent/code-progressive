@@ -11,9 +11,6 @@ tags:
 keywords: ["0238", "Products", "of", "Array", "Except", "Self", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0238] Products of Array Except Self
 
 > 題號：**0238** | 難度：**Medium** | 主題：**Hashing**

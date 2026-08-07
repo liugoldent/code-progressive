@@ -8,9 +8,6 @@ tags:
 keywords: ["React", "Props", "概念", "基本程式", "的slot使用方式"]
 ---
 
-
-
-
 # [React] Props
 ## 概念
 * 有時我們需要將數據傳給子組件，需要使用到props

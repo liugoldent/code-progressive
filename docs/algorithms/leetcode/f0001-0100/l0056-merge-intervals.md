@@ -12,9 +12,6 @@ tags:
 keywords: ["0056", "Merge", "Intervals", "LeetCode", "JavaScript", "Interval", "Greedy", "Sorting"]
 ---
 
-
-
-
 # [0056] Merge Intervals
 
 > **難度**：Medium  

@@ -10,9 +10,6 @@ tags:
 keywords: ["0297", "Serialize", "and", "Deserialize", "Binary", "Tree", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0297] Serialize and Deserialize Binary Tree
 
 > 題號：**0297** | 難度：**Medium** | 主題：**Trees, Serialize and Deserialize Binary Tree**

@@ -1,3 +1,9 @@
+---
+title: "Puppeteer"
+description: "Puppeteer 筆記，整理 使用場景、2 page 初始化與 timeout 設定 等重點。"
+keywords: ["Puppeteer", "backend", "使用場景", "使用", "puppeteer-core", "連外部瀏覽器", "page", "初始化與"]
+---
+
 # Puppeteer
 
 根據實際用過的兩支腳本整理：

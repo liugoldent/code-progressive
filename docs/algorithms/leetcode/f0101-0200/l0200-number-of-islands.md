@@ -14,9 +14,6 @@ tags:
 keywords: ["0200", "Number", "of", "Islands", "LeetCode", "JavaScript", "DFS", "Graph"]
 ---
 
-
-
-
 # [0200] Number of Islands
 
 > Tags: `DFS`, `Graph`, `Grid Traversal`, `Flood Fill`, `LeetCode`, `JavaScript`, `面試常見題`

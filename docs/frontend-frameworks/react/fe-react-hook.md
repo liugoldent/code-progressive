@@ -8,9 +8,6 @@ tags:
 keywords: ["前端", "React", "Hook", "知識點", "FE-knowledge", "簡單介紹什麼是Hooks，與其產生背景？以及其之優點"]
 ---
 
-
-
-
 # [FE] React Hook 知識點
 
 [readfog](https://www.readfog.com/a/1632458350731038720)

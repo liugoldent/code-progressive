@@ -8,9 +8,6 @@ tags:
 keywords: ["前端", "HTML", "FE-knowledge", "DOCTYPE有什麼作用", "HTML5", "為什麼只需要寫", "DOCTYPE", "HTML>"]
 ---
 
-
-
-
 # [FE] HTML
 
 ## DOCTYPE有什麼作用

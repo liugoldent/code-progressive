@@ -10,9 +10,6 @@ tags:
 keywords: ["0167", "Input", "Array", "Is", "Sorted", "LeetCode", "Javascript", "好文連結"]
 ---
 
-
-
-
 # [0167] Input Array Is Sorted
 
 > 題號：**0167** | 難度：**Medium** | 主題：**Input Array Is Sorted, two pointers**

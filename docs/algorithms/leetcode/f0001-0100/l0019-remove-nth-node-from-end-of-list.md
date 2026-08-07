@@ -10,9 +10,6 @@ tags:
 keywords: ["0019", "Remove", "Nth", "Node", "From", "End", "of", "List"]
 ---
 
-
-
-
 # [0019] Remove Nth Node From End of List
 
 > 題號：**0019** | 難度：**Medium** | 主題：**Remove Nth Node From End of List, Linked List**

@@ -6,9 +6,6 @@ tags:
 keywords: ["Python", "常見問題", "<u>**In", "how", "do", "convert", "all", "of"]
 ---
 
-
-
-
 # [Python] 常見問題
 ## <u>**In Python, how do I convert all of the items in a list to floats?**</u>
 如何將list內的item，都轉換為float()?

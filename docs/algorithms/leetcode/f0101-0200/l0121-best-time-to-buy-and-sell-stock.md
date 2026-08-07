@@ -10,9 +10,6 @@ tags:
 keywords: ["0121", "Best", "Time", "to", "Buy", "and", "Sell", "Stock"]
 ---
 
-
-
-
 # [0121] Best Time to Buy and Sell Stock
 
 > 題號：**0121** | 難度：**Easy** | 主題：**Best Time to Buy and Sell Stock, Sliding Window**

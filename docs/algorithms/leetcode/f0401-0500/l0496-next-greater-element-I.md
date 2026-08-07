@@ -10,9 +10,6 @@ tags:
 keywords: ["0496", "Next", "Greater", "Element", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0496] Next Greater Element I
 
 > 題號：**0496** | 難度：**Easy** | 主題：**Stack, Next Greater Element I**

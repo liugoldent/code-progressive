@@ -10,9 +10,6 @@ tags:
 keywords: ["0230", "Kth", "Smallest", "Element", "in", "BST", "LeetCode", "Javascript"]
 ---
 
-
-
-
 # [0230] Kth Smallest Element in a BST
 
 > 題號：**0230** | 難度：**Medium** | 主題：**Kth Smallest Element in a BST, Trees**
