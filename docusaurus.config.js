@@ -80,11 +80,7 @@ const config = {
         docs: {
           sidebarPath: "./sidebars.js",
         },
-        blog: {
-          blogTitle: "__yeah! Code 技術文章",
-          blogDescription:
-            "整理技術學習、開發實作與數位內容觀察的文章。",
-        },
+        blog: false,
         sitemap: {
           changefreq: "weekly",
           priority: 0.5,

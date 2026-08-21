@@ -18,6 +18,8 @@ keywords: ["useState 題目", "useReducer 題目", "useContext 題目", "useRef 
 
 ## `useState`：render snapshot 與更新佇列
 
+> 實際案例：[useState：交易下單數量與衍生金額](./practical-cases/use-state)
+
 ### 1. 連續更新三次，畫面是多少？
 
 ```tsx
@@ -34,7 +36,19 @@ function Counter() {
 <details>
 <summary>答案</summary>
 
-第一次點擊後是 `1`。三行都讀到同一次 render 的 `count = 0`，所以都排入「設成 1」。若要累加三次，改用三個 `setCount(previous => previous + 1)`。
+第一次點擊後是 `1`，不是 `3`。
+
+每一次 render 都會取得一份 state snapshot。這次畫面中的 `count` 是 `0`，event handler 內的三個 `count` 也都固定是 `0`；呼叫 `setCount` 只會排入下一次 render 的更新，不會立刻改掉目前函式裡的變數。因此三行實際上都是 `setCount(1)`。
+
+React 也會批次處理同一個 event 中的更新，通常等 handler 跑完才進行下一次 render。若下一個值依賴前一個待處理值，要傳入 updater function：
+
+```tsx
+setCount(previous => previous + 1); // 0 → 1
+setCount(previous => previous + 1); // 1 → 2
+setCount(previous => previous + 1); // 2 → 3
+```
+
+React 會依序把每個 updater 套用到 queue 中的 pending state，所以結果是 `3`。簡單判斷方式是：**更新不依賴舊值可直接傳值；依賴舊值時使用 functional update。**
 
 </details>
 
@@ -50,7 +64,22 @@ Parent 每次 render 都讓 child 跟著 render。`loadDraft` 與 `loadProfile` 
 <details>
 <summary>答案</summary>
 
-`loadDraft()` 是普通 expression，每次 render 都先被 JavaScript 呼叫，雖然 React 只採用第一次的結果。傳入 `() => loadProfile()` 才是 lazy initializer，正常情況只在初始化時呼叫。開發環境 Strict Mode 可能為了檢查純度而呼叫 initializer 兩次，結果只採用一次。
+`loadDraft()` 會在 child 每次 render 時執行；`() => loadProfile()` 則只在該 component instance 初始化時使用。
+
+原因是 JavaScript 呼叫 `useState` 前，會先計算所有參數：
+
+```tsx
+const initialDraft = loadDraft();       // 每次 render 都先執行
+const [draft] = useState(initialDraft);  // React 後續忽略 initialDraft
+```
+
+第二種傳入的是函式本身，而不是函式結果。React 把它辨認為 initializer，需要建立初始 state 時才呼叫：
+
+```tsx
+const [profile] = useState(() => loadProfile());
+```
+
+因此 parent re-render 導致 child re-render，不會再次載入 profile；但 child unmount 後重新 mount 會重新初始化。開發環境 Strict Mode 可能故意呼叫 initializer 兩次並丟棄其中一次結果，以檢查它是否純粹，所以 initializer 不應寫 storage、送 request 或修改外部變數。
 
 </details>
 
@@ -68,7 +97,27 @@ function discount() {
 <details>
 <summary>答案</summary>
 
-程式 mutation 了舊 state，接著把同一個 reference 傳回 setter。React 以 `Object.is` 判斷新舊 state，相同 reference 可跳過更新。應建立新 object：`setOrder(previous => ({ ...previous, price: 90 }))`。
+因為「object 裡面的內容變了」不等於「state reference 變了」。這段程式先直接修改目前的 state object，再把同一個 object 傳回去：
+
+```tsx
+order.price = 90; // 舊 object 被直接修改
+setOrder(order);  // previousObject === nextObject
+```
+
+React 使用 `Object.is` 比較前後 state。兩者是同一個 reference，React 可以判斷沒有新 state 而跳過更新，所以畫面不一定重新 render。
+
+直接 mutation 還會破壞舊 render 的 snapshot。先前的 event handler、memoized component 或除錯紀錄若仍持有這個 object，也會看到它被偷偷改掉，使「某次 render 當時的資料」不再可靠。
+
+應建立新的 object，只替換要變動的欄位：
+
+```tsx
+setOrder(previous => ({
+  ...previous,
+  price: 90,
+}));
+```
+
+若修改巢狀資料，從被修改的節點一路到最外層都要建立新 reference；也可以用 Immer 協助產生 immutable update。
 
 </details>
 
@@ -82,7 +131,15 @@ setSymbol("BTCUSDT");
 <details>
 <summary>答案</summary>
 
-React 會以 `Object.is` 比較並跳過不必要的更新。實作上 component 可能在跳過 children 前被額外呼叫一次，因此面試時不要承諾「component function 絕對零次呼叫」；可靠保證是相同 state 不會形成需要 commit 的 UI 變更。
+通常不會產生需要 commit 的 UI 更新。React 會用 `Object.is(previousState, nextState)` 比較新舊值；兩者相同時，可以跳過 component children 的重新 render 與 DOM commit。
+
+```tsx
+Object.is('BTCUSDT', 'BTCUSDT'); // true
+```
+
+但不要把這個最佳化描述成「component function 在所有情況下絕對不會再被呼叫」。若更新已經進入處理流程，React 實作上仍可能先呼叫 component，再決定 bailout；Strict Mode 也可能額外 render 來檢查純度。可靠的語意是：**相同 state 不會形成新的可觀察 UI 狀態，render 必須純粹到即使被額外呼叫也沒有問題。**
+
+另外，若 state 是 object，只有同一個 reference 才相同；`Object.is({}, {})` 是 `false`，即使兩個 object 內容看起來一樣。
 
 </details>
 
@@ -100,7 +157,18 @@ BTC 切成 ETH 時，`marketPrice` 已改，input 為何可能仍是 BTC 價格�
 <details>
 <summary>答案</summary>
 
-`initialState` 只在 component instance 初始化時使用。先決定產品規格：只是顯示就直接用 prop；切 symbol 要整份重設可用 `key={symbol}`；每個 symbol 要保留 draft 則由 parent 以 symbol 管理。不要不加思考地用 effect 同步兩份 source of truth。
+因為 `useState(marketPrice)` 的參數是 **initial state**，不是「每當 prop 改變就同步 state」。它只在這個 `Ticket` instance 第一次 mount 時決定 `price`；之後 `marketPrice` 改變，現有的 local state 仍由 `setPrice` 管理。
+
+這個行為很重要：若使用者正在 input 輸入草稿，parent 任意 re-render 都覆蓋內容，輸入框會無法正常編輯。React 因此不會自動讓 prop 與 local state 綁在一起。
+
+正確做法取決於資料的真正 owner：
+
+- Input 只需要顯示市場價格，沒有獨立草稿：直接使用 `marketPrice` prop，不建立重複 state。
+- 切換 symbol 時要把整個表單視為新表單：由 parent 使用 `<Ticket key={symbol} ... />`，讓 React remount 並重新初始化。
+- 每個 symbol 都要保留自己的草稿：把 drafts 提升到 parent，以 `symbol` 作為 key 管理。
+- 只有某個明確外部事件需要覆蓋草稿：在 event handler 中同時更新相關 state，讓重設原因清楚。
+
+用 effect 做 `setPrice(marketPrice)` 雖然有時可行，但它建立兩份 source of truth，還會先 render 舊值再同步新值，並可能意外覆蓋使用者輸入；應先確認需求再使用。
 
 </details>
 
@@ -115,11 +183,23 @@ const [notional, setNotional] = useState(20);
 <details>
 <summary>答案</summary>
 
-若 `notional` 永遠是 `Number(price) * Number(quantity)`，它是 render 時可計算的 derived data，不該再保存。多一份 state 會增加不同步狀態與額外 render。只有無法由目前 props/state 重建、且需要跨 render 保存的資料才是 state 候選。
+`notional` 不該是獨立 state，因為它完全可以由目前的 `price` 與 `quantity` 推導：
+
+```tsx
+const notional = Number(price) * Number(quantity);
+```
+
+若同時保存三份 state，每次修改 price 或 quantity 都必須記得同步 notional。只要漏掉一條更新路徑，便會出現不可能狀態，例如畫面顯示 `price = 20`、`quantity = 2`，但 `notional = 20`。若用 effect 同步，還會多一次 render：先顯示舊 notional，再由 effect 更新。
+
+Render 本來就是根據 props/state 計算 UI 的地方，因此便宜的 derived data 直接計算即可。只有計算非常昂貴且 profiling 證明有需要時，才考慮 `useMemo`；`useMemo` 是效能快取，不是用來修正資料一致性的另一份 state。
+
+判斷問題可以問：**刪掉這份 state 後，能否只靠目前的 props/state 完整重建？**若可以，它通常就是 derived data。
 
 </details>
 
 ## `useReducer`：集中描述狀態轉移
+
+> 實際案例：[useReducer：集中管理交易訂單狀態](./practical-cases/use-reducer)
 
 ### 1. Dispatch 兩次會遺失更新嗎？
 
@@ -136,7 +216,17 @@ dispatch({ type: "increment" });
 <details>
 <summary>答案</summary>
 
-不會。兩個 action 依序進入更新佇列，第二次 reducer 會收到第一次 reducer 的結果，最後加二。這和兩次 `setCount(count + 1)` 都捕捉同一 snapshot 不同。
+不會，最後會加二。`dispatch` 不會直接執行並修改目前 render 裡的 `count`，而是把 action 排進 React 的更新佇列。下一次 render 計算 reducer state 時，React 會依序處理：
+
+```text
+原始 state 0
+  → reducer(0, increment) 回傳 1
+  → reducer(1, increment) 回傳 2
+```
+
+第二個 action 收到的是第一個 action 算完的 pending state，而不是 event handler closure 裡原本的 snapshot。即使 React 將同一個 event 的更新 batch 在一次 render 內處理，action 的順序仍會保留。
+
+這和兩次 `setCount(count + 1)` 不同：後者先在 handler 中把同一份 `count` snapshot 算成相同的 next value；reducer 則把「發生 increment」排入 queue，之後逐步套用到最新 pending state。
 
 </details>
 
@@ -152,7 +242,23 @@ function reducer(state, action) {
 <details>
 <summary>答案</summary>
 
-不應該。Reducer 必須純粹：相同 state/action 產生相同結果，不修改外部系統。React Strict Mode 在開發環境可能額外呼叫 reducer 來找 impurity，副作用因此可能重複。分析、request 或 storage 應放在 event handler、effect 或資料層。
+不應該。Reducer 的工作是根據 `(state, action)` **計算 next state**，不是執行 action 所代表的外部工作。相同輸入應得到相同輸出，而且不能修改傳入的 state 或 component 外部的資料。
+
+React 可以為了 Strict Mode、concurrent rendering 或重試更新而重複計算 reducer。若 reducer 內呼叫 API 或 analytics，一次使用者操作就可能送出多次 request／事件；即使那次 render 最後被放棄，外部副作用也無法自動撤回。
+
+```tsx
+function reducer(state, action) {
+  // ✅ 只計算資料
+  return { ...state, status: action.type };
+}
+
+function handleSubmit() {
+  analytics.track('submit'); // ✅ 明確由使用者事件觸發
+  dispatch({ type: 'submit' });
+}
+```
+
+若副作用必須在某個 state 成功 commit 後同步外部系統，放在 effect；若它是使用者操作直接造成的工作，通常放 event handler 或專門的資料層。Reducer 應保持容易單元測試：給定 state/action，直接斷言回傳值即可。
 
 </details>
 
@@ -167,7 +273,19 @@ const [state, dispatch] = useReducer(reducer, props, createInitialState);
 <details>
 <summary>答案</summary>
 
-第三個 `init` function 用於 lazy initialization，只在初始化 reducer state 時需要；直接呼叫 `createInitialState(props)` 則是每次 component render 都先計算，再把結果當參數傳入。
+第三個參數 `createInitialState` 是 lazy initializer。React 建立這個 reducer state 時會呼叫 `createInitialState(props)`，並把結果當作初始 state；一般 re-render 不會再次執行。
+
+```tsx
+// ✅ 傳入 function，由 React 在初始化時呼叫
+useReducer(reducer, props, createInitialState);
+
+// ❌ JavaScript 每次 render 都先呼叫，再把結果交給 React
+useReducer(reducer, createInitialState(props));
+```
+
+這能避免 parent 更新造成 child re-render 時，反覆解析或複製大型初始資料。不過 props 後來改變也**不會自動重設 reducer state**；需要 reset 時應 dispatch 明確的 `reset` action，或在資料 identity 真正改變時用 `key` remount component。
+
+開發環境 Strict Mode 可能呼叫 initializer 兩次來檢查純度，因此 `createInitialState` 只能做 deterministic calculation，不應送 request、寫 storage 或修改 props。
 
 </details>
 
@@ -183,7 +301,26 @@ function reducer(state, action) {
 <details>
 <summary>答案</summary>
 
-這同時破壞 reducer 純度與 immutable update。因為回傳 reference 沒變，React 可忽略更新；舊 snapshot 也被偷偷改壞。應回傳 `{ ...state, orders: [...state.orders, action.order] }`。
+React 很可能不更新畫面，因為 reducer 回傳的仍是同一個 state reference：
+
+```tsx
+Object.is(previousState, nextState); // true
+```
+
+更嚴重的是，`push` 已直接修改 `previousState.orders`。先前 render 的 closure、React DevTools 歷史或其他仍引用這個 array 的 component，都會看到舊 snapshot 被改掉，造成難以重現的資料錯亂。
+
+Reducer 應建立新的 array 與最外層 object：
+
+```tsx
+function reducer(state, action) {
+  return {
+    ...state,
+    orders: [...state.orders, action.order],
+  };
+}
+```
+
+Immutable update 的目的不只是「讓 React 知道要 render」，也是保證每次 state snapshot 不會在產生後被偷偷改變。對深層結構，可拆小 reducer、正規化資料，或使用 Immer 降低複製巢狀結構的負擔。
 
 </details>
 
@@ -196,7 +333,21 @@ const [state, dispatch] = useReducer(reducer, initialState);
 <details>
 <summary>答案</summary>
 
-可以，`dispatch` identity 穩定。常見設計會把 state Context 與 dispatch Context 拆開，讓只發 action、不讀 state 的元件不必因整份 state 更新。拆 Context 是 render 邊界設計，不是 `useMemo` 的替代語法遊戲。
+可以。React 保證同一個 mounted reducer 的 `dispatch` function identity 穩定；state 更新時不會產生新的 dispatch function。因此把它放入 Context，不會因為 dispatch 本身的 reference 改變而通知 consumer。
+
+常見做法是拆成兩個 Context：
+
+```tsx
+<OrderStateContext.Provider value={state}>
+  <OrderDispatchContext.Provider value={dispatch}>
+    {children}
+  </OrderDispatchContext.Provider>
+</OrderStateContext.Provider>
+```
+
+只需要發送 action 的 `AddOrderButton` 訂閱 dispatch Context；當 orders state 更新時，它不會因讀取整份 state Context 而被通知。需要顯示 orders 的 component 才訂閱 state Context。
+
+若寫成 `{ state, dispatch }` 單一 value，每次 state 變動都會產生新的整體 value，所有 consumer 都會更新。`useMemo` 可以避免 unrelated parent render 建立無意義的新 object，但無法讓只讀 dispatch 的 consumer 在 state 真正改變時跳過通知；拆 Context 才改變訂閱邊界。
 
 </details>
 
@@ -205,11 +356,28 @@ const [state, dispatch] = useReducer(reducer, initialState);
 <details>
 <summary>答案</summary>
 
-當多個欄位一起轉移、同一狀態有很多事件、規則需要集中測試，或想用 action 描述「發生什麼」時適合 reducer。單一 toggle/input 不會因改成 reducer 自動更好；server cache 也不該只因複雜就塞進 reducer。
+不是看 state 有幾個欄位，而是看**狀態轉移規則是否開始分散、互相依賴**。以下情況適合 reducer：
+
+- 一個事件會同時修改多個欄位，例如 `orderSubmitted` 同時更新 status、error 與 submittedAt。
+- 許多 event handler 都在重複相同更新規則。
+- 下一個 state 需要依賴多個目前欄位，容易產生不合法組合。
+- 希望用 action 描述「發生什麼」，並獨立測試每種狀態轉移。
+
+```tsx
+dispatch({ type: 'price_changed', price: '100' });
+dispatch({ type: 'order_submitted' });
+dispatch({ type: 'request_failed', message });
+```
+
+這會把「事件」留在 component，把「事件如何改變 state」集中在 reducer。代價是 action type、reducer switch 與額外結構，所以單一 input、toggle 或彼此獨立的少量 state 使用 `useState` 通常更直接。
+
+Reducer 也不會自動解決 server cache、request deduplication、retry、loading lifecycle 或跨頁同步；這些需求通常交給專門的資料取得工具，而不是只因資料複雜就全塞進 reducer。
 
 </details>
 
 ## `useContext`：讀取最近的 Provider 並訂閱 value
+
+> 實際案例：[useContext：跨元件共用交易偏好](./practical-cases/use-context)
 
 ### 1. 會讀到哪一層 Provider？
 
@@ -227,7 +395,18 @@ const [state, dispatch] = useReducer(reducer, initialState);
 <details>
 <summary>答案</summary>
 
-`Panel` 讀到 `dark`，`Button` 讀到離自己最近的 `light`。`useContext` 往 component 上方找最近的 provider，不會讀到同一個 component return 裡才建立的 provider。
+`Panel` 讀到 `dark`，`Button` 讀到 `light`。
+
+Context 的查找方式類似 lexical scope：React 從呼叫 `useContext(ThemeContext)` 的 component 所在位置，沿著 **render tree 向上** 找第一個相同 Context object 的 Provider。最近的一層會遮蔽更外層的值，所以內層可以針對局部子樹 override theme。
+
+```text
+Provider("dark")
+├─ Panel  → dark
+└─ Provider("light")
+   └─ Button → light
+```
+
+這不是依照檔案 import 路徑或 JSX 宣告順序搜尋，也不會往 sibling 或 child 尋找。若某個 component 自己先呼叫 `useContext`，再在 return 中建立 Provider，該 Provider 位於它的下方，只會影響 children，不會反過來影響 component 自己。
 
 </details>
 
@@ -241,7 +420,25 @@ const AuthContext = createContext("guest");
 <details>
 <summary>答案</summary>
 
-不會。只要上方有 matching provider，consumer 就取得 provider 的 `undefined`；default value 只在完全沒有 provider 時使用。若 provider 必填，常用 `null` default 搭配 custom Hook 主動 throw 清楚錯誤。
+不會。Consumer 會取得 `undefined`。
+
+`createContext('guest')` 的 default value 不是空值合併規則，而是「樹上完全找不到 matching Provider」時的最後 fallback。只要找到了 Provider，它提供的 value 就是答案，不論 value 是 `undefined`、`null`、`false` 或空字串。
+
+若 Auth Provider 是必填，建議不要給一個看似可正常運作的假使用者，而是使用明確 sentinel 並包成 custom Hook：
+
+```tsx
+const AuthContext = createContext<AuthValue | null>(null);
+
+function useAuth() {
+  const value = useContext(AuthContext);
+  if (value === null) {
+    throw new Error('useAuth must be used inside AuthProvider');
+  }
+  return value;
+}
+```
+
+這樣漏包 Provider 時會在錯誤位置立即失敗，而不是讓 `undefined` 傳到更深處才出現難懂的 property error。
 
 </details>
 
@@ -255,7 +452,27 @@ return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 <details>
 <summary>答案</summary>
 
-每次 render 都建立新的 object reference，Context value 以 `Object.is` 比較後視為改變。可用 `useMemo(() => ({ theme, setTheme }), [theme])` 避免「內容沒變但 reference 變」；若 `theme` 真的變，consumer 本來就應更新。
+因為 object literal 每次執行都會建立新 reference：
+
+```tsx
+Object.is(
+  { theme, setTheme },
+  { theme, setTheme },
+); // false
+```
+
+Context 使用 `Object.is` 比較前後 `value`。即使 theme 與 setTheme 都沒變，只要 unrelated parent state 讓 Provider component re-render，新的 `{ theme, setTheme }` 就會被判定為不同 value，React 因而通知所有訂閱這個 Context 的 consumer。
+
+可以穩定 value identity：
+
+```tsx
+const value = useMemo(
+  () => ({ theme, setTheme }),
+  [theme], // setTheme identity 由 React 保證穩定
+);
+```
+
+這只避免「內容沒變但包裝 object 變了」的通知。如果 `theme` 真的改變，value 本來就應變，所有讀取該 Context 的 consumer 也應取得新 theme。若 value 包含多組更新頻率差很多的資料，通常應拆 Context，而不是不斷堆 memo。
 
 </details>
 
@@ -264,7 +481,24 @@ return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 <details>
 <summary>答案</summary>
 
-不能擋住 component 自己訂閱的 Context 更新。`memo` 只比較 parent 傳入的 props。若 theme 與每秒更新的 ticker 共用一個 Context，應依責任/頻率拆 Context，或採 selector-based external store。
+不能擋住 component **自己訂閱的 Context** 更新。`React.memo` 比較的是 parent 傳入的 props；Context 是另一條獨立的 reactive input。
+
+```tsx
+const Price = memo(function Price() {
+  const ticker = useContext(MarketContext);
+  return <span>{ticker.price}</span>;
+});
+```
+
+即使 `Price` 沒有 props，當 `MarketContext.value` 改變時仍必須 re-render，否則它會顯示過期的 context。Memo 不能為了效能破壞 correctness。
+
+可以採取的最佳化包括：
+
+- 將 theme、auth、ticker 等不同責任或更新頻率拆成不同 Context。
+- 讓外層 component 讀 Context，再把 consumer 真正需要的 primitive prop 傳給 memoized child。
+- 高頻且需要 selector 的資料使用 `useSyncExternalStore` 類型的 external store，讓 component 只訂閱選取片段。
+
+重點是縮小訂閱範圍，而不是期待 `memo` 擋住已訂閱資料的合法更新。
 
 </details>
 
@@ -273,7 +507,21 @@ return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 <details>
 <summary>答案</summary>
 
-除了 tree 位置錯誤，也要檢查 provider 與 consumer 是否 import 到兩個不同的 Context object，例如 monorepo 重複打包同一模組。Context 的 identity 必須是同一個 `===` object，名字相同沒有用。
+常見原因有兩類。
+
+第一類是 Provider 實際上不在 consumer 上方：可能包在 sibling、包在 consumer return 的下方，或某條 route／測試 render path 漏包。Context 只沿著 React tree 向上找，不看畫面上的 DOM 距離。
+
+第二類是雙方使用了兩個不同的 Context object：
+
+```tsx
+// provider-import.ts 與 consumer-import.ts 若因重複 bundle
+// 各自拿到一份模組，名稱相同也沒有用。
+ProviderContext === ConsumerContext; // 必須是 true
+```
+
+這在 monorepo、symlink、library 重複安裝或錯誤的 bundler alias 中可能發生。`createContext` 每呼叫一次都建立新的 identity；Context 靠 object `===` 配對，不靠變數名稱或 default value。
+
+除錯順序可先用 React DevTools 確認 tree 與 Provider value，再檢查 provider/consumer 是否都從同一個 context module 匯入，以及 bundle 中是否出現重複套件。
 
 </details>
 
@@ -282,11 +530,24 @@ return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 <details>
 <summary>答案</summary>
 
-高頻且消費粒度差異很大的資料（order book、mouse position）、龐大 server cache、只在單一小子樹使用的 local state，都不適合無差別放進全域 Context。Context 解決傳遞，不自動提供 selector、cache、request lifecycle 或細粒度訂閱。
+Context 擅長解決「許多深層 component 都需要同一份相對穩定資料」的傳遞問題，例如 theme、locale、登入資訊或表單層級設定；它不是免費的全域 state manager。
+
+以下資料不適合無差別塞進單一 Context：
+
+- 每秒更新很多次的 order book、mouse position 或影音進度。
+- 一個巨大 object，但不同 consumer 只需要其中不同的小欄位。
+- 具有 cache、deduplication、retry、stale time 等 lifecycle 的 server data。
+- 只在一個小 component 子樹內使用的 local draft。
+
+Provider value 改變時，所有讀取該 Context 的 consumer 都會收到更新；原生 `useContext` 不提供 selector，無法只因 component 使用 `value.price` 就忽略 `value.depth` 的改變。把所有資料放在一起會擴大 render fan-out，也模糊資料 owner。
+
+應先把 state 放在最低的共同 owner；跨深層但低頻的資料再用 Context。高頻細粒度訂閱考慮 external store，server cache 使用資料取得工具，並依責任與更新頻率拆分 Context。
 
 </details>
 
 ## `useRef`：跨 render 的可變容器
+
+> 實際案例：[useRef：訂單驗證失敗時聚焦欄位](./practical-cases/use-ref)
 
 ### 1. 點擊後畫面為什麼仍是 0？
 
@@ -300,7 +561,27 @@ function Counter() {
 <details>
 <summary>答案</summary>
 
-修改 `ref.current` 不會要求 React render，所以 DOM 仍顯示 0。若資料影響畫面，使用 state；ref 適合 timer id、DOM node、imperative instance 或不參與 render 的最新值。
+因為 ref 是 React 不追蹤的 mutable container。點擊後 `countRef.current` 的確從 `0` 變成 `1`，但這個 mutation 不會把更新排進 React queue，也就沒有新的 render 與 DOM commit，所以按鈕文字仍停在 `0`。
+
+```text
+點擊 → ref.current 變成 1 → 沒有 re-render → DOM 仍是 0
+```
+
+如果之後剛好有另一個 state 造成 component re-render，JSX 可能才讀到目前的 ref 值而突然顯示 `1`。這種更新時機取決於無關事件，資料流不可預測，也說明不應拿 ref 保存會影響畫面的資料。
+
+計數會顯示在 UI，就應使用 state：
+
+```tsx
+const [count, setCount] = useState(0);
+
+return (
+  <button onClick={() => setCount(previous => previous + 1)}>
+    {count}
+  </button>
+);
+```
+
+Ref 適合 timer ID、DOM node、imperative instance，或 callback 需要讀取但不應觸發畫面更新的值。判斷重點是：**這個值改變時，畫面是否應重新計算？是就用 state；否才考慮 ref。**
 
 </details>
 
@@ -315,7 +596,38 @@ return <input ref={inputRef} />;
 <details>
 <summary>答案</summary>
 
-初次 render 是 `null`。React 在 commit 時才把 DOM node 指派給 ref；需要 focus 可在事件中做，需在 mount 後同步操作則用合適的 effect。Unmount 時 React 會把 DOM ref 設回 `null`。
+不能。初次 render 時 `inputRef.current` 是傳給 `useRef` 的初始值 `null`，因為此時 React 只是在計算「應該產生什麼 JSX」，真正的 `<input>` DOM node 還沒建立。
+
+React 大致分成兩個階段：
+
+```text
+Render：呼叫 component，計算 JSX
+   ↓
+Commit：更新 DOM，設定 ref.current
+```
+
+React 在 commit 階段建立／更新 DOM 後，才把 node 指派給 `inputRef.current`。因此 render 內讀 DOM ref，不只初次是 `null`，更新 render 時也可能讀到上一輪 commit 的 node，而不是目前正在計算的 JSX。
+
+需要操作 DOM 時依需求選擇時機：
+
+```tsx
+// ✅ 使用者操作發生時，DOM 通常已完成 commit
+function handleClick() {
+  inputRef.current?.focus();
+}
+
+// ✅ mount 後同步量測 layout，避免畫面先閃動
+useLayoutEffect(() => {
+  const width = inputRef.current?.getBoundingClientRect().width;
+}, []);
+
+// ✅ mount 後不需阻擋 paint 的操作
+useEffect(() => {
+  inputRef.current?.focus();
+}, []);
+```
+
+當 node 從 DOM 移除時，React 會在 commit 中把 ref 設回 `null`。因此非同步 callback 執行時仍應考慮 component 可能已 unmount，使用 null check 或 optional chaining。
 
 </details>
 
@@ -331,7 +643,57 @@ useEffect(() => {
 <details>
 <summary>答案</summary>
 
-長生命 callback 可讀 `latestSymbol.current` 取得最新 committed value，但這也建立非 reactive 的 escape hatch。若 symbol 改變本來就該重建 subscription，仍應放 dependency；不要用 ref 隱藏真正的 effect 輸入。
+這個模式讓長時間存活的 callback 透過同一個 ref object，讀到後來寫入 `.current` 的值：
+
+```tsx
+const latestSymbol = useRef(symbol);
+
+useEffect(() => {
+  latestSymbol.current = symbol;
+}, [symbol]);
+
+useEffect(() => {
+  const timer = setInterval(() => {
+    console.log(latestSymbol.current);
+  }, 3000);
+
+  return () => clearInterval(timer);
+}, []);
+```
+
+Interval callback 雖然捕捉到第一次 render 的 lexical environment，但它捕捉的 `latestSymbol` object 沒有改變，因此可以從 `.current` 取得後續同步進去的值，而且不必在每次 `symbol` 改變時重設 interval。
+
+代價包括：
+
+1. **脫離 reactive data flow**：ref 是 mutable escape hatch。React 不會追蹤 `.current` 的變化，也不會因它改變而重新 render 或重新執行 effect。
+2. **需要手動同步**：開發者必須維護 `latestSymbol.current = symbol` 及正確的 dependencies。忘記同步或漏掉依賴時，仍會得到舊資料，而且比一般 dependency 問題更難察覺。
+3. **畫面與邏輯可能不同步**：修改 `.current` 不會更新 JSX，因此不能把 ref 當成應驅動畫面的 state。
+4. **存在 effect 執行前的時間差**：`useEffect` 在 commit 後才把新 `symbol` 寫入 ref。在新畫面完成 commit 到該 effect 執行之間，callback 仍可能讀到前一次的值。
+5. **可能掩蓋真正的依賴**：若 `symbol` 改變時，本來就應重新訂閱、重新查詢或連線到另一個商品，那它就是 reactive dependency，應放入 effect dependency，而不是用 ref 阻止 effect 重跑。
+
+可用這個原則判斷：
+
+| 需求 | 建議做法 |
+| --- | --- |
+| `symbol` 改變後需要更新畫面 | 使用 state / props |
+| `symbol` 改變後需要重建 subscription | 將 `symbol` 放進 effect dependencies，並 cleanup 舊 subscription |
+| 不想重設 timer，但 callback 要讀取最新 `symbol` | React 18 可使用此 ref pattern |
+| 使用 React 19.2+，且 callback 只由 effect 內部觸發 | 可考慮 `useEffectEvent` |
+
+React 19.2+ 可將「非 reactive、但需要讀取最新值」的 effect 邏輯寫成 Effect Event：
+
+```tsx
+const onTick = useEffectEvent(() => {
+  console.log(symbol);
+});
+
+useEffect(() => {
+  const timer = setInterval(() => onTick(), 3000);
+  return () => clearInterval(timer);
+}, []);
+```
+
+`useEffectEvent` 只能從 effect 或其他 Effect Event 中呼叫，不是一般 event handler，也不應拿來刻意省略真正會決定 effect 是否重跑的 dependency。本專案目前使用 React 18，因此這段是升級後的替代方案，現階段不能直接使用。
 
 </details>
 
@@ -344,7 +706,45 @@ const engineRef = useRef(new TradingEngine());
 <details>
 <summary>答案</summary>
 
-`new TradingEngine()` 是普通 expression，每次 render 都會執行，只是 React 忽略後續 initial value。可用可預測的 lazy pattern：`if (engineRef.current === null) engineRef.current = new TradingEngine()`，前提是建立結果穩定且只在初始化分支寫 ref。
+會。`useRef` 雖然只會採用第一次 render 傳入的 initial value，但 JavaScript 會先計算函式參數，再呼叫函式：
+
+```tsx
+const engine = new TradingEngine(); // 每次 render 都先執行
+const engineRef = useRef(engine);    // 後續 render 傳入的 engine 會被忽略
+```
+
+因此 `useRef(new TradingEngine())` 在每次 re-render 都會建立一個新 instance，只是 React 繼續保留原本的 `engineRef.current`，新建立的 instance 隨即被丟棄。
+
+**解法一：用 ref 做 lazy initialization**
+
+```tsx
+const engineRef = useRef<TradingEngine | null>(null);
+
+if (engineRef.current === null) {
+  engineRef.current = new TradingEngine();
+}
+
+// 此處可確定 engineRef.current 已是 TradingEngine
+engineRef.current.trade();
+```
+
+這是 render 中寫入 ref 的少數可接受例外：條件必須可預測，而且 `new TradingEngine()` 的結果必須穩定、不能有外部副作用。
+
+**解法二：使用 `useState` 的 lazy initializer**
+
+```tsx
+const [engine] = useState(() => new TradingEngine());
+```
+
+若 instance 在元件存活期間不需要被替換，這也能避免每次 re-render 都執行 constructor。不需要 setter 時可以只解構第一個元素。
+
+| 寫法 | 一般 re-render 時是否重新建立 |
+| --- | --- |
+| `useRef(new TradingEngine())` | 會，建立後被 React 忽略 |
+| `useRef(null)` + 初始化判斷 | 不會 |
+| `useState(() => new TradingEngine())` | 不會 |
+
+以上都是針對同一次 mount 的 re-render；元件 unmount 後重新 mount，仍會建立新的 instance。開 WebSocket、訂閱事件等有外部副作用的初始化，應放進 effect 並提供 cleanup，而不是在 render 或 state initializer 中執行。另外，開發環境的 Strict Mode 可能故意重複呼叫初始化流程來檢查純度，因此 constructor 仍應保持純粹。
 
 </details>
 
@@ -353,7 +753,82 @@ const engineRef = useRef(new TradingEngine());
 <details>
 <summary>答案</summary>
 
-一般不行。Render 應保持純粹，concurrent rendering 可能被暫停或丟棄；render 中任意讀寫 ref 會讓結果依執行時機改變。只接受可預測的單次初始化例外，其他讀寫放事件或 effect。
+**一般不行。**語法上可以存取 `.current`，但 React 不會追蹤 ref 的讀寫，而同一個 ref object 又會跨多次 render 保留。若在 render 中任意讀寫，它就成為 React 不知道的隱藏輸入或副作用。
+
+React 預期 render 像純函式：相同的 props、state、context 應算出相同的 JSX，而且執行一次、兩次，或中途放棄，都不應改變其他 render 的結果。
+
+#### 為什麼 render 中寫 ref 有問題？
+
+```tsx
+function Counter() {
+  const renderCount = useRef(0);
+  renderCount.current += 1; // ❌ render 本身產生 mutation
+
+  return <p>Render 次數：{renderCount.current}</p>;
+}
+```
+
+這段程式假設「呼叫 component function 就等於成功顯示一次」，但 React 不保證如此：
+
+- Strict Mode 在開發環境可能額外執行 render，以找出不純的程式。
+- Concurrent rendering 可以暫停、重試或放棄某次 render。
+- 被放棄的 render 雖然沒有 commit 到畫面，卻已經修改共用的 `ref.current`。
+
+例如 render A 把數字從 0 改成 1，之後 A 被放棄；render B 仍可能讀到 1。畫面從未 commit A，但 A 已偷偷影響 B，結果便取決於 React 的執行時機，而不只取決於 props 和 state。
+
+#### 為什麼 render 中讀 ref 也有問題？
+
+```tsx
+function Player() {
+  const playingRef = useRef(false);
+
+  return <p>{playingRef.current ? '播放中' : '已暫停'}</p>; // ❌
+}
+```
+
+若其他地方執行 `playingRef.current = true`，React 不會因此重新 render，畫面可能一直顯示「已暫停」。即使剛好因另一個 state 更新而重新 render，畫面才突然讀到新值，更新時機也不是由這份資料驅動的。
+
+DOM ref 還有另一個問題：React 在 commit 階段才設定 DOM ref。第一次 render 時它是 `null`；後續 render 讀到的也可能是上一次 commit 的 DOM node，而不是目前正在計算的 JSX 所對應的 node。
+
+#### 應該放在哪裡？
+
+| 需求 | 正確位置 |
+| --- | --- |
+| 值會影響 JSX | 使用 state / props，在 render 中讀取 |
+| 點擊時 focus input 或讀取最新 imperative value | Event handler 中讀寫 ref |
+| Commit 後操作 DOM、訂閱或同步外部系統 | 合適的 effect 中讀寫 ref |
+| 保存 timer ID，不需要顯示在畫面 | Event handler 或 effect 中讀寫 ref |
+
+```tsx
+function SearchBox() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  function handleFocus() {
+    inputRef.current?.focus(); // ✅ 使用者事件發生時，render 已結束
+  }
+
+  return (
+    <>
+      <input ref={inputRef} />
+      <button onClick={handleFocus}>Focus</button>
+    </>
+  );
+}
+```
+
+#### 例外：可預測的 lazy initialization
+
+```tsx
+const engineRef = useRef<TradingEngine | null>(null);
+
+if (engineRef.current === null) {
+  engineRef.current = new TradingEngine();
+}
+```
+
+這是 render 中寫 ref 的少數可接受例外，因為初始化分支只在值為 `null` 時執行，而且每次執行都應得到可預測、等價且沒有外部副作用的結果。若 constructor 會連線 WebSocket、訂閱事件或修改外部資料，就不是安全的 lazy initialization，應改到 effect 並 cleanup。
+
+簡單記法：**資料若參與畫面，用 state；ref 只保存不參與畫面的 imperative 資料，並在 event handler、effect 或可預測的初始化分支中存取。**
 
 </details>
 
@@ -362,11 +837,32 @@ const engineRef = useRef(new TradingEngine());
 <details>
 <summary>答案</summary>
 
-每個 mounted component instance 各有自己的 ref，並跨 render 保留；module 變數通常被所有 instance 共用，也可能跨 request 汙染 SSR。需要 component-local imperative state 時用 ref，需要 UI state 時用 state。
+差別在 **owner、生命週期與隔離範圍**。
+
+```tsx
+let moduleCounter = 0; // 整個 module 共用
+
+function Widget() {
+  const localCounter = useRef(0); // 每個 Widget instance 各自一份
+}
+```
+
+若畫面同時 mount 兩個 `Widget`：
+
+- 兩者讀寫的是同一個 `moduleCounter`，A 修改後 B 也會看到。
+- 兩者各自擁有不同的 `localCounter` ref，A 不會污染 B。
+- Ref 在該 instance 的 re-render 之間保留；unmount 後該 instance 的 ref 便失去生命週期 owner，重新 mount 會建立新 ref。
+- Module 變數通常存活到整個 module／頁面執行環境被卸載，和 component 是否存在無關。
+
+Module 變數還可能造成測試互相污染，以及 SSR 中不同使用者 request 共用可變資料的風險。Ref 則由 React component tree 管理，範圍比較符合「這個 instance 的 imperative 資料」。
+
+不過 ref 仍不會觸發 render。若資料改變需要更新 UI，應使用 state；若多個 component 真的要共享 reactive data，應由共同 parent、Context 或 external store 管理，而不是用 module mutable variable 偷渡。
 
 </details>
 
 ## `useImperativeHandle`：限制 parent 透過 ref 能做什麼
+
+> 實際案例：[useImperativeHandle：限制價格欄位的命令介面](./practical-cases/use-imperative-handle)
 
 ### 1. Parent 最後拿到 DOM node 還是自訂 object？
 
@@ -379,7 +875,29 @@ useImperativeHandle(ref, () => ({
 <details>
 <summary>答案</summary>
 
-Parent 的 ref 會拿到 `{ focus }`，不是內部 input DOM node。這讓 child 只暴露必要操作，不洩漏整個 DOM 實作。
+Parent 最後拿到的是 `{ focus }` 這個自訂 handle，不是內部的 `<input>` DOM node。
+
+`useImperativeHandle` 會攔截 parent 傳入的 ref，並決定要把什麼值放進 `parentRef.current`：
+
+```tsx
+type InputHandle = {
+  focus: () => void;
+};
+
+const SearchInput = forwardRef<InputHandle>(function SearchInput(_, ref) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useImperativeHandle(ref, () => ({
+    focus: () => inputRef.current?.focus(),
+  }), []);
+
+  return <input ref={inputRef} />;
+});
+```
+
+Parent 只能呼叫 `searchRef.current?.focus()`，不能任意修改 input value、style 或 DOM attributes。這建立一層封裝：child 之後即使把 `<input>` 換成第三方 editor，只要仍實作 `focus()`，parent 就不必改。
+
+它不是把資料「傳回 parent」的一般管道，而是刻意暴露一小組 imperative commands 的 escape hatch。
 
 </details>
 
@@ -394,7 +912,25 @@ useImperativeHandle(ref, () => ({
 <details>
 <summary>答案</summary>
 
-空 dependency 讓 handle 保留初次 render 的 `onSubmit` 與 `symbol` closure。應列出 `[onSubmit, symbol]`，或重新設計 API 讓 `submit` 接收必要參數。不要為了穩定 identity 犧牲 correctness。
+因為空 dependency array 表示 React 不需要重新建立 handle。第一次 render 建立的 `submit` function 透過 closure 捕捉了當時的 `onSubmit` 與 `symbol`，後續 props 改變時，它仍呼叫舊值。
+
+```tsx
+useImperativeHandle(ref, () => ({
+  submit: () => onSubmit(symbol),
+}), [onSubmit, symbol]); // ✅ handle 使用到的 reactive values
+```
+
+當 dependency 改變時，React 會在 commit 階段更新 parent ref 所指向的 handle。Parent 下次呼叫 `submit()` 就會使用最新 callback 與 symbol。
+
+另一種設計是讓命令顯式接收當次資料：
+
+```tsx
+useImperativeHandle(ref, () => ({
+  submit: (nextSymbol: string) => onSubmit(nextSymbol),
+}), [onSubmit]);
+```
+
+選擇取決於 API 語意，但不能為了讓 handle identity 看似穩定，就故意省略真實 dependency；stable stale value 仍然是 bug。
 
 </details>
 
@@ -403,7 +939,25 @@ useImperativeHandle(ref, () => ({
 <details>
 <summary>答案</summary>
 
-Render 階段 ref 可能仍是 `null`，而且 render 必須純粹。應在使用者 event 或 commit 後的 effect 中呼叫。Optional chaining 只能避免 null exception，不能讓 render 中的 imperative side effect 變正確。
+這是不正確的呼叫時機，可能什麼都沒做，也可能操作上一輪 commit 的 DOM。
+
+Parent render 時，child 的這次 JSX 還沒有 commit：初次 mount 的 `ref.current` 是 `null`；更新時它可能仍指向上一輪 handle。更重要的是 `focus()` 會改變瀏覽器焦點，屬於外部副作用，而 render 必須只是計算 JSX。
+
+React 可以重複、暫停或放棄 render。若 render 中呼叫 focus，即使這次 UI 最後沒有 commit，使用者焦點也已被移動；Strict Mode 下還可能重複執行。
+
+應由明確事件或 commit 後流程觸發：
+
+```tsx
+function handleEditClick() {
+  editorRef.current?.focus(); // ✅ 使用者事件
+}
+
+useEffect(() => {
+  if (shouldAutoFocus) editorRef.current?.focus(); // ✅ commit 後
+}, [shouldAutoFocus]);
+```
+
+Optional chaining 只避免 `null` exception，不能把 render phase 的 side effect 變成正確做法。
 
 </details>
 
@@ -412,7 +966,20 @@ Render 階段 ref 可能仍是 `null`，而且 render 必須純粹。應在使�
 <details>
 <summary>答案</summary>
 
-優先暴露最小、具語意的操作，例如 `focusInvalidField()`；直接暴露整個 DOM node 會讓 parent 與 child 結構耦合。這個 Hook 應是少量 escape hatch，不是一般資料流。
+優先暴露最小而具語意的操作，例如 `focus()`、`clearSelection()` 或 `focusInvalidField()`，而不是整個 `HTMLInputElement`。
+
+若直接暴露 DOM node，parent 可以呼叫任何 method、改任意 attribute，甚至假設 child 一定由某個 `<input>` 組成。Child 的內部結構因此變成 public API，日後換成 textarea、contenteditable 或第三方元件都可能破壞 parent。
+
+```tsx
+type FormHandle = {
+  focusInvalidField: () => void;
+  resetSelection: () => void;
+};
+```
+
+這種 capability-based API 只承諾「能完成什麼」，不洩漏「內部怎麼完成」。也比較容易限制誤用、撰寫型別和測試。
+
+只有 parent 確實需要原生 DOM API，而且薄 wrapper 沒有封裝價值時，才考慮直接轉發 DOM ref。`useImperativeHandle` 應保持少量 escape hatch，不能取代一般 props/state 資料流。
 
 </details>
 
@@ -421,7 +988,22 @@ Render 階段 ref 可能仍是 `null`，而且 render 必須純粹。應在使�
 <details>
 <summary>答案</summary>
 
-通常不該。`setPrice()`、`getValues()` 會建立難追蹤的雙向命令流；會影響畫面的資料仍應透過 props/state 單向傳遞。Focus、scroll、selection、播放控制才是較合理的 imperative use case。
+通常不該。Controlled component 的核心是 value 由 props/state 決定，更新透過 callback 往上通知：
+
+```tsx
+<PriceInput value={price} onChange={setPrice} />
+```
+
+資料 owner 明確，React DevTools 能看見 props/state，任何 render 都能根據輸入重建 UI。若改成 parent 到處呼叫 `ref.current.setPrice()`、`getPrice()`，就形成隱藏的雙向命令流：畫面真正資料可能藏在 child ref／DOM 中，驗證、重設、SSR 與測試都更難推理。
+
+合理的 imperative use case 通常是「命令」而不是「應用資料」：
+
+- Focus、scroll、文字 selection。
+- 播放、暫停影音。
+- 觸發第三方 imperative widget 的操作。
+- 暫時無法用 declarative props 表達的 DOM 行為。
+
+若需求可以說成「畫面應呈現某個 value」，優先 props/state；若需求是「現在執行一次 focus/scroll/play」，才考慮 imperative handle。
 
 </details>
 
@@ -430,11 +1012,73 @@ Render 階段 ref 可能仍是 `null`，而且 render 必須純粹。應在使�
 <details>
 <summary>答案</summary>
 
-此專案的 React 18 需要用 `forwardRef` 讓 function component 接收 ref，再交給 `useImperativeHandle`。React 19 可把 `ref` 當 prop 取得。回答時要先說專案版本，避免把新語法貼進 React 18 專案。
+**核心差異（一句話總結）：**React 18 的 function component 必須透過 `forwardRef` 接收 parent 傳來的 ref；React 19 則可把 `ref` 當成一般 prop，直接從 props 取得。
+
+#### React 18：必須使用 `forwardRef`
+
+在 React 18，`ref` 是 React 特別處理的 attribute，不會出現在 function component 的一般 props 中。Child 必須用 `forwardRef` 包裹，並從 render function 的第二個參數取得 `ref`：
+
+```tsx
+// React 18
+import { forwardRef, useRef } from 'react';
+
+type Props = {
+  placeholder?: string;
+};
+
+const CustomInput = forwardRef<HTMLInputElement, Props>(
+  function CustomInput({ placeholder }, ref) {
+    return <input ref={ref} placeholder={placeholder} />;
+  },
+);
+
+function Parent() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  return <CustomInput ref={inputRef} placeholder="請輸入..." />;
+}
+```
+
+#### React 19：直接把 `ref` 當 prop
+
+React 19 開始，function component 可以直接從第一個參數取得 `ref`，因此新元件不再需要使用 `forwardRef`：
+
+```tsx
+// React 19+
+import { useRef, type Ref } from 'react';
+
+type Props = {
+  placeholder?: string;
+  ref?: Ref<HTMLInputElement>;
+};
+
+function CustomInput({ placeholder, ref }: Props) {
+  return <input ref={ref} placeholder={placeholder} />;
+}
+
+function Parent() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  return <CustomInput ref={inputRef} placeholder="請輸入..." />;
+}
+```
+
+Parent 的寫法沒有改變，差別只在 **child 如何接收 ref**：
+
+| 版本 | Child 接收方式 | 是否需要 `forwardRef` |
+| --- | --- | --- |
+| React 18 | render function 的第二個參數 | 需要 |
+| React 19 | 一般 props 中的 `ref` | 不需要 |
+
+若 child 不想直接暴露 DOM，而是要透過 `useImperativeHandle` 只提供 `focus()`、`clear()` 等方法，兩個版本仍然都可以使用它；改變的只有 ref 傳進 child 的方式。
+
+面試與實作時要先確認 React 與 `@types/react` 版本。React 19 的 ref-as-prop 語法若直接貼進 React 18 專案，runtime 與型別都不會依照 React 19 的方式處理。
 
 </details>
 
 ## `useId`：SSR 安全的 accessibility identity
+
+> 實際案例：[useId：建立可重複使用的無障礙訂單欄位](./practical-cases/use-id)
 
 ### 1. State 更新後 ID 會改嗎？
 
@@ -446,7 +1090,26 @@ const [value, setValue] = useState("");
 <details>
 <summary>答案</summary>
 
-同一個 component instance 的 ID 跨 render 穩定；component unmount/remount 後則是新的 identity。它適合連結 label/input 或 description，不是資料庫 ID。
+不會。同一個 mounted component instance 中，同一個 `useId` 呼叫位置會在 re-render 之間取得相同 ID。Input 的 value state 更新不會改變 component identity，因此 label 與 input 的關聯也不會斷掉。
+
+```tsx
+const id = useId(); // 例如 React 產生的 :r1:
+
+return (
+  <>
+    <label htmlFor={id}>Symbol</label>
+    <input
+      id={id}
+      value={value}
+      onChange={event => setValue(event.target.value)}
+    />
+  </>
+);
+```
+
+若 component unmount 後重新 mount，例如 `key` 改變，這是新的 component instance，ID 也可能不同。不要依賴 ID 的字串格式或拿它當永久資料 identity；它只需在 React tree 與 server/client hydration 中維持正確關聯。
+
+因此 `useId` 適合 accessibility attributes，不適合作為 API payload、database ID、analytics entity ID 或需要跨 session 保存的識別碼。
 
 </details>
 
@@ -455,7 +1118,20 @@ const [value, setValue] = useState("");
 <details>
 <summary>答案</summary>
 
-不可以。Hook 不能在 `map` 中依資料筆數動態呼叫，而且 list key 必須來自資料本身的穩定 identity。應使用 `order.id`；若資料沒有 ID，要在資料建立時產生，而不是 render 時生成。
+不可以，原因有兩層。
+
+第一，若在 `map` 裡為每筆資料呼叫 `useId`，資料筆數或順序改變會讓 Hook 呼叫次數／順序改變，違反 Rules of Hooks。
+
+第二，list key 的任務是告訴 React「這次 render 的哪筆資料，對應上次的哪筆資料」。這個 identity 必須來自資料本身；`useId` 的 identity 來自 component tree 中的 Hook 位置，無法表達某個 order 在排序、插入或刪除後仍是同一筆 order。
+
+```tsx
+// ✅ key 來自 domain data
+orders.map(order => (
+  <OrderRow key={order.id} order={order} />
+));
+```
+
+若 key 跟著位置變動，React 可能把某列的 local state、focus 或輸入內容錯配給另一筆資料。資料沒有 ID 時，應在資料建立／取得時產生並保存，而不是在 render 時臨時生成。
 
 </details>
 
@@ -464,7 +1140,17 @@ const [value, setValue] = useState("");
 <details>
 <summary>答案</summary>
 
-Random value 每次 render 不穩定，SSR 產生的 HTML 也可能和 client hydration 不一致。`useId` 由 React 依 tree identity 協調，適合 server/client 一致的 accessibility ID。
+因為 `Math.random()` 每次呼叫都可能不同，render 不是穩定、可重試的計算：
+
+```tsx
+const id = Math.random().toString(36); // 每次 render 都是新值
+```
+
+State 更新後 label 的 `htmlFor` 和 input `id` 雖然可能在同一次 render 一起改掉，但 DOM identity 無意義地變動，也破壞 render 純度。Strict Mode 的額外 render 還會產生更多不同結果。
+
+SSR 問題更明顯：server 可能輸出 `id="abc"`，client 第一次 render 卻得到 `id="xyz"`，造成 hydration markup 不一致。React 無法確定 server HTML 和 client component 是否完全對應。
+
+`useId` 會根據 React tree identity 產生可協調的 ID；在 server 與 client component tree 相同的前提下，即使 hydration 執行順序不同，也能維持關聯。它解決的是 UI／accessibility identity，不是密碼學隨機值或資料 ID。
 
 </details>
 
@@ -479,7 +1165,30 @@ const errorId = `${prefix}-price-error`;
 <details>
 <summary>答案</summary>
 
-用一個 `useId` 當 prefix 再加 suffix，可以建立同一欄位的 input、hint、error 關係，不需為每個節點各呼叫一次 Hook。
+可以把一次 `useId` 的結果當作該元件實例的唯一 prefix，再加上有語意的 suffix：
+
+```tsx
+const prefix = useId();
+const inputId = `${prefix}-price`;
+const hintId = `${prefix}-price-hint`;
+const errorId = `${prefix}-price-error`;
+
+return (
+  <>
+    <label htmlFor={inputId}>Price</label>
+    <input
+      id={inputId}
+      aria-describedby={`${hintId} ${errorId}`}
+    />
+    <p id={hintId}>輸入每單位價格</p>
+    <p id={errorId}>價格必須大於零</p>
+  </>
+);
+```
+
+每個 `PriceField` instance 都會有不同 prefix，所以頁面上 render 多份表單也不會 ID collision；同一 instance 內的 label、hint、error 又能清楚互相關聯。
+
+不需要為每個 element 都呼叫一次 `useId`。共用 prefix 能減少 Hook 數量，也讓產生出的關係更容易閱讀與維護。
 
 </details>
 
@@ -488,7 +1197,31 @@ const errorId = `${prefix}-price-error`;
 <details>
 <summary>答案</summary>
 
-不會，它只提供 ID。仍要正確連接 `htmlFor`/`id`、`aria-describedby`、`aria-labelledby` 等語意；若 label 已包住 input，甚至可能不需要 ID。
+不會。`useId` 只產生一個可用的唯一字串，不知道這個 ID 要代表 label、提示、錯誤訊息或其他 element，也不會自動加入任何 ARIA 關係。
+
+```tsx
+const errorId = useId();
+
+// ❌ 只有產生 ID，input 與錯誤訊息仍沒有關聯
+return <p id={errorId}>Required</p>;
+```
+
+必須把正確 attributes 接起來：
+
+```tsx
+const inputId = useId();
+const errorId = `${inputId}-error`;
+
+return (
+  <>
+    <label htmlFor={inputId}>Price</label>
+    <input id={inputId} aria-describedby={errorId} aria-invalid="true" />
+    <p id={errorId}>Price is required</p>
+  </>
+);
+```
+
+Accessibility 取決於正確 HTML semantics、名稱、描述、狀態與鍵盤操作，不取決於「是否使用某個 Hook」。例如 `<label><span>Price</span><input /></label>` 已由巢狀語意建立關聯，可能根本不需要 ID。
 
 </details>
 
@@ -503,7 +1236,24 @@ if (showError) {
 <details>
 <summary>答案</summary>
 
-違反 Rules of Hooks：不同 render 的 Hook 呼叫順序可能改變。應在 component 最上層固定呼叫，再決定是否使用產生的 ID；或把條件區塊抽成獨立 component。
+這會違反 Rules of Hooks。React 不是靠變數名稱辨認某個 Hook 的 state，而是靠每次 render 的**呼叫順序**把第 1、2、3 個 Hook 對回先前保存的資料。
+
+假設 `showError = false` 時跳過 `useId`，後面的 `useState` 變成第 2 個 Hook；下一次 `showError = true` 時插入 `useId`，原本的 `useState` 變成第 3 個。React 就無法正確判斷每個儲存位置屬於誰。
+
+應固定在 component top level 呼叫，再條件式使用結果：
+
+```tsx
+const errorId = useId();
+
+return (
+  <>
+    <input aria-describedby={showError ? errorId : undefined} />
+    {showError && <p id={errorId}>Invalid price</p>}
+  </>
+);
+```
+
+如果只有某個條件成立時才需要整組 hooks，可把那個區塊抽成獨立 component，讓新 component 內部的 Hook 順序仍固定。規則不是「條件式不能顯示 UI」，而是「同一 component 每次 render 必須以相同順序呼叫 Hooks」。
 
 </details>
 

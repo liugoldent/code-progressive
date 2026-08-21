@@ -31,22 +31,52 @@ export default function Home() {
           {JSON.stringify(structuredData)}
         </script>
       </Head>
-      <Link to="/docs/intro">
-        <div className={styles.header}>
+      <main className={styles.hero}>
+        <div className={styles.hero__content}>
+          <p className={styles.hero__eyebrow}>FRONTEND NOTES · SINCE 2019</p>
+          <Heading as="h1" className={styles.hero__title}>
+            Build with curiosity.
+            <span>寫下每一次理解。</span>
+          </Heading>
+          <p className={styles.hero__description}>
+            從 JavaScript、React、Vue 到前端工程，
+            <br className={styles.desktopBreak} />
+            把學習過程整理成可以反覆查閱的技術筆記。
+          </p>
+          <div className={styles.hero__actions}>
+            <Link className={styles.primaryAction} to="/docs/intro">
+              開始閱讀 <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+
+        <div className={styles.hero__visual} aria-hidden="true">
           <img
-            className={styles.header__img}
-            src="/img/code.png"
-            alt="進入 __yeah! Code 技術筆記"
+            className={styles.hero__backdrop}
+            src="/img/hero-workspace.jpg"
+            alt=""
             loading="eager"
-            fetchPriority="high"
+            fetchPriority="low"
+            decoding="async"
+            width="1400"
+            height="933"
+          />
+          <img
+            className={styles.hero__logo}
+            src="/img/code.png"
+            alt=""
+            loading="eager"
+            fetchPriority="low"
+            decoding="async"
             width="500"
             height="500"
           />
-          <Heading as="h1" className={styles.header__text}>
-            {siteConfig.title}
-          </Heading>
         </div>
-      </Link>
+
+        <p className={styles.hero__signature} aria-hidden="true">
+          {siteConfig.title}
+        </p>
+      </main>
     </Layout>
   );
 }

@@ -90,6 +90,15 @@ React Router Declarative mode 與 Data/Framework mode 的 implementation 不同�
 
 </details>
 
+### `useNavigate` 六題詳細補充
+
+1. **Render 不能導航**：`navigate()` 會改 location/history，是外部狀態寫入；render 中呼叫會造成 render → navigate → render，Strict Mode/concurrent render 更會放大問題。使用者決策放 event handler；由已 committed 狀態觸發才放 Effect；loader/action 已知 redirect 時優先在資料層 redirect。
+2. **replace 的語意**：登入頁通常只是前往目標頁的中繼狀態，使用 replace 可避免 Back 又回到已無效的 login submit 畫面。一般內容瀏覽應保留 push，不能為了「不讓使用者返回」濫用 replace。
+3. **History delta**：`navigate(-1)` 只操作 browser history，上一筆可能不存在、是站外或不是產品預期頁。Close modal 若確定 modal 由 location background 建立可用 delta；一般取消流程應提供明確 fallback path。
+4. **Navigation state**：它保存在 history entry，適合短暫且不可分享的 UI context；重新整理、複製連結、直接開網址都不能當可靠資料來源。可分享/可恢復的 filter 放 URL，canonical entity 回 server/query cache，敏感資料不要放 history state。
+5. **Event 或 Effect**：按下按鈕、完成 submit 等已知 user event 直接 navigate，避免先 set flag 再由 Effect 觀察。只有導航原因來自 render 後才知道的外部同步狀態，例如 auth session 失效，Effect 才合理。
+6. **Return type**：Declarative router 的 navigation 可回 `void`；Data/Framework mode 能回在導航完成時 resolve 的 Promise，且 identity contract 也不同。TypeScript 應依實際 router mode 做 module augmentation或明確處理 Promise，不能一律 `await` 後假設 loader 已完成。
+
 ## React Router `useParams`：讀取目前 route match 的動態片段
 
 ### 1. `/trade/:symbol` 讀到的 symbol 一定是 string 嗎？
@@ -154,6 +163,15 @@ Validation 後的 param 應進 query key，例如 `['ticker', symbol]`。只讓 
 最好在 route loader/schema boundary 解析並回 404/redirect，或 component 明確顯示 invalid state；不要讓 `undefined` 一路進 API 變成 `/api/ticker/undefined`。URL 也是不可信輸入。
 
 </details>
+
+### `useParams` 六題詳細補充
+
+1. **Param type**：Route 可能沒有 match、optional param 也可能缺少，因此讀值要視為 `string | undefined` 並在 boundary validate。即使 TypeScript 縮窄 key，也不代表 URL 內容符合業務 enum。
+2. **Decode**：Router 已對匹配片段做 URL decoding，重複 `decodeURIComponent` 可能把合法 `%` 再解一次並拋錯。仍要做的是 schema/allowlist validation、大小寫 normalization，以及把 normalized value用於 query key。
+3. **Nested matches**：Child route 可讀到目前 matched branch 上祖先 routes 的 dynamic params；同名 param 會造成理解困難，route design 應使用清楚唯一名稱。Sibling 或未 match route 的 params 不存在。
+4. **不要複製 state**：Param 本身就是 URL source of truth；複製進 local state 後，navigation 改 param 不會自動同步，還會短暫顯示舊 entity。直接由 param 推導 query/form key；只有真正可編輯 draft 才建立 local state，並定義何時 reset。
+5. **Cache identity**：`['ticker', normalizedSymbol]` 讓 param 變更自然切換 observer/cache；不要 key 固定再讓 queryFn 偷讀 closure。未通過 validation 前使用 enabled gate 或 route error，避免用 `undefined` 發 request。
+6. **Invalid param UX**：在 route/loader boundary 轉成 404、redirect 或明確 unsupported state，比 component 回空白更可觀察。錯誤頁仍需保留導航出口，也不要把 invalid input 默默改成 BTC，否則分享的錯誤 URL 看似成功。
 
 ## React Router `useSearchParams`：讀寫 query string
 
@@ -224,6 +242,15 @@ Default init 可提供初始讀值，但不會自動在第一次 render 把它�
 
 </details>
 
+### `useSearchParams` 六題詳細補充
+
+1. **它是 navigation**：`setSearchParams` 會建立/取代 location，而不是只改 component memory，因此會觸發 router matching、loader 與 history 語意。是否 replace、是否保留 scroll，都應按 navigation UX 決定。
+2. **Stable 但 mutable**：目前 `searchParams` reference 可穩定地當 Effect dependency，但 `URLSearchParams` 物件本身可 mutation；只呼叫 `.set()` 不會通知 Router。建立/回傳新的 params 並呼叫 setter，才能讓 URL 成為已提交狀態。
+3. **保留其他 keys**：`setSearchParams({ tab })` 表示整份 query 變成這個 object，不是 merge。更新單一欄位要從 current 複製、set/delete 目標 key後回傳；並測試 multi-value keys，避免 object shorthand 意外壓掉重複參數。
+4. **Parsing 與 validation**：`Number(null)`、`Number('')` 都可能得到 0，`Number('abc')` 是 NaN；必須先檢查 raw presence，再做 finite/integer/range clamp。URL 永遠是不可信輸入，不能只靠 TypeScript cast。
+5. **Default init**：它只提供 URL 缺值時 Hook 首次讀取的預設，不會自動改寫 address bar。若產品要求 canonical URL，應明確 navigate/redirect，並避免 hydration 後才偷偷加參數造成 history 噪音。
+6. **每字更新**：Query 可分享時很有價值，但每個 keystroke 都 push history、跑 loader 或發 request 可能很昂貴。可用 local draft + submit/debounce commit，或使用 replace 避免 Back 穿過每個字；選擇要與可分享性和資料取得策略一致。
+
 ## React Hook Form `useForm`：建立表單控制與 subscription
 
 ### 1. `defaultValues` prop 改變後欄位會自動重設嗎？
@@ -288,6 +315,15 @@ Root/server error 的生命週期要明確管理，成功/重新提交時依需�
 
 </details>
 
+### `useForm` 六題詳細補充
+
+1. **Default values 是初始化基準**：同步 prop 改變不會自動覆蓋使用者已編輯欄位；載入新 entity 後應在明確時機 `reset(nextValues)`，並選擇是否保留 dirty/touched/errors。避免每個 render 建新 values 造成無限 reset 或草稿消失。
+2. **Controlled / uncontrolled 邊界**：`register` 主要讓 RHF透過 ref 管 uncontrolled input；自己傳 `value` 卻不把 `onChange` 交回 RHF，畫面與 form store 就分裂。第三方 controlled widget 用 `Controller/useController`，普通 input 則讓 `register` 提供 handlers。
+3. **Dirty 比較基準**：`isDirty` 是目前 values 與完整 `defaultValues` 的比較結果；漏給 default、型別不一致（`"1"` vs `1`）或 reset 選項都會改變判斷。所有欄位先提供穩定 default，server entity 切換時再明確重設基準。
+4. **handleSubmit**：它回傳真正的 submit handler，會處理 preventDefault、執行 validation，再分流 onValid/onInvalid；onValid 內 request thrown error仍需自行 catch/交給 mutation。不要同時在 form `onSubmit` 外又綁 button click 重複送出。
+5. **Server root error**：Root error適合表單整體錯誤，欄位錯誤則對應 field name。新提交開始時可清掉過期 server error，成功 reset；若 server error 要持續到使用者修改某欄，應定義精確 clear 規則，不能讓舊訊息污染下一筆 entity。
+6. **Render 粒度**：解構/訂閱整份 formState、根層 `watch()` 或把所有 values 提升到 parent 都會擴大更新。讓欄位靠 uncontrolled ref 運作，在需要顯示 error/derived preview 的小 component 用 `useFormState`、`useWatch` 精準訂閱。
+
 ## React Hook Form `useWatch`：在指定範圍訂閱欄位值
 
 ### 1. 它和 `getValues('price')` 差在哪裡？
@@ -343,6 +379,15 @@ Root/server error 的生命週期要明確管理，成功/重新提交時依需�
 不可以，Hook 只能在 component/custom Hook 頂層。事件中讀一次用 `getValues`；需要 reactive render 則在頂層 `useWatch`，handler 使用該次 render snapshot 或明確 imperative read。
 
 </details>
+
+### `useWatch` 六題詳細補充
+
+1. **Reactive vs imperative**：`useWatch` 建 subscription，指定欄位改變會讓使用它的 component render；`getValues` 只讀呼叫當下 snapshot，不訂閱。UI preview 用 watch，click submit 前臨時讀值可用 getValues。
+2. **Name 粒度**：不傳 name 訂閱整份 form，任一欄位輸入都可能更新 consumer。把 price/quantity preview 抽到小 component，只 watch 這兩個 names，再在本地推導 notional，能隔離大表單。
+3. **Subscription order**：若 `setValue` 發生在 watcher 建立前，那次 notification 可能已錯過；初始化應使用 defaultValues，或在 custom Hook 合併 `useWatch` result 與 `getValues()` 的目前 snapshot。不要依靠 Effect 裡晚建立 watcher補歷史事件。
+4. **compute**：它可讓 subscription只回傳真正關心的衍生結果，例如總額或 filtered slice，縮小回傳 identity。Compute 必須 pure 且結果穩定；每次回新大型 object 仍可能造成 render。
+5. **disabled**：它暫停 subscription，不等於 unregister、清空 value 或修改 form store。重新啟用時要理解預設/目前值來源；若產品真的要刪欄位資料，使用 unregister/resetField 等明確 API。
+6. **Rules of Hooks**：不能在 event handler 呼叫 useWatch；Hook 必須在 component/custom Hook 頂層。Handler 要最新值使用 `getValues`，或讓頂層 watcher 產生值後由 closure 使用本次 render snapshot。
 
 ## React Hook Form `useFieldArray`：管理動態欄位與 identity
 
@@ -405,6 +450,15 @@ Stack 多個 field-array actions 會讓 index/registration lifecycle 難以推�
 `field.id` 是 RHF/React render identity；server `orderId` 是業務 identity，兩者都應保留但用途不同。Submit 時送 server ID，render key 用 field.id；不要覆寫或把自動產生 field id 當後端資料 ID。
 
 </details>
+
+### `useFieldArray` 六題詳細補充
+
+1. **`field.id` 是 React identity**：Index key 會在插入/刪除/排序後把 DOM input state與錯誤對到另一列。`field.id` 專供 reconciliation；server entity ID仍是業務欄位，兩者不要互相覆寫。
+2. **Update 可能 remount**：`update` 會替換該列 field object，文件明確提示可能 unmount/remount；要只改一個欄位且保留 focus/內部狀態，使用 `setValue('items.0.price', next)`。整列語意真的被替換時才用 update。
+3. **Append 完整 shape**：新增資料應包含所有已註冊欄位的 defaults，不能只傳 partial/空 object讓 controlled/uncontrolled 狀態不一致。可用 `createEmptyOrder()` factory 集中型別、預設與 client metadata。
+4. **不要堆疊 array actions**：同一 event 連續 append/remove 會讓第二個 index 基於尚未反映的 fields snapshot，意圖難以推導。直接計算最終 replace 值，或讓下一個操作在後續 render/明確事件執行。
+5. **Array-level error**：Built-in rules 的 root error位於 field-array error boundary，應在整個列表附近顯示，例如「至少一筆」；每列欄位錯誤仍顯示在該 row。Server array error也要轉成一致結構，讓 focus與 accessibility訊息可用。
+6. **兩種 ID 分工**：`field.id` 在 client render lifetime 保持 row identity；`serverId` 用於 update/delete API。Swap/move只改順序不改任何 ID；submit 時送 serverId與欄位值，通常不要把 RHF internal id當後端主鍵。
 
 ## 完成檢查
 

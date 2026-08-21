@@ -105,7 +105,18 @@ React 在開發環境額外執行一次 setup/cleanup 壓力測試，檢查 effe
 
 </details>
 
+### `useEffect` 六題詳細補充
+
+1. **Derived state**：Effect 的工作對象應是 React 外部系統；`total` 完全由本次 render 的 `price`、`quantity` 決定，直接算才能保證同一個 snapshot 永遠一致。若計算昂貴，先 profile 再 memoize，仍不需要多一份 state。
+2. **Cleanup 時序**：每次 setup 與它自己的 closure 綁定，所以 cleanup 讀到的是舊 `symbol`，這正是它能解除舊連線的原因。Dependency 改變時是「新 UI commit → 舊 cleanup → 新 setup」；unmount 則只剩最後一次 cleanup。
+3. **Stale interval**：空 dependency 表示這個 Effect 不會因 `count` 改變而重建，不表示 callback 自動讀最新值。若只需 `setCount(c => c + 1)` 就用 updater；若要記錄最新 count，才選擇把 count 列為 dependency、latest ref 或 React 19 Effect Event，各自代表不同 setup 語意。
+4. **Request race**：cleanup 可用 `AbortController` 取消仍支援 abort 的 fetch；若底層不能取消，至少以 `ignore` flag 或 request ID 阻止過期結果 commit。Loading/error 也要檢查同一 identity，否則舊 request 的 finally 仍可能關掉新 request 的 loading。
+5. **Strict Mode**：開發環境的額外 setup/cleanup 模擬「mount 後立即離開再回來」，用來暴露沒有解除 listener、重複連線和非冪等寫入。Production 不會因 Strict Mode 固定執行兩次，但使用者真實導航仍會 remount，所以 cleanup 必須本來就正確。
+6. **Dependencies**：component 內的 props、state、以及使用它們建立的 function/object 都是 reactive values。若不想讓某個值觸發 Effect，必須證明它不是 setup 的輸入，例如移到 Effect 內建立、移到 module scope，或拆成 Effect Event；不能只刪陣列項目。
+
 ## `useLayoutEffect`：DOM 已 commit、browser 尚未 paint
+
+> 實際案例：[useLayoutEffect：交易風險 Tooltip 定位](./practical-cases/use-layout-effect) · [OneCompiler 可操作版本](https://onecompiler.com/react#draft-8xxa)
 
 ### 1. Tooltip 為何先閃在錯的位置？
 
@@ -137,7 +148,7 @@ useEffect(() => {
 <details>
 <summary>答案</summary>
 
-React 會立刻處理這次更新，通常在 browser paint 前完成第二次 render/commit，所以可避免錯誤位置被看見；代價是阻擋 paint更久。工作要小而必要，不能放慢 request 或重計算。
+React 會立刻處理這次更新，通常在 browser paint 前完成第二次 render/commit，所以可避免錯誤位置被看見；代價是阻擋 paint 更久。工作要小而必要，不能放慢 request 或重計算。
 
 </details>
 
@@ -167,6 +178,15 @@ Server 沒有 layout、也不執行 effects；依賴 paint 前修正的 componen
 兩者都在 commit 後同步外部系統；Layout Effect 在 paint 前同步執行並阻擋 paint，適合 DOM measurement/position correction。一般 Effect不應死背成「永遠 paint 後」，但若邏輯必須保證 paint 前完成，就明確用 Layout Effect。
 
 </details>
+
+### `useLayoutEffect` 六題詳細補充
+
+1. **Tooltip 閃爍**：首次 render 還不知道實際高度，可以先 render、在 layout effect 量測、立即 setState，再讓 browser paint 修正後的位置。若錯位不影響體驗，普通 Effect 更不阻塞；若可用 CSS positioning 解決，甚至不需 Effect。
+2. **DOM 時序**：commit 先完成 DOM mutation 與 ref attachment，layout effects 才執行，之後才允許 paint。適合 `getBoundingClientRect`、selection、scroll 等必須依 committed DOM 的工作，不適合在 render 讀 node。
+3. **同步更新**：layout effect 中的 state update 會讓 React 在 paint 前再 render/commit；使用者看不到中間版，但主執行緒要付兩次工作。要避免無條件 setState 形成循環，也不要在這裡做可延後的大計算。
+4. **SSR**：server 沒有 viewport、字型完成狀態或 DOM layout，因此無法預先執行同一套量測。應讓 server fallback 結構可接受、hydration 後再修正；若 component 沒有有意義的 server HTML，才考慮 client-only boundary。
+5. **API latency**：網路等待不會因 paint 前執行而縮短，反而會阻塞首屏。資料預取應交給 framework/server-state layer；layout effect 只保留微小、同步且直接影響首次 paint 的 DOM 工作。
+6. **面試口述**：不要簡化成「Effect 永遠 paint 後」，因 React 可能依互動時機提早處理。可靠差異是 `useLayoutEffect` **保證**在 browser repaint 前同步完成，會阻塞 paint；只有需要這個保證才使用。
 
 ## `useInsertionEffect`：CSS-in-JS library 的插入時機
 
@@ -223,6 +243,15 @@ Render 必須純粹，且 concurrent render 可能被丟棄；render 中修改 D
 先說它是 library hook、不是 `useEffect` 的「更早更快版」；主要供 CSS-in-JS 在 layout measurement 前插 style，產品 component 很少直接使用。再補上 render purity、不能拿來量 DOM 與 SSR 不執行即可。
 
 </details>
+
+### `useInsertionEffect` 六題詳細補充
+
+1. **不用來量 DOM**：它的執行點是為 style insertion 特別設計，ref attachment 與 DOM 可用性不是它的 contract。產品 component 量測一律先考慮 CSS，再考慮 layout effect。
+2. **不能在 render 插 style**：concurrent render 可能暫停或放棄；若 render 已改動 document，未 commit 的 tree 也會污染頁面。Insertion Effect 讓 side effect 與真正 commit 對齊，並確保後續 layout measurement 已看到 CSS。
+3. **不能 setState**：這個階段的限制是刻意的，避免在極早 commit phase 再發 component update。業務狀態應在 event、一般 Effect 或 layout effect 中處理，library 只在這裡插入/清除 style rule。
+4. **Ref 不保證**：不要因名字裡有 Effect 就假設和 layout effect 擁有相同 DOM 時序；callback 可能在 refs attach 前後交錯執行。它只能依賴 library 自己的 stylesheet/cache。
+5. **SSR**：server-side style 必須在 render pipeline 中收集 critical CSS 並輸出到 HTML，不能等 client Effect。Hydration 還要重用 server 已生成的 rules，避免重複插入與 class mismatch。
+6. **安全回答**：先指出 audience 是 CSS-in-JS library author，再說明目的為「layout effect 量測前讓規則存在」。最後補上 render purity、不是 DOM measurement、server 不執行，即已涵蓋主要 contract。
 
 ## `useMemo`：快取本次 render 的計算結果
 
@@ -288,6 +317,15 @@ const rows = useMemo(() => selectRows(data, options), [data, options]);
 開發環境用額外呼叫找出 impurity，只採用其中一次結果。若 callback mutation props 或有副作用，問題會被放大；正確做法是保持 calculation 純粹，不是偵測環境避開第二次。
 
 </details>
+
+### `useMemo` 六題詳細補充
+
+1. **執行時機**：memo calculation 是 render 的一部分，所以不能寫 request、setState、修改 prop 或依賴執行次數。初次一定計算；後續只在所有 dependencies 皆 `Object.is` 相同時重用上次結果。
+2. **Object dependency**：component body 每次都建立新的 `options`，等於每次都宣告輸入改了。把 `{ limit }` 移入 calculation 並依賴 `limit` 最直接，也比「先 memo options、再 memo rows」少一層心智成本。
+3. **不是 storage**：Cache 消失時最多只能讓計算重做，不能讓業務資料遺失或行為改變。WebSocket instance、使用者 draft 與 request result 分別應由 ref、state 或 server cache 保存。
+4. **成本模型**：Memo 有建立 closure、保存 value、比較 dependencies 及閱讀維護成本。便宜計算通常直接做更快；真正適合的是可量測的昂貴 calculation，或需要穩定 identity 才能讓下游 memo boundary 生效。
+5. **Context value**：Memo 只能避免 inputs 沒變時的虛假新 reference；只要 value 內任一 dependency 改變，所有讀該 Context 的 consumers 仍收到更新。高頻且互不相關的欄位應拆 Context 或使用 selector store。
+6. **Strict Mode**：雙重 calculation 是 purity probe，React 只採其中一份結果。若 callback push 到 props array，畫面可能重複 item，正好證明 calculation 有 mutation；應複製後操作，而不是用 ref 阻擋第二次。
 
 ## `useCallback`：快取 function definition
 
@@ -364,6 +402,15 @@ const add = useCallback((order) => {
 
 </details>
 
+### `useCallback` 六題詳細補充
+
+1. **快取的是 definition**：Render 時 React 依 dependencies 決定回傳舊 function 或新 function；body 要等 click/subscription 呼叫才跑。它不會快取 `submit` 結果，也不會自動防止重複提交。
+2. **Child 仍 render**：Parent render 預設會 render children；只有 `memo` 才比較 props，而任何一個新 object/function 都足以讓 shallow comparison 失敗。優化前要先確認 child 真昂貴，並檢查完整 props boundary。
+3. **Stale symbol**：`[]` 宣告 callback 永遠不需換版，與 body 讀取會變的 `symbol` 矛盾。正確 dependency 是所有 reactive reads；若 `submit` 來自 module scope 或穩定 API 才可能不列，不能憑名字猜穩定。
+4. **Functional updater**：改用 updater 後 callback 不再讀 render snapshot 的 `orders`，因此可合法移除該 dependency。React 會按 queue 中最新 pending state 呼叫 updater，也能避免同事件多次新增時遺失更新。
+5. **實際價值**：常見 contract 是 memoized child prop、另一個 Effect dependency、或 add/remove listener 需要 reference。普通 DOM button 不會因 handler 換 reference 就昂貴更新，包 callback 反而讓 dependency 更難讀。
+6. **Compiler**：Compiler 能根據資料流自動建立許多 memo boundary，但專案可能只編譯部分檔案，library identity contract 也不一定能推導。升級時應靠 compiler diagnostics、lint 與 Profiler 逐步刪除冗餘手動 memo，而非全域搜尋取代。
+
 ## `useDebugValue`：替 custom Hook 標示 DevTools 狀態
 
 ### 1. 它會把文字印到 console 嗎？
@@ -431,6 +478,15 @@ useDebugValue(date, date => formatVerySlowly(date));
 優先標能縮短 debug 的語意，例如 `Socket: reconnecting (attempt 2)`，而不是再顯示一整個無法掃讀的 object。敏感資料也不該為了方便直接暴露在 label。
 
 </details>
+
+### `useDebugValue` 六題詳細補充
+
+1. **不是 console**：它只影響 React DevTools 展開 custom Hook 時顯示的 label，不會出現在 browser console，也不應被測試當作輸出。真正 logging 應使用可控的 logger/telemetry。
+2. **使用位置**：最有價值的是共用 custom Hook 的抽象邊界，例如 connection、permissions 或 query state。一般 component 內散落使用只會讓 DevTools tree 多出難以維護的標籤。
+3. **Lazy formatter**：第二個參數接收原始 value，DevTools 需要顯示時才格式化，因此能避免每次 render 都做日期/大 object serialization。Formatter 也必須 pure，不能因 DevTools 展開而改變程式狀態。
+4. **Rules of Hooks**：它仍依呼叫順序對應 Hook slot，必須在 custom Hook 頂層呼叫。可以傳 `enabled ? value : "disabled"`，但不能把呼叫本身放在 if 後。
+5. **不影響 correctness**：Production 可能沒有 DevTools，React 也不承諾 formatter 一定執行。任何資料初始化、錯誤上報或 cache 更新放在 formatter 中都是 bug。
+6. **業務語意**：Label 應回答「這個 Hook 現在處於什麼狀態」，例如 `Socket: reconnecting #2`，並避免 token、email 等敏感值。大型 raw object 可由 DevTools 其他欄位查看，不必塞進一行 label。
 
 ## 完成檢查
 

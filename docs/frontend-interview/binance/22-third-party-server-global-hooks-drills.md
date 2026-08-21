@@ -90,6 +90,15 @@ queryFn: ({ signal }) => fetch(url, { signal })
 
 </details>
 
+### `useQuery` 六題詳細補充
+
+1. **Query key 是 cache identity**：`queryFn` 讀到的每個會改變結果的變數都應出現在 key，例如 `['ticker', symbol]`。只改 closure 裡的 symbol 而不改 key，observer 仍訂閱同一筆 cache，會造成不同市場資料互相覆蓋。
+2. **Pending 與 fetching**：`isPending` 表示目前沒有成功資料可顯示；`isFetching` 表示 queryFn 正在執行，包含已有舊資料的背景更新。首次 skeleton 通常看 pending，保留內容的小 spinner 看 fetching，避免 refetch 時整頁閃空。
+3. **stale 與 GC**：`staleTime` 決定資料多久內視為 fresh、是否需要在 mount/focus 等時機 refetch；`gcTime` 決定沒有 observer 的 inactive cache 最久保留多久。前者是新鮮度策略，後者是記憶體生命期，並不代表 server data 的保存期限。
+4. **enabled**：它是 declarative dependency gate，例如缺少 userId 前不執行；長期設為 false 再手動 refetch，會放棄許多自動 invalidation/refetch 能力。真正按鈕觸發的一次性寫入通常是 mutation，不應把 query 硬改成 imperative mode。
+5. **取消舊 request**：queryFn 應接收並傳遞 `signal` 給 fetch；key 改變或 query 被取消時，資料層才能中止 I/O。即使不支援 abort，正確 key 仍會把結果寫入各自 cache，不應用一個 component state 接住所有 symbol。
+6. **Initial 與 placeholder**：`initialData` 被視為 cache 中真實初始資料，會影響 stale 判斷並可供其他 observer 使用；`placeholderData` 只是在該 observer 尚無資料時的暫時顯示，不等於成功取得。使用 placeholder 時要在 UI 保留「尚未確認」語意。
+
 ## TanStack Query `useMutation`：執行 server write
 
 ### 1. `useMutation` render 時會立刻 POST 嗎？
@@ -149,6 +158,15 @@ Network 完成順序不保證等於呼叫順序。產品要決定 disable、允�
 不應盲目套用。讀取通常可安全重試，寫入可能已在 server 成功但 client 丟失回應；沒有冪等保障時自動 retry 可能重複下單。先確認 HTTP method、idempotency key 與 server contract，再決定 mutation retry。
 
 </details>
+
+### `useMutation` 六題詳細補充
+
+1. **何時執行**：`useMutation` 只建立 mutation observer 與狀態；真正的 POST 在事件呼叫 `mutate(variables)` 或 `mutateAsync(variables)` 才開始。Render 中不能呼叫，否則每次 render 都可能產生外部寫入。
+2. **mutate / mutateAsync**：前者適合 callback-driven UI，錯誤交給 mutation callbacks；後者回 Promise，適合必須依序 `await` 多步驟或由 caller catch。不要同時 await 又在 onError 做重複 toast/rollback，先定義單一錯誤 owner。
+3. **Cache 不會自動理解業務關係**：新增 order 成功不代表 library 知道哪些 query keys 含 orders。可精確 `setQueryData` 寫入 server 回應，或 invalidate 對應 keys 重新取得；不要無差別 invalidate 全站造成 request storm。
+4. **Optimistic rollback**：`onMutate` 先取消相關 query、保存 previous snapshot、再 patch cache；`onError` 使用 context 還原，`onSettled` 最後重新驗證。Snapshot 必須 immutable，若直接 mutation 原 cache，rollback reference 也早已被改壞。
+5. **連點 concurrency**：每次 mutate 都是獨立執行，response 完成順序不保證等於呼叫順序。UI 若只顯示「最後一次 variables」，不能當作所有 mutation ledger；金融操作要用 client request ID、disable/queue policy 與 server idempotency。
+6. **Retry 策略**：Read query 通常可以安全重試，但 mutation 可能重複產生副作用。只有 endpoint 具 idempotency key 或操作本身冪等時才自動 retry，並針對 4xx validation、5xx、timeout 分別決策。
 
 ## TanStack Query `useQueryClient`：操作目前 Provider 的 cache client
 
@@ -220,6 +238,15 @@ Prefetch 通常用於提前暖 cache，呼叫端不直接需要回傳資料；en
 
 </details>
 
+### `useQueryClient` 六題詳細補充
+
+1. **Client instance**：在 render 中 `new QueryClient()` 會讓每次 render 都產生空 cache，observer、retry 與 mutation 狀態也全部換 owner。應在 app bootstrap/module scope 建一次，或用 lazy state 確保每個 application request/client session 有穩定 instance。
+2. **Prefix matching**：`['orders']` 預設可匹配 `['orders']`、`['orders', symbol]` 等前綴；需要只影響完全相同 key 時使用 exact 選項。Key 應由共用 factory 建立，避免字串拼法不同導致漏 invalidation。
+3. **Immutable cache update**：`setQueryData` updater 應回傳新 object/array 並保留未變節點的 references。直接 push/splice 舊資料會破壞 snapshot、memo 與 rollback；也不要把不完整 optimistic response 假裝成 server canonical entity。
+4. **Imperative read 不訂閱**：`getQueryData` 只讀呼叫當下的 cache，之後改變不會讓 component 因這行自動 render。Render UI 應使用 `useQuery`/observer；imperative read 適合 event、loader 或 cache orchestration。
+5. **Prefetch 與 ensure**：prefetch 表達「先暖 cache，caller 不直接需要回傳資料」，錯誤通常由 cache 狀態處理；ensure 表達「這段流程現在需要一份資料」，會回傳資料並依 cache/freshness 決定是否 fetch。選擇取決於 caller contract，而非哪個比較快。
+6. **Provider ownership**：Hook 讀最近一層 `QueryClientProvider` 的 client。多 client 可隔離 microfrontend/test/cache，但跨 provider invalidation 不互通；若意外巢狀 provider，外層 Devtools 也可能看不到內層資料。
+
 ## React Redux `useSelector`：訂閱 selector result
 
 ### 1. 為何任何 action 都讓 component render？
@@ -286,6 +313,15 @@ const order = useSelector(state => state.orders.byId[id]);
 Hook 找不到 Redux Context 會拋錯。測試要用實際/測試 store Provider 包住 component；不要 mock `useSelector` 到失去真實 subscription 行為。
 
 </details>
+
+### `useSelector` 六題詳細補充
+
+1. **Selector result identity**：React Redux 預設以嚴格 reference equality 比較前後結果；每次回 `{ a, b }` 新 object，任何 action 後都像改變。可分成多個 primitive selectors、用 memoized selector，或明確傳 `shallowEqual`，不要先用昂貴 deep equality 掩蓋設計。
+2. **Selector 必須 pure**：它可能在 render、每次 dispatch 與開發檢查中多次執行，所以不能 request、dispatch、寫 storage 或 mutation state。昂貴 derivation 用 Reselect 等 memoization，副作用放 thunk/listener/event。
+3. **選整份 state**：`state => state` 讓任何 reducer 產生新 root reference 都通知 component，等同放棄 subscription 粒度，也會觸發官方 dev warning。只選 UI 實際使用的最小 slice，並保持 reducer structural sharing。
+4. **Selector 讀 props**：簡單 inline selector 可捕捉 `id`；有內部 memo cache 的 selector 若被多個 component instance 共用，要建立 per-instance selector 或使用支援多參數 cache 的設計。Entity 可能被同次 action 刪除時也要 defensive read，避免 zombie-child edge case。
+5. **React.memo 邊界**：Store subscription 的 selected result 改變時，component 必須 render，`memo` 不會阻止；memo 只處理 parent props 引起的 render。要減少 store update，應修 selector result identity 和粒度。
+6. **Provider**：沒有對應 context 的 Provider 時 Hook 無法取得 store，會直接報錯而非回 undefined。測試應用真 store/Provider 或明確 test wrapper；不要在 component 裡 catch 後靜默顯示舊資料。
 
 ## React Redux `useDispatch`：取得 store dispatch
 
@@ -355,6 +391,15 @@ console.log(symbol);
 
 </details>
 
+### `useDispatch` 六題詳細補充
+
+1. **Dispatch 與 render**：dispatch 先讓 reducer 計算 store，再通知 subscriptions；目前 component 只有在它的 selector result 改變或 parent 更新時才 render。Dispatch 本身不是 local setter，不代表所有 dispatching components 都更新。
+2. **不能在 render dispatch**：Render 必須 pure，dispatch 會同步改外部 store 並通知其他 components，容易形成 update-during-render 警告或循環。由使用者造成的 action 放 event；由外部同步造成的放 Effect，但先確認是否應由 loader/thunk 負責。
+3. **Dependency**：同一 Provider store 下 dispatch reference 穩定，但 eslint 不知道這項 library contract；安全做法仍放 `[dispatch]`。這不會造成 Effect 重跑，反而讓 dependency 描述完整。
+4. **Typed Hook**：預先建立 `useAppDispatch` 能帶入 `AppDispatch`，讓 thunk return type、中介層擴充與 action payload 在所有 component 一致。新版 React Redux 可用 `.withTypes`；避免每個 call site 重複 cast。
+5. **Closure 仍是 snapshot**：dispatch 完成後，目前 handler 裡的 selected value仍屬於本次 render，不會就地改變。若 orchestration 需要最新 state，放進 thunk 使用 `getState`，或讓下一次 render/Effect 回應 selector 改變。
+6. **Action 粒度**：UI 若知道「先 setLoading、再 setRows、再 closeModal」等 reducer 細節，流程會散落且容易中斷。Dispatch 一個具業務意圖的 action/thunk，例如 `orderSubmitted`，由 domain layer 決定狀態轉移與 side effects。
+
 ## Zustand bound store Hook：以 selector 訂閱 client store
 
 ### 1. 為何不建議不傳 selector 讀整份 store？
@@ -421,6 +466,15 @@ Server 只能看到 default state，client 一開始可能立刻讀 localStorage
 技術上能把 response 塞進 store，但你要自己負責 cache identity、stale/fresh、dedupe、retry、cancel、refetch 與 invalidation。Zustand 適合 shared client state；server state通常交給專門資料庫層，只有產品需要的 client projection 才進 store。
 
 </details>
+
+### Zustand 六題詳細補充
+
+1. **整份 store subscription**：不傳 selector 通常取得整個 state object，任何欄位更新都可能讓 component render。使用 `useStore(s => s.price)` 等最小 selector；同時取多欄時要注意回傳 object identity，必要時使用 shallow equality。
+2. **Nested mutation**：若直接修改 nested object 又回傳同一 reference，selector equality 看不出改變。應建立從修改節點到 selected boundary 的新 references，或使用 Immer middleware；action methods 也要維持未變 branch 的 sharing。
+3. **Store 建立位置**：Component body 每次 create 會重置資料、遺失 subscriptions，還可能讓 sibling 各有意外獨立 store。Global singleton 放 module scope；需要 per-tree/per-request instance 時，用 Context/provider lazy 建立並明確定義 lifecycle。
+4. **getState 不訂閱**：它適合 event handler、service 或除錯讀取呼叫當下值；在 render 中使用不會因後續 store 改變重 render。UI 讀值一定使用 bound hook selector，否則畫面會停在舊 snapshot。
+5. **Persist 與 SSR**：Server 初始 state 與 client storage rehydrate state 可能不同，直接把 persisted 值用於首次 client render 會 mismatch。應定義 hydration flag/fallback、延後顯示 client-only state，且不能把 token/敏感資料無限制 persist。
+6. **不能取代 Query cache**：Zustand 管 client-owned state 很合適，但不自帶 query key、staleness、dedupe、refetch、cancellation 與 mutation invalidation。把 server response 全搬進 store 等於自行重造資料層；兩者可分別管理 UI state 與 server state。
 
 ## 完成檢查
 

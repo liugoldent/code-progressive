@@ -21,15 +21,18 @@ keywords: ["談談", "blob", "Interview", "解釋", "屬性", "方法", "綜合�
 - 返回 Blob 對象的大小（以字節為單位）。
 ### type
 - 返回 Blob 對象的 MIME 類型。例如，對於圖像文件，可能是 `image/png`、`image/jpeg` 等。
-### lastModified
-- 返回 Blob 對象的最後修改時間（時間戳）。
+### `lastModified` 屬於 File
+- `Blob` 沒有 `lastModified` 屬性；繼承自 `Blob` 的 `File` 才有檔名、最後修改時間等檔案資訊。
 ### 程式碼
 ```js
 const blob = new Blob(["Hello, world!"], { type: "text/plain" });
 
 console.log(blob.size); // 輸出：13（"Hello, world!" 的字節數）
 console.log(blob.type); // 輸出：text/plain
-console.log(blob.lastModified); // 輸出：當前時間的時間戳
+
+const file = new File([blob], "hello.txt", { type: "text/plain" });
+console.log(file.name); // 輸出：hello.txt
+console.log(file.lastModified); // 輸出：最後修改時間的時間戳
 ```
 
 ## 方法
@@ -113,4 +116,3 @@ const pkgMsg = (msgId: number, data: Buffer) => {
 [微信小程序websocket使用protobuf，发送arraybuffer](https://blog.csdn.net/qq_31754591/article/details/130995991)
 [WebSocket系列之JavaScript字符串如何与二进制数据间进行互相转换](https://juejin.cn/post/6844903585528954894)
 [WebSocket系列之二进制数据设计与传输](https://juejin.cn/post/6844903585969340424#heading-6)
-

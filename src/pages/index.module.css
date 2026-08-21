@@ -1,48 +1,269 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
- @import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap');
+.hero {
+  --hero-ink: #151515;
+  --hero-muted: #646464;
+  --hero-line: rgba(21, 21, 21, 0.16);
 
-.heroBanner {
-  padding: 4rem 0;
-  text-align: center;
   position: relative;
+  isolation: isolate;
+  min-height: calc(100svh - var(--ifm-navbar-height));
+  padding: clamp(4rem, 9vw, 8.5rem) max(7vw, 1.5rem) 4rem;
   overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 42%, rgba(229, 225, 215, 0.56), transparent 34%),
+    #f8f7f3;
+  color: var(--hero-ink);
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
+.hero::after {
+  position: absolute;
+  z-index: -1;
+  right: max(7vw, 1.5rem);
+  bottom: 2.5rem;
+  left: max(7vw, 1.5rem);
+  height: 1px;
+  content: "";
+  background: var(--hero-line);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  width: min(690px, 62vw);
+}
+
+.hero__eyebrow {
+  margin: 0 0 1.5rem;
+  color: var(--hero-muted);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: clamp(0.68rem, 0.9vw, 0.78rem);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.hero__title {
+  max-width: 760px;
+  margin: 0;
+  color: inherit;
+  font-family: Georgia, "Noto Serif TC", "Times New Roman", serif;
+  font-size: clamp(3.4rem, 7.2vw, 7.25rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+}
+
+.hero__title span {
+  display: block;
+  margin-top: 0.22em;
+  font-family: var(--ifm-font-family-base);
+  font-size: 0.37em;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+.hero__description {
+  margin: clamp(1.8rem, 4vw, 3rem) 0 0;
+  color: var(--hero-muted);
+  font-size: clamp(0.95rem, 1.25vw, 1.08rem);
+  line-height: 1.9;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.primaryAction {
+  display: inline-flex;
+  gap: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--hero-ink);
+  color: var(--hero-ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+.primaryAction {
+  color: #fff;
+  background: var(--hero-ink);
+}
+
+.primaryAction:hover {
+  color: #fff;
+  background: #3b3b3b;
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.hero__visual {
+  position: absolute;
+  z-index: 1;
+  top: clamp(3rem, 6vw, 5rem);
+  right: max(5vw, 1.5rem);
+  bottom: clamp(5rem, 8vw, 7rem);
+  width: clamp(380px, 43vw, 720px);
+  overflow: hidden;
+  background: #e9e6df;
+  animation: visual-in 360ms 40ms ease-out both;
+}
+
+.hero__visual::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(90deg, rgba(248, 247, 243, 0.2), transparent 38%);
+}
+
+.hero__backdrop {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.9;
+  transform: scale(1.015);
+}
+
+.hero__logo {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: min(48%, 300px);
+  height: auto;
+  opacity: 0.88;
+  filter: contrast(1.08);
+  mix-blend-mode: multiply;
+  transform: translate(-50%, -50%);
+}
+
+.hero__signature {
+  position: absolute;
+  right: max(7vw, 1.5rem);
+  bottom: 0.6rem;
+  margin: 0;
+  color: var(--hero-muted);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+}
+
+@keyframes visual-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
 }
 
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.header {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 4em;
+@media (max-width: 996px) {
+  .hero {
+    display: flex;
+    align-items: flex-end;
+    min-height: calc(100svh - var(--ifm-navbar-height));
+    padding-top: 7rem;
+    padding-bottom: 5rem;
+  }
+
+  .hero__content {
+    width: 100%;
+  }
+
+  .hero__title {
+    max-width: 680px;
+    font-size: clamp(3.2rem, 12vw, 6.4rem);
+  }
+
+  .hero__visual {
+    top: 0;
+    right: -18%;
+    bottom: auto;
+    width: 92%;
+    height: 58%;
+    opacity: 0.5;
+    -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 40%, transparent 100%);
+  }
+
+  .hero__visual::after {
+    background: linear-gradient(90deg, rgba(248, 247, 243, 0.3), transparent 52%);
+  }
+
+  .hero__logo {
+    left: 45%;
+    width: min(38%, 210px);
+  }
 }
 
-.header__img {
-  width: auto;
-  height: calc(100vh - 60px);
-  max-width: 100%;
-  object-fit: cover;
+@media (max-width: 480px) {
+  .hero {
+    min-height: calc(100svh - var(--ifm-navbar-height));
+    padding-bottom: 4.5rem;
+  }
+
+  .hero__eyebrow {
+    margin-bottom: 1rem;
+  }
+
+  .hero__title {
+    font-size: clamp(2.9rem, 15vw, 4.4rem);
+  }
+
+  .hero__title span {
+    font-size: 0.34em;
+  }
+
+  .desktopBreak {
+    display: none;
+  }
+
+  .hero__actions {
+    align-items: stretch;
+  }
+
+  .primaryAction {
+    flex: 1;
+    padding-inline: 0.9rem;
+  }
 }
 
-.header__text {
-  position: absolute;
-  background-color: rgba( 255, 255, 255, 0.75 );
-  color: black;
-  text-align: center;
-  padding: 0.8em;
-  border-radius: 0.25em;
-  font-family: 'Homemade Apple', cursive;
+[data-theme="dark"] .hero {
+  --hero-ink: #f1efe9;
+  --hero-muted: #aaa69d;
+  --hero-line: rgba(241, 239, 233, 0.15);
+
+  background:
+    radial-gradient(circle at 78% 42%, rgba(60, 58, 53, 0.55), transparent 35%),
+    #171717;
+}
+
+[data-theme="dark"] .hero__visual {
+  background: #292824;
+  filter: brightness(0.58) saturate(0.7);
+}
+
+[data-theme="dark"] .hero__visual::after {
+  background: linear-gradient(90deg, rgba(23, 23, 23, 0.28), transparent 42%);
+}
+
+[data-theme="dark"] .hero__logo {
+  filter: invert(1) contrast(0.9);
+  mix-blend-mode: screen;
+}
+
+@media (max-width: 996px) {
+  [data-theme="dark"] .hero__visual {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__visual {
+    animation: none;
+  }
 }

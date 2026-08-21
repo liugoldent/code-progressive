@@ -1,0 +1,9 @@
+{
+  "label": "Hooks 實際案例",
+  "position": 27,
+  "link": {
+    "type": "generated-index",
+    "title": "React Hooks 實際案例",
+    "description": "用交易下單介面的獨立案例理解 React Hooks，並練習面試時說明使用時機、資料 ownership 與常見陷阱。"
+  }
+}
