@@ -1,5 +1,5 @@
 ---
-sidebar_position: 26
+sidebar_position: 27
 title: "第三方 Hooks 六題實戰：React Router / React Hook Form"
 description: "useNavigate、useParams、useSearchParams、useForm、useWatch、useFieldArray 各六題，練習 URL state、history、表單 subscription、validation 與動態欄位 identity。"
 tags:
@@ -23,6 +23,48 @@ React Router 在不同模式/版本的 import path、navigate return type 與 Da
 :::
 
 ## React Router `useNavigate`：以程式改變 location/history
+
+### 做題前：Navigate 改的是 browser history，不是 local state
+
+URL 本身是一份可返回、可分享、可重新整理的 application state。`useNavigate` 取得 imperative navigation function，適合在使用者事件或已完成的 Effect 中改變目前 location。
+
+```tsx
+const navigate = useNavigate();
+
+navigate("/orders/123", { replace?, state? });
+navigate(-1);
+```
+
+| 呼叫方式 | 對 history 的影響 |
+| --- | --- |
+| `navigate(to)` | 預設 push 新 entry，Back 可回上一頁 |
+| `navigate(to, { replace: true })` | 取代目前 entry，常用於登入完成等中繼頁 |
+| `navigate(delta)` | 在既有 history stack 前進／後退，不保證目的地是站內頁 |
+
+```tsx
+async function handleLogin(credentials) {
+  const result = await login(credentials);
+
+  if (result.ok) {
+    navigate("/dashboard", { replace: true });
+  }
+}
+```
+
+```text
+使用者 submit
+  → server 確認登入成功
+  → navigate("/dashboard", { replace: true })
+  → Router 更新 location、match 新 routes、render 新頁面
+```
+
+Render 必須 pure，不能在 component body 直接 navigate。一般頁面連結優先使用 `<Link>`，表單／資料路由優先使用 `<Form>`、loader/action `redirect`；這些 declarative API 能保留 accessibility、pending 與 framework data flow。只有事件結果確實需要程式判斷目的地時才用 Hook。
+
+Navigation `state` 適合短暫 UI context，不會成為可分享 URL，也不能替代 server data。Data/Framework mode 的 navigate 可回傳完成時 resolve 的 Promise；Declarative mode 常回 `void`，型別與 await 行為要依實際 router mode。
+
+> 一句話記憶：`useNavigate` 是程式化 history 操作；先判斷應 push、replace，還是其實該用 Link/redirect。
+
+官方參考：[React Router `useNavigate`](https://reactrouter.com/api/hooks/useNavigate)
 
 ### 1. 為何 render 時立刻跳頁或形成循環？
 
@@ -101,6 +143,46 @@ React Router Declarative mode 與 Data/Framework mode 的 implementation 不同�
 
 ## React Router `useParams`：讀取目前 route match 的動態片段
 
+### 做題前：Param 來自目前 matched route，也是外部輸入
+
+Route pattern `/trade/:symbol` 中的 `:symbol` 是動態片段。Router 對目前 URL 完成 matching 後，`useParams` 回傳 matched branch 中可用的 params；nested child 也能讀到 parent route params。
+
+```tsx
+const params = useParams();
+```
+
+```text
+URL /accounts/a1/orders/o9
+    ↓ match /accounts/:accountId/orders/:orderId
+useParams()
+    ↓
+{ accountId: "a1", orderId: "o9" }
+```
+
+Param value 仍要視為 `string | undefined` 與不可信輸入：Router 負責路徑 matching/decoding，不負責確認它是支援的交易對、合法 UUID 或有權查看的帳號。
+
+```tsx
+function TickerPage() {
+  const { symbol: rawSymbol } = useParams();
+  const symbol = parseSupportedSymbol(rawSymbol);
+
+  const ticker = useQuery({
+    queryKey: ["ticker", symbol],
+    queryFn: () => fetchTicker(symbol),
+    enabled: symbol !== null,
+  });
+
+  if (symbol === null) return <NotFound />;
+  return <Ticker data={ticker.data} />;
+}
+```
+
+不要把 param 無條件複製到 `useState`。URL 改變會產生新的 params，但舊 local state 不會重新初始化，於是出現兩份 source of truth。若只要顯示／查詢，直接從 param validate、normalize、derive；只有真正可編輯且尚未提交的 draft 才另建 state。
+
+> 一句話記憶：`useParams` 讀的是目前 route match，不是已驗證的業務資料；先檢查再進 query 或 UI。
+
+官方參考：[React Router `useParams`](https://reactrouter.com/api/hooks/useParams)
+
 ### 1. `/trade/:symbol` 讀到的 symbol 一定是 string 嗎？
 
 ```tsx
@@ -174,6 +256,48 @@ Validation 後的 param 應進 query key，例如 `['ticker', symbol]`。只讓 
 6. **Invalid param UX**：在 route/loader boundary 轉成 404、redirect 或明確 unsupported state，比 component 回空白更可觀察。錯誤頁仍需保留導航出口，也不要把 invalid input 默默改成 BTC，否則分享的錯誤 URL 看似成功。
 
 ## React Router `useSearchParams`：讀寫 query string
+
+### 做題前：Search params 是 URL state，setter 會觸發 navigation
+
+搜尋條件、分頁與 tab 若需要分享、bookmark 或重新整理後恢復，適合放在 query string。`useSearchParams` 讓 component 讀取目前 `URLSearchParams`，並透過 setter 導航到新的 search string。
+
+```tsx
+const [searchParams, setSearchParams] = useSearchParams(defaultInit?);
+```
+
+```tsx
+function OrdersToolbar() {
+  const [params, setParams] = useSearchParams();
+  const tab = params.get("tab") ?? "open";
+
+  function changeTab(nextTab: string) {
+    setParams((current) => {
+      const next = new URLSearchParams(current);
+      next.set("tab", nextTab);
+      next.delete("page"); // tab 改變時明確重設分頁
+      return next;
+    });
+  }
+
+  return <Tabs value={tab} onChange={changeTab} />;
+}
+```
+
+```text
+目前 URL ?symbol=BTCUSDT&tab=open&page=3
+  → 建立 params copy、只修改 tab 並刪除 page
+  → setSearchParams(next)
+  → Router navigation
+  → URL 與所有 readers 一起看到新 search params
+```
+
+`setSearchParams({ tab: "history" })` 是替換成該組 params，不會像 class state 自動 merge，所以想保留 `symbol` 時要從目前值 copy。Callback 形狀也不具有 React state setter 的同 tick queue 累積保證。
+
+`searchParams` reference 是穩定但 mutable 的。只呼叫 `params.set(...)` 會修改 object，卻不會更新 URL 或 navigation；應產生下一份 params 並交給 setter。輸入框每打一字就 navigation 也可能污染 history 與增加 loader/request，實務上常區分 input draft 與 committed URL filters。
+
+> 一句話記憶：讀值來自 URL，寫值代表 navigation；更新時要明確決定保留、替換與移除哪些 keys。
+
+官方參考：[React Router `useSearchParams`](https://reactrouter.com/api/hooks/useSearchParams)
 
 ### 1. `setSearchParams` 是 local state setter 嗎？
 
@@ -253,6 +377,72 @@ Default init 可提供初始讀值，但不會自動在第一次 render 把它�
 
 ## React Hook Form `useForm`：建立表單控制與 subscription
 
+### 做題前：它建立的是整張表單的控制器
+
+大型表單若每個 input 都用 React state controlled，任何按鍵都可能讓整個 form tree render。React Hook Form（RHF）主要透過欄位註冊、ref 與細粒度 subscription 管理輸入，`useForm` 則建立這份 form control 與所有操作 API。
+
+```tsx
+const {
+  register,
+  handleSubmit,
+  control,
+  formState,
+  setValue,
+  reset,
+  setError,
+  getValues,
+} = useForm({ defaultValues, resolver?, mode? });
+```
+
+```tsx
+type OrderForm = {
+  symbol: string;
+  quantity: number;
+};
+
+function OrderTicket() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<OrderForm>({
+    defaultValues: { symbol: "BTCUSDT", quantity: 1 },
+  });
+
+  async function onValid(values: OrderForm) {
+    await postOrder(values);
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onValid)}>
+      <input {...register("symbol", { required: "請輸入交易對" })} />
+      <input
+        type="number"
+        {...register("quantity", { valueAsNumber: true, min: 0.001 })}
+      />
+      {errors.symbol && <p role="alert">{errors.symbol.message}</p>}
+      <button disabled={isSubmitting}>送出</button>
+    </form>
+  );
+}
+```
+
+```text
+register 欄位與規則
+  → 使用者輸入由 form control 追蹤
+  → handleSubmit 執行 validation
+      ├─ valid：呼叫 onValid(parsedValues)
+      └─ invalid：更新 errors，聚焦／顯示錯誤
+```
+
+`defaultValues` 是 form 初始化與 dirty comparison 的基準，不是每次 props 改變就自動覆蓋欄位。遠端資料到達後要以 `reset(data)` 或適合版本的 values 策略明確同步；否則使用者 draft 很容易被非預期重設。
+
+RHF 只管理 client form state/validation，不替代 server validation、mutation cache 或安全檢查。即使 client 通過，server 仍必須驗證；server error 可用 `setError` 顯示，並定義下次提交／欄位變更時如何清除。
+
+> 一句話記憶：`useForm` 建立表單控制與 subscription 邊界，`register` 接欄位，`handleSubmit` 串 validation 與提交。
+
+官方參考：[React Hook Form `useForm`](https://react-hook-form.com/docs/useform)
+
 ### 1. `defaultValues` prop 改變後欄位會自動重設嗎？
 
 ```tsx
@@ -326,6 +516,59 @@ Root/server error 的生命週期要明確管理，成功/重新提交時依需�
 
 ## React Hook Form `useWatch`：在指定範圍訂閱欄位值
 
+### 做題前：Watch 的重點是「哪個 component 要跟哪個欄位一起 render」
+
+`getValues("price")` 只在呼叫當下讀 snapshot，不建立 subscription；`useWatch` 則訂閱指定欄位，當該值改變時讓呼叫它的 component/custom Hook 更新。這讓衍生 UI 可以靠近實際 consumer，不必讓整張表單每打一字都 render。
+
+```tsx
+const value = useWatch({
+  control,
+  name?,
+  defaultValue?,
+  compute?,
+  disabled?,
+});
+```
+
+```tsx
+function Notional({ control }: { control: Control<OrderForm> }) {
+  const [price, quantity] = useWatch({
+    control,
+    name: ["price", "quantity"],
+  });
+
+  const notional = Number(price) * Number(quantity);
+  return <output>名目金額：{notional}</output>;
+}
+
+function OrderTicket() {
+  const { register, control } = useForm<OrderForm>();
+
+  return (
+    <form>
+      <input {...register("price")} />
+      <input {...register("quantity")} />
+      <Notional control={control} />
+    </form>
+  );
+}
+```
+
+```text
+price 改變
+  → RHF form control 通知 price subscribers
+  → Notional 的 useWatch 得到新值並 render
+  → 不需讓不關心 price 的 siblings 全部更新
+```
+
+不傳 `name` 代表訂閱整張表單，方便但會放大更新範圍。`compute` 可從訂閱資料選出真正需要的結果，但仍應保持 pure。Subscription 建立有時序：若在 `useWatch` 掛上前已 `setValue`，需要結合 `getValues` 或調整 component 結構，不能假設舊通知會重播。
+
+它是 Hook，只能在 component/custom Hook 頂層呼叫；event handler 想讀當下值應使用 `getValues`，不能臨時呼叫 `useWatch`。
+
+> 一句話記憶：`useWatch` 是 RHF 的 reactive field subscription，訂閱範圍應縮到真正需要重新 render 的 consumer。
+
+官方參考：[React Hook Form `useWatch`](https://react-hook-form.com/docs/usewatch)
+
 ### 1. 它和 `getValues('price')` 差在哪裡？
 
 <details>
@@ -390,6 +633,66 @@ Root/server error 的生命週期要明確管理，成功/重新提交時依需�
 6. **Rules of Hooks**：不能在 event handler 呼叫 useWatch；Hook 必須在 component/custom Hook 頂層。Handler 要最新值使用 `getValues`，或讓頂層 watcher 產生值後由 closure 使用本次 render snapshot。
 
 ## React Hook Form `useFieldArray`：管理動態欄位與 identity
+
+### 做題前：動態欄位最難的不是 array，而是每一列的身份
+
+使用者可新增、刪除、交換多筆委託時，每列 input 都有自己的 focus、dirty、validation 與 DOM instance。若用 array index 當 React key，刪掉第 0 列後，後面所有 row 的 key 都改變，輸入狀態可能跟錯資料。
+
+`useFieldArray` 以 RHF 產生的 `field.id` 維持 UI row identity，並提供結構操作：
+
+```tsx
+const {
+  fields,
+  append,
+  prepend,
+  remove,
+  swap,
+  move,
+  update,
+  replace,
+} = useFieldArray({ control, name, rules? });
+```
+
+```tsx
+function OrderLegs() {
+  const { control, register } = useForm({
+    defaultValues: { legs: [{ serverId: null, symbol: "BTCUSDT", quantity: 1 }] },
+  });
+  const { fields, append, remove } = useFieldArray({ control, name: "legs" });
+
+  return (
+    <>
+      {fields.map((field, index) => (
+        <fieldset key={field.id}>
+          <input {...register(`legs.${index}.symbol`)} />
+          <input type="number" {...register(`legs.${index}.quantity`)} />
+          <button type="button" onClick={() => remove(index)}>刪除</button>
+        </fieldset>
+      ))}
+      <button
+        type="button"
+        onClick={() => append({ serverId: null, symbol: "", quantity: 1 })}
+      >
+        新增一列
+      </button>
+    </>
+  );
+}
+```
+
+| Identity | 用途 |
+| --- | --- |
+| `field.id` | RHF/React render row key，維持 input instance |
+| `serverId` | 後端 entity identity，提交、更新、刪除 API 使用 |
+| array index | 目前欄位 path 的位置，排序後本來就會改變 |
+
+`append` 應傳完整 row shape，讓 default、validation 與 dirty comparison 有一致基準。`update(index, value)` 可能讓該 row unmount/remount；只改單一欄位且要保留 instance 時，使用 `setValue("legs.0.quantity", next)` 更精確。
+
+不要在同一個 click 中堆疊多個互相依賴的 array action 再假設每一步同步完成；先表達最終結構，或把下一步放到下一個明確 lifecycle。
+
+> 一句話記憶：`useFieldArray` 管動態欄位結構；render key 用 `field.id`，業務 API identity 仍用 server ID。
+
+官方參考：[React Hook Form `useFieldArray`](https://react-hook-form.com/docs/usefieldarray)
 
 ### 1. Render list 時 key 應用 index 還是 `field.id`？
 

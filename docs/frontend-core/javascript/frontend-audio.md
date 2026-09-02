@@ -38,6 +38,27 @@ keywords: ["Audio", "MediaRecorder", "getUserMedia", "Web Audio", "STT", "16 kHz
 ≈ 1.92 MB（未包含 WAV header）
 ```
 
+### codec 是什麼？Opus 又是什麼？
+
+**codec（編解碼器）**是 coder-decoder／compressor-decompressor 的縮寫，可以把原始音訊編碼成較小的資料，也能在播放時把資料解碼回可播放的音訊。它描述的是「如何壓縮與還原內容」，不是副檔名或檔案容器。
+
+**Opus** 是一種開放、免權利金的有損音訊 codec，特色是低延遲，並且能依內容與 bitrate 兼顧人聲和音樂。因此它常用在：
+
+- 瀏覽器 `MediaRecorder` 錄音；
+- WebRTC 語音／視訊通話；
+- Discord 類型的即時語音；
+- 網路音訊串流。
+
+Opus 編碼後的資料通常放在 **WebM** 或 **Ogg** 容器中：
+
+```text
+demo.webm
+└── WebM：容器
+    └── Opus：音訊 codec
+```
+
+因此 `audio/webm;codecs=opus` 的意思是：「這是 WebM 容器，其中的音訊使用 Opus 編碼」。把 `.webm` 改名成 `.wav` 不會將 Opus 變成 PCM；若語音辨識 API 要求 PCM WAV，仍需要先解碼並轉換格式。
+
 ### 常見音訊格式
 
 | 格式 | 常見內容 | 適合用途 |
@@ -393,4 +414,3 @@ STT 常見兩種時間戳：
 - [MDN：getUserMedia()](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia)
 - [MDN：MediaRecorder](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder)
 - [MDN：Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
-

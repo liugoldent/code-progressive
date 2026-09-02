@@ -153,13 +153,13 @@ React 官方把 state 描述成每次 render 的 snapshot，Rules of Hooks 的�
 
 | 順序 | 文件 | 先學這個的原因 |
 | --- | --- | --- |
-| 1 | [React 基礎：Vue 對照版](./01-react-basics-vue-comparison.md) | 先用你熟悉的 Vue 對照 React 基礎語法與思考模型。 |
-| 2 | [React 反射訓練](./02-react-reflex-drills.md) | 把「看得懂」練成能從空白實作、debug 與口述；前兩週應反覆回來做。 |
-| 3 | [React 常用第三方 Hooks 入門](./02-react-third-party-hooks.md) | 基礎決策穩定後，再認識 `useQuery`、`useMutation`、Redux、Router 與表單 Hooks。 |
-| 4 | [React 術語中文對照與交易頁範例](./02-react-terms-code-examples.md) | 把常見英文術語翻成中文，再用交易頁範例看懂程式碼。 |
-| 5 | [Vue 轉 React 生態面試題](./03-vue-to-react-ecosystem-qna.md) | 準備面試官追問「你本來寫 Vue，怎麼接 React」。 |
-| 6 | [JavaScript / TypeScript 面試重點](./04-javascript-typescript.md) | 補 production JavaScript、TypeScript 與非同步基礎。 |
-| 7 | [React / Redux / React Query](./05-react-state-data.md) | 進入 React 職缺核心：狀態管理與 API 資料流。 |
+| 1 | [React 更新流程與狀態管理](./05-react-state-data.md) | 先建立 Trigger → Render → Commit → Paint 與三種 Effect 時機的共同心智模型，再進入後續 React 主題。 |
+| 2 | [React 基礎：Vue 對照版](./01-react-basics-vue-comparison.md) | 用你熟悉的 Vue 對照 React 基礎語法與思考模型。 |
+| 3 | [React 反射訓練](./02-react-reflex-drills.md) | 把「看得懂」練成能從空白實作、debug 與口述；前兩週應反覆回來做。 |
+| 4 | [React 常用第三方 Hooks 入門](./02-react-third-party-hooks.md) | 基礎決策穩定後，再認識 `useQuery`、`useMutation`、Redux、Router 與表單 Hooks。 |
+| 5 | [React 術語中文對照與交易頁範例](./02-react-terms-code-examples.md) | 把常見英文術語翻成中文，再用交易頁範例看懂程式碼。 |
+| 6 | [Vue 轉 React 生態面試題](./03-vue-to-react-ecosystem-qna.md) | 準備面試官追問「你本來寫 Vue，怎麼接 React」。 |
+| 7 | [JavaScript / TypeScript 面試重點](./04-javascript-typescript.md) | 補 production JavaScript、TypeScript 與非同步基礎。 |
 | 8 | [UI 品質 / Responsive / Tooling](./06-ui-responsive-tooling.md) | 補職缺要求的 responsive UI、Webpack、Tailwind、a11y。 |
 | 9 | [效能 / 測試 / 前端系統設計](./07-quality-performance-system.md) | 準備 Senior 常問的效能、測試與架構題。 |
 | 10 | [交易產品前端情境題](./08-crypto-product-case.md) | 把 React 能力套到 Binance Futures / 交易頁場景。 |
@@ -171,7 +171,9 @@ React 官方把 state 描述成每次 render 的 snapshot，Rules of Hooks 的�
 | 16 | [React 現場實戰題第一回補強](./16-react-state-effect-reinforcement.md) | 用六題組合題補強 derived state、async race、subscription 與 WebSocket lifecycle。 |
 | 17 | [React 現場實戰題第二回](./14-react-render-identity-live-demo.md) | 用 list key、state ownership、memo、Context、external store 與 Transition 深入 render correctness。 |
 | 18 | [極致前端行動路線](./12-frontend-mastery-action-plan.md) | 把瀏覽器底層、React 轉化與 Nuxt / Next 全端渲染收斂成六週可驗收的行動與作品。 |
-| 19 | [React Hooks 六題反射題庫](./17-react-hooks-six-drills-index.md) | 30 種 React 內建與第三方 Hook，每種固定六題，共 180 題；用來按 Hook 補洞與複習。 |
+| 19 | [React Hooks 為什麼存在](./17-react-hooks-purpose-guide.md) | 先用「做什麼、為何存在、解決什麼、怎麼用」理解 React 與常見第三方 Hooks，再進題庫。 |
+| 20 | [React Hooks 六題反射題庫](./17-react-hooks-six-drills-index.md) | 30 種 React 內建與第三方 Hook，每種固定六題，共 180 題；用來按 Hook 補洞與複習。 |
+| 21 | [AI 時代的軟體工程師學習策略](./24-ai-era-software-engineer-learning-strategy.md) | 把 Vue 深度、React 第二專長、全端邊界與 AI 驗證流程組合成可持續的轉職策略。 |
 
 ## 面試回答框架
 
@@ -210,4 +212,5 @@ React 官方把 state 描述成每次 render 的 snapshot，Rules of Hooks 的�
 - [React 現場實戰題第一回補強](./16-react-state-effect-reinforcement.md)
 - [React 現場實戰題第二回](./14-react-render-identity-live-demo.md)
 - [極致前端行動路線](./12-frontend-mastery-action-plan.md)
+- [React Hooks 為什麼存在](./17-react-hooks-purpose-guide.md)
 - [React Hooks 六題反射題庫](./17-react-hooks-six-drills-index.md)

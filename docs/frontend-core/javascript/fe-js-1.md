@@ -10,6 +10,12 @@ keywords: ["前端", "Javascript", "FE-knowledge", "typeof", "vs", "instanceof",
 
 # [FE] Javascript - 1
 
+:::info 這篇的定位
+
+本篇以 DOM、網路、檔案上傳、可視區與影音等瀏覽器實務為主。語言底層觀念請先讀 [JavaScript 底層核心：執行環境、記憶體與非同步](./javascript-runtime-core.md)。
+
+:::
+
 ## typeof vs instanceof
 
 ### typeof
@@ -67,7 +73,7 @@ Person.prototype.sayName = function () {
 };
 const person1 = new Person("Tom", 20);
 console.log(person1); // Person {name: "Tom", age: 20}
-t.sayName(); // 'Tom'
+person1.sayName(); // 'Tom'
 ```
 
 - 流程

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 20
+sidebar_position: 21
 title: "React Hooks 六題反射題庫：內建與第三方 Hook 全覽"
 description: "React Hooks 練習總覽：React 18 內建 Hook、React 19 新 Hook，以及 TanStack Query、Redux、React Router、React Hook Form、Zustand 常用 Hook，每個 Hook 固定六題。"
 tags:
@@ -11,6 +11,8 @@ keywords: ["React Hooks 題庫", "React Hook 面試題", "useState 題目", "use
 ---
 
 # React Hooks 六題反射題庫
+
+> 第一次接觸或還不確定該選哪個 Hook，先讀：[React Hooks 為什麼存在：常用 Hook 解決問題全覽](./17-react-hooks-purpose-guide.md)
 
 這套題庫不是叫你背 API。每個 Hook 都固定六題，依序練：
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 25
+sidebar_position: 26
 title: "第三方 Hooks 六題實戰：TanStack Query / Redux / Zustand"
 description: "useQuery、useMutation、useQueryClient、useSelector、useDispatch、Zustand store Hook 各六題，練習 server cache、mutation、selector 與 global client state。"
 tags:
@@ -24,6 +24,63 @@ keywords: ["useQuery 題目", "useMutation 題目", "useQueryClient 題目", "us
 :::
 
 ## TanStack Query `useQuery`：訂閱一份 server cache
+
+### 做題前：Server state 不只是 fetch 完放進 local state
+
+同一筆 `BTCUSDT` 行情可能同時被頁首、圖表與下單面板使用。若每個 component 都在 Effect 中自行 fetch，就會各自維護 loading、error、取消、重試與新鮮度，也不知道彼此其實在讀同一份遠端資料。
+
+`useQuery` 讓 component 以 query key 訂閱 QueryClient 中的一筆 cache：
+
+```tsx
+const result = useQuery({
+  queryKey,
+  queryFn,
+  staleTime?,
+  gcTime?,
+  enabled?,
+});
+```
+
+| 概念 | 角色 |
+| --- | --- |
+| `queryKey` | server data 的 cache identity；會改變結果的輸入都應進 key |
+| `queryFn({ signal })` | 取得資料並回傳 Promise；失敗時 throw |
+| `data` / `error` | 最近成功資料或目前錯誤 |
+| `status` | 是否還沒有資料、成功或錯誤 |
+| `fetchStatus` / `isFetching` | queryFn 現在是否正在執行，包含背景 refetch |
+
+```tsx
+function Ticker({ symbol }: { symbol: string }) {
+  const ticker = useQuery({
+    queryKey: ["ticker", symbol],
+    queryFn: ({ signal }) => fetchTicker(symbol, signal),
+    staleTime: 10_000,
+  });
+
+  if (ticker.isPending) return <p>第一次載入中…</p>;
+  if (ticker.isError) return <p role="alert">載入失敗</p>;
+
+  return (
+    <p>
+      {ticker.data.price}
+      {ticker.isFetching && <small> 更新中…</small>}
+    </p>
+  );
+}
+```
+
+```text
+component 訂閱 ["ticker", symbol]
+  → cache 有 fresh data：直接顯示
+  → cache 無資料／已需更新：queryFn 取得資料
+  → QueryClient 保存結果並通知所有相同 key observers
+```
+
+Query key 是「資料是誰」，`staleTime` 是「多久內不用重新驗證」，`gcTime` 是「沒有 observer 後 cache 留多久」，三者不要混在一起。它適合可快取的 server read；一次性 server write 通常用 mutation。
+
+> 一句話記憶：`useQuery` 用穩定 key 訂閱共享 server cache，queryFn 只是取得這筆資料的方法。
+
+官方參考：[TanStack Query `useQuery`](https://tanstack.com/query/latest/docs/framework/react/reference/useQuery)、[Query basics](https://tanstack.com/query/latest/docs/framework/react/guides/queries)
 
 ### 1. 切 symbol 後為何仍顯示 BTC 資料？
 
@@ -101,6 +158,59 @@ queryFn: ({ signal }) => fetch(url, { signal })
 
 ## TanStack Query `useMutation`：執行 server write
 
+### 做題前：Mutation 是由事件觸發的一次寫入流程
+
+Query 通常宣告「畫面需要哪份 server data」；下單、修改暱稱、刪除資料則是使用者主動觸發的 write。`useMutation` 在 render 時只建立 observer 與操作函式，不會自行 POST。
+
+```tsx
+const mutation = useMutation({
+  mutationFn,
+  onMutate?,
+  onSuccess?,
+  onError?,
+  onSettled?,
+});
+```
+
+| 項目 | 角色 |
+| --- | --- |
+| `mutate(variables)` | 啟動 mutation，以 callbacks 接結果，回傳 `void` |
+| `mutateAsync(variables)` | 啟動並回傳 Promise，由 caller `await` / `catch` |
+| `isPending` / `data` / `error` | 這個 mutation observer 的執行狀態 |
+| lifecycle callbacks | optimistic patch、成功更新、rollback 與最後校正 |
+
+```tsx
+const queryClient = useQueryClient();
+const createOrder = useMutation({
+  mutationFn: postOrder,
+  onSuccess: (confirmedOrder) => {
+    queryClient.setQueryData(["orders"], (old = []) => [
+      ...old,
+      confirmedOrder,
+    ]);
+  },
+});
+
+function handleSubmit(draft) {
+  createOrder.mutate(draft);
+}
+```
+
+```text
+render：建立 mutation observer（不送 request）
+event：mutate(draft)
+  → pending → mutationFn(draft)
+  → success：更新／invalidate 相關 query cache
+  → error：顯示錯誤，必要時 rollback
+  → settled：做成功失敗都要執行的校正
+```
+
+Server write 成功不代表 QueryClient 自動知道哪些 read caches 受影響；關係必須由 `setQueryData` 或 `invalidateQueries` 明確描述。多次 `mutate` 也可能並行且亂序完成。下單、付款等操作若要 retry，必須先有 server idempotency contract。
+
+> 一句話記憶：`useMutation` 管理一次命令式 server write 的 lifecycle，cache 一致性仍要明確接回 QueryClient。
+
+官方參考：[TanStack Query `useMutation`](https://tanstack.com/query/latest/docs/framework/react/reference/useMutation)、[Mutations guide](https://tanstack.com/query/latest/docs/framework/react/guides/mutations)
+
 ### 1. `useMutation` render 時會立刻 POST 嗎？
 
 ```tsx
@@ -169,6 +279,62 @@ Network 完成順序不保證等於呼叫順序。產品要決定 disable、允�
 6. **Retry 策略**：Read query 通常可以安全重試，但 mutation 可能重複產生副作用。只有 endpoint 具 idempotency key 或操作本身冪等時才自動 retry，並針對 4xx validation、5xx、timeout 分別決策。
 
 ## TanStack Query `useQueryClient`：操作目前 Provider 的 cache client
+
+### 做題前：QueryClient 是整個 query cache 的協調者
+
+`useQuery` 負責訂閱某筆資料，`useMutation` 負責一次寫入；當你需要讓多筆 query 失效、直接 patch cache、prefetch 下一頁或取消 request，就要取得它們共同使用的 QueryClient。
+
+```tsx
+const queryClient = useQueryClient(queryClient?);
+```
+
+一般 browser app 會建立穩定 client，再透過 Provider 供整棵 tree 使用：
+
+```tsx
+const queryClient = new QueryClient();
+
+root.render(
+  <QueryClientProvider client={queryClient}>
+    <App />
+  </QueryClientProvider>,
+);
+```
+
+```tsx
+function RefreshOrdersButton() {
+  const queryClient = useQueryClient();
+
+  return (
+    <button onClick={() => {
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+    }}>
+      重新驗證訂單
+    </button>
+  );
+}
+```
+
+| 操作 | 意圖 |
+| --- | --- |
+| `invalidateQueries` | 標記 matching queries stale，active query 通常接著 refetch |
+| `setQueryData` | 同步、immutable 地更新一筆已知 cache |
+| `prefetchQuery` | 提前取得資料並放進 cache，不直接回傳給 UI |
+| `cancelQueries` | 請求 query 取消；queryFn 要有傳遞 AbortSignal 才能中止底層 I/O |
+| `getQueryData` | imperative snapshot read，不會讓 component 訂閱 |
+
+```text
+最近的 QueryClientProvider
+  └─ useQueryClient() 取得同一 client
+      ├─ 讀寫 cache
+      ├─ invalidate / refetch / cancel
+      └─ 通知 useQuery observers
+```
+
+不要在 component body 每次 `new QueryClient()`，否則 cache identity 會跟著 render 重建。需要 reactive UI 時仍應 `useQuery`；render 中 `getQueryData()` 只讀一次 snapshot，後續 cache 更新不會自動重畫。
+
+> 一句話記憶：`useQueryClient` 取得目前 Provider 的 cache coordinator，用來做跨 query 的命令式協調。
+
+官方參考：[TanStack Query `useQueryClient`](https://tanstack.com/query/latest/docs/framework/react/reference/useQueryClient)、[QueryClient](https://tanstack.com/query/latest/docs/reference/QueryClient)
 
 ### 1. 為何不能在 component render 中 `new QueryClient()`？
 
@@ -249,6 +415,47 @@ Prefetch 通常用於提前暖 cache，呼叫端不直接需要回傳資料；en
 
 ## React Redux `useSelector`：訂閱 selector result
 
+### 做題前：Component 訂閱的是 selector 結果，不是抽象的「整個 Redux」
+
+Redux store 是 React 外部的 shared client state。`<Provider store={store}>` 把同一 store 放進 context；`useSelector` 讀取需要的 slice，並在每次 dispatch 後重新執行 selector，判斷這個 component 是否需要 render。
+
+```tsx
+const selected = useSelector(selector, equalityFnOrOptions?);
+```
+
+```tsx
+function ActiveSymbol() {
+  const symbol = useSelector((state: RootState) => state.trade.symbol);
+  return <strong>{symbol}</strong>;
+}
+```
+
+```text
+store.dispatch(action)
+  → Redux reducers 建立 next root state
+  → useSelector 再算 selector(nextState)
+  → 比較 previousSelected 與 nextSelected
+  → 結果不同才要求該 component render
+```
+
+預設比較是嚴格 reference equality（`===`）。因此下面 selector 每次都建立新 object，即使欄位沒變，也容易讓任何 action 都觸發 render：
+
+```tsx
+// 每次 selector 執行都產生新 reference
+const result = useSelector((state) => ({
+  symbol: state.trade.symbol,
+  side: state.trade.side,
+}));
+```
+
+可以分開選 primitive、使用 memoized selector，或明確採用 `shallowEqual`。Selector 必須 pure，不能送 API、dispatch 或 mutation state；它可能在 render 與 store update 的不同時機多次執行。
+
+`React.memo` 只比較 parent props，不能擋住 component 自己的 store subscription 更新。Selector 的粒度與回傳 identity 才決定這條訂閱何時更新。
+
+> 一句話記憶：`useSelector` 訂閱「從 store 推導出的結果」，結果 identity 改變才使 component 更新。
+
+官方參考：[React Redux Hooks：`useSelector`](https://react-redux.js.org/api/hooks#useselector)
+
 ### 1. 為何任何 action 都讓 component render？
 
 ```tsx
@@ -324,6 +531,54 @@ Hook 找不到 Redux Context 會拋錯。測試要用實際/測試 store Provide
 6. **Provider**：沒有對應 context 的 Provider 時 Hook 無法取得 store，會直接報錯而非回 undefined。測試應用真 store/Provider 或明確 test wrapper；不要在 component 裡 catch 後靜默顯示舊資料。
 
 ## React Redux `useDispatch`：取得 store dispatch
+
+### 做題前：Dispatch 是寫入入口，本身不會訂閱資料
+
+`useDispatch()` 取得最近 Redux Provider 中 store 的 `dispatch` function。Component 用它送出 action；Redux reducer 再根據 action 計算 next state。畫面是否更新，則取決於 `useSelector` 等訂閱結果是否改變。
+
+```tsx
+const dispatch = useDispatch();
+```
+
+```tsx
+function SideButtons() {
+  const dispatch = useAppDispatch();
+
+  return (
+    <>
+      <button onClick={() => dispatch({ type: "trade/sideChanged", payload: "buy" })}>
+        買入
+      </button>
+      <button onClick={() => dispatch({ type: "trade/sideChanged", payload: "sell" })}>
+        賣出
+      </button>
+    </>
+  );
+}
+```
+
+```text
+click event
+  → dispatch(action)
+  → middleware（若有）
+  → reducers(previousState, action)
+  → store 保存 nextState 並通知 subscribers
+  → selector 結果改變的 components render
+```
+
+| `useDispatch` | `useSelector` |
+| --- | --- |
+| 取得 command/write function | 讀取並訂閱 derived state |
+| 呼叫後不保證目前 component render | 選取結果改變才 render |
+| 適合 event handler、thunk/action dispatch | 適合 JSX 所需資料 |
+
+不能在 render 中 dispatch，否則形成 render → store update → render loop。Event handler dispatch 後，當前 closure 中的 selector value 仍是那次 render 的 snapshot；新值要到下一次 render 才取得。
+
+TypeScript 專案通常在 app 層輸出 `useAppDispatch = useDispatch.withTypes<AppDispatch>()`，讓 thunk 與 middleware 擴充型別保留下來；UI 不必到處重複寫 cast。
+
+> 一句話記憶：`useDispatch` 只提供 Redux 的 action 入口，真正的 state 計算在 reducer，真正的 UI 訂閱在 selector。
+
+官方參考：[React Redux Hooks：`useDispatch`](https://react-redux.js.org/api/hooks#usedispatch)、[React Redux TypeScript usage](https://react-redux.js.org/using-react-redux/usage-with-typescript)
 
 ### 1. 呼叫 `dispatch` 本身會讓目前 component render 嗎？
 
@@ -401,6 +656,57 @@ console.log(symbol);
 6. **Action 粒度**：UI 若知道「先 setLoading、再 setRows、再 closeModal」等 reducer 細節，流程會散落且容易中斷。Dispatch 一個具業務意圖的 action/thunk，例如 `orderSubmitted`，由 domain layer 決定狀態轉移與 side effects。
 
 ## Zustand bound store Hook：以 selector 訂閱 client store
+
+### 做題前：`create` 同時產生 store 與綁定 React 的 Hook
+
+Zustand 常把 shared client state 與 actions 放在 module-level store。呼叫 bound store Hook 時傳 selector，component 只訂閱自己需要的 slice，不必手寫 Provider（除非要 scoped/dynamic store）。
+
+```tsx
+type TradingStore = {
+  symbol: string;
+  side: "buy" | "sell";
+  setSymbol(symbol: string): void;
+};
+
+const useTradingStore = create<TradingStore>()((set) => ({
+  symbol: "BTCUSDT",
+  side: "buy",
+  setSymbol: (symbol) => set({ symbol }),
+}));
+```
+
+Component 應選取實際需要的資料：
+
+```tsx
+function SymbolPicker() {
+  const symbol = useTradingStore((state) => state.symbol);
+  const setSymbol = useTradingStore((state) => state.setSymbol);
+
+  return (
+    <select value={symbol} onChange={(e) => setSymbol(e.target.value)}>
+      <option>BTCUSDT</option>
+      <option>ETHUSDT</option>
+    </select>
+  );
+}
+```
+
+```text
+store action 呼叫 set(partial / updater)
+  → store 建立 next state
+  → 各 selector 重新計算 slice
+  → slice equality 改變的 components render
+```
+
+不傳 selector 等於讀整份 store，任何欄位 reference 變動都可能更新 component。若 selector 回傳新 object/array，也要考慮 `useShallow` 或其他 equality 策略；優先選 primitive 或穩定 slice。
+
+`useTradingStore.getState()` 是不訂閱的 imperative read，適合 React 外的 event/service，不適合在 render 取代 bound Hook。Store 也應穩定建立；在 component body 每次 `create()` 會重建狀態與訂閱邊界。
+
+Zustand 管的是 shared client state，不自帶 TanStack Query 的 server cache 新鮮度、retry、dedupe 與 invalidation。SSR 加 `persist` 時還要設計每個 request 的 store 隔離與 hydration，不能直接假設 browser `localStorage` 值和 server HTML 相同。
+
+> 一句話記憶：Zustand bound Hook 用 selector 把 component 接到穩定 client store；選多大 slice，就承擔多大的更新範圍。
+
+官方參考：[Zustand `create`](https://zustand.docs.pmnd.rs/reference/apis/create)、[Zustand selectors](https://zustand.docs.pmnd.rs/learn/guides/auto-generating-selectors)
 
 ### 1. 為何不建議不傳 selector 讀整份 store？
 

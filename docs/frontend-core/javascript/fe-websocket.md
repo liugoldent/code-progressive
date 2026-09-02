@@ -697,6 +697,8 @@ Socket.IO 是建立在 Engine.IO 之上的即時通訊函式庫，提供 event�
 
 在 Network 中，Socket.IO 可能先出現 polling request，再升級為 WS；Messages 看到的資料也會包含 Socket.IO 自己的封包格式。
 
+完整的 Engine.IO 架構、Vue／React 實作與差異表，請繼續閱讀 [Socket.IO 入門](./fe-socketio.md)。
+
 ## 最後整理
 
 學 WebSocket 時，可以依這條主線理解：
@@ -730,6 +732,7 @@ Network → WS → 選擇連線
 
 ## 延伸閱讀
 
+- [本站：Socket.IO 入門與 WebSocket 差異](./fe-socketio.md)
 - [MDN：Writing WebSocket client applications](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications)
 - [Chrome DevTools：Analyze the messages of a WebSocket connection](https://developer.chrome.com/docs/devtools/network/reference/#websocket)
 - [Vue：Composables 與 side effect cleanup](https://vuejs.org/guide/reusability/composables.html#side-effects)

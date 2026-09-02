@@ -1,5 +1,5 @@
 ---
-sidebar_position: 21
+sidebar_position: 22
 title: "React Hooks 六題實戰：State / Context / Ref"
 description: "useState、useReducer、useContext、useRef、useImperativeHandle、useId 各六題，練習 snapshot、identity、subscription、DOM ref 與 accessibility。"
 tags:
@@ -19,6 +19,53 @@ keywords: ["useState 題目", "useReducer 題目", "useContext 題目", "useRef 
 ## `useState`：render snapshot 與更新佇列
 
 > 實際案例：[useState：交易下單數量與衍生金額](./practical-cases/use-state)
+
+### 做題前：先知道 state 不是可立即修改的普通變數
+
+Component 每次 render 都像 React 呼叫一次函式並拍下一張快照。該次函式裡的 `count`、event handler 與 JSX 都屬於同一張 snapshot；呼叫 setter 是要求 React 排入下一次 render，不會改掉目前函式中的變數。
+
+```tsx
+const [state, setState] = useState(initialState);
+```
+
+| 項目 | 角色 |
+| --- | --- |
+| `initialState` | component 第一次 mount 時的初值；可以傳值或 lazy initializer |
+| `state` | 本次 render 固定不變的 snapshot |
+| `setState(next)` | 把指定的 next value 排入更新佇列 |
+| `setState(previous => next)` | 讓 next value 依序從 queue 中的 pending state 計算 |
+
+```text
+目前 render：count = 0
+    ↓ event handler 呼叫 setCount(...)
+React 將 update 放進 queue
+    ↓ handler 結束後處理 queue
+下一次 render：count = 計算後的新 snapshot
+```
+
+完整的輸入情境通常同時包含「要保存的資料」與「可以推導的資料」：
+
+```tsx
+function OrderTicket() {
+  const [price, setPrice] = useState("10");
+  const [quantity, setQuantity] = useState("2");
+  const notional = Number(price) * Number(quantity); // 不必再建 state
+
+  return (
+    <label>
+      數量
+      <input value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+      <span>名目金額：{notional}</span>
+    </label>
+  );
+}
+```
+
+`useState` 適合保存會影響畫面、且無法只靠目前 props/state 重建的資料。若值不影響 render，可考慮 ref；若能直接計算，就不要再存一份 state；若多個欄位有複雜狀態轉移，再考慮 reducer。
+
+> 一句話記憶：state 是「每次 render 的不可變快照」，setter 是「排入下一張快照的更新」。
+
+官方參考：[React `useState`](https://react.dev/reference/react/useState)、[State as a Snapshot](https://react.dev/learn/state-as-a-snapshot)
 
 ### 1. 連續更新三次，畫面是多少？
 
@@ -201,6 +248,52 @@ Render 本來就是根據 props/state 計算 UI 的地方，因此便宜的 deri
 
 > 實際案例：[useReducer：集中管理交易訂單狀態](./practical-cases/use-reducer)
 
+### 做題前：它解決的是「狀態怎麼轉移」，不是單純少寫 setter
+
+當一張訂單表單同時有 `draft`、`submitting`、`success`、`error`，使用多個 `useState` 很容易在不同 event handler 重複一樣的更新規則，甚至產生「已成功但仍顯示錯誤」的不可能組合。
+
+```tsx
+const [state, dispatch] = useReducer(reducer, initialArg, init?);
+```
+
+| 項目 | 角色 |
+| --- | --- |
+| `state` | 本次 render 的 reducer state snapshot |
+| `dispatch(action)` | 把描述事件的 action 排入 React update queue |
+| `reducer(state, action)` | pure function；根據舊 state 與 action 回傳完整 next state |
+| `initialArg` / `init` | 初始輸入，以及選填的 lazy initialization function |
+
+```tsx
+type OrderState =
+  | { status: "editing"; error: null }
+  | { status: "submitting"; error: null }
+  | { status: "error"; error: string };
+
+function reducer(state: OrderState, action): OrderState {
+  switch (action.type) {
+    case "submitted":
+      return { status: "submitting", error: null };
+    case "failed":
+      return { status: "error", error: action.message };
+    case "reset":
+      return { status: "editing", error: null };
+    default:
+      return state;
+  }
+}
+```
+
+```text
+使用者事件 → dispatch(action) → React 呼叫 reducer(previousState, action)
+           → reducer 回傳 nextState → component 重新 render
+```
+
+Reducer 只計算 state，不能送 request、改 DOM、產生隨機值或直接 mutation 舊 state。副作用仍放 event handler、Effect 或資料層；副作用完成後再 dispatch 結果。簡單 boolean 或單一 input 不必為了「看起來正式」就使用 reducer。
+
+> 一句話記憶：`dispatch` 說明發生什麼，pure reducer 集中決定下一個合法狀態。
+
+官方參考：[React `useReducer`](https://react.dev/reference/react/useReducer)、[Extracting State Logic into a Reducer](https://react.dev/learn/extracting-state-logic-into-a-reducer)
+
 ### 1. Dispatch 兩次會遺失更新嗎？
 
 ```tsx
@@ -379,6 +472,48 @@ Reducer 也不會自動解決 server cache、request deduplication、retry、loa
 
 > 實際案例：[useContext：跨元件共用交易偏好](./practical-cases/use-context)
 
+### 做題前：Context 是 tree 上的依賴注入與訂閱
+
+假設登入使用者、主題或交易市場設定要被很深的 child 使用。逐層傳 props 沒有錯，但中間 component 若完全不關心資料，會形成大量 prop drilling。Context 讓 ancestor 在 tree 上提供 value，descendant 直接讀取最近的一層。
+
+```tsx
+const MarketContext = createContext("spot");
+
+function App() {
+  return (
+    <MarketContext.Provider value="futures">
+      <OrderPanel />
+    </MarketContext.Provider>
+  );
+}
+
+function OrderPanel() {
+  const market = useContext(MarketContext);
+  return <p>目前市場：{market}</p>;
+}
+```
+
+| 元件／API | 角色 |
+| --- | --- |
+| `createContext(defaultValue)` | 建立 Context identity；default 只在上方完全沒有對應 Provider 時使用 |
+| `<Context.Provider value={value}>` | 對其 descendant 提供 value |
+| `useContext(Context)` | 讀最近 Provider 的 value，並訂閱後續變化 |
+
+當 Provider value 改變，React 會用 `Object.is` 比較前後 value 並通知 consumers。因此每次 render 都建立 `{ user, logout }` 新 object，會被視為 value 改變；拆 Context、穩定 identity 或縮小 Provider 範圍，是在管理訂閱粒度，不是改變 Context 的基本語意。
+
+```text
+Outer Provider(value=A)
+└─ component 讀到 A
+   └─ Inner Provider(value=B)
+      └─ component 讀到 B
+```
+
+Context 不會自動成為完整 global store：它沒有 selector、transaction、devtools 或 server cache。頻繁更新的大型共用資料要評估 subscription 粒度；明確只經過一兩層的資料，props 反而更直觀。
+
+> 一句話記憶：`useContext` 讀取並訂閱 component 上方最近 Provider 的 value。
+
+官方參考：[React `useContext`](https://react.dev/reference/react/useContext)、[Passing Data Deeply with Context](https://react.dev/learn/passing-data-deeply-with-context)
+
 ### 1. 會讀到哪一層 Provider？
 
 ```tsx
@@ -548,6 +683,51 @@ Provider value 改變時，所有讀取該 Context 的 consumer 都會收到更�
 ## `useRef`：跨 render 的可變容器
 
 > 實際案例：[useRef：訂單驗證失敗時聚焦欄位](./practical-cases/use-ref)
+
+### 做題前：ref 能跨 render 保存值，但改它不會更新畫面
+
+Ref 是 component instance 擁有的一個穩定 object：
+
+```tsx
+const ref = useRef(initialValue);
+// ref object identity 穩定；可讀寫 ref.current
+```
+
+它最常處理兩類資料：
+
+1. React 交付的 DOM node，例如 focus、scroll 或 measurement。
+2. 不參與 render 的 mutable value，例如 timer ID、previous value、第三方 instance。
+
+```tsx
+function SearchBox() {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function scheduleSearch() {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      inputRef.current?.focus();
+    }, 300);
+  }
+
+  return <input ref={inputRef} onChange={scheduleSearch} />;
+}
+```
+
+| 比較 | state | ref |
+| --- | --- | --- |
+| 跨 render 保留 | 是 | 是 |
+| 更新是否要求 React render | 是 | 否 |
+| render 用的畫面資料 | 適合 | 不適合 |
+| DOM／timer／imperative instance | 通常不適合 | 適合 |
+
+`ref.current = next` 會立刻修改容器，但 React 不知道 UI 應重新計算。因此把計數器、錯誤訊息或按鈕文字只放 ref，畫面不會跟著變。Render 也應保持 pure；除了可預測的 lazy initialization，不要在 component body 任意讀寫 mutable ref。
+
+DOM ref 的時序要跟 commit 對齊：render 時 DOM 可能尚未存在，commit 後 React 才設定 `.current`；unmount 時再清回 `null`。
+
+> 一句話記憶：ref 是 component 私有的 mutable box，能記住值，但不會通知 React 重畫。
+
+官方參考：[React `useRef`](https://react.dev/reference/react/useRef)、[Referencing Values with Refs](https://react.dev/learn/referencing-values-with-refs)
 
 ### 1. 點擊後畫面為什麼仍是 0？
 
@@ -864,6 +1044,52 @@ Module 變數還可能造成測試互相污染，以及 SSR 中不同使用者 r
 
 > 實際案例：[useImperativeHandle：限制價格欄位的命令介面](./practical-cases/use-imperative-handle)
 
+### 做題前：它是在設計 imperative API 邊界
+
+一般情況應以 props 描述 UI，例如用 `isOpen` 控制 modal。但 focus、selection、scroll 這些操作本質上是命令式行為；parent 有時需要透過 ref 呼叫 child。若直接暴露整個 DOM node，parent 也能任意改 style、value 或事件，child 的封裝就破掉了。
+
+```tsx
+useImperativeHandle(ref, createHandle, dependencies?);
+```
+
+```tsx
+type SearchInputHandle = {
+  focus(): void;
+  clear(): void;
+};
+
+const SearchInput = forwardRef<SearchInputHandle>(function SearchInput(_, ref) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useImperativeHandle(ref, () => ({
+    focus() {
+      inputRef.current?.focus();
+    },
+    clear() {
+      if (inputRef.current) inputRef.current.value = "";
+    },
+  }), []);
+
+  return <input ref={inputRef} />;
+});
+```
+
+```text
+parent ref.current
+    ↓ 只能看到 child 公開的 contract
+{ focus(), clear() }
+    ↓ child 內部再操作
+真正的 input DOM ref
+```
+
+`createHandle` 讀到的 props/state 屬於 reactive values，必須正確列在 dependencies，否則 method 可能捕捉舊值。React 18 及更早版本要用 `forwardRef` 接收 ref；React 19 可以把 `ref` 當 prop 接收。這是版本語法差異，封裝原則相同。
+
+不要用 imperative handle 取代本來可以 declarative 表達的資料流。`open/close` 往往適合 `isOpen` prop；`focus/scroll/select` 才是典型 imperative method。
+
+> 一句話記憶：它不是讓 parent 權限更大，而是把 child 的 ref 能力縮成最小公開介面。
+
+官方參考：[React `useImperativeHandle`](https://react.dev/reference/react/useImperativeHandle)
+
 ### 1. Parent 最後拿到 DOM node 還是自訂 object？
 
 ```tsx
@@ -1079,6 +1305,45 @@ Parent 的寫法沒有改變，差別只在 **child 如何接收 ref**：
 ## `useId`：SSR 安全的 accessibility identity
 
 > 實際案例：[useId：建立可重複使用的無障礙訂單欄位](./practical-cases/use-id)
+
+### 做題前：它產生的是結構 ID，不是資料 ID
+
+同一頁可能 render 多個表單元件。若每個元件都硬編碼 `id="password"`，`label htmlFor`、`aria-describedby` 會指向重複 ID；若用 `Math.random()`，server render 與 client hydration 又可能產生不同 HTML。
+
+```tsx
+const id = useId();
+```
+
+`useId` 回傳與這個 component 中這次 Hook 呼叫位置相關的穩定字串，適合串起 accessibility attributes：
+
+```tsx
+function PasswordField() {
+  const prefix = useId();
+  const inputId = `${prefix}-input`;
+  const hintId = `${prefix}-hint`;
+
+  return (
+    <div>
+      <label htmlFor={inputId}>密碼</label>
+      <input id={inputId} aria-describedby={hintId} type="password" />
+      <p id={hintId}>至少 12 個字元</p>
+    </div>
+  );
+}
+```
+
+```text
+useId() 產生同一 instance 的 prefix
+├─ label htmlFor ──────┐
+├─ input id  ◀─────────┘
+└─ aria-describedby ──▶ hint id
+```
+
+它不適合 list key、database ID、cache key 或 request ID。那些 identity 應來自資料本身，才能在排序、插入、刪除與重新掛載後仍代表同一 entity。`useId` 也不會自動建立 label 關聯；你仍要把回傳字串放進正確 HTML attributes。
+
+> 一句話記憶：`useId` 解決同一 React tree 與 SSR hydration 中的 accessibility ID 協調，不代表業務資料身份。
+
+官方參考：[React `useId`](https://react.dev/reference/react/useId)
 
 ### 1. State 更新後 ID 會改嗎？
 

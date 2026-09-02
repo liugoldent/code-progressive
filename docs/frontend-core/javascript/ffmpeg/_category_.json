@@ -1,0 +1,10 @@
+{
+  "label": "FFmpeg 系列",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "slug": "/Frontend/JavaScript/ffmpeg",
+    "title": "FFmpeg 系列",
+    "description": "從媒體資料流與命令列模型開始，逐步學會轉檔、剪輯、字幕、HLS、Node.js 後端整合與瀏覽器 ffmpeg.wasm。"
+  }
+}

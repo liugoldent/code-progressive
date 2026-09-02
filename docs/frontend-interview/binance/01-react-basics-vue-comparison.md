@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: "React 基礎教學：Vue 轉 React 對照筆記"
 description: "給 Vue 背景工程師準備 React 與 Binance 前端面試，對照 JSX、component、props、useState、useEffect、事件、列表、表單、computed 與 Vue reactivity 差異。"
 tags:

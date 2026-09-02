@@ -1,5 +1,5 @@
 ---
-sidebar_position: 23
+sidebar_position: 24
 title: "React Hooks 六題實戰：Concurrent UI / External Store"
 description: "useTransition、useDeferredValue、useSyncExternalStore 各六題，練習 urgent 與 non-blocking 更新、延後值、external store snapshot 與 SSR。"
 tags:
@@ -17,6 +17,158 @@ keywords: ["useTransition 題目", "useDeferredValue 題目", "useSyncExternalSt
 這三個 Hook 都不是 debounce，也不會讓昂貴 JavaScript 自動變快。它們處理的是 React 更新優先級、延後顯示與外部訂閱的一致性。
 
 ## `useTransition`：把 state update 標成 non-blocking
+
+`useTransition` 用來告訴 React：**某一批 state update 不需要立刻完成，可以先讓更急的互動更新。**
+
+例如搜尋商品時，畫面其實有兩種不同優先級的更新：
+
+- 使用者剛輸入的文字要立刻出現在 input，這是 **urgent update**。
+- 數千筆搜尋結果可以稍後再更新，這是 **non-blocking update**。
+
+如果兩者一起觸發昂貴的 render，使用者可能每打一個字都感覺輸入框卡住。`useTransition` 可以把結果區的更新降成較低優先級，讓 React 優先處理新的按鍵、點擊等互動。
+
+### 基本語法
+
+```tsx
+const [isPending, startTransition] = useTransition();
+
+startTransition(() => {
+  setSomeState(nextValue);
+});
+```
+
+- `startTransition(callback)`：將 callback 中同步排入的 state updates 標記為 Transition。
+- `isPending`：這次 Transition 尚未完成時為 `true`，可以用來顯示「結果更新中」。
+
+:::warning 最重要的觀念
+
+**`startTransition` 的 callback 會立即、同步執行。它主要標記的是 React state update，不是把 callback 變成背景工作。**
+
+`startTransition` 不是計時器、`setTimeout` 或 Web Worker。React 不會等到瀏覽器有空才呼叫 callback，也不會把 callback 裡的 JavaScript 搬到另一條 thread。
+
+```tsx
+console.log("A");
+
+startTransition(() => {
+  console.log("B");
+  setQuery(nextQuery); // 只有這個 React update 被標記為 Transition
+});
+
+console.log("C");
+
+// 執行順序：A → B → C
+```
+
+因此下面的 `expensiveFilter()` 仍然會立即占用 main thread、阻塞 event handler：
+
+```tsx
+startTransition(() => {
+  const results = expensiveFilter(products, nextQuery); // 仍是同步工作
+  setResults(results); // 這個 state update 才是 Transition
+});
+```
+
+真正被改變的是 React 對 `setQuery`、`setResults` 等更新所觸發 render 的排程優先級。Transition 讓 React 可以優先處理更急的互動，並中斷或放棄過時的低優先級 render；它不會讓普通 JavaScript 自動變快或變成背景工作。
+
+:::
+
+### 實際案例：商品搜尋
+
+假設 `ProductList` 需要 render 很多商品。不要讓同一份 state 同時控制輸入框與昂貴結果，而是把它拆成兩份：
+
+```tsx
+import { memo, useState, useTransition } from "react";
+
+type Product = {
+  id: string;
+  name: string;
+};
+
+const ProductList = memo(function ProductList({
+  products,
+  query,
+}: {
+  products: Product[];
+  query: string;
+}) {
+  const normalizedQuery = query.trim().toLowerCase();
+  const matchedProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(normalizedQuery),
+  );
+
+  return (
+    <ul>
+      {matchedProducts.map((product) => (
+        <li key={product.id}>{product.name}</li>
+      ))}
+    </ul>
+  );
+});
+
+export function ProductSearch({ products }: { products: Product[] }) {
+  const [input, setInput] = useState("");
+  const [query, setQuery] = useState("");
+  const [isPending, startTransition] = useTransition();
+
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const next = event.target.value;
+
+    // Urgent：受控 input 必須立刻反映使用者輸入。
+    setInput(next);
+
+    // Non-blocking：大型結果區可以稍後追上最新輸入。
+    startTransition(() => {
+      setQuery(next);
+    });
+  }
+
+  return (
+    <section>
+      <label>
+        搜尋商品
+        <input value={input} onChange={handleChange} />
+      </label>
+
+      {isPending && <p>搜尋結果更新中...</p>}
+
+      <ProductList products={products} query={query} />
+    </section>
+  );
+}
+```
+
+這個案例的更新流程是：
+
+```txt
+使用者輸入
+├─ setInput(next)              → urgent，input 立即顯示新文字
+└─ startTransition(...)
+   └─ setQuery(next)           → non-blocking，驅動大型結果區
+```
+
+當使用者連續輸入時，React 可以先處理最新的 `input`，並中斷或放棄尚未 commit 的舊 `query` render，讓結果直接追上較新的內容。`ProductList` 加上 `memo`，也能在 urgent render 中以 props 未變為由跳過結果區，等 Transition 更新 `query` 時再重新 render。
+
+這不表示篩選或 render 變快了，而是 React 有機會先完成更重要的互動。若 `products.filter(...)` 本身就是一段長時間、不可切割的同步 JavaScript，它執行時仍會占住 main thread；這種瓶頸仍要靠改善演算法、列表 virtualization 或 Web Worker 處理。
+
+### 什麼適合放進 Transition？
+
+可以用這個問題判斷：**這次更新晚一點顯示，使用者是否仍能正確操作？**
+
+通常適合：
+
+- 大型搜尋或篩選結果
+- 複雜圖表
+- 大量列表
+- 大型頁籤內容切換
+
+通常不適合：
+
+- controlled input 的 `value`
+- checkbox 是否勾選
+- focus、pressed 等立即互動狀態
+- 必須立即顯示的表單錯誤
+
+最後要記住：Transition 解決的是 **React 更新優先級**，不是 debounce、網路 loading，也不是把 JavaScript 搬到背景執行。
 
 ### 1. 為何輸入仍然卡住？
 
@@ -61,6 +213,51 @@ function handleChange(event) {
 ```
 
 `input` 是 DOM value 的 source of truth，因此每個 keystroke 都要立刻 commit；`query` 只驅動可延後的結果區。也可以只保存 input，再讓結果區讀 `useDeferredValue(input)`，避免自己維護兩份值。
+
+#### 補充：`useDeferredValue` 是什麼？
+
+`useDeferredValue` 是 React 的 concurrent Hook，用來讓畫面中**優先級較低的 consumer 暫時沿用某個 value 的舊版本**。它不會延後原本 state 的更新；`input` 仍會立即變成最新值，只是昂貴的結果區可以先讀 `deferredQuery`，等 React 有空時再於 background render 中追上。
+
+```tsx
+function ProductSearch({ products }) {
+  const [input, setInput] = useState("");
+  const deferredQuery = useDeferredValue(input);
+  const isStale = input !== deferredQuery;
+
+  return (
+    <section>
+      <input
+        value={input}
+        onChange={(event) => setInput(event.target.value)}
+      />
+
+      <div aria-busy={isStale} style={{ opacity: isStale ? 0.6 : 1 }}>
+        <ProductList products={products} query={deferredQuery} />
+      </div>
+    </section>
+  );
+}
+```
+
+一次輸入大致會經過兩次 render：
+
+```txt
+使用者輸入 "re"
+├─ urgent render
+│  ├─ input = "re"                 → 輸入框立刻更新
+│  └─ deferredQuery = "r"          → 結果區暫時顯示舊結果
+└─ background render
+   └─ deferredQuery = "re"         → 結果區追上最新輸入
+```
+
+如果追趕途中又輸入新字，React 可以中斷尚未 commit 的 background render，改為追最新值。因此它表達的是「這部分 UI 可以落後」，不是固定延遲幾毫秒，也不是 debounce。它沒有 `isPending`；需要提示畫面正在追上時，可以比較 `input !== deferredQuery`。
+
+和 `useTransition` 的差別可以從控制位置理解：
+
+- `useTransition`：在產生 state update 的地方，把某次更新標成 non-blocking，並提供 `isPending`。
+- `useDeferredValue`：在消費 value 的地方取得可落後的版本；適合只有一份 urgent state，或無法控制 value 是在哪裡更新的情況。
+
+兩者都只調整 React render 的排程，不會讓昂貴計算本身變快，也不保證減少 API request。若要讓 urgent render 真正跳過昂貴結果區，通常還要把該 child 包成 `memo`，並確保其他 props 的 identity 穩定。
 
 </details>
 
@@ -123,6 +320,108 @@ startTransition(async () => {
 </details>
 
 ## `useDeferredValue`：讓非關鍵 consumer 暫時使用舊值
+
+> 實際案例：[useDeferredValue：輸入框立即更新，昂貴結果稍後追上](./practical-cases/use-deferred-value)
+
+### 它是等待一段時間後才更新嗎？
+
+不是。`useDeferredValue` 沒有計時器，也不能設定 `300ms` 之類的等待時間。更精確的心智模型是：
+
+> Urgent update 發生時，React 允許 deferred value 暫時沿用「上一次已 commit 的值」，同時在 background render 嘗試讓它追上最新 value。
+
+```tsx
+const [input, setInput] = useState("");
+const deferredQuery = useDeferredValue(input);
+```
+
+假設畫面原本已經 commit：
+
+```txt
+input = "B"
+deferredQuery = "B"
+```
+
+使用者再輸入 `T` 時，大致會經過：
+
+```txt
+第一階段：urgent render
+├─ input = "BT"                 → controlled input 立即顯示新文字
+└─ deferredQuery = "B"          → 結果區暫時沿用上次 commit 的值
+
+第二階段：background render
+└─ deferredQuery = "BT"         → background render 完成後才 commit 新結果
+```
+
+如果第二階段尚未完成，使用者又輸入 `C`，React 可以放棄過時的 `"BT"` background render，改為嘗試讓 `deferredQuery` 直接追上 `"BTC"`。因此中間值不保證每個都會 commit，追上速度也由 React 排程與實際 render 成本決定，不是「時間到就更新」。
+
+這也表示它不是 debounce：
+
+- `useDeferredValue`：調整 React render 的相對優先級，讓 UI consumer 可以暫時讀舊值。
+- debounce：等待明確時間，例如停止輸入 `300ms` 後才執行工作。
+
+若需求是減少搜尋 API 次數，仍要使用 debounce、cache 或 request cancellation；`useDeferredValue` 不提供 request 次數或延遲時間保證。
+
+### `useTransition` 和 `useDeferredValue` 怎麼選？
+
+兩者底層都在表達「這部分 React UI 可以晚一點完成」，主要差別在控制位置：
+
+| 比較 | `useTransition` | `useDeferredValue` |
+| --- | --- | --- |
+| 放在哪一端 | 產生 state update 的地方 | 消費 value 的地方 |
+| 控制方式 | `startTransition(() => setState(...))` | `const deferred = useDeferredValue(value)` |
+| 適用時機 | 能控制 setter，想標記某次更新 | 已經拿到 value，只想讓某個 consumer 晚點追上 |
+| pending 狀態 | 提供 `isPending` | 沒有；可比較 `value !== deferredValue` |
+| 搜尋案例 | 常拆成 urgent `input` 和 transition `query` | 可以只保存 `input`，列表讀 `deferredInput` |
+
+#### 能控制更新：使用 `useTransition`
+
+```tsx
+const [input, setInput] = useState("");
+const [query, setQuery] = useState("");
+const [isPending, startTransition] = useTransition();
+
+function handleChange(event) {
+  const next = event.target.value;
+
+  setInput(next); // urgent
+  startTransition(() => {
+    setQuery(next); // non-blocking
+  });
+}
+
+return <SlowProductList query={query} />;
+```
+
+這種寫法適合你擁有更新 action、想明確指定哪個 state update 是 non-blocking，並需要 `isPending` 顯示追趕狀態。
+
+#### 只想延後 consumer：使用 `useDeferredValue`
+
+```tsx
+const [input, setInput] = useState("");
+const deferredInput = useDeferredValue(input);
+const isStale = input !== deferredInput;
+
+return (
+  <>
+    <input value={input} onChange={event => setInput(event.target.value)} />
+    <SlowProductList query={deferredInput} />
+  </>
+);
+```
+
+這種寫法適合 source value 必須立即更新，但只有某個昂貴 consumer 可以落後；也適合 value 由 props、context 或第三方 Hook 提供，無法控制它原本的 setter。
+
+可以用下面的問題快速判斷：
+
+```txt
+我能控制產生這次 state update 的地方嗎？
+├─ 能，而且想標記「這次更新」可以延後
+│  └─ useTransition
+└─ 不能，或只想讓「某個 consumer」晚點追上
+   └─ useDeferredValue
+```
+
+同一條資料流程通常選最能表達 ownership 邊界的一種即可，不需要同時套兩層。若昂貴 child 沒有 `memo` 邊界，parent 的 urgent render 仍可能呼叫它；要真正跳過舊值未變時的昂貴 child，還要確保 component 被 memoize，其他 props identity 也維持穩定。
 
 ### 1. 第一次 render 會拿到什麼？
 
@@ -209,6 +508,73 @@ Deferred value 讓它有機會先維持舊值，但若 child 沒有 memo 邊界�
 </details>
 
 ## `useSyncExternalStore`：把 React 接到外部 mutable source
+
+> 實際案例：[useSyncExternalStore：訂閱 React 外部的即時行情 store](./practical-cases/use-sync-external-store)
+
+### 做題前：React 不會自動知道普通 JavaScript store 變了
+
+WebSocket client、browser online status 或第三方 store 可以在 React event 之外改變。Component 直接呼叫 `store.getSnapshot()` 只是在這次 render 讀一次值；之後 store 變動，React 沒收到通知，就不會重新 render。
+
+`useSyncExternalStore` 要求外部 source 提供正式 contract：
+
+```tsx
+const snapshot = useSyncExternalStore(
+  subscribe,
+  getSnapshot,
+  getServerSnapshot?,
+);
+```
+
+| 參數 | 外部 store 必須保證什麼 |
+| --- | --- |
+| `subscribe(callback)` | store 改變時呼叫 callback，並回傳 unsubscribe |
+| `getSnapshot()` | 回傳目前不可變 snapshot；同一版本沒變時 reference 必須相同 |
+| `getServerSnapshot()` | 選填；SSR 與 hydration 第一刻可重現的 snapshot |
+
+最小 store 可以長這樣：
+
+```tsx
+let price = 100;
+const listeners = new Set<() => void>();
+
+const tickerStore = {
+  getSnapshot: () => price,
+  subscribe(listener: () => void) {
+    listeners.add(listener);
+    return () => listeners.delete(listener);
+  },
+  update(nextPrice: number) {
+    price = nextPrice;
+    listeners.forEach((listener) => listener());
+  },
+};
+
+function Price() {
+  const price = useSyncExternalStore(
+    tickerStore.subscribe,
+    tickerStore.getSnapshot,
+    () => 100,
+  );
+
+  return <span>{price}</span>;
+}
+```
+
+```text
+WebSocket message
+  → store 建立新版本
+  → subscribe callbacks 通知 React
+  → React 呼叫 getSnapshot
+  → snapshot 確實改變才 render/commit
+```
+
+React 還能在 concurrent render 與 commit 間重新檢查 snapshot，降低同一畫面不同區塊讀到不同 store version 的風險。但 Hook 不負責 WebSocket reconnect、資料驗證、sequence gap、cache policy 或 selector 粒度；那些仍是 store adapter 的責任。
+
+Object snapshot 若每次呼叫都 `{ ...current }`，即使內容沒變 reference 也不同，會造成持續更新。應在 store 真正變動時才建立並快取新 immutable snapshot。
+
+> 一句話記憶：外部 store 負責穩定 snapshot 與變更通知，`useSyncExternalStore` 負責讓 React 安全地訂閱它。
+
+官方參考：[React `useSyncExternalStore`](https://react.dev/reference/react/useSyncExternalStore)
 
 ### 1. 直接讀 store 為何不會更新？
 

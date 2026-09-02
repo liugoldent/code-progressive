@@ -10,15 +10,21 @@ keywords: ["前端", "Javascript", "FE-knowledge", "Difference", "what", "is", "
 
 # [FE] Javascript - 2
 
+:::info 建議閱讀順序
+
+這篇保留較多面試速查題。若想從執行模型理解「為什麼」，建議先讀 [JavaScript 底層核心：執行環境、記憶體與非同步](./javascript-runtime-core.md)，再回來用本篇複習。
+
+:::
+
 ## Difference
 
 ### var、const、let
 
 - var 為 function scope
 - const let 為 block scope
-- const 是常數一經宣告之後就要指定數值，不可再度被賦值
-- var 在 function 內還是會暴露到 global 環境
-- const let 則不會暴露出去
+- `const` 宣告時必須初始化，之後不可重新指定 binding；若值是物件，物件內容仍可修改
+- 函式內宣告的 `var` 仍屬於該函式，不會自動暴露到全域
+- 在瀏覽器傳統 script 的最上層，`var` 可能成為 `globalThis` 的屬性；最上層 `let`、`const` 不會
 
 ```javascript
 var a = 1;
@@ -50,20 +56,21 @@ for (var i = 1; i <= 5; i++) {
     console.log(i);
   }, 0);
 }
-// 5
-// 5
-// 5
-// 5
-// 5
-// 原因：var為function scope，當i被賦值時，不會被綁在for裡留下作用域，而迴圈又已經跑完，所以是5
+// 6
+// 6
+// 6
+// 6
+// 6
+// 原因：var 是函式作用域，五個 callback 共用同一個 i。
+// 迴圈結束時 i 已經加到 6，之後 callback 才開始執行。
 ```
 
 ### 淺拷貝 vs 深拷貝
 
-#### 深拷貝使用
+#### 深拷貝不是 JSON 往返的同義詞
 
 ```javascript
-JSON.parse(JSON.stringify());
+const copied = structuredClone(source);
 ```
 
 #### 淺拷貝
@@ -185,7 +192,7 @@ console.log(gen.next().value); // 输出: undefined
 
 - Generator 和 async/await 需要與 Promise 對象搭配處理非同步情況。
 
-- async/await 實質上是 Generator 的語法糖，相當於會自動執行 Generator 函数。
+- async/await 可以用「自動暫停與恢復」類比 Generator，但規範中兩者是不同機制；`await` 會以 Promise 語意安排後續執行。
 
 - async/await 使用上更為簡潔，將非同步代碼以同步的形式進行編寫，是處理非同步編程的最終方案。
 

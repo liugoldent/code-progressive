@@ -1,5 +1,5 @@
 ---
-sidebar_position: 22
+sidebar_position: 23
 title: "React Hooks 六題實戰：Effect / Memo"
 description: "useEffect、useLayoutEffect、useInsertionEffect、useMemo、useCallback、useDebugValue 各六題，練習同步外部系統、dependency、paint timing 與 memoization。"
 tags:
@@ -17,6 +17,47 @@ keywords: ["useEffect 題目", "useLayoutEffect 題目", "useInsertionEffect 題
 這一組最重要的分界是：render 用來計算 JSX；Effect 用來讓 committed UI 與外部系統同步；memoization 只處理效能或 reference identity。
 
 ## `useEffect`：同步外部系統
+
+### 做題前：Effect 的對象必須是 React 外部系統
+
+Render 的責任是根據 props/state 計算 JSX；Effect 則在畫面 commit 後，把這個結果同步到 React 無法直接控制的系統，例如 WebSocket、browser event、timer、第三方 widget 或 network connection。
+
+```tsx
+useEffect(setup, dependencies?);
+```
+
+| 項目 | 角色 |
+| --- | --- |
+| `setup` | 建立目前這版 props/state 對應的外部同步 |
+| `cleanup` | `setup` 選擇回傳的函式；撤銷同一次 setup 建立的工作 |
+| `dependencies` | setup 讀取的所有 reactive values；React 用 `Object.is` 比較 |
+
+```tsx
+function Ticker({ symbol }: { symbol: string }) {
+  const [price, setPrice] = useState<number | null>(null);
+
+  useEffect(() => {
+    const connection = tickerClient.subscribe(symbol, setPrice);
+    return () => connection.unsubscribe();
+  }, [symbol]);
+
+  return <p>{symbol}：{price ?? "連線中"}</p>;
+}
+```
+
+當 `symbol` 從 BTC 變 ETH，生命週期不是只執行新 setup：
+
+```text
+commit BTC → setup(BTC)
+commit ETH → cleanup(BTC) → setup(ETH)
+unmount   → cleanup(ETH)
+```
+
+若沒有外部系統，通常不需要 Effect。`total = price * quantity` 直接在 render 計算；使用者點擊送出就在 event handler 執行；不要先設旗標，再用 Effect 監看旗標完成同一事件。Fetch 放 Effect 時還要自己處理 abort、race、cache 與 server rendering，framework 或 server-state library 往往更完整。
+
+> 一句話記憶：Effect 是 committed UI 與外部系統之間可 setup、可 cleanup、可重新同步的橋。
+
+官方參考：[React `useEffect`](https://react.dev/reference/react/useEffect)、[Synchronizing with Effects](https://react.dev/learn/synchronizing-with-effects)
 
 ### 1. 這個 derived state Effect 有什麼問題？
 
@@ -118,6 +159,43 @@ React 在開發環境額外執行一次 setup/cleanup 壓力測試，檢查 effe
 
 > 實際案例：[useLayoutEffect：交易風險 Tooltip 定位](./practical-cases/use-layout-effect) · [OneCompiler 可操作版本](https://onecompiler.com/react#draft-8xxa)
 
+### 做題前：只有「錯誤畫面不能先被看見」才需要阻擋 paint
+
+Tooltip 初次 render 前不知道自己的實際高度，必須等 DOM commit 後量測，再修正位置。若用一般 Effect，browser 可能先畫出錯誤位置；`useLayoutEffect` 讓量測與同步修正在 repaint 前完成。
+
+```text
+render → DOM commit / ref attach → useLayoutEffect → browser paint → useEffect
+```
+
+```tsx
+function Tooltip({ targetRect }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [height, setHeight] = useState(0);
+
+  useLayoutEffect(() => {
+    const nextHeight = ref.current?.getBoundingClientRect().height ?? 0;
+    setHeight(nextHeight);
+  }, []);
+
+  const top = targetRect.top - height;
+  return <div ref={ref} style={{ top }}>風險提示</div>;
+}
+```
+
+第一次 commit 的 DOM 已存在，ref 也已 attach；layout effect 量到高度後 `setHeight`，React 會在 paint 前完成必要的第二次 render/commit。使用者看不到錯位版，但主執行緒被同步工作阻擋，所以內容必須小且必要。
+
+| 需求 | 選擇 |
+| --- | --- |
+| 訂閱、network、analytics，不影響首次可見位置 | `useEffect` |
+| DOM measurement 後必須在 paint 前修正 | `useLayoutEffect` |
+| 可以靠 CSS layout 完成 | 不需要 Effect |
+
+Server 沒有 DOM layout，兩種 Effect 都不在 server render 執行。若 server HTML 必須等 client 量測才合理，還要設計可接受 fallback 或 client-only boundary。
+
+> 一句話記憶：`useLayoutEffect` 是會阻擋 repaint 的 DOM 同步窗口，不是更快、更高級的 `useEffect`。
+
+官方參考：[React `useLayoutEffect`](https://react.dev/reference/react/useLayoutEffect)
+
 ### 1. Tooltip 為何先閃在錯的位置？
 
 ```tsx
@@ -190,12 +268,70 @@ Server 沒有 layout、也不執行 effects；依賴 paint 前修正的 componen
 
 ## `useInsertionEffect`：CSS-in-JS library 的插入時機
 
+### 為什麼需要它？（為啥不能用 `useEffect` / `useLayoutEffect`）
+
+主要為了解決 CSS-in-JS 在 React 18 **效能與渲染順序**上的痛點：
+
+- **`useEffect` 太晚了**：它通常會讓瀏覽器先繪製（paint）畫面。如果這時才插入樣式，頁面可能出現無樣式內容的快閃（FOUC），並觸發額外的樣式計算與重繪。
+- **`useLayoutEffect` 可能造成額外的樣式重算**：它雖然會在瀏覽器繪製前執行，但 React 此時已進入 layout effect 階段；若許多 component 才各自插入 `<style>`，瀏覽器可能反覆執行 Recalculate Style，甚至連帶觸發 layout，增加 rendering cost。
+- **`useInsertionEffect` 的時間點剛剛好**：它在 commit 期間、所有 layout effects 執行前插入樣式，確保後續的 DOM layout measurement 已經能讀到新 CSS，讓瀏覽器更有效率地統一套用樣式。要注意，React 並不保證它一定發生在所有 DOM mutation 之前，因此仍不能在這裡依賴 ref 或量測 DOM。
+
+### API 與執行邊界
+
+```tsx
+useInsertionEffect(setup, dependencies?);
+```
+
+它的典型 caller 是 CSS-in-JS library，而不是一般產品 component：
+
+```tsx
+function useCSS(rule: string) {
+  useInsertionEffect(() => {
+    const style = insertRule(rule);
+    return () => style.remove();
+  }, [rule]);
+}
+```
+
+```text
+render（只計算 className）
+  ↓ commit 中插入必要 style rule
+useInsertionEffect
+  ↓ layout effects 開始量測，已能套用該 rule
+useLayoutEffect
+  ↓ paint
+```
+
+這個階段不能 setState，也不能假設 refs 已 attach 或 DOM 已完成特定 mutation。Server render 也不執行它；library 若支援 SSR，仍需另外收集與輸出 critical CSS。
+
+> 一句話記憶：`useInsertionEffect` 只為 runtime CSS library 提供 layout measurement 前的樣式插入時機。
+
+官方參考：[React `useInsertionEffect`](https://react.dev/reference/react/useInsertionEffect)
+
 ### 1. 一般產品 component 該用它量 DOM 嗎？
 
 <details>
 <summary>答案</summary>
 
 不該。它主要給 CSS-in-JS library 在 layout effects 讀 layout 前插入動態 style。此時不能依賴 ref 已附加，也不適合一般 DOM measurement；量測用 `useLayoutEffect`。
+
+原因是它的執行時機**沒有提供 DOM 已到位的保證**。可以把可靠的順序理解成：
+
+```text
+React commit 開始
+  ├─ DOM mutations 與 useInsertionEffect 的處理可能交錯
+  ├─ refs 連接完成
+  └─ useLayoutEffect 執行（DOM 已 commit、瀏覽器繪製前）
+瀏覽器繪製頁面（paint）
+useEffect 執行（通常不阻擋 paint）
+```
+
+React 只保證 `useInsertionEffect` 早於所有 layout effects，不保證它一定在所有 DOM mutations 之前或之後。因此在裡面存取 `ref.current` 或呼叫 `getBoundingClientRect()` 都不可靠：
+
+- **元件首次掛載時**：ref 尚未連接，`ref.current` 通常仍是 `null`。
+- **元件更新時**：DOM mutations 可能尚未完成，也可能已完成；你無法可靠判定量到的是更新前還是更新後的 DOM 尺寸與狀態。
+
+若必須讀取已 commit 的新 DOM 並在 paint 前修正畫面，應使用 `useLayoutEffect`。
 
 </details>
 
@@ -204,7 +340,30 @@ Server 沒有 layout、也不執行 effects；依賴 paint 前修正的 componen
 <details>
 <summary>答案</summary>
 
-Render 必須純粹，且 concurrent render 可能被丟棄；render 中修改 DOM 會留下未 commit 的 style。Insertion Effect 把實際插入移到 commit 的專用時機。
+因為 render 階段只應該**描述 UI 應該長什麼樣子**，不能直接修改 `document.head`。在 React 18 的 concurrent rendering 中，一次 render 可能被暫停、重跑，甚至整份丟棄；「render 過」不代表「最後真的顯示在畫面上」。
+
+假設 CSS-in-JS library 在 component function 執行時立刻做這件事：
+
+```tsx
+function Button({ color }: { color: string }) {
+  // ❌ render 階段直接改外部 DOM
+  document.head.appendChild(createStyle(`.button { color: ${color} }`));
+  return <button className="button">Buy</button>;
+}
+```
+
+React 可能先 render `color="red"`，還沒 commit 就收到更高優先級的更新，最後只 commit `color="green"`。但 red 的 `<style>` 已經被插進真實 DOM，形成幾個問題：
+
+- 畫面上根本沒有 red 版本，卻留下無主的 style rule。
+- Strict Mode 或 render retry 可能重複插入相同 rule。
+- render 不再純粹；相同 props 呼叫兩次，外部結果不同，也難以測試。
+- 被 Suspense 或 concurrent render 放棄的 tree 仍可能污染全域 stylesheet。
+
+較合理的分工是：render 時只依據 style 內容算出穩定的 class name、把規則登記到 library cache；等 React **真的 commit 這棵 tree** 時，再由 `useInsertionEffect` 把尚未存在的 rule 插入 stylesheet。如此 side effect 才和 committed UI 對齊，而且 rule 會早於所有 layout effects 準備好，後續的 `getBoundingClientRect()` 才會量到套用新 CSS 後的尺寸。
+
+它解決的是「**何時安全地把動態 CSS 寫進真實頁面**」，不是要求每個 render 都新增一個 `<style>`。成熟 library 通常還會用 hash、cache 與 rule 去重，讓相同樣式共用 class/rule；SSR 則另外在 server render pipeline 收集 CSS，因為 Effect 類 Hook 在 server 不執行。
+
+面試時可以濃縮成：**render 可能被放棄，所以不能在 render 修改 stylesheet；`useInsertionEffect` 把插入動作延後到 commit，並保證 CSS 在 layout effects 量測之前已存在。**
 
 </details>
 
@@ -255,6 +414,45 @@ Render 必須純粹，且 concurrent render 可能被丟棄；render 中修改 D
 
 ## `useMemo`：快取本次 render 的計算結果
 
+### 做題前：先有正確程式，再用 memoization 省重算
+
+Component 每次 render 都會重新執行函式 body。大多數計算很便宜，直接重算最清楚；但若大型清單篩選已被 Profiler 證明昂貴，而且輸入常保持不變，就可以快取上次結果。
+
+```tsx
+const cachedValue = useMemo(calculateValue, dependencies);
+```
+
+```tsx
+function OrderTable({ orders, filter, theme }) {
+  const visibleOrders = useMemo(
+    () => expensiveFilter(orders, filter),
+    [orders, filter],
+  );
+
+  return <Table className={theme} rows={visibleOrders} />;
+}
+```
+
+```text
+第一次 render             → 執行 calculation，保存 result
+下次 render，deps 都相同  → 重用 result
+下次 render，某個 dep 改變 → 重新 calculation，保存新 result
+```
+
+| 它快取什麼 | 不負責什麼 |
+| --- | --- |
+| pure calculation 的回傳值 | 不保存業務資料 |
+| 物件／陣列的 reference identity | 不阻止 parent 或 component 本身 render |
+| dependency 未變時省掉重算 | 不修正 side effect 或 stale dependency |
+
+Calculation 在 render 階段執行，所以必須 pure，不能送 request、改 props 或寫外部變數。Cache 是效能最佳化，React 在特定情況可以丟棄；若 cache 消失會讓功能壞掉，那份資料應該是 state 或 ref，而不是 `useMemo`。
+
+`useMemo` 本身也有 closure、dependency comparison 與閱讀成本。先量測再使用；如果一個「永遠新」的 dependency 每次都換 reference，memo 仍會每次重算。
+
+> 一句話記憶：`useMemo` 可以重用 pure calculation 的結果，但不能成為程式正確性所依賴的 storage。
+
+官方參考：[React `useMemo`](https://react.dev/reference/react/useMemo)
+
 ### 1. `useMemo` callback 何時執行？
 
 ```tsx
@@ -296,7 +494,31 @@ const rows = useMemo(() => selectRows(data, options), [data, options]);
 <details>
 <summary>答案</summary>
 
-不一定。Memo 自己有 dependency 比較、記憶體與認知成本，簡單乘法或短陣列可能更慢。先找真實 re-render 原因並用 Profiler 量測；`useMemo` 不解 mutation、stale data 或錯誤 state owner。
+不一定，甚至可能更慢。`useMemo` 不是免費跳過計算：每次 render 仍要建立 calculation function、建立 dependency array、逐項用 `Object.is` 比較，React 還要保存上一次 dependencies 與結果。對 `price * quantity`、字串拼接或只有幾筆資料的 `map`，重新計算通常比管理 cache 更便宜。
+
+```tsx
+// 通常直接算即可：便宜、清楚、沒有 cache 管理成本
+const total = price * quantity;
+
+// 通常是過度優化
+const total = useMemo(() => price * quantity, [price, quantity]);
+```
+
+`useMemo` 比較可能有價值的情況有兩類：
+
+1. **計算真的昂貴**：例如大量資料排序、複雜圖表轉換，而且 Profiler 顯示它在無關 render 中反覆消耗可觀時間。
+2. **穩定 reference 能跨過 memo boundary**：例如結果 object/array 傳給 `memo` 包裝的昂貴 child；沒有穩定 reference 時，child 的 shallow comparison 每次都會判定 prop 改變。
+
+```tsx
+const visibleRows = useMemo(
+  () => expensiveFilterAndSort(rows, filter, sort),
+  [rows, filter, sort],
+);
+
+return <MemoizedTable rows={visibleRows} />;
+```
+
+判斷順序應是：先確認 re-render 是否真的慢，再找出慢的是 calculation 還是 child render，最後才在能切斷重複工作的邊界加 memo。`useMemo` 只會重用結果，不會修好原陣列被 mutation、漏 dependency 造成的 stale data，或 state 放錯 owner 導致整棵樹頻繁 render。
 
 </details>
 
@@ -305,7 +527,35 @@ const rows = useMemo(() => selectRows(data, options), [data, options]);
 <details>
 <summary>答案</summary>
 
-它能避免 provider 因 unrelated render 建立新 object 而通知 consumer；當 object 內的真實 dependency 改變，value reference 仍應改，consumer 仍會 render。它無法提供 selector 粒度或隔離高頻欄位。
+Context Provider 以 `Object.is` 比較前後的 `value`。如果 Provider 每次 render 都建立新的 object，即使內容相同，reference 仍不同，所有讀取該 Context 的 consumers 都會收到更新。
+
+```tsx
+function SessionProvider({ children }) {
+  const [user, setUser] = useState<User | null>(null);
+  const [theme, setTheme] = useState("dark");
+
+  // ❌ theme 改變令 Provider re-render，也會建立新的 value object
+  // consumer 即使只需要 user，仍會被通知
+  return (
+    <SessionContext value={{ user, logout: () => setUser(null) }}>
+      {children}
+    </SessionContext>
+  );
+}
+```
+
+先穩定 function，再 memoize Provider value，可以避免 `user` 沒變時產生「假的新 value」：
+
+```tsx
+const logout = useCallback(() => setUser(null), []);
+const session = useMemo(() => ({ user, logout }), [user, logout]);
+
+return <SessionContext value={session}>{children}</SessionContext>;
+```
+
+但它只能消除 **Provider 因無關原因 render，而 value 的真實輸入都沒變** 的情況。只要 `user` 改變，`session` reference 就必須改變；所有呼叫 `useContext(SessionContext)` 的 consumers 仍會 render。就算某個 consumer 只讀 `logout`、完全沒讀 `user`，標準 Context 也不會替它做欄位級 selector。
+
+如果 value 同時放入 `price`、`theme`、`user` 等更新頻率和使用者完全不同的資料，單純 memoize 整個 object 無法隔離它們。常見改善是拆成多個 Context、把 state 與 dispatch 分開，或改用支援 selector 的 external store。另需注意：`memo(Component)` 也擋不住 component 自己訂閱的 Context 更新；`memo` 只比較 props。
 
 </details>
 
@@ -314,7 +564,28 @@ const rows = useMemo(() => selectRows(data, options), [data, options]);
 <details>
 <summary>答案</summary>
 
-開發環境用額外呼叫找出 impurity，只採用其中一次結果。若 callback mutation props 或有副作用，問題會被放大；正確做法是保持 calculation 純粹，不是偵測環境避開第二次。
+在 Strict Mode 的**開發環境**，React 可能故意呼叫 `useMemo` calculation 兩次，並忽略其中一次結果。這是 purity probe：純函式以相同 inputs 執行兩次，除了多花開發環境的計算時間，不應留下任何可觀察差異；production 不會因這項 Strict Mode 檢查固定做兩次。
+
+```tsx
+const visible = useMemo(() => {
+  // ❌ 修改來自 props 的陣列；執行兩次會 push 兩次
+  todos.push({ id: "temp", text: "Loading" });
+  return filterTodos(todos, tab);
+}, [todos, tab]);
+```
+
+這段程式即使沒有 Strict Mode 也有 bug，因為它修改了 component 不擁有的輸入。雙重呼叫只是讓重複資料更快現形。正確寫法是建立 calculation 自己擁有的新資料：
+
+```tsx
+const visible = useMemo(() => {
+  const nextTodos = [...todos, { id: "temp", text: "Loading" }];
+  return filterTodos(nextTodos, tab);
+}, [todos, tab]);
+```
+
+Calculation 內也不能發 request、寫 localStorage、記 analytics、遞增 module 變數或 setState，因為 render 可以重試、暫停或被放棄，React 從來不保證它只執行一次。若需要與外部系統同步，應由 event handler 或合適的 Effect 負責。
+
+不要用 `useRef`、`process.env.NODE_ENV` 或「是否已執行」flag 跳過第二次，這只會把 impurity 藏起來。真正的判準是：**無論 calculation 被呼叫零次、一次或多次，除了回傳值之外都不應改變外部世界。**
 
 </details>
 
@@ -329,6 +600,46 @@ const rows = useMemo(() => selectRows(data, options), [data, options]);
 
 ## `useCallback`：快取 function definition
 
+### 做題前：它保存函式 identity，不會提前執行函式
+
+在 JavaScript 中，每次 render 寫出的 `() => submit(symbol)` 都是新 function object。普通按鈕完全沒問題；只有下游真的在意 reference identity 時，穩定 callback 才有價值。
+
+```tsx
+const cachedFunction = useCallback(functionDefinition, dependencies);
+```
+
+```tsx
+const OrderForm = memo(function OrderForm({ onSubmit }) {
+  // 假設這個 child render 很昂貴
+  return <button onClick={onSubmit}>送出</button>;
+});
+
+function TradePage({ symbol, theme }) {
+  const handleSubmit = useCallback(() => {
+    submitOrder(symbol);
+  }, [symbol]);
+
+  return (
+    <div className={theme}>
+      <OrderForm onSubmit={handleSubmit} />
+    </div>
+  );
+}
+```
+
+當 `theme` 改變而 `symbol` 沒變，React 可以回傳上一個 `handleSubmit` reference；搭配 `memo`，昂貴 child 才有機會跳過 render。若 child 沒有 memo boundary，單獨包 `useCallback` 通常不會減少 render。
+
+| `useMemo` | `useCallback` |
+| --- | --- |
+| 執行 calculation 並快取回傳值 | 不執行 callback，只快取 function 本身 |
+| `useMemo(() => result, deps)` | `useCallback(fn, deps)` |
+
+Dependencies 不是「我希望何時換函式」的選項，而是 callback 讀取的全部 reactive values。漏掉 `symbol` 會讓 callback 永遠送出舊 symbol。若只為更新 state 而讀舊 state，functional updater 常能合法減少 dependency。
+
+> 一句話記憶：`useCallback` 只在 dependencies 不變時提供相同 function identity，不會讓 function 執行得更快。
+
+官方參考：[React `useCallback`](https://react.dev/reference/react/useCallback)
+
 ### 1. Callback 會在 render 時執行嗎？
 
 ```tsx
@@ -338,7 +649,26 @@ const handleBuy = useCallback(() => submit(symbol), [symbol]);
 <details>
 <summary>答案</summary>
 
-不會。React 在 render 時回傳快取的 function reference，function body 等被事件或其他程式呼叫才執行。它大致等同 `useMemo(() => function, deps)`，不是「快取執行結果」。
+不會。`useCallback` 的確在 render 階段被呼叫，但 React 此時只決定要回傳「上一次的 function reference」還是「這次的新 function reference」；箭頭函式裡的 `submit(symbol)` 不會因此執行。Function body 要等 click、child component 或其他程式真正呼叫 `handleBuy()` 時才執行。
+
+可以把它概念化成：
+
+```tsx
+// 兩者的 memoization 概念近似
+const handleBuy = useCallback(() => submit(symbol), [symbol]);
+const handleBuy = useMemo(() => () => submit(symbol), [symbol]);
+```
+
+不過這不代表 React 連「函式值」都不會建立。Component 每次 render 時，JavaScript 仍會先建立這次傳給 `useCallback` 的箭頭函式；若 dependencies 都與上次相同，React 會忽略它並把上一次保存的 reference 回傳。
+
+```tsx
+const handleBuy = useCallback(() => submit(symbol), [symbol]);
+
+// 只有真正呼叫時才 submit
+return <button onClick={handleBuy}>Buy</button>;
+```
+
+因此 `useCallback` 快取的是 **function identity / definition**，不是 function 的執行結果，也不會自動 debounce、防止連點或避免 API 重複送出。如果想快取計算結果，才是 `useMemo`；如果想控制連點，則要另外做 disabled、debounce 或 request state。
 
 </details>
 
@@ -352,7 +682,37 @@ return <Row onSelect={onSelect} order={{ id, price }} />;
 <details>
 <summary>答案</summary>
 
-`order` 每次都是新 object，而且 child 若沒包 `memo`，parent render 本來就會呼叫 child。要先確認優化邊界：穩定所有影響 `memo` 比較的 props，或更好地傳 primitives；別只 memo 一個 callback 就期待整棵 tree 停止。
+因為穩定一個 callback 並不等於阻止 child render。React 的預設行為是：parent render 時，它回傳的 child elements 也會重新被 React 處理。只有 child 使用 `memo`，React 才會在進入 child 前對新舊 props 做 shallow comparison。
+
+即使 `Row` 已包 `memo`，這個例子仍有另一個問題：
+
+```tsx
+const onSelect = useCallback(handleSelect, []);
+
+// ❌ 每次 render 都建立新的 order object
+return <MemoizedRow onSelect={onSelect} order={{ id, price }} />;
+```
+
+`onSelect` reference 或許沒變，但 `{ id, price }` 每次 render 都是新的 object。`memo` 逐項用 `Object.is` 比較 props，會得到：
+
+```tsx
+Object.is(previousOrder, nextOrder); // false
+```
+
+只要任一 prop 不同，`Row` 仍會 render。可以優先改傳 primitive，讓資料依賴更清楚：
+
+```tsx
+return <MemoizedRow onSelect={onSelect} id={id} price={price} />;
+```
+
+若 child API 必須接收 object，才考慮：
+
+```tsx
+const order = useMemo(() => ({ id, price }), [id, price]);
+return <MemoizedRow onSelect={onSelect} order={order} />;
+```
+
+另外，`useCallback(handleSelect, [])` 只有在 `handleSelect` 本身不是會隨 render 改變的 reactive value 時才安全；否則仍可能產生 stale closure。完整的優化邊界必須同時滿足：child 確實昂貴、child 有 `memo`、所有需要穩定的 props 都穩定，而且 Profiler 證明省下的工作值得增加的複雜度。
 
 </details>
 
@@ -365,7 +725,23 @@ const handleBuy = useCallback(() => submit(symbol), []);
 <details>
 <summary>答案</summary>
 
-Callback 永遠捕捉初次 render 的 symbol。應依賴 `[submit, symbol]`。若 callback identity 改變造成 effect 重連，要重畫 effect/API 邊界，而不是刪 dependency 製造 stale closure。
+因為 JavaScript function 會閉包捕捉「建立它的那一次 render snapshot」。第一次 render 若 `symbol === "BTC"`，空 dependency `[]` 便告訴 React：「這個 callback 永遠不需要換成新版」。之後畫面即使已切成 ETH，React 仍回傳第一次保存的 callback，所以 click 時讀到的仍是 `"BTC"`。
+
+```tsx
+// 第一次 render：建立捕捉 BTC 的 function
+// 後續 render：因為 []，繼續重用同一個 function
+const handleBuy = useCallback(() => submit(symbol), []);
+```
+
+正確作法是把 callback body 讀取的 reactive values 都列為 dependencies：
+
+```tsx
+const handleBuy = useCallback(() => submit(symbol), [submit, symbol]);
+```
+
+當 `symbol` 從 BTC 變成 ETH，React 會回傳一個捕捉 ETH 的新 callback。若 `submit` 是 component 外的 module function，它不是 reactive value，可以不列；若它來自 props、Context 或 component 內宣告，通常就必須列入。應以實際來源判斷，而不是看到它「像 function」就猜它穩定。
+
+Dependency array 不是用來指定「我希望 callback 多久改一次」，而是描述 callback 使用了哪些 render inputs。若正確 dependencies 讓某個 Effect 太常重連，應拆 Effect、移動 function 建立位置或重新設計 subscription 邊界；直接刪 dependency 只是以 stale data 換取穩定 identity。
 
 </details>
 
@@ -380,7 +756,40 @@ const add = useCallback((order) => {
 <details>
 <summary>答案</summary>
 
-改成 `setOrders(previous => [...previous, order])` 後 callback 不必讀 `orders`，dependency 可變成 `[]`（若沒有其他 reactive value）。這不是欺騙 lint，而是把「如何由前值更新」交給 React queue。
+原本的 callback 必須讀取「建立它的那次 render」中的 `orders`，所以 `[orders]` 必須存在；每當 orders 改變，callback reference 也會跟著改變。
+
+```tsx
+const add = useCallback((order) => {
+  setOrders([...orders, order]);
+}, [orders]);
+```
+
+若下一個 state 只需要根據前一個 state 算出，可以把「如何更新」交給 React 的 state queue：
+
+```tsx
+const add = useCallback((order) => {
+  setOrders(previous => [...previous, order]);
+}, []);
+```
+
+這時 callback body 不再讀取 render scope 的 `orders`，因此可以**合法**移除該 dependency。React 稍後處理 update queue 時，會把當時最新的 pending state 傳入 `previous`。這在同一批更新連續新增多筆資料時尤其重要：
+
+```tsx
+setOrders(previous => [...previous, firstOrder]);
+setOrders(previous => [...previous, secondOrder]);
+```
+
+第二個 updater 會收到第一個 updater 的結果，不會因兩次都讀到同一份舊 snapshot 而覆蓋其中一筆。
+
+但 functional updater 只能移除「只為了計算下一個 state 而讀取的舊 state」。如果 callback 還讀了其他 reactive value，仍要保留：
+
+```tsx
+const add = useCallback((order) => {
+  setOrders(previous => [...previous, { ...order, symbol }]);
+}, [symbol]);
+```
+
+這不是為了安撫 lint 的技巧，而是實際改變資料流：callback 不再自行讀舊 state，而是傳一個純 updater 給 React。
 
 </details>
 
@@ -389,7 +798,41 @@ const add = useCallback((order) => {
 <details>
 <summary>答案</summary>
 
-常見於傳給已 memoized 且 render 昂貴的 child、callback 是其他 Hook dependency、或外部 API 真的依 function identity 訂閱/解除。普通 button handler 通常不需包；建立 function 本身很少是瓶頸。
+`useCallback` 的價值通常不是「建立 function 很貴」——建立普通 JavaScript function 通常很便宜——而是下游是否會觀察 function reference 改變。常見的有效場景有三種：
+
+1. **傳給已 memoized、而且 render 昂貴的 child**
+
+   ```tsx
+   const handleSelect = useCallback((id: string) => {
+     setSelectedId(id);
+   }, []);
+
+   return <MemoizedLargeTable onSelect={handleSelect} rows={rows} />;
+   ```
+
+   若其他 props 也穩定，callback reference 不變能讓 `memo` 跳過無關的 child render。若 child 沒有 `memo` 或 render 很便宜，通常得不到實際收益。
+
+2. **Callback 是另一個 Hook 的 dependency**
+
+   ```tsx
+   const createConnection = useCallback(
+     () => connect(roomId),
+     [roomId],
+   );
+
+   useEffect(() => {
+     const connection = createConnection();
+     return () => connection.disconnect();
+   }, [createConnection]);
+   ```
+
+   穩定 identity 可避免 Effect 因無關 render 重跑。不過若 function 只供該 Effect 使用，通常直接把 function 移進 Effect 會更簡單，不一定需要 `useCallback`。
+
+3. **API 明確把 function identity 當成 contract**
+
+   例如某些 subscription、imperative API 或自訂 Hook 需要用同一個 callback reference 註冊、更新或作為 cache key。此時 identity 本身就是 API 語意的一部分。
+
+普通 `<button onClick={handleClick}>` 通常不需要 `useCallback`。DOM button 不會只因 handler reference 改變就做昂貴的 component render，而且 memoization 本身仍有 dependency 比較與維護成本。先找出可量測的 render 問題，再在真正存在 identity-sensitive consumer 的邊界使用。
 
 </details>
 
@@ -398,7 +841,34 @@ const add = useCallback((order) => {
 <details>
 <summary>答案</summary>
 
-要看專案是否啟用 Compiler、編譯覆蓋與實際 profiler。Compiler 可自動 memoize 許多值/function，會降低手動 `useCallback` 的需求；但 subscription identity、明確 API contract 或未被編譯的程式仍需判斷。不要只因「新版 React」就批次刪除。
+不一定。React Compiler 能分析 component 與 Hook 的資料流，自動 memoize 許多 values、functions 與 component 子樹，因此在成功編譯的程式碼中，原本只為避免無關 re-render 而手寫的 `useCallback` 往往會變得多餘。
+
+但「專案安裝了新版 React」不等於「所有程式都已由 Compiler 自動優化」。仍要確認：
+
+- 專案是否真的啟用 React Compiler，而不只是升級 React runtime。
+- 該檔案或 component 是否在 Compiler 的編譯範圍內並成功通過分析。
+- 第三方 library 或自訂 Hook 是否對 callback identity 有明確 contract。
+- 手動 memo 是否不只為效能，也是在表達某個外部 API 所需的穩定 identity。
+
+例如單純把 handler 傳給 UI child，Compiler 通常有機會自動建立適當的 memo boundary：
+
+```tsx
+function ProductPage({ productId }) {
+  function handleBuy() {
+    submit(productId);
+  }
+
+  return <BuyButton onBuy={handleBuy} />;
+}
+```
+
+但若 callback 被交給未受 Compiler 控制的外部 subscription，則應依那個 API 的 contract 判斷，而不是假設 Compiler 一定能替你維持需要的 reference：
+
+```tsx
+useExternalSubscription(topic, handler);
+```
+
+遷移時不要全域搜尋並刪除所有 `useCallback`。較安全的方式是先確認 Compiler diagnostics 與 lint，再用 Profiler 比較關鍵互動，逐步移除只是效能提示、已被 Compiler 涵蓋的 memoization；對 subscription、cache key 或 library boundary 則保留清楚的 identity 設計。
 
 </details>
 
@@ -413,6 +883,43 @@ const add = useCallback((order) => {
 
 ## `useDebugValue`：替 custom Hook 標示 DevTools 狀態
 
+> 實際案例：[useDebugValue：替行情連線 Hook 顯示可讀狀態](./practical-cases/use-debug-value)
+
+### 做題前：它只改善 custom Hook 的除錯介面
+
+當 DevTools 看到 `useSyncExternalStore`、`useState` 等底層值時，不一定知道它們合起來代表「行情已連線」或「訂單同步中」。`useDebugValue` 讓 reusable custom Hook 顯示一個具業務意義的 label。
+
+```tsx
+useDebugValue(value, format?);
+```
+
+```tsx
+function useTickerStatus(symbol: string) {
+  const status = useSyncExternalStore(subscribe, getSnapshot);
+
+  useDebugValue(
+    { symbol, status },
+    ({ symbol, status }) => `${symbol}: ${status}`,
+  );
+
+  return status;
+}
+```
+
+| 項目 | 角色 |
+| --- | --- |
+| `value` | 要讓 React DevTools 顯示的除錯資料 |
+| `format(value)` | 選填 formatter；DevTools 需要顯示時才呼叫，適合較昂貴格式化 |
+| Hook return value | 真正提供給 component 的資料，與 debug value 無關 |
+
+它不會印到 console、不會改變 render、也不能成為 logging、telemetry 或 production correctness 的依據。通常只放在被多人重用、內部狀態不易理解的 custom Hook；產品 component 中每個小 Hook 都標註反而製造雜訊。
+
+Hooks 規則仍然適用：`useDebugValue` 必須無條件放在 custom Hook 頂層，不能因 `process.env` 或資料狀態不同而條件式呼叫。
+
+> 一句話記憶：`useDebugValue` 是 custom Hook 給 React DevTools 的人類可讀標籤，不影響產品行為。
+
+官方參考：[React `useDebugValue`](https://react.dev/reference/react/useDebugValue)
+
 ### 1. 它會把文字印到 console 嗎？
 
 ```tsx
@@ -426,7 +933,16 @@ function useOnlineStatus() {
 <details>
 <summary>答案</summary>
 
-不會。它只自訂 React DevTools 顯示的 custom Hook label，不改 UI、不回傳資料、也不取代 logging。
+不會。`useDebugValue` 的用途是替 **custom Hook 在 React DevTools 裡顯示一段容易理解的除錯資訊**。以上例來說，開發者在 DevTools 的 Components 面板檢查使用 `useOnlineStatus` 的 component 時，可以在 Hooks 區域看到類似 `OnlineStatus: Online` 或 `OnlineStatus: Offline` 的資訊。
+
+它不會產生任何使用者看得見的 UI，也不會：
+
+- 把內容印到 browser console；
+- 改變 `online` 的值；
+- 讓 component 因此多回傳資料；
+- 自動把狀態送到 logging 或監控平台。
+
+因此，若目的是保留執行紀錄，仍應使用適當的 logger 或 telemetry；若目的是在畫面上顯示連線狀態，仍要由 component render。`useDebugValue` 只是在 DevTools 中替 Hook 加上「給開發者看的註解」，不能取代正式的輸出或記錄機制。
 
 </details>
 
@@ -435,7 +951,18 @@ function useOnlineStatus() {
 <details>
 <summary>答案</summary>
 
-通常不用。它對被多人重用、內部狀態不易理解的 custom Hook 最有價值；直接看到 `useState` 的小 Hook 再加 label 可能只是噪音。
+通常不用，而且 React 官方也更鼓勵把它用在 **共享、可重用的 custom Hook**，而不是每個 component 或每個簡單 Hook 都加。
+
+判斷標準是：開發者只看 Hook 名稱與原始 state 時，是否很難快速知道目前的業務狀態。例如下列 Hook 很適合標示：
+
+- `useOnlineStatus`：將 boolean 翻成 `Online` / `Offline`；
+- `useSocket`：顯示 `connecting`、`connected`、`reconnecting #2`；
+- `usePermission`：顯示 `granted`、`denied`、`prompt`；
+- 共用 data-fetching Hook：摘要成 `loading`、`success (12 items)` 或 `error`。
+
+反過來說，如果 Hook 只是包一個容易看懂的 `useState(false)`，或只在單一 component 內使用，DevTools 原本的資訊通常已經足夠。到處加入 `useDebugValue` 會增加維護成本，也可能讓真正重要的狀態被大量 label 淹沒。
+
+另外，`useDebugValue` 通常應寫在 custom Hook 裡，讓除錯資訊跟抽象本身放在一起；不需要為了使用它而在每個呼叫該 Hook 的產品 component 重複標示。
 
 </details>
 
@@ -448,7 +975,24 @@ useDebugValue(date, date => formatVerySlowly(date));
 <details>
 <summary>答案</summary>
 
-傳第二個 formatter function，React DevTools 需要顯示時才呼叫格式化。先在外面算好字串則每次 Hook render 都付成本，即使沒開 DevTools。
+把原始值當作第一個參數，再把格式化邏輯以第二個參數傳入：
+
+```tsx
+useDebugValue(date, currentDate => formatVerySlowly(currentDate));
+```
+
+這個第二參數稱為 formatter function。React 會把原始的 `date` 交給它，並在 React DevTools 確實需要顯示該 debug value 時才進行格式化。這能避免在一般 render 過程中先支付昂貴的日期格式化、巨大 object serialization 或摘要計算成本。
+
+下面的寫法則失去延後計算的好處：
+
+```tsx
+// 每次 custom Hook render 都會先執行 formatVerySlowly
+useDebugValue(formatVerySlowly(date));
+```
+
+即使使用者根本沒有開 DevTools，傳入第一個參數前，JavaScript 仍必須先執行 `formatVerySlowly(date)`。因此只有在格式化真的有成本時才需要 formatter；簡單的 boolean 轉字串通常可以直接寫。
+
+formatter 必須保持 pure：相同輸入應得到相同描述，而且不能在裡面更新 state、送 request、寫 cache 或回報錯誤。React 不保證它一定會執行，也不保證精確的執行次數；DevTools 的顯示行為不應影響應用程式本身。
 
 </details>
 
@@ -457,7 +1001,29 @@ useDebugValue(date, date => formatVerySlowly(date));
 <details>
 <summary>答案</summary>
 
-不可以，仍是 Hook，必須遵守頂層與固定順序規則。要條件顯示可把條件放進 value/formatter，而不是條件式呼叫 `useDebugValue`。
+不可以。雖然 `useDebugValue` 不管理畫面狀態，它仍然是 React Hook，所以同樣受 Rules of Hooks 約束：必須在 custom Hook 的頂層呼叫，不能放進 `if`、迴圈、event handler 或可能提早 `return` 之後。
+
+錯誤範例：
+
+```tsx
+function useSocket(enabled: boolean) {
+  if (enabled) {
+    useDebugValue("Socket enabled");
+  }
+}
+```
+
+當 `enabled` 在不同 render 間改變時，Hook 的呼叫數量與順序也會改變，破壞 React 依固定順序追蹤 Hooks 的規則。
+
+正確做法是每次 render 都呼叫它，只讓傳入的值依條件改變：
+
+```tsx
+function useSocket(enabled: boolean) {
+  useDebugValue(enabled ? "Socket enabled" : "Socket disabled");
+}
+```
+
+如果某個狀態沒有值得顯示的內容，也應維持呼叫位置固定，例如傳入 `null`、`"disabled"` 或其他清楚的摘要；重點是條件只能影響 value 或 formatter 的輸出，不能影響 `useDebugValue` 本身是否被呼叫。
 
 </details>
 
@@ -466,7 +1032,26 @@ useDebugValue(date, date => formatVerySlowly(date));
 <details>
 <summary>答案</summary>
 
-不可以。它是開發觀察工具；資料流、錯誤處理與 UI 不該依賴 DevTools 是否存在。Custom Hook 仍要正常 return 真正狀態。
+不可以。`useDebugValue` 是開發階段的觀察工具，不是應用程式資料流的一部分。Production 使用者通常不會開 React DevTools，而且 React 不保證 formatter 會被呼叫，因此任何 correctness 都不能依賴它。
+
+尤其不能把下列工作放進 formatter：
+
+- 初始化資料或補上預設值；
+- 更新 state、ref 或 cache；
+- 發送 API request；
+- 執行訂閱或 cleanup；
+- 上報必要的錯誤或監控事件。
+
+例如下面的程式有 bug，因為 `reportError` 是否執行取決於 DevTools 是否要求顯示 label：
+
+```tsx
+useDebugValue(error, currentError => {
+  reportError(currentError);
+  return currentError.message;
+});
+```
+
+真正影響功能的工作應放在正常 render 資料流、event handler 或適合的 Effect 中。Custom Hook 也仍然要透過 `return` 提供呼叫端真正需要的狀態；`useDebugValue` 不會把值傳給 component，更不能作為功能是否正常的依據。
 
 </details>
 
@@ -475,7 +1060,24 @@ useDebugValue(date, date => formatVerySlowly(date));
 <details>
 <summary>答案</summary>
 
-優先標能縮短 debug 的語意，例如 `Socket: reconnecting (attempt 2)`，而不是再顯示一整個無法掃讀的 object。敏感資料也不該為了方便直接暴露在 label。
+優先顯示能回答「這個 Hook 現在處於什麼狀態？」的**業務語意摘要**，而不是不加整理地塞入整包原始資料。
+
+例如 socket Hook 內部可能有多個欄位：
+
+```tsx
+{
+  connected: false,
+  retryCount: 2,
+  nextRetryAt: 1720000000000,
+  lastError: /* ... */
+}
+```
+
+DevTools label 若直接顯示整個 object，開發者仍要展開並自行推理；顯示 `Socket: reconnecting (attempt 2)` 則能立即說明狀態。常見的好摘要還包括 `Query: loading`、`Cart: 3 items`、`Permission: denied`。必要時可用 formatter 從原始資料產生這種短文字。
+
+不過，不是所有原始值都必須改成字串。若某個小型 enum、boolean 或短值本身已很清楚，直接傳入即可。原則是資訊要簡短、穩定、容易掃讀，並且確實有助於定位問題。
+
+也要把 DevTools 視為可能被開發者、測試人員、共享螢幕或截圖看到的介面。不要在 label 放 access token、密碼、完整 email、個資或其他 secret；除錯方便不代表可以繞過資料最小化與隱私要求。若需要辨認資料，可採遮罩、計數、狀態分類或非敏感 ID 摘要。
 
 </details>
 

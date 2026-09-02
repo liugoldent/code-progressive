@@ -1,12 +1,12 @@
 ---
 slug: "/Frontend/JavaScript/video"
 title: "前端 Video 影片處理入門"
-description: "從影片播放、相機錄影與螢幕擷取，到 WebVTT、SRT、轉碼、字幕壓製與 MP4 輸出。"
+description: "理解 MP4 與 HLS/m3u8 的播放流程，並學習相機錄影、螢幕擷取、字幕、轉碼與影片輸出。"
 tags:
   - JavaScript
   - Web API
   - Video
-keywords: ["Video", "getUserMedia", "MediaRecorder", "WebVTT", "SRT", "FFmpeg", "字幕"]
+keywords: ["Video", "MP4", "HLS", "m3u8", "hls.js", "getUserMedia", "MediaRecorder", "WebVTT", "SRT", "FFmpeg", "字幕"]
 ---
 
 # 前端 Video 影片處理入門
@@ -118,6 +118,145 @@ video.requestVideoFrameCallback(onFrame);
 ```
 
 一般字幕優先使用 `<track>`，不要自行用 `setInterval()` 猜時間。
+
+### MP4 是怎麼被播放的
+
+先釐清一件事：**MP4 是容器格式，HLS 是串流協定**，兩者不是同一層級的格式。MP4 可以是一個完整檔案，也可以被切成 HLS 使用的 fragmented MP4（fMP4）片段。
+
+把一個 MP4 URL 放進 `<video>` 後，大致會經過以下流程：
+
+```text
+<video src="movie.mp4">
+        │
+        ▼
+瀏覽器發出 HTTP request，讀取 MP4 metadata
+        │
+        ├── demux：從容器拆出 video / audio track
+        ├── decode：H.264、AAC 等壓縮資料解碼
+        ├── buffer：保留即將播放的影音資料
+        └── sync + render：同步聲音時間軸並把 frame 畫到畫面
+```
+
+瀏覽器不一定要等整支 MP4 下載完才播放。伺服器若支援 HTTP byte range，瀏覽器可使用 `Range` request 只取需要的 byte，例如拖曳到 10 分鐘時請求檔案中對應的區段：
+
+```http
+GET /movie.mp4 HTTP/1.1
+Range: bytes=5242880-
+```
+
+伺服器通常以 `206 Partial Content` 和 `Content-Range` 回應。若不支援 Range，seek 可能需要重新下載大量內容，甚至無法正常運作。
+
+MP4 內有一個常被稱為 `moov` atom／box 的索引資料，播放器需要它才能知道軌道、時間與 sample 位於哪裡。若它被放在檔案尾端，瀏覽器可能要先取得尾端資料才能開始；FFmpeg 的 `-movflags +faststart` 會把它移到前方，改善漸進式下載的起播時間。
+
+所以 MP4 常見問題可先檢查：
+
+- HTTP status 是否為 `200` 或 Range request 的 `206`；
+- 回應的 `Content-Type` 是否正確，例如 `video/mp4`；
+- MP4 裡的 video／audio codec 是否為目標瀏覽器支援的組合；
+- `moov` 是否位於前方；
+- 跨網域且需要用 `fetch()`／MSE 取檔或把畫面讀回 Canvas 時，是否有正確的 CORS header。
+
+### m3u8／HLS 是怎麼被播放的
+
+`.m3u8` **不是影片本體**，而是 UTF-8 文字播放清單。HLS（HTTP Live Streaming）會把一支影片或直播拆成多個短片段，再用 m3u8 告訴播放器要去哪裡取得它們。
+
+```text
+master.m3u8
+├── 360p/index.m3u8 ──> segment-001.ts、segment-002.ts⋯
+├── 720p/index.m3u8 ──> segment-001.ts、segment-002.ts⋯
+└── 1080p/index.m3u8 ─> segment-001.ts、segment-002.ts⋯
+```
+
+第一層 multivariant／master playlist 可以列出不同 bitrate、解析度、codec 和音訊版本。選定品質後，播放器再讀 media playlist；裡面才是實際 media segments 的 URL：
+
+```m3u8
+#EXTM3U
+#EXT-X-TARGETDURATION:6
+#EXT-X-MEDIA-SEQUENCE:0
+#EXTINF:6.0,
+segment-000.ts
+#EXTINF:6.0,
+segment-001.ts
+#EXT-X-ENDLIST
+```
+
+HLS 的播放流程如下：
+
+```text
+下載 master.m3u8
+        │
+        ▼
+依頻寬、播放器尺寸與裝置能力選擇 variant
+        │
+        ▼
+下載該 variant 的 media playlist
+        │
+        ▼
+依序下載並緩衝 .ts 或 fMP4 segments
+        │
+        ├── 網路變慢：切到較低 bitrate
+        ├── 網路變快：切到較高 bitrate
+        └── 直播：定期重新取得更新後的 playlist
+        │
+        ▼
+demux / decode / sync / render
+```
+
+這就是 adaptive bitrate streaming（ABR）：切換的是不同品質的片段，不是把同一個片段在瀏覽器即時轉碼。VOD 清單通常會以 `#EXT-X-ENDLIST` 結束；直播清單則持續更新，播放器會週期性重新抓取。
+
+#### Safari 原生播放與 hls.js
+
+支援原生 HLS 的瀏覽器可直接把 m3u8 URL 指定給 `<video>`。其他常見瀏覽器通常會使用 hls.js：它負責解析播放清單、選擇與下載片段，再透過 Media Source Extensions（MSE）把資料餵給同一個 `<video>` 元素。
+
+```bash
+npm install hls.js
+```
+
+```js
+import Hls from "hls.js";
+
+const video = document.querySelector("#player");
+const source = "https://media.example.com/master.m3u8";
+
+let hls;
+
+if (Hls.isSupported()) {
+  hls = new Hls();
+  hls.loadSource(source);
+  hls.attachMedia(video);
+
+  hls.on(Hls.Events.ERROR, (_event, data) => {
+    console.error("HLS 播放錯誤", data.type, data.details);
+  });
+} else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+  video.src = source;
+} else {
+  console.error("此瀏覽器不支援 HLS");
+}
+
+// SPA 元件卸載時執行，停止 request 並釋放 MSE 等資源。
+function destroyPlayer() {
+  hls?.destroy();
+  hls = undefined;
+}
+```
+
+此例優先使用 hls.js，再退回瀏覽器原生 HLS；需要先安裝 `hls.js`。無論走哪條路，最後的播放控制仍是 `video.play()`、`pause()`、`currentTime` 和原本的媒體事件。
+
+#### m3u8 能下載，為什麼還是不能播
+
+只看到 m3u8 request 成功不代表整條播放鏈成功。DevTools 的 Network 應依序檢查 master playlist、media playlist、segment、加密 key（若有）是否都成功：
+
+- **CORS**：m3u8、每個 segment、key 都可能來自不同 URL，hls.js 的 request 都必須被允許；
+- **MIME type**：m3u8 常用 `application/vnd.apple.mpegurl`，`.ts` 常用 `video/mp2t`；
+- **相對路徑**：segment URL 會以 playlist URL 為基準解析，部署到 CDN 子路徑時很容易指錯；
+- **HTTPS**：HTTPS 頁面載入 HTTP playlist 或 segment 會被 mixed content 政策阻擋；
+- **授權**：cookie、token 或簽名 URL 必須同時涵蓋 playlist、segment 與 key，不只是第一個 m3u8；
+- **codec**：HLS 封裝成功不代表瀏覽器能解碼裡面的影音 codec；
+- **過期與快取**：直播 playlist 不應被 CDN 長時間快取，簽名 segment URL 也不能在播放途中提前失效；
+- **切片與時間軸**：不合理的 timestamp、缺少 keyframe 或片段中斷，可能造成卡住、黑畫面或切換品質失敗。
+
+除錯時也要監聽 `<video>` 的 `error`、`waiting`、`stalled`，並保留 hls.js 回報的 error `type` 與 `details`；只記錄「播放失敗」通常不足以定位問題。
 
 ## 3. 本機影片預覽
 
@@ -406,7 +545,7 @@ extracting_audio → transcribing → reviewing
 ### 網路與播放
 
 - 一般 MP4 伺服器應支援 HTTP Range，讓使用者 seek。
-- 大量長影片可評估 HLS／DASH 自適應串流。
+- 大量長影片、直播或需要自動切換畫質時，可評估 HLS／DASH 自適應串流。
 - 列表頁用 `preload="none"` 或 `metadata`，不要同時下載所有影片。
 - 先顯示封面、時長、解析度與檔案大小。
 - 區分上傳進度、轉碼進度與字幕產生狀態。
@@ -428,6 +567,9 @@ extracting_audio → transcribing → reviewing
 | 誤解 | 正確觀念 |
 | --- | --- |
 | MP4 就是 H.264 | MP4 是容器，裡面可以是不同 codec |
+| m3u8 就是一支影片 | m3u8 是 HLS 的文字播放清單，實際影音在 segments 中 |
+| MP4 和 HLS 是兩種 codec | MP4 是容器；HLS 是傳輸與播放協定，兩者也可以一起使用 |
+| 第一個 m3u8 回傳 200 就代表能播 | media playlist、所有 segments、key、CORS 與 codec 都可能讓播放失敗 |
 | `timeupdate` 每一 frame 都會觸發 | 它不是逐幀 API，頻率也不固定 |
 | `getUserMedia()` 要求 720p 就一定拿到 720p | 普通值和 `ideal` 是偏好，要看實際 settings |
 | 瀏覽器錄影一定能輸出 MP4 | `MediaRecorder` 格式支援依瀏覽器而異 |
@@ -440,8 +582,11 @@ extracting_audio → transcribing → reviewing
 - [MDN：HTML video and audio](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/HTML_video_and_audio)
 - [MDN：Web video codec guide](https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Video_codecs)
 - [MDN：`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video)
+- [MDN：HTTP Range requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Range_requests)
+- [MDN：Media Source API](https://developer.mozilla.org/en-US/docs/Web/API/Media_Source_Extensions_API)
+- [Apple：HTTP Live Streaming](https://developer.apple.com/streaming/)
+- [hls.js：官方文件與範例](https://github.com/video-dev/hls.js)
 - [MDN：getUserMedia()](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia)
 - [MDN：getDisplayMedia()](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia)
 - [MDN：MediaRecorder](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder)
 - [W3C：WebVTT](https://www.w3.org/TR/webvtt1/)
-

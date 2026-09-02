@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 title: "JavaScript / TypeScript 前端面試重點"
 description: "整理 Binance 前端面試常考的 JavaScript 與 TypeScript production code 重點，包含 event loop、Promise、async/await、closure、this、module、型別設計、泛型與 narrowing。"
 tags:

@@ -1,13 +1,13 @@
 ---
-sidebar_position: 8
-title: "React 狀態管理面試：Redux / React Query"
-description: "Binance 前端面試中的 React 狀態管理與資料流筆記，整理 render、reconciliation、Hooks、Redux / Flux、React Query server state、快取、mutation、invalidation 與非同步資料處理。"
+sidebar_position: 2
+title: "React 更新流程與狀態管理：Redux / React Query"
+description: "Binance 前端面試中的 React 更新流程、狀態管理與資料流筆記，整理 render、commit、useInsertionEffect、useLayoutEffect、useEffect、Redux / Flux、React Query server state、快取、mutation、invalidation 與非同步資料處理。"
 tags:
   - React
   - Redux
   - React Query
   - Interview
-keywords: ["React 狀態管理", "React 面試", "Redux 面試", "Flux architecture", "React Query 面試", "TanStack Query", "server state", "client state", "state management", "async data", "query invalidation", "Binance frontend interview"]
+keywords: ["React 更新流程", "React render commit", "useInsertionEffect", "useLayoutEffect", "useEffect", "React 狀態管理", "React 面試", "Redux 面試", "Flux architecture", "React Query 面試", "TanStack Query", "server state", "client state", "state management", "async data", "query invalidation", "Binance frontend interview"]
 ---
 
 # React / Redux / React Query
@@ -59,21 +59,26 @@ reconciliation 可以理解成 React 的「新舊畫面比對」流程。
 
 `commit` 不是 `useEffect` 專屬名詞，也不是 Git commit。它是 React 把 render 結果套用到真實 DOM 的更新階段。
 
-React 一次畫面更新可以先用這個流程理解：
+React 一次畫面更新可以先用這條主線理解：
 
 ```txt
 Trigger
 → Render
 → Commit
+  ├─ useInsertionEffect（commit 期間，早於所有 layout effects）
+  ├─ React 套用 DOM 變更、連接 refs
+  └─ useLayoutEffect（DOM 已 commit，瀏覽器尚未 paint）
 → Browser Paint
-→ useEffect（常見情況）
+→ useEffect（一般、非互動更新的常見情況）
 ```
 
-這是一個方便建立心智模型的簡化順序。最重要的界線是：
+這是一個方便建立心智模型的簡化順序。三種 Effect 都不在 render 階段執行，而是和已 commit 的 UI 有關；其中 `useInsertionEffect`、DOM mutation 與 ref 處理都屬於 React 的 commit 工作，實際內部處理可能交錯，不應把上圖誤背成每個 component 都會走完一條完全獨立的同步流水線。
+
+最重要的界線是：
 
 ```txt
 Render：計算下一個畫面
-Commit：把差異套用到 DOM
+Commit：React 將計算結果落地，處理 DOM、refs 與同步 Effects
 Paint：瀏覽器把結果畫到螢幕
 Effect：讓 React 與外部系統同步
 ```
@@ -139,7 +144,7 @@ Commit 時才真正把文字從 `0` 更新為 `20`。
 
 React 不會因為 component function 重新執行，就把整個頁面 DOM 全部重建。它只會 commit reconciliation 判斷出的必要變更；如果前後結果相同，可能不需要修改任何 DOM。
 
-Refs 的連接 / 移除與 layout effect 的 setup / cleanup 也和 commit 時機相關，因此 render 階段不能假設 DOM 已經更新完成。
+`useInsertionEffect`、DOM mutations、refs 的連接 / 移除，以及 layout effect 的 setup / cleanup 都和 commit 時機相關，因此 render 階段不能假設 DOM 已經更新完成。
 
 ### 4. Browser Paint：瀏覽器畫到螢幕
 
@@ -150,7 +155,43 @@ React 修改 DOM 後，瀏覽器還要進行 style calculation、layout、paint 
 - React render：React 呼叫 component，計算 JSX。
 - Browser rendering / paint：瀏覽器依 DOM / CSS 計算 layout 並畫出像素。
 
-### 5. `useLayoutEffect` 與 `useEffect` 的位置
+### 5. 三種 Effect 插在哪裡？
+
+#### `useInsertionEffect`：commit 期間，早於 layout effects
+
+`useInsertionEffect` 主要是給 CSS-in-JS library 作者插入動態 `<style>`，讓後面的 layout effect 量測 DOM 時，樣式已經存在：
+
+```txt
+Render
+→ Commit 開始
+  → useInsertionEffect（插入動態 CSS）
+  → DOM / refs 等 commit 工作
+  → useLayoutEffect（讀取套用樣式後的 layout）
+→ Browser Paint
+```
+
+這張圖表達的是概念位置，不是可以依賴的 DOM 操作順序。React 對 `useInsertionEffect` 的關鍵保證是「早於 layout effects」；官方同時提醒：它執行時 ref 尚未連接，而且 DOM 可能已更新、也可能尚未更新，所以不能在這裡量尺寸或操作 component DOM，也不能在裡面更新 state。
+
+一般產品 component 幾乎不需要直接使用它：
+
+```tsx
+// CSS-in-JS library 內部的概念範例，不是一般 component 的慣用寫法
+function useDynamicStyle(rule: string) {
+  useInsertionEffect(() => {
+    const style = document.createElement("style");
+    style.textContent = rule;
+    document.head.appendChild(style);
+
+    return () => style.remove();
+  }, [rule]);
+}
+```
+
+- 動態插入 CSS rule：library 才考慮 `useInsertionEffect`。
+- DOM 尺寸與位置量測：使用 `useLayoutEffect`。
+- API、WebSocket、timer、event listener：通常使用 `useEffect`。
+
+#### `useLayoutEffect`：DOM commit 後、paint 前
 
 需要量測 DOM 並在使用者看到畫面前同步修正 layout 時，可以使用 `useLayoutEffect`：
 
@@ -163,6 +204,8 @@ Render
 
 `useLayoutEffect` 會阻擋 paint，所以只應用在必須同步量測 / 調整 DOM、避免閃爍的情況。
 
+#### `useEffect`：commit 後，通常讓 paint 先發生
+
 一般 `useEffect` 則是在 component commit 後執行，用來同步 WebSocket、timer、event listener、network 或第三方 widget 等外部系統：
 
 ```txt
@@ -172,7 +215,15 @@ Render
 → useEffect（非互動更新的常見情況）
 ```
 
-更精準地說，`useEffect` 保證和 commit 後的 component 狀態相連，但不能一律背成「永遠在 paint 後」。React 可能因為更新是否由 interaction 觸發等因素調整 effect 與 paint 的相對時機。若邏輯必須在 paint 前完成，應明確使用 `useLayoutEffect`。
+更精準地說，`useEffect` 保證和 commit 後的 component 狀態相連，但不能一律背成「永遠在 paint 後」。非互動更新時，React 通常讓瀏覽器先 paint；由 click 等 interaction 造成的更新，React 可能在 paint 前執行 Effect。若邏輯必須在 paint 前完成，應明確使用 `useLayoutEffect`。
+
+| Hook | React 提供的時機保證 | 適合用途 | 會不會阻擋 paint |
+| --- | --- | --- | --- |
+| `useInsertionEffect` | commit 期間、早於 layout effects；不可依賴 DOM / ref 狀態 | CSS-in-JS library 動態插入 style | 會延後後續 commit / layout 工作 |
+| `useLayoutEffect` | DOM commit 後、browser paint 前同步執行 | 量測 DOM、修正位置、scroll | 會 |
+| `useEffect` | commit 後執行；通常 paint 後，但 interaction 情況可能提前 | API、訂閱、WebSocket、timer、第三方系統 | 不提供阻擋 paint 的保證 |
+
+官方文件可搭配閱讀：[useInsertionEffect](https://react.dev/reference/react/useInsertionEffect)、[useLayoutEffect](https://react.dev/reference/react/useLayoutEffect)、[useEffect](https://react.dev/reference/react/useEffect)。
 
 ### 套回 derived state 的錯誤範例
 
@@ -215,7 +266,7 @@ setQuantity("2")
 
 ### 面試最短回答
 
-> A React update has a render phase and a commit phase. During render, React calls components and calculates the next UI. During commit, it applies the necessary changes to the DOM. Rendering does not mean rebuilding the whole DOM. Effects are related to committed UI: `useLayoutEffect` runs after DOM changes but before paint, while `useEffect` runs after commit and is used to synchronize with external systems.
+> A React update has a render phase and a commit phase. During render, React calculates the next UI. During commit, it applies DOM changes and runs commit-related work. `useInsertionEffect` is a library-oriented hook that runs before layout effects and must not rely on refs or DOM timing. `useLayoutEffect` runs after the DOM commit but before paint and blocks it. `useEffect` runs after commit and usually lets the browser paint first, although interaction-driven updates may run it before paint.
 
 延伸實作與逐步時序見 [React 現場實戰題：State / Effect / Realtime](./11-react-state-effect-live-demo.md)。
 
