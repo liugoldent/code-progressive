@@ -1,0 +1,10 @@
+{
+  "label": "系統設計",
+  "position": 5.5,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "系統設計",
+    "description": "從單機服務逐步理解高流量、快取、負載平衡、資料庫與可用性設計。"
+  }
+}

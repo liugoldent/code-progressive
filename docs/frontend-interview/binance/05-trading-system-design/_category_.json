@@ -1,0 +1,10 @@
+{
+  "label": "交易產品與系統設計",
+  "position": 6,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "交易產品與系統設計",
+    "description": "聚焦交易頁情境、Order Book、WebSocket 與高併發 realtime 資料治理。"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "label": "前端核心與品質",
+  "position": 5,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "前端核心與品質",
+    "description": "整理 JavaScript、TypeScript、UI、工具鏈、效能、測試與前端系統設計。"
+  }
+}

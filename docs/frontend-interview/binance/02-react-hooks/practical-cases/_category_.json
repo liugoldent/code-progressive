@@ -1,0 +1,10 @@
+{
+  "label": "Hooks 實作案例",
+  "position": 9,
+  "link": {
+    "type": "generated-index",
+    "slug": "/frontend-interview/binance/practical-cases",
+    "title": "React Hooks 實際案例",
+    "description": "用可獨立執行的交易介面案例理解 React Hooks，並練習面試時說明使用時機、資料 ownership 與常見陷阱。"
+  }
+}

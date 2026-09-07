@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+sidebar_label: "面試攻略總覽"
 title: "Binance 前端面試攻略：Vue 轉 React 技能地圖"
 description: "給 Vue 工程師準備 Binance Frontend / Senior Front-end Developer 面試的 React 轉職路線，整理 React 心智模型、JavaScript、TypeScript、狀態管理、WebSocket、交易產品情境與 30 次訓練計畫。"
 tags:
@@ -147,33 +148,33 @@ React 官方把 state 描述成每次 render 的 snapshot，Rules of Hooks 的�
 4. **15 分鐘用 AI review**：請 AI 找 bug、出反例、追問設計，不要直接重寫整題。
 5. **10 分鐘重寫**：關掉答案，再把最卡的部分寫一次。
 
-完成的判準不是「我看懂了」，而是隔天能從空白重現，且能回答「為什麼不用另一種寫法」。詳細題目見 [React 反射訓練](./02-react-reflex-drills.md)。
+完成的判準不是「我看懂了」，而是隔天能從空白重現，且能回答「為什麼不用另一種寫法」。詳細題目見 [React 反射訓練](/docs/frontend-interview/binance/react-reflex-drills)。
 
 ## 建議閱讀順序
 
 | 順序 | 文件 | 先學這個的原因 |
 | --- | --- | --- |
-| 1 | [React 更新流程與狀態管理](./05-react-state-data.md) | 先建立 Trigger → Render → Commit → Paint 與三種 Effect 時機的共同心智模型，再進入後續 React 主題。 |
-| 2 | [React 基礎：Vue 對照版](./01-react-basics-vue-comparison.md) | 用你熟悉的 Vue 對照 React 基礎語法與思考模型。 |
-| 3 | [React 反射訓練](./02-react-reflex-drills.md) | 把「看得懂」練成能從空白實作、debug 與口述；前兩週應反覆回來做。 |
-| 4 | [React 常用第三方 Hooks 入門](./02-react-third-party-hooks.md) | 基礎決策穩定後，再認識 `useQuery`、`useMutation`、Redux、Router 與表單 Hooks。 |
-| 5 | [React 術語中文對照與交易頁範例](./02-react-terms-code-examples.md) | 把常見英文術語翻成中文，再用交易頁範例看懂程式碼。 |
-| 6 | [Vue 轉 React 生態面試題](./03-vue-to-react-ecosystem-qna.md) | 準備面試官追問「你本來寫 Vue，怎麼接 React」。 |
-| 7 | [JavaScript / TypeScript 面試重點](./04-javascript-typescript.md) | 補 production JavaScript、TypeScript 與非同步基礎。 |
-| 8 | [UI 品質 / Responsive / Tooling](./06-ui-responsive-tooling.md) | 補職缺要求的 responsive UI、Webpack、Tailwind、a11y。 |
-| 9 | [效能 / 測試 / 前端系統設計](./07-quality-performance-system.md) | 準備 Senior 常問的效能、測試與架構題。 |
-| 10 | [交易產品前端情境題](./08-crypto-product-case.md) | 把 React 能力套到 Binance Futures / 交易頁場景。 |
-| 11 | [面試題庫與回答模板](./09-interview-drills.md) | 最後用題庫整理口述答案與行為面試。 |
-| 12 | [Realtime Socket Governance](./10-realtime-socket-governance.md) | 準備高併發、多分頁、K 線 realtime 與 refetch storm 的系統設計題。 |
-| 13 | [React 現場實戰題系列](./13-react-live-interview-series.md) | 用多回現場題集中練 state、effect、identity、render、realtime 與 concurrent UI 的推導。 |
-| 14 | [React 現場實戰題入門篇](./15-react-foundations-live-demo.md) | 從 event、props、state、form、state owner 到 effect cleanup，先建立 React 基本反射。 |
-| 15 | [React 現場實戰題第一回](./11-react-state-effect-live-demo.md) | 從 state snapshot、effect、closure、race 與 WebSocket 錯誤版本推到正確答案。 |
-| 16 | [React 現場實戰題第一回補強](./16-react-state-effect-reinforcement.md) | 用六題組合題補強 derived state、async race、subscription 與 WebSocket lifecycle。 |
-| 17 | [React 現場實戰題第二回](./14-react-render-identity-live-demo.md) | 用 list key、state ownership、memo、Context、external store 與 Transition 深入 render correctness。 |
-| 18 | [極致前端行動路線](./12-frontend-mastery-action-plan.md) | 把瀏覽器底層、React 轉化與 Nuxt / Next 全端渲染收斂成六週可驗收的行動與作品。 |
-| 19 | [React Hooks 為什麼存在](./17-react-hooks-purpose-guide.md) | 先用「做什麼、為何存在、解決什麼、怎麼用」理解 React 與常見第三方 Hooks，再進題庫。 |
-| 20 | [React Hooks 六題反射題庫](./17-react-hooks-six-drills-index.md) | 30 種 React 內建與第三方 Hook，每種固定六題，共 180 題；用來按 Hook 補洞與複習。 |
-| 21 | [AI 時代的軟體工程師學習策略](./24-ai-era-software-engineer-learning-strategy.md) | 把 Vue 深度、React 第二專長、全端邊界與 AI 驗證流程組合成可持續的轉職策略。 |
+| 1 | [React 更新流程與狀態管理](/docs/frontend-interview/binance/react-state-data) | 先建立 Trigger → Render → Commit → Paint 與三種 Effect 時機的共同心智模型，再進入後續 React 主題。 |
+| 2 | [React 基礎：Vue 對照版](/docs/frontend-interview/binance/react-basics-vue-comparison) | 用你熟悉的 Vue 對照 React 基礎語法與思考模型。 |
+| 3 | [React 反射訓練](/docs/frontend-interview/binance/react-reflex-drills) | 把「看得懂」練成能從空白實作、debug 與口述；前兩週應反覆回來做。 |
+| 4 | [React 常用第三方 Hooks 入門](/docs/frontend-interview/binance/react-third-party-hooks) | 基礎決策穩定後，再認識 `useQuery`、`useMutation`、Redux、Router 與表單 Hooks。 |
+| 5 | [React 術語中文對照與交易頁範例](/docs/frontend-interview/binance/react-terms-code-examples) | 把常見英文術語翻成中文，再用交易頁範例看懂程式碼。 |
+| 6 | [Vue 轉 React 生態面試題](/docs/frontend-interview/binance/vue-to-react-ecosystem-qna) | 準備面試官追問「你本來寫 Vue，怎麼接 React」。 |
+| 7 | [JavaScript / TypeScript 面試重點](/docs/frontend-interview/binance/javascript-typescript) | 補 production JavaScript、TypeScript 與非同步基礎。 |
+| 8 | [UI 品質 / Responsive / Tooling](/docs/frontend-interview/binance/ui-responsive-tooling) | 補職缺要求的 responsive UI、Webpack、Tailwind、a11y。 |
+| 9 | [效能 / 測試 / 前端系統設計](/docs/frontend-interview/binance/quality-performance-system) | 準備 Senior 常問的效能、測試與架構題。 |
+| 10 | [交易產品前端情境題](/docs/frontend-interview/binance/crypto-product-case) | 把 React 能力套到 Binance Futures / 交易頁場景。 |
+| 11 | [面試題庫與回答模板](/docs/frontend-interview/binance/interview-drills) | 最後用題庫整理口述答案與行為面試。 |
+| 12 | [Realtime Socket Governance](/docs/frontend-interview/binance/realtime-socket-governance) | 準備高併發、多分頁、K 線 realtime 與 refetch storm 的系統設計題。 |
+| 13 | [React 現場實戰題系列](/docs/frontend-interview/binance/react-live-interview-series) | 用多回現場題集中練 state、effect、identity、render、realtime 與 concurrent UI 的推導。 |
+| 14 | [React 現場實戰題入門篇](/docs/frontend-interview/binance/react-foundations-live-demo) | 從 event、props、state、form、state owner 到 effect cleanup，先建立 React 基本反射。 |
+| 15 | [React 現場實戰題第一回](/docs/frontend-interview/binance/react-state-effect-live-demo) | 從 state snapshot、effect、closure、race 與 WebSocket 錯誤版本推到正確答案。 |
+| 16 | [React 現場實戰題第一回補強](/docs/frontend-interview/binance/react-state-effect-reinforcement) | 用六題組合題補強 derived state、async race、subscription 與 WebSocket lifecycle。 |
+| 17 | [React 現場實戰題第二回](/docs/frontend-interview/binance/react-render-identity-live-demo) | 用 list key、state ownership、memo、Context、external store 與 Transition 深入 render correctness。 |
+| 18 | [極致前端行動路線](/docs/frontend-interview/binance/frontend-mastery-action-plan) | 把瀏覽器底層、React 轉化與 Nuxt / Next 全端渲染收斂成六週可驗收的行動與作品。 |
+| 19 | [React Hooks 為什麼存在](/docs/frontend-interview/binance/react-hooks-purpose-guide) | 先用「做什麼、為何存在、解決什麼、怎麼用」理解 React 與常見第三方 Hooks，再進題庫。 |
+| 20 | [React Hooks 六題反射題庫](/docs/frontend-interview/binance/react-hooks-six-drills-index) | 30 種 React 內建與第三方 Hook，每種固定六題，共 180 題；用來按 Hook 補洞與複習。 |
+| 21 | [AI 時代的軟體工程師學習策略](/docs/frontend-interview/binance/ai-era-software-engineer-learning-strategy) | 把 Vue 深度、React 第二專長、全端邊界與 AI 驗證流程組合成可持續的轉職策略。 |
 
 ## 面試回答框架
 
@@ -200,17 +201,17 @@ React 官方把 state 描述成每次 render 的 snapshot，Rules of Hooks 的�
 - [JavaScript event loop](../../frontend-core/javascript/eventLoop.md)
 - [TypeScript 基礎](../../frontend-core/typescript/t01-basic.md)
 - [Redux 筆記](../../frontend-frameworks/react/r07-redux.md)
-- [React 基礎：Vue 對照版](./01-react-basics-vue-comparison.md)
-- [React 反射訓練](./02-react-reflex-drills.md)
-- [React 常用第三方 Hooks 入門](./02-react-third-party-hooks.md)
-- [React 術語中文對照與交易頁範例](./02-react-terms-code-examples.md)
-- [Vue 轉 React 生態面試題](./03-vue-to-react-ecosystem-qna.md)
-- [Realtime Socket Governance](./10-realtime-socket-governance.md)
-- [React 現場實戰題系列](./13-react-live-interview-series.md)
-- [React 現場實戰題入門篇](./15-react-foundations-live-demo.md)
-- [React 現場實戰題第一回](./11-react-state-effect-live-demo.md)
-- [React 現場實戰題第一回補強](./16-react-state-effect-reinforcement.md)
-- [React 現場實戰題第二回](./14-react-render-identity-live-demo.md)
-- [極致前端行動路線](./12-frontend-mastery-action-plan.md)
-- [React Hooks 為什麼存在](./17-react-hooks-purpose-guide.md)
-- [React Hooks 六題反射題庫](./17-react-hooks-six-drills-index.md)
+- [React 基礎：Vue 對照版](/docs/frontend-interview/binance/react-basics-vue-comparison)
+- [React 反射訓練](/docs/frontend-interview/binance/react-reflex-drills)
+- [React 常用第三方 Hooks 入門](/docs/frontend-interview/binance/react-third-party-hooks)
+- [React 術語中文對照與交易頁範例](/docs/frontend-interview/binance/react-terms-code-examples)
+- [Vue 轉 React 生態面試題](/docs/frontend-interview/binance/vue-to-react-ecosystem-qna)
+- [Realtime Socket Governance](/docs/frontend-interview/binance/realtime-socket-governance)
+- [React 現場實戰題系列](/docs/frontend-interview/binance/react-live-interview-series)
+- [React 現場實戰題入門篇](/docs/frontend-interview/binance/react-foundations-live-demo)
+- [React 現場實戰題第一回](/docs/frontend-interview/binance/react-state-effect-live-demo)
+- [React 現場實戰題第一回補強](/docs/frontend-interview/binance/react-state-effect-reinforcement)
+- [React 現場實戰題第二回](/docs/frontend-interview/binance/react-render-identity-live-demo)
+- [極致前端行動路線](/docs/frontend-interview/binance/frontend-mastery-action-plan)
+- [React Hooks 為什麼存在](/docs/frontend-interview/binance/react-hooks-purpose-guide)
+- [React Hooks 六題反射題庫](/docs/frontend-interview/binance/react-hooks-six-drills-index)
