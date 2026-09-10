@@ -22,6 +22,8 @@ keywords: ["Valid Anagram", "Arrays and Hashing", "JavaScript", "Python venv", "
 > 對應目標：Amazon、Binance、台積電、聯發科面試共同核心  
 > 今日演算法語言：**JavaScript＋Python**
 
+作答方式：知識題標示單選，先選再展開解析；進度與經歷題依事實勾選，沒有標準答案；「尚未完成／無需補課」不可與互相矛盾的完成項同時勾選。這些是 Markdown 勾選清單，可在筆記中勾選或口頭選答案；不必寫填空，也不代表網站會自動保存作答。原有程式實作與口述練習仍依各節執行。
+
 ## 今日完成定義
 
 - [ ] **NeetCode 150｜60 分鐘**：Valid Anagram 前 30 分鐘獨立讀題、推導與實作；後 30 分鐘才看提示、修正、測試與寫 Big-O。看過答案不算完成。
@@ -42,7 +44,7 @@ keywords: ["Valid Anagram", "Arrays and Hashing", "JavaScript", "Python venv", "
 
 ## Part 1｜NeetCode 150：Valid Anagram（60 分鐘）
 
-完整的 JavaScript＋Python 三階段題解已放到 LeetCode 筆記區：
+完整的 TypeScript＋Python 三階段題解已放到 LeetCode 筆記區：
 
 **[開始 LeetCode 242｜Valid Anagram 練習](/docs/algorithms/leetcode/f0201-0300/l0242-valid-anagram)**
 
@@ -56,7 +58,7 @@ keywords: ["Valid Anagram", "Arrays and Hashing", "JavaScript", "Python venv", "
 | 5–10 | 官方範例與自訂測資 | 先寫預期值，不執行 code |
 | 10–15 | 第一個直覺與 Big-O 預估 | 寫下正確性理由與成本 |
 | 15–20 | 從直覺整理計畫 | 三句 prose 或 pseudocode |
-| 20–30 | JavaScript＋Python 閉卷實作 | 不看提示完成第一次版本 |
+| 20–30 | TypeScript＋Python 閉卷實作 | 不看提示完成第一次版本 |
 | 30–40 | 必要時依序看提示並修正 | 記錄看到了第幾層提示 |
 | 40–50 | 測試與 edge cases | 至少跑 8 組測資 |
 | 50–60 | 寫 Big-O 與口述 | 說出 invariant、取捨與 Unicode follow-up |
@@ -65,11 +67,11 @@ keywords: ["Valid Anagram", "Arrays and Hashing", "JavaScript", "Python venv", "
 
 - [ ] 前 30 分鐘沒有看提示或 Stage B。
 - [ ] 先寫了第一個直覺、正確性理由、預估 Big-O，再開始 coding。
-- [ ] 能用 JavaScript 與 Python 從空白完成，而不是把看過的答案重新抄一次。
+- [ ] 能用 TypeScript 與 Python 從空白完成，而不是把看過的答案重新抄一次。
 - [ ] 至少測試：長度不同、相同字串、字元重排、頻率不同、單字元與題目允許的最長方向。
 - [ ] 能解釋為什麼長度檢查可提早失敗，以及核心狀態每輪代表什麼。
 - [ ] 能推導時間與空間複雜度，並說出排序解的 trade-off。
-- [ ] 已在題解頁回填耗時、錯誤類型、提示層級與卡點。
+- [ ] 已在本頁勾選實際進度與補課項目。
 
 ---
 
@@ -125,12 +127,24 @@ deactivate
 
 今日實作紀錄：
 
-```txt
-建立環境的命令：
-python 實際路徑：
-pip 實際路徑：
-我如何確認沒有用到系統環境：
-```
+**單選｜哪個操作組合能建立並確認目前使用專案 venv？**
+
+- [ ] A. 只建立 .venv 資料夾，就代表 Python 已切換。
+- [ ] B. python3 -m venv .venv，啟用後檢查 sys.executable，並用 python -m pip --version 確認 pip 所屬環境。
+- [ ] C. 只看終端機名稱有專案名，就代表套件隔離成功。
+
+<details>
+<summary>選完再看答案與解析</summary>
+
+**答案：B。** 環境名稱不能取代執行路徑檢查；sys.executable 應指向專案 .venv 的 Python。
+
+</details>
+
+**實際環境檢查結果（依實際情況單選）**
+
+- [ ] 尚未執行。
+- [ ] Python 與 pip 都指向專案 .venv。
+- [ ] 至少一個仍指向其他環境，需重新啟用並檢查。
 
 ### 2. `pyproject.toml`：專案與工具的共同設定入口
 
@@ -261,19 +275,46 @@ assert most_common_character("aaa") == ("a", 3)
 
 ### 閉卷口述題
 
-```txt
-我的 90 秒心智模型：
+**單選｜React 從 setter 到畫面更新，哪個順序正確？**
 
-Trigger：
+- [ ] A. Setter 直接改 DOM，之後才呼叫元件。
+- [ ] B. 安排更新 → render 計算 UI → commit 必要 DOM 變更 → browser paint。
+- [ ] C. 每次 render 都刪除整頁 DOM，再重建所有節點。
 
-Render：
+<details>
+<summary>選完再看答案與解析</summary>
 
-Commit：
+**答案：B。** Render 負責計算，commit 才套用必要變更；元件執行不代表整頁 DOM 重建。
 
-State snapshot：
+</details>
 
-Source of truth：
-```
+**單選｜初始值為 0，在同一個 handler 呼叫兩次 setCount(count + 1)，下一次 count 是多少？**
+
+- [ ] A. 2，因為呼叫兩次就加兩次。
+- [ ] B. 0，setter 不會安排更新。
+- [ ] C. 1，兩次都根據目前快照 0 要求設成 1。
+
+<details>
+<summary>選完再看答案與解析</summary>
+
+**答案：C。** Setter 不會改掉目前 handler 的快照；若要連續累加，可使用兩次 functional updater。
+
+</details>
+
+**單選｜搜尋框和列表都讀寫 query，source of truth 應如何安排？**
+
+- [ ] A. 各自保存 query，偶爾同步。
+- [ ] B. 放在能涵蓋讀寫者的最近共同 owner，子元件透過 props 與事件使用。
+- [ ] C. 把 query 當普通區域變數，修改後畫面必定更新。
+
+<details>
+<summary>選完再看答案與解析</summary>
+
+**答案：B。** 同一概念資料有明確 owner，能減少多份 state 不同步的情況。
+
+</details>
+
+選完後，依正確選項順序練一段 90 秒口述。
 
 <details>
 <summary>完成口述後再看參考骨架</summary>
@@ -286,17 +327,18 @@ Source of truth：
 
 先不看提示回答：
 
-```txt
-情境：購物車有 items，畫面要顯示 total。
+**單選｜購物車 total 完全由 items 算出，哪個選擇比較合理？**
 
-方案 A：把 items 與 total 都存 state。
-方案 B：只存 items，每次 render 計算 total。
+- [ ] A. 只存 items，render 時計算 total；若量測證明昂貴，再考慮快取。
+- [ ] B. items 與 total 各存 state，任何更新都手動同步。
+- [ ] C. 只存 total，需要 items 時再從總額還原。
 
-我選：
-好處：
-代價：
-何時可能改選另一個方案：
-```
+<details>
+<summary>選完再看答案與解析</summary>
+
+**答案：A。** 這樣避免兩份資料失去同步；代價是每次 render 計算。後端權威總額則是另一個契約，不能當成純前端衍生值。
+
+</details>
 
 <details>
 <summary>參考 trade-off</summary>
@@ -605,12 +647,40 @@ DAU：1,000,000 人
 
 ### 今日卡點紀錄
 
-| 主題 | 卡點 | 根因分類 | 下一個最小行動 |
-| --- | --- | --- | --- |
-| Valid Anagram | ＿＿＿＿ | 讀題／推導／JavaScript／Python／測試／Big-O | ＿＿＿＿ |
-| Python | ＿＿＿＿ | venv／pyproject／型別／type hints | ＿＿＿＿ |
-| React | ＿＿＿＿ | 更新流程／snapshot／ownership／trade-off | ＿＿＿＿ |
-| System Design | ＿＿＿＿ | 假設／QPS／頻寬／儲存／failure | ＿＿＿＿ |
+每個主題依實際情況選狀態；需要補課時直接採用對應動作，不必另寫原因。
+
+**Valid Anagram（依實際情況單選）**
+
+- [ ] 已獨立完成並驗證。
+- [ ] 看解析能理解，但尚未獨立完成。
+- [ ] 尚未開始／卡住，採用下列補課動作。
+
+補課動作：週六 30 分鐘：重做對應演算法練習並跑測試。
+
+**Python（依實際情況單選）**
+
+- [ ] 已獨立完成並驗證。
+- [ ] 看解析能理解，但尚未獨立完成。
+- [ ] 尚未開始／卡住，採用下列補課動作。
+
+補課動作：週六 25 分鐘：重跑本節環境檢查、型別檢查與測試。
+
+**React（依實際情況單選）**
+
+- [ ] 已獨立完成並驗證。
+- [ ] 看解析能理解，但尚未獨立完成。
+- [ ] 尚未開始／卡住，採用下列補課動作。
+
+補課動作：週六 20 分鐘：重選更新模型題，再操作計數器或任務列表。
+
+**System Design（依實際情況單選）**
+
+- [ ] 已獨立完成並驗證。
+- [ ] 看解析能理解，但尚未獨立完成。
+- [ ] 尚未開始／卡住，採用下列補課動作。
+
+補課動作：週日 20 分鐘：重選本節設計題，再照框架錄三分鐘口述。
+
 
 ### 未完成才加入的補課項目
 
@@ -622,31 +692,104 @@ DAU：1,000,000 人
 
 明日開始前，先不看答案回答：
 
-```txt
-1. Valid Anagram 的 Input／Output 契約是什麼？
-2. 你的第一版作法每一輪維持什麼 invariant？
-3. venv 與 pyproject.toml 分別解決什麼問題？
-4. Type hints 為什麼不是 runtime validation？
-5. React render、commit 與 browser paint 有何不同？
-6. 如何從 DAU 推導 peak QPS，而不是直接猜一個數字？
-```
+**單選｜Valid Anagram 要判斷什麼？**
+
+- [ ] A. 兩個字串每個位置都一樣。
+- [ ] B. 兩個字串出現過的字元種類一樣即可。
+- [ ] C. 兩個字串每個字元的次數完全相同，順序可不同。
+
+<details>
+<summary>選完再看答案與解析</summary>
+
+**答案：C。** 例如 aab 與 abb 種類相同，但次數不同，所以不成立。
+
+</details>
+
+**單選｜venv、pyproject.toml 與 type hints 哪個描述正確？**
+
+- [ ] A. venv 隔離套件環境；pyproject 保存專案／工具設定；type hints 預設不做 runtime validation。
+- [ ] B. venv 隔離 OS 與網路；type hints 自動攔截所有錯誤 JSON。
+- [ ] C. pyproject 一存在，就保證所有測試與型別檢查通過。
+
+<details>
+<summary>選完再看答案與解析</summary>
+
+**答案：A。** 設定、靜態型別與執行時驗證各自負責不同工作。
+
+</details>
+
+**單選｜假設 100 萬 DAU、每人每天 8 次 API 請求、尖峰是平均的 10 倍，尖峰 QPS 約是多少？**
+
+- [ ] A. 8,000,000 QPS，因為每日有八百萬次。
+- [ ] B. 約 926 QPS，做數量級估算可用約 1,000。
+- [ ] C. 約 93 QPS，不需要乘尖峰倍數。
+
+<details>
+<summary>選完再看答案與解析</summary>
+
+**答案：B。** 平均為 1,000,000 × 8 ÷ 86,400 ≈ 92.6 QPS，再乘 10；每日總量不是每秒流量。
+
+</details>
 
 ## 今日結束打卡
 
-```txt
-實際開始／結束：＿＿＿＿～＿＿＿＿
-Valid Anagram：未完成／提示後完成／閉卷完成
-看到提示層級：未看／提示一／提示二／提示三／Stage B
-Python 小實作：未完成／完成
-React 口述：未完成／看稿完成／閉卷完成
-System Design 主動產出：小圖／三個數字／failure case／3 分鐘口述
+這是進度自評，沒有標準答案；每列選一個符合實際結果的狀態。選對知識題不等於完成程式或錄音。
 
-今天最重要的理解：
+**Valid Anagram（依實際情況單選）**
 
-今天仍不穩的地方：
+- [ ] 尚未開始／未完成。
+- [ ] 看解析後能完成，還需練習。
+- [ ] 已獨立完成，並執行測試或口述驗證。
 
-週末補課的唯一優先項目：
-```
+**Python 環境與型別（依實際情況單選）**
+
+- [ ] 尚未開始／未完成。
+- [ ] 看解析後能完成，還需練習。
+- [ ] 已獨立完成，並執行測試或口述驗證。
+
+**React 回想（依實際情況單選）**
+
+- [ ] 尚未開始／未完成。
+- [ ] 看解析後能完成，還需練習。
+- [ ] 已獨立完成，並執行測試或口述驗證。
+
+**System Design 容量（依實際情況單選）**
+
+- [ ] 尚未開始／未完成。
+- [ ] 看解析後能完成，還需練習。
+- [ ] 已獨立完成，並執行測試或口述驗證。
+
+**本次學習時間（依實際情況單選）**
+
+- [ ] 少於原定時間。
+- [ ] 約等於原定時間。
+- [ ] 超過原定時間。
+- [ ] 未計時。
+
+**口述或主動產出（可複選，依實際情況）**
+
+- [ ] 已錄音，符合本節時限。
+- [ ] 已錄音，但超時或中斷。
+- [ ] 已自畫資料流或重算數字。
+- [ ] 已操作 failure case 並核對結果。
+- [ ] 尚未產出。
+
+**今天最需要補強的地方（依實際情況單選）**
+
+- [ ] 題意或契約。
+- [ ] 實作與測試。
+- [ ] React／Python 模型。
+- [ ] System Design 假設與故障。
+- [ ] 口述表達。
+- [ ] 目前沒有待補項目。
+
+**週末下一個最小行動（依實際情況單選）**
+
+- [ ] 週六 30 分鐘：重做本頁演算法練習並跑測試。
+- [ ] 週六 20 分鐘：重做本頁前端／Python 選擇題與實作驗證。
+- [ ] 週日 20 分鐘：重選 System Design 題並照答案框架口述。
+- [ ] 週日 20 分鐘：重錄本頁口述任務。
+- [ ] 無需補課。
 
 真正完成的標準不是「看完」，而是明天不看筆記仍能重建：
 

@@ -19,6 +19,8 @@ keywords: ["Contains Duplicate", "Arrays and Hashing", "React Trigger Render Com
 > 今日總時數：140 分鐘  
 > 對應目標：Amazon、Binance、台積電、聯發科面試共同核心
 
+作答方式：知識題標示單選，先選再展開解析；進度與經歷題依事實勾選，沒有標準答案；「尚未完成／無需補課」不可與互相矛盾的完成項同時勾選。這些是 Markdown 勾選清單，可在筆記中勾選或口頭選答案；不必寫填空，也不代表網站會自動保存作答。原有程式實作與口述練習仍依各節執行。
+
 ## 今日完成定義
 
 - [ ] **NeetCode 150｜60 分鐘**：讀懂 Contains Duplicate 題目與 constraints，先說出暴力解，再閉卷完成最佳化實作、測試 edge cases、說明 Big-O。
@@ -62,7 +64,7 @@ keywords: ["Contains Duplicate", "Arrays and Hashing", "React Trigger Render Com
 - [ ] 能指出暴力解的重複操作，而不只背 Pattern 名稱。
 - [ ] 能閉卷完成最佳化 TypeScript 與 Python 實作。
 - [ ] 能解釋 edge cases、invariant 與 Big-O。
-- [ ] 已在 LeetCode 筆記頁回填耗時、錯誤類型與卡點。
+- [ ] 已在本頁勾選實際進度與補課項目。
 
 ---
 
@@ -205,11 +207,18 @@ function OrderForm() {
 
 使用者點擊按鈕，`setState` 被呼叫後，從 Trigger 到畫面更新發生什麼？
 
-```txt
-我的 60 秒回答：
+**單選｜React 從 setter 到畫面更新，哪個順序正確？**
 
+- [ ] A. Setter 直接改 DOM，之後才呼叫元件。
+- [ ] B. 安排更新 → render 計算 UI → commit 必要 DOM 變更 → browser paint。
+- [ ] C. 每次 render 都刪除整頁 DOM，再重建所有節點。
 
-```
+<details>
+<summary>選完再看答案與解析</summary>
+
+**答案：B。** Render 負責計算，commit 才套用必要變更；元件執行不代表整頁 DOM 重建。
+
+</details>
 
 <details>
 <summary>參考回答</summary>
@@ -231,11 +240,18 @@ function handleClick() {
 }
 ```
 
-```txt
-畫面：
-console：
-理由：
-```
+**單選｜第一次點擊後，下一次畫面與當次 console 分別是什麼？**
+
+- [ ] A. 畫面 1、console 1；setter 立即改掉區域變數。
+- [ ] B. 畫面 1、console 0；handler 仍使用目前快照。
+- [ ] C. 畫面 0、console 0；setter 完全沒有效果。
+
+<details>
+<summary>選完再看答案與解析</summary>
+
+**答案：B。** setScore(score + 1) 安排下一次 state 為 1，但目前 handler 的 score 仍是 0。
+
+</details>
 
 <details>
 <summary>參考回答</summary>
@@ -248,11 +264,18 @@ console：
 
 `firstName`、`lastName`、`fullName` 是否都應該存 state？
 
-```txt
-我的答案與理由：
+**單選｜fullName 只由 firstName 和 lastName 組合而成，應如何保存？**
 
+- [ ] A. 三者都存 state，再用 effect 同步。
+- [ ] B. 只保存 fullName，任何名字都能無歧義拆回來。
+- [ ] C. 保存 firstName、lastName，render 時計算 fullName。
 
-```
+<details>
+<summary>選完再看答案與解析</summary>
+
+**答案：C。** 可推導的資料通常不必另存；如果 fullName 可獨立編輯且語意不同，再重新決定 owner。
+
+</details>
 
 <details>
 <summary>參考回答</summary>
@@ -281,11 +304,32 @@ console：
 
 ### 今日卡點紀錄
 
-| 主題 | 卡點 | 根因分類 | 下一個最小行動 |
-| --- | --- | --- | --- |
-| Contains Duplicate | ＿＿＿＿ | 讀題／Pattern／實作／測試／Big-O | ＿＿＿＿ |
-| React | ＿＿＿＿ | Trigger／Render／Commit／snapshot／owner | ＿＿＿＿ |
-| System Design | ＿＿＿＿ | 功能／品質／規模／failure | ＿＿＿＿ |
+每個主題依實際情況選狀態；需要補課時直接採用對應動作，不必另寫原因。
+
+**Contains Duplicate（依實際情況單選）**
+
+- [ ] 已獨立完成並驗證。
+- [ ] 看解析能理解，但尚未獨立完成。
+- [ ] 尚未開始／卡住，採用下列補課動作。
+
+補課動作：週六 30 分鐘：重做對應演算法練習並跑測試。
+
+**React（依實際情況單選）**
+
+- [ ] 已獨立完成並驗證。
+- [ ] 看解析能理解，但尚未獨立完成。
+- [ ] 尚未開始／卡住，採用下列補課動作。
+
+補課動作：週六 20 分鐘：重選更新模型題，再操作計數器或任務列表。
+
+**System Design（依實際情況單選）**
+
+- [ ] 已獨立完成並驗證。
+- [ ] 看解析能理解，但尚未獨立完成。
+- [ ] 尚未開始／卡住，採用下列補課動作。
+
+補課動作：週日 20 分鐘：重選本節設計題，再照框架錄三分鐘口述。
+
 
 ### 明確的週末補課項目
 
@@ -298,12 +342,31 @@ console：
 
 明日開始前的 retrieval check：
 
-```txt
-1. 暴力解為什麼是 O(n²)？
-2. Set 解法每輪維持什麼 invariant？
-3. setState 為什麼不會改掉當前 handler 的 snapshot？
-4. functional 與 non-functional requirement 的差別是什麼？
-```
+**單選｜Contains Duplicate 兩兩比較最差時間為什麼是 O(n²)？**
+
+- [ ] A. 需要比較約 n(n−1)/2 對元素。
+- [ ] B. 只比較 n 次，但每次固定花 n 秒。
+- [ ] C. 只要有兩個迴圈就一定是 O(n²)，不用看範圍。
+
+<details>
+<summary>選完再看答案與解析</summary>
+
+**答案：A。** 成本來自實際比較次數；不能只數迴圈層數。
+
+</details>
+
+**單選｜哪一組正確區分功能需求與品質需求？**
+
+- [ ] A. 功能：p95 小於 200 ms；品質：新增標的。
+- [ ] B. 功能：使用 Redis；品質：使用 PostgreSQL。
+- [ ] C. 功能：新增追蹤標的；品質：讀取 p95 小於 200 ms。
+
+<details>
+<summary>選完再看答案與解析</summary>
+
+**答案：C。** 功能說明使用者能做什麼；品質說明做到什麼程度。這裡的延遲是練習目標。
+
+</details>
 
 ---
 
@@ -742,18 +805,57 @@ Redis 的 sharded Pub/Sub 是後續可研究的分區機制，讓頻道訊息在
 
 ## 今日結束打卡
 
-```txt
-實際開始／結束：＿＿＿＿～＿＿＿＿
-Contains Duplicate：未完成／提示後完成／閉卷完成
-React 口述：未完成／看稿完成／閉卷完成
-System Design 口述：未完成／完成＿＿分＿＿秒
+這是進度自評，沒有標準答案；每列選一個符合實際結果的狀態。選對知識題不等於完成程式或錄音。
 
-今天最重要的理解：
+**Contains Duplicate（依實際情況單選）**
 
-今天仍不穩的地方：
+- [ ] 尚未開始／未完成。
+- [ ] 看解析後能完成，還需練習。
+- [ ] 已獨立完成，並執行測試或口述驗證。
 
-週末補課的唯一優先項目：
-```
+**React 更新模型（依實際情況單選）**
+
+- [ ] 尚未開始／未完成。
+- [ ] 看解析後能完成，還需練習。
+- [ ] 已獨立完成，並執行測試或口述驗證。
+
+**System Design 需求（依實際情況單選）**
+
+- [ ] 尚未開始／未完成。
+- [ ] 看解析後能完成，還需練習。
+- [ ] 已獨立完成，並執行測試或口述驗證。
+
+**本次學習時間（依實際情況單選）**
+
+- [ ] 少於原定時間。
+- [ ] 約等於原定時間。
+- [ ] 超過原定時間。
+- [ ] 未計時。
+
+**口述或主動產出（可複選，依實際情況）**
+
+- [ ] 已錄音，符合本節時限。
+- [ ] 已錄音，但超時或中斷。
+- [ ] 已自畫資料流或重算數字。
+- [ ] 已操作 failure case 並核對結果。
+- [ ] 尚未產出。
+
+**今天最需要補強的地方（依實際情況單選）**
+
+- [ ] 題意或契約。
+- [ ] 實作與測試。
+- [ ] React／Python 模型。
+- [ ] System Design 假設與故障。
+- [ ] 口述表達。
+- [ ] 目前沒有待補項目。
+
+**週末下一個最小行動（依實際情況單選）**
+
+- [ ] 週六 30 分鐘：重做本頁演算法練習並跑測試。
+- [ ] 週六 20 分鐘：重做本頁前端／Python 選擇題與實作驗證。
+- [ ] 週日 20 分鐘：重選 System Design 題並照答案框架口述。
+- [ ] 週日 20 分鐘：重錄本頁口述任務。
+- [ ] 無需補課。
 
 真正完成的標準不是「看完」，而是明天不看筆記仍能重建：
 

@@ -1,14 +1,15 @@
 ---
 title: "[0242] Valid Anagram"
-description: "LeetCode 242 Valid Anagram 的 JavaScript 與 Python 三階段練習筆記：獨立讀題、解法推導、測試、Big-O 與工程遷移。"
+toc_max_heading_level: 2
+description: "LeetCode 242 Valid Anagram 的 TypeScript 與 Python 三階段練習筆記：獨立讀題、解法推導、測試、Big-O 與工程遷移。"
 tags:
   - LeetCode
   - Easy
-  - JavaScript
+  - TypeScript
   - Python
   - String
   - Interview
-keywords: ["0242", "Valid Anagram", "LeetCode", "JavaScript", "Python", "String", "Edge Cases", "Big-O", "面試口述"]
+keywords: ["0242", "Valid Anagram", "LeetCode", "TypeScript", "Python", "String", "Edge Cases", "Big-O", "面試口述"]
 ---
 
 # [0242] Valid Anagram
@@ -16,11 +17,11 @@ keywords: ["0242", "Valid Anagram", "LeetCode", "JavaScript", "Python", "String"
 > 題單：[NeetCode 150](https://neetcode.io/practice/practice/neetcode150)  
 > 官方題目：[LeetCode 242. Valid Anagram](https://leetcode.com/problems/valid-anagram/)  
 > 今日完整日課：[第 1 週 Day 2：Python、React 回想與容量估算](/docs/career-blueprint/week-01-day-02)  
-> 今日指定語言：**JavaScript＋Python**
+> 今日指定語言：**TypeScript＋Python**
 
 ## Stage A｜解題前：先獨立完成（0–30 分鐘）
 
-這一段刻意不透露最佳解法。啟動 30 分鐘計時器，只看 Stage A；先口述、寫計畫，再分別用 JavaScript 與 Python 實作。
+這一段刻意不透露最佳解法。啟動 30 分鐘計時器，只看 Stage A；先口述、寫計畫，再分別用 TypeScript 與 Python 實作。
 
 ### 1. 題目基本資料
 
@@ -41,11 +42,11 @@ keywords: ["0242", "Valid Anagram", "LeetCode", "JavaScript", "Python", "String"
 
 ### 3. Input / Output 契約
 
-JavaScript：
+TypeScript：
 
-```js
-function isAnagram(s, t) {
-  // 回傳 boolean
+```ts
+function isAnagram(s: string, t: string): boolean {
+  throw new Error("回傳 boolean，先完成自己的版本");
 }
 ```
 
@@ -60,7 +61,7 @@ class Solution:
 - 輸入 `s` 與 `t` 都是字串。
 - 回傳 `true`／`True` 代表 `t` 是 `s` 的 anagram，否則回傳 false。
 - 字元順序不需要相同，但種類與出現次數必須相同。
-- 題目不要求修改輸入；JavaScript 與 Python 的字串都是 immutable。
+- 題目不要求修改輸入；TypeScript 與 Python 的字串都是 immutable。
 - 官方 constraints 保證兩個字串都至少有一個字元，且只含小寫英文字母。
 
 ### 4. 官方範例拆解
@@ -185,11 +186,11 @@ class Solution:
 
 ### 12. 第一次閉卷實作
 
-JavaScript：
+TypeScript：
 
-```js
-function isAnagram(s, t) {
-  // 前 30 分鐘先自己完成
+```ts
+function isAnagram(s: string, t: string): boolean {
+  throw new Error("前 30 分鐘先自己完成");
 }
 ```
 
@@ -204,7 +205,7 @@ class Solution:
 
 紀錄：
 
-| 欄位 | JavaScript | Python |
+| 欄位 | TypeScript | Python |
 | --- | --- | --- |
 | 實作耗時 | ＿＿分鐘 | ＿＿分鐘 |
 | 是否一次通過 | 是／否 | 是／否 |
@@ -269,10 +270,10 @@ class Solution:
 
 對 `s` 的每個字元，重新計算它在兩邊出現幾次。
 
-#### JavaScript 暴力解
+#### TypeScript 暴力解
 
-```js
-function countCharacter(text, target) {
+```ts
+function countCharacter(text: string, target: string): number {
   let count = 0;
 
   for (const character of text) {
@@ -284,7 +285,7 @@ function countCharacter(text, target) {
   return count;
 }
 
-function isAnagramRepeatedCount(s, t) {
+function isAnagramRepeatedCount(s: string, t: string): boolean {
   if (s.length !== t.length) {
     return false;
   }
@@ -336,7 +337,7 @@ def is_anagram_repeated_count(s: str, t: str) -> bool:
 - 讀到 `s[i]` 就加一，讀到 `t[i]` 就減一。
 - 最後每個差值都等於零，就代表兩邊每個字母的數量一樣。
 
-JavaScript 用 `Map`，Python 用 `dict[str, int]`。一般雜湊實作下，找到並更新一個字母的紀錄平均是 `O(1)`，不必重新掃描字串。
+TypeScript 用 `Map`，Python 用 `dict[str, int]`。一般雜湊實作下，找到並更新一個字母的紀錄平均是 `O(1)`，不必重新掃描字串。
 
 ### 5. 為什麼不是 Set
 
@@ -381,15 +382,15 @@ JavaScript 用 `Map`，Python 用 `dict[str, int]`。一般雜湊實作下，找
 
 ### 9. 最佳化完整實作
 
-#### JavaScript
+#### TypeScript
 
-```js
-function isAnagram(s, t) {
+```ts
+function isAnagram(s: string, t: string): boolean {
   if (s.length !== t.length) {
     return false;
   }
 
-  const balance = new Map();
+  const balance = new Map<string, number>();
 
   for (let index = 0; index < s.length; index += 1) {
     const sourceCharacter = s[index];
@@ -430,15 +431,15 @@ Python 的 `zip(s, t)` 在這裡安全，是因為前面已確認長度相同。
 
 ### 10. 可執行測試
 
-#### JavaScript：Node.js
+#### TypeScript：Node.js
 
-```js
-const assert = require("node:assert/strict");
+```ts
+// 將本區完整存為 anagram.ts，使用 tsx anagram.ts，或先編譯後以 Node.js 執行。
 
-function isAnagram(s, t) {
+function isAnagram(s: string, t: string): boolean {
   if (s.length !== t.length) return false;
 
-  const balance = new Map();
+  const balance = new Map<string, number>();
 
   for (let index = 0; index < s.length; index += 1) {
     const source = s[index];
@@ -450,7 +451,7 @@ function isAnagram(s, t) {
   return [...balance.values()].every((difference) => difference === 0);
 }
 
-const cases = [
+const cases: [string, string, boolean][] = [
   ["anagram", "nagaram", true],
   ["rat", "car", false],
   ["a", "a", true],
@@ -464,10 +465,10 @@ const cases = [
 ];
 
 for (const [source, target, expected] of cases) {
-  assert.equal(isAnagram(source, target), expected);
+  if (isAnagram(source, target) !== expected) throw new Error(`Failed: ${source}, ${target}`);
 }
 
-console.log("All JavaScript tests passed.");
+console.log("All TypeScript tests passed.");
 ```
 
 #### Python
@@ -525,8 +526,8 @@ if __name__ == "__main__":
 
 排序替代方案：
 
-```js
-function isAnagramBySorting(s, t) {
+```ts
+function isAnagramBySorting(s: string, t: string): boolean {
   return [...s].sort().join("") === [...t].sort().join("");
 }
 ```
@@ -541,13 +542,13 @@ def is_anagram_by_sorting(s: str, t: str) -> bool:
 ### 12. Edge Cases 與常見錯誤
 
 - **只比較 Set：** 會忽略重複次數，將 `"aab"` 與 `"abb"` 誤判為相同。
-- **漏掉長度檢查：** Python `zip` 會截短；JavaScript 也可能忽略另一邊剩餘內容。
+- **漏掉長度檢查：** Python `zip` 會截短；TypeScript 也可能忽略另一邊剩餘內容。
 - **中途看到負值就回傳：** 同步掃描時順序不同，中途 balance 可正可負，不代表最後不能抵銷。
 - **先加後減寫錯 key：** `s[i]` 要增加，`t[i]` 要減少，兩次更新都要讀取各自最新值。
 - **把 Map／dict 單次平均 `O(1)` 說成總成本：** 總共仍走訪 `n` 次，所以是平均 `O(n)`。
 - **空間永遠寫 `O(1)`：** 只有固定 26 字母時才成立；一般 Unicode 應寫 `O(k)`。
 - **擅自 lowercase 或移除空白：** 會改變官方契約。
-- **JavaScript 直接用索引處理任意 Unicode：** 索引走訪的是 UTF-16 code units，不能直接等同使用者看見的完整字元。
+- **TypeScript 直接用索引處理任意 Unicode：** 索引走訪的是 UTF-16 code units，不能直接等同使用者看見的完整字元。
 
 ### 13. 為什麼不用其他方法
 
@@ -561,10 +562,10 @@ def is_anagram_by_sorting(s: str, t: str) -> bool:
 
 ### 14. Unicode Follow-up
 
-Python `dict` 與 JavaScript `Map` 都能用更大的字元集合當 key，但「支援 Unicode」不只換資料結構：
+Python `dict` 與 TypeScript `Map` 都能用更大的字元集合當 key，但「支援 Unicode」不只換資料結構：
 
 - Python 字串迭代以 Unicode code points 為主，但視覺相同文字仍可能有不同 normalization forms。
-- JavaScript `for...of` 比索引更接近逐 code point；`string.length` 與 `string[index]` 則以 UTF-16 code units 為基礎。
+- TypeScript `for...of` 比索引更接近逐 code point；`string.length` 與 `string[index]` 則以 UTF-16 code units 為基礎。
 - 人眼的一個 grapheme cluster 仍可能包含多個 code points。
 - 是否 NFC／NFD normalization、是否 case-fold、是否按 grapheme cluster 比較，必須由產品契約決定。
 
@@ -623,10 +624,10 @@ def normalize_for_comparison(text: str) -> str:
 
 ### 2. 常見直覺寫法
 
-```js
-function shipmentMatches(expectedSkus, scannedSkus) {
-  return [...expectedSkus].sort().join("\u0000") ===
-    [...scannedSkus].sort().join("\u0000");
+```ts
+function shipmentMatches(expectedSkus: string[], scannedSkus: string[]): boolean {
+  return JSON.stringify([...expectedSkus].sort()) ===
+    JSON.stringify([...scannedSkus].sort());
 }
 ```
 
@@ -748,7 +749,7 @@ Production 行為要明確：
 完成狀態：未完成／提示後完成／閉卷完成
 看到提示層級：未看／提示一／提示二／提示三／Stage B
 
-JavaScript 卡點：
+TypeScript 卡點：
 Python 卡點：
 我的第一版時間與空間：
 我最後能口述的 invariant：
