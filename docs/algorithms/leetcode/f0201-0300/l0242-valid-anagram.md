@@ -1,12 +1,10 @@
 ---
 title: "[0242] Valid Anagram"
-toc_max_heading_level: 2
-description: "LeetCode 242 Valid Anagram 的 TypeScript 與 Python 三階段練習筆記：獨立讀題、解法推導、測試、Big-O 與工程遷移。"
+sidebar_label: "[0242] Valid Anagram"
+description: "LeetCode 0242 Valid Anagram 三階段刷題筆記：先讀懂題目與限制，再推導解法，最後把技巧遷移到真實工程案例。"
 tags:
   - LeetCode
   - Easy
-  - TypeScript
-  - Python
   - String
   - Interview
 keywords: ["0242", "Valid Anagram", "LeetCode", "TypeScript", "Python", "String", "Edge Cases", "Big-O", "面試口述"]
@@ -219,6 +217,8 @@ class Solution:
 能否口述 Big-O：
 ```
 
+#### 分級提示
+
 <details>
 <summary>提示一：需求層級</summary>
 
@@ -266,7 +266,7 @@ class Solution:
 
 這題的 Pattern 就是「把兩邊的數量記下來，看能不能全部抵銷」。
 
-### 2. 最直接但較慢的解法
+### 2. 暴力解
 
 對 `s` 的每個字元，重新計算它在兩邊出現幾次。
 
@@ -339,7 +339,7 @@ def is_anagram_repeated_count(s: str, t: str) -> bool:
 
 TypeScript 用 `Map`，Python 用 `dict[str, int]`。一般雜湊實作下，找到並更新一個字母的紀錄平均是 `O(1)`，不必重新掃描字串。
 
-### 5. 為什麼不是 Set
+### 5. 為什麼是 Map／dict，而不是 Set
 
 | 結構 | 保存的資訊 | 本題評估 |
 | --- | --- | --- |
@@ -380,7 +380,7 @@ TypeScript 用 `Map`，Python 用 `dict[str, int]`。一般雜湊實作下，找
 
 中途不必要求每個差值都是零；字元順序不同時，中間狀態本來就可能正負變化。
 
-### 9. 最佳化完整實作
+### 9. 完整實作
 
 #### TypeScript
 
@@ -429,9 +429,55 @@ class Solution:
 
 Python 的 `zip(s, t)` 在這裡安全，是因為前面已確認長度相同。若漏掉長度檢查，`zip` 會在較短輸入結束時停止，剩餘字元可能完全沒被處理。
 
-### 10. 可執行測試
+### 10. 複雜度分析
 
-#### TypeScript：Node.js
+令 `n = len(s)`、`m = len(t)`，`k` 是兩個輸入中不同字元的數量：
+
+- 長度不同時：`O(1)` 時間、`O(1)` 額外空間，直接回傳。
+- 長度相同時：走訪 `n` 組字元，最後最多檢查 `k` 個差值，所以平均時間為 `O(n + k)`，簡寫為 `O(n)`。
+- 一般字元集合下，Map／dict 最多保存 `k` 個 key，因此額外空間是 `O(k)`，最差 `O(n)`。
+- 官方只有 26 個小寫英文字母，`k <= 26`，所以也可說相對輸入長度是 `O(1)` 額外空間；必須同時說明這依賴固定 alphabet。
+- 雜湊查找的 `O(1)` 是一般情況的平均成本，不是所有情況的絕對保證。
+
+排序替代方案：
+
+```ts
+function isAnagramBySorting(s: string, t: string): boolean {
+  return [...s].sort().join("") === [...t].sort().join("");
+}
+```
+
+```python
+def is_anagram_by_sorting(s: str, t: str) -> bool:
+    return sorted(s) == sorted(t)
+```
+
+排序時間為 `O(n log n + m log m)`，而且兩種語言都會建立排序用的新集合。它的優點是短、直觀、較難寫錯；小型資料時完全可能是更好的工程選擇。
+
+### 11. Edge cases 與常見錯誤
+
+- **只比較 Set：** 會忽略重複次數，將 `"aab"` 與 `"abb"` 誤判為相同。
+- **漏掉長度檢查：** Python `zip` 會截短；TypeScript 也可能忽略另一邊剩餘內容。
+- **中途看到負值就回傳：** 同步掃描時順序不同，中途 balance 可正可負，不代表最後不能抵銷。
+- **先加後減寫錯 key：** `s[i]` 要增加，`t[i]` 要減少，兩次更新都要讀取各自最新值。
+- **把 Map／dict 單次平均 `O(1)` 說成總成本：** 總共仍走訪 `n` 次，所以是平均 `O(n)`。
+- **空間永遠寫 `O(1)`：** 只有固定 26 字母時才成立；一般 Unicode 應寫 `O(k)`。
+- **擅自 lowercase 或移除空白：** 會改變官方契約。
+- **TypeScript 直接用索引處理任意 Unicode：** 索引走訪的是 UTF-16 code units，不能直接等同使用者看見的完整字元。
+
+### 12. 為什麼不用其他方法
+
+| 方法 | 何時合理 | 為什麼今天不選為主解 |
+| --- | --- | --- |
+| 重複 count | 輸入很小、先求正確 | 最差 `O(n²)`，重算相同資訊 |
+| 排序後比較 | 小型資料、可讀性最重要 | `O(n log n)` 且建立排序結果 |
+| Python `Counter(s) == Counter(t)` | Production Python、團隊熟悉標準函式庫 | 很適合，但今天要親手練狀態與 invariant |
+| 長度 26 的 array/list | 永遠只有 `a` 到 `z`，重視常數成本 | Unicode follow-up 要重寫索引策略 |
+| Map／dict balance | 要線性處理並自然延伸到較大字元集合 | 使用 `O(k)` 狀態，但最符合今天的推導 |
+
+### 13. 測試
+
+#### TypeScript
 
 ```ts
 // 將本區完整存為 anagram.ts，使用 tsx anagram.ts，或先編譯後以 Node.js 執行。
@@ -514,53 +560,8 @@ if __name__ == "__main__":
     print("All Python tests passed.")
 ```
 
-### 11. 複雜度分析
-
-令 `n = len(s)`、`m = len(t)`，`k` 是兩個輸入中不同字元的數量：
-
-- 長度不同時：`O(1)` 時間、`O(1)` 額外空間，直接回傳。
-- 長度相同時：走訪 `n` 組字元，最後最多檢查 `k` 個差值，所以平均時間為 `O(n + k)`，簡寫為 `O(n)`。
-- 一般字元集合下，Map／dict 最多保存 `k` 個 key，因此額外空間是 `O(k)`，最差 `O(n)`。
-- 官方只有 26 個小寫英文字母，`k <= 26`，所以也可說相對輸入長度是 `O(1)` 額外空間；必須同時說明這依賴固定 alphabet。
-- 雜湊查找的 `O(1)` 是一般情況的平均成本，不是所有情況的絕對保證。
-
-排序替代方案：
-
-```ts
-function isAnagramBySorting(s: string, t: string): boolean {
-  return [...s].sort().join("") === [...t].sort().join("");
-}
-```
-
-```python
-def is_anagram_by_sorting(s: str, t: str) -> bool:
-    return sorted(s) == sorted(t)
-```
-
-排序時間為 `O(n log n + m log m)`，而且兩種語言都會建立排序用的新集合。它的優點是短、直觀、較難寫錯；小型資料時完全可能是更好的工程選擇。
-
-### 12. Edge Cases 與常見錯誤
-
-- **只比較 Set：** 會忽略重複次數，將 `"aab"` 與 `"abb"` 誤判為相同。
-- **漏掉長度檢查：** Python `zip` 會截短；TypeScript 也可能忽略另一邊剩餘內容。
-- **中途看到負值就回傳：** 同步掃描時順序不同，中途 balance 可正可負，不代表最後不能抵銷。
-- **先加後減寫錯 key：** `s[i]` 要增加，`t[i]` 要減少，兩次更新都要讀取各自最新值。
-- **把 Map／dict 單次平均 `O(1)` 說成總成本：** 總共仍走訪 `n` 次，所以是平均 `O(n)`。
-- **空間永遠寫 `O(1)`：** 只有固定 26 字母時才成立；一般 Unicode 應寫 `O(k)`。
-- **擅自 lowercase 或移除空白：** 會改變官方契約。
-- **TypeScript 直接用索引處理任意 Unicode：** 索引走訪的是 UTF-16 code units，不能直接等同使用者看見的完整字元。
-
-### 13. 為什麼不用其他方法
-
-| 方法 | 何時合理 | 為什麼今天不選為主解 |
-| --- | --- | --- |
-| 重複 count | 輸入很小、先求正確 | 最差 `O(n²)`，重算相同資訊 |
-| 排序後比較 | 小型資料、可讀性最重要 | `O(n log n)` 且建立排序結果 |
-| Python `Counter(s) == Counter(t)` | Production Python、團隊熟悉標準函式庫 | 很適合，但今天要親手練狀態與 invariant |
-| 長度 26 的 array/list | 永遠只有 `a` 到 `z`，重視常數成本 | Unicode follow-up 要重寫索引策略 |
-| Map／dict balance | 要線性處理並自然延伸到較大字元集合 | 使用 `O(k)` 狀態，但最符合今天的推導 |
-
-### 14. Unicode Follow-up
+<details>
+<summary>Unicode Follow-up</summary>
 
 Python `dict` 與 TypeScript `Map` 都能用更大的字元集合當 key，但「支援 Unicode」不只換資料結構：
 
@@ -581,11 +582,13 @@ def normalize_for_comparison(text: str) -> str:
 
 不要在官方小寫英文字母題目裡額外做這一步；這是 follow-up 的需求決策。
 
+</details>
+
 ---
 
-## Stage C｜解題後：遷移到真實工程（55–60 分鐘＋延伸）
+## Stage C｜解題後：遷移到 Production（55–60 分鐘＋延伸）
 
-### 【這個資料結構／演算法是為了解決什麼問題？】
+### 1. 【這個資料結構／演算法是為了解決什麼問題？】
 
 **回答：** 這題用 Map／dict 解決的是「我要知道每一種東西有幾個，不想每次都從頭數」。
 
@@ -595,7 +598,7 @@ def normalize_for_comparison(text: str) -> str:
 
 每次回頭重數，整體最差會到 `O(n²)`；改成邊讀邊更新紀錄，平均是 `O(n)`。代價是需要 `O(k)` 額外記憶體，`k` 是不同字母的數量。本題只有 26 種小寫字母，也能用 26 格陣列，空間不會隨字串長度增加。
 
-### 【現實工作中哪裡會遇到？可以用這個題型去改善什麼？】
+### 2. 【現實工作中哪裡會遇到？可以用這個題型去改善什麼？】
 
 #### 情境 A：出貨前，確認每種商品都裝對數量
 
@@ -615,14 +618,14 @@ def normalize_for_comparison(text: str) -> str:
 
 下面用出貨核對示範完整做法。
 
-### 1. 工程遷移情境：倉儲出貨 SKU 對帳
+### 工程情境：倉儲出貨 SKU 對帳
 
 - `expectedSkus` 來自已確認訂單。
 - `scannedSkus` 來自包裝站掃描器。
 - 順序不重要，但重複數量非常重要。
 - 系統不只要 boolean，也要告訴操作員缺少與多出的 SKU。
 
-### 2. 常見直覺寫法
+### 常見直覺寫法
 
 ```ts
 function shipmentMatches(expectedSkus: string[], scannedSkus: string[]): boolean {
@@ -638,15 +641,15 @@ def shipment_matches(expected_skus: list[str], scanned_skus: list[str]) -> bool:
 
 兩個版本都正確且容易閱讀。對幾十筆 SKU 的低頻操作，可能已經足夠。
 
-### 3. 潛在問題與觸發門檻
+### 潛在問題與觸發門檻
 
 當單批數萬筆、每秒大量批次、對帳位於 latency-sensitive path，或還要輸出數量差時，排序才可能成為值得處理的瓶頸。先以 production-sized fixture profiling；不要只因為看到 `sort` 就預設必須最佳化。
 
-### 4. 套用本題技巧
+### 套用本題技巧
 
 把「character → count」替換成「SKU → count」：預期清單增加 count、掃描清單減少 count。差值為正代表缺少，為負代表多掃。重複 SKU 保留數量語意，輸入順序則不影響結果。
 
-### 5. Production 風格優化
+### Production 風格優化
 
 ```python
 from collections import Counter
@@ -696,7 +699,7 @@ Production 行為要明確：
 - SKU 大小寫、空白與 alias normalization 應在進入對帳前依業務規則完成。
 - 同一掃描事件若可能重送，要先用 event ID 做 idempotency；頻率映射無法辨認網路重送。
 
-### 6. 優化前後比較
+### 優化前後比較
 
 | 面向 | 排序比較 | 頻率對帳 |
 | --- | --- | --- |
@@ -707,24 +710,24 @@ Production 行為要明確：
 | 錯誤細節 | 需額外 diff | 可直接產生 missing／unexpected counts |
 | 小資料可讀性 | 非常簡單 | 程式較多，但回傳資訊完整 |
 
-### 7. 使用界線與代價
+### 使用界線與代價
 
 小資料、低頻、只需 boolean，且 profile 沒顯示排序為瓶頸時，簡單排序版更容易維護。資料大、呼叫頻繁、要輸出數量差或接收 stream 時，頻率映射較合適。
 
 代價是 `O(k)` 額外記憶體；key 必須 hashable 且 equality 語意穩定。跨服務資料另需處理 transaction、版本、一致性與重送。
 
-### 8. Code Review 說法
+### Code Review 說法
 
 > 目前排序比較的邏輯是正確的。這條路徑每批可能到數萬筆，而且後面還要顯示缺少與多出的 SKU；可以考慮一次走訪建立 frequency map，平均時間由 `O(n log n)` 降為 `O(n)`，也能直接產生數量差。代價是 `O(k)` 記憶體。建議先用 production-sized fixture benchmark，確認排序確實影響 SLO 再改。
 
-### 9. 變形題
+### 變形題
 
 1. 忽略大小寫與空白時，normalization 應由哪一層負責？
 2. 輸入是無法一次載入記憶體的 stream，要如何逐批更新狀態？何時才能宣布相同？
 3. 要回傳最少刪除幾個字元才能互為 anagram，frequency difference 如何轉成答案？
 4. 包含 Unicode 時，code point、normalization 與 grapheme cluster 如何改變契約？
 
-### 10. 一分鐘複習卡
+### 一分鐘複習卡
 
 | 問題 | 一句答案 |
 | --- | --- |
@@ -742,7 +745,8 @@ Production 行為要明確：
 | Production 用途 | 對帳兩批順序無關、重複數量重要的資料 |
 | 使用界線 | 本地 Map／dict 不解決一致性、重送與 transaction |
 
-## 今日回填
+<details>
+<summary>今日回填</summary>
 
 ```txt
 實際耗時：＿＿分鐘
@@ -756,7 +760,9 @@ Python 卡點：
 下次看到什麼需求，會想到用 Map／dict 記次數：
 ```
 
-## 延伸連結
+</details>
+
+## 相關連結
 
 - [第 1 週 Day 2：完整 140 分鐘日課](/docs/career-blueprint/week-01-day-02)
 - [LeetCode 242. Valid Anagram](https://leetcode.com/problems/valid-anagram/)

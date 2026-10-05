@@ -1,35 +1,36 @@
 ---
 title: "[0167] Two Sum II - Input Array Is Sorted"
-toc_max_heading_level: 2
-description: "LeetCode 167 Two Sum II - Input Array Is Sorted 三階段筆記：獨立讀題、推導解法、TypeScript 與 Python 實作測試，以及工程應用與取捨。"
+sidebar_label: "[0167] Two Sum II - Input Array Is Sorted"
+description: "LeetCode 0167 Two Sum II 三階段刷題筆記：先讀懂題目與限制，再推導解法，最後把技巧遷移到真實工程案例。"
 tags:
   - LeetCode
   - Medium
-  - TypeScript
-  - Python
   - Array
   - Interview
-keywords: ["0167", "Two Sum II - Input Array Is Sorted", "TypeScript", "Python", "面試練習"]
+keywords: ["0167", "Two Sum II", "LeetCode", "TypeScript", "Python", "雙指標", "面試刷題"]
 ---
 
 # [0167] Two Sum II - Input Array Is Sorted
 
-> [一個月 LeetCode 預習索引](/docs/career-blueprint/leetcode-month-01) · 日曆安排：2026-09-28（W04）<br />
-> 整理／官方題面核對：2026-09-08；實際練習日期與完成狀態由你填寫。
+> 題單：[NeetCode 150](https://neetcode.io/practice/practice/neetcode150)<br />
+> 官方題目：[LeetCode 167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)<br />
+> 練習索引：[一個月 LeetCode 預習索引](/docs/career-blueprint/leetcode-month-01)
 
-可以直接預習；若要測試獨立解題能力，先完成 Stage A，再展開提示與 Stage B。
+## Stage A｜解題前：先獨立完成（0–25 分鐘）
 
-## Stage A｜解題前：先獨立完成
+這一段先不提示最佳演算法。請先計時、口述題意，再寫自己的版本。
 
 ### 1. 題目基本資料
 
 | 項目 | 內容 |
 | --- | --- |
-| 題號／難度 | 167／Medium |
-| 廣義分類 | Array |
-| 官方題面 | [LeetCode：Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) |
-| 練習日期 | 自行填寫；日曆日期不代表已完成 |
-| 建議限時 | 讀題與測資 10 分鐘、第一次計畫與實作 20 分鐘、分析測試 20 分鐘、複習 10 分鐘；工程延伸另讀 |
+| 題號 | 0167 |
+| 題名 | Two Sum II - Input Array Is Sorted |
+| 難度 | Medium |
+| 題目大類 | Array |
+| 官方題目 | [LeetCode：Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) |
+| 本次整理日期 | 2026-09-08 |
+| 建議限時 | 第一次作答 20 分鐘，口述 5 分鐘 |
 
 ### 2. 白話題意
 
@@ -107,7 +108,7 @@ def two_sum(numbers: list[int], target: int) -> list[int]: ...
 我認為最容易錯的測資與理由：
 ```
 
-### 12. 第一次實作
+### 12. 第一次閉卷實作
 
 #### TypeScript
 
@@ -153,11 +154,21 @@ def two_sum(numbers: list[int], target: int) -> list[int]:
 
 </details>
 
-## Stage B｜解題分析：完成第一次實作後再看
+---
+
+## Stage B｜解題分析：完成閉卷後再看（25–50 分鐘）
+
+:::warning 先完成第一次作答
+
+以下開始包含解法。若還沒自己嘗試，先停在 A 區。
+
+:::
 
 ### 1. 看到這題，怎麼想到要用相向雙指標與排序排除？
 
-需要找兩個位置，直覺會列舉所有配對。但已排序讓我們知道一整排配對都不可能：`[2,7,11,15]` 中 2+15 太大，15 配任何其他值都只會更大，所以可排除 15；接著 2+11 仍太大，排除 11。這個「安全排除」才是雙指標理由。Map 能查配對位置，但會用 O(n) 空間，沒有利用題目給的排序與空間限制。
+**先抓住這個想法：** 已排序讓一次比較不只判斷一組配對，還能安全排除左端或右端的一整批不可能答案。
+
+需要找兩個位置，直覺會列舉所有配對。但 `[2,7,11,15]` 中 2+15 太大，15 配任何其他值都只會更大，所以可排除 15；接著 2+11 仍太大，排除 11。這個「安全排除」才是雙指標理由。Map 能查配對位置，但會用 O(n) 空間，沒有利用題目給的排序與空間限制。
 
 **下次可以怎麼想：** 已排序且兩端和能判定一整排配對必然太大或太小時，就能每次安全排除一端。
 
@@ -193,11 +204,11 @@ def two_sum_brute(numbers: list[int], target: int) -> list[int]:
 
 最多 n(n−1)/2 次比較，O(n²)。其中很多配對可由排序一次整批排除，不需要逐一算。
 
-### 4. 從瓶頸推導資料結構／演算法
+### 4. 從枚舉配對推導排序排除
 
 和小於 target 時，numbers[left] 配任何不大於 numbers[right] 的值都太小，故丟棄 left。和大於 target 時，numbers[right] 配任何不小於 numbers[left] 的值都太大，故丟棄 right。
 
-### 5. 為什麼是這個資料結構／方法
+### 5. 為什麼是相向雙指標，而不是 Map
 
 索引存取、相加、比較都 O(1)，不另存查詢表。left 只增加、right 只減少，所以總移動 n−1 次以內。
 
@@ -267,7 +278,7 @@ def two_sum(numbers: list[int], target: int) -> list[int]:
 
 每個位置搭配二分搜尋是 O(n log n)、O(1) 額外空間，可作中間解。未排序時 Map 更合適；若先排序還要回傳原始位置，須保留位置對應及排序成本。
 
-### 13. 可執行測試
+### 13. 測試
 
 把本頁 Stage B 的暴力解、完整實作及下列同語言測試依序放進 `solution.ts`／`solution.py`；不要混入 Stage A 的空白模板。TypeScript 使用已有的 `tsx` 執行器執行 `tsx solution.ts`，或先用 TypeScript 編譯器以 ES2020 編譯再執行；Python 使用 `python3 solution.py`。
 
@@ -318,7 +329,9 @@ for solve in (two_sum_brute, two_sum):
 print('167: both implementations passed', len(cases), 'cases')
 ```
 
-## Stage C｜解題後：帶回真實工作
+---
+
+## Stage C｜解題後：遷移到 Production（50–60 分鐘）
 
 ### 1. 【這個資料結構／演算法是為了解決什麼問題？】
 
@@ -409,4 +422,10 @@ function pickPackages(items: readonly Package[], target: number): [string, strin
 
 完成後回填：實際練習日期＿＿；TypeScript／Python 測試＿＿；能否閉卷解釋＿＿；下次要重寫的部分＿＿。
 
-[回到一個月預習索引](/docs/career-blueprint/leetcode-month-01)
+---
+
+## 相關連結
+
+- [Two Sum](/docs/algorithms/leetcode/f0001-0100/l0001-two-sum)
+- [Valid Palindrome](/docs/algorithms/leetcode/f0101-0200/l0125-valid-palindrome)
+- [一個月 LeetCode 預習索引](/docs/career-blueprint/leetcode-month-01)

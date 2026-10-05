@@ -1,35 +1,36 @@
 ---
 title: "[0125] Valid Palindrome"
-toc_max_heading_level: 2
-description: "LeetCode 125 Valid Palindrome 三階段筆記：獨立讀題、推導解法、TypeScript 與 Python 實作測試，以及工程應用與取捨。"
+sidebar_label: "[0125] Valid Palindrome"
+description: "LeetCode 0125 Valid Palindrome 三階段刷題筆記：先讀懂題目與限制，再推導解法，最後把技巧遷移到真實工程案例。"
 tags:
   - LeetCode
   - Easy
-  - TypeScript
-  - Python
   - String
   - Interview
-keywords: ["0125", "Valid Palindrome", "TypeScript", "Python", "面試練習"]
+keywords: ["0125", "Valid Palindrome", "LeetCode", "TypeScript", "Python", "雙指標", "面試刷題"]
 ---
 
 # [0125] Valid Palindrome
 
-> [一個月 LeetCode 預習索引](/docs/career-blueprint/leetcode-month-01) · 日曆安排：2026-09-24（W03）<br />
-> 整理／官方題面核對：2026-09-08；實際練習日期與完成狀態由你填寫。
+> 題單：[NeetCode 150](https://neetcode.io/practice/practice/neetcode150)<br />
+> 官方題目：[LeetCode 125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/)<br />
+> 練習索引：[一個月 LeetCode 預習索引](/docs/career-blueprint/leetcode-month-01)
 
-可以直接預習；若要測試獨立解題能力，先完成 Stage A，再展開提示與 Stage B。
+## Stage A｜解題前：先獨立完成（0–25 分鐘）
 
-## Stage A｜解題前：先獨立完成
+這一段先不提示最佳演算法。請先計時、口述題意，再寫自己的版本。
 
 ### 1. 題目基本資料
 
 | 項目 | 內容 |
 | --- | --- |
-| 題號／難度 | 125／Easy |
-| 廣義分類 | String |
-| 官方題面 | [LeetCode：Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) |
-| 練習日期 | 自行填寫；日曆日期不代表已完成 |
-| 建議限時 | 讀題與測資 10 分鐘、第一次計畫與實作 20 分鐘、分析測試 20 分鐘、複習 10 分鐘；工程延伸另讀 |
+| 題號 | 0125 |
+| 題名 | Valid Palindrome |
+| 難度 | Easy |
+| 題目大類 | String |
+| 官方題目 | [LeetCode：Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) |
+| 本次整理日期 | 2026-09-08 |
+| 建議限時 | 第一次作答 20 分鐘，口述 5 分鐘 |
 
 ### 2. 白話題意
 
@@ -109,7 +110,7 @@ def is_palindrome(s: str) -> bool: ...
 我認為最容易錯的測資與理由：
 ```
 
-### 12. 第一次實作
+### 12. 第一次閉卷實作
 
 #### TypeScript
 
@@ -155,11 +156,21 @@ def is_palindrome(s: str) -> bool:
 
 </details>
 
-## Stage B｜解題分析：完成第一次實作後再看
+---
+
+## Stage B｜解題分析：完成閉卷後再看（25–50 分鐘）
+
+:::warning 先完成第一次作答
+
+以下開始包含解法。若還沒自己嘗試，先停在 A 區。
+
+:::
 
 ### 1. 看到這題，怎麼想到要用相向雙指標？
 
-不想為了比前後，就先複製清理字串，再複製反轉字串。最直接的清理反轉法正確，但每次只需要最外側兩個有效字元。例如 `A, a` 先比兩端 A 與 a，再跳過中間標點即可。Map 計數不保留位置關係，會把同字母數量但順序不同的 `aabb` 誤當可能的回文。
+**先抓住這個想法：** 回文只需要逐對確認左右兩端的有效字元，不必先複製整份清理結果與反轉結果。
+
+最直接的清理反轉法正確，但每次只需要最外側兩個有效字元。例如 `A, a` 先比兩端 A 與 a，再跳過中間標點即可。Map 計數不保留位置關係，會把同字母數量但順序不同的 `aabb` 誤當可能的回文。
 
 **下次可以怎麼想：** 如果答案由前後對應位置是否相同決定，就從兩端逐對確認，遇到可忽略項再跳過。
 
@@ -188,11 +199,11 @@ def is_palindrome_brute(s: str) -> bool:
 
 清理、轉小寫、反轉都可能配置長度 O(n) 的暫存；不是 O(n²) 時間問題，不應硬說原版很慢。
 
-### 4. 從瓶頸推導資料結構／演算法
+### 4. 從額外字串推導相向雙指標
 
 把整串清理延後到真正比較時。左右指標略過無效字元，僅轉換當下兩個字元，不建立長度 n 的新字串。
 
-### 5. 為什麼是這個資料結構／方法
+### 5. 為什麼是相向雙指標
 
 字元索引、ASCII 判斷與單字元大小寫轉換 O(1)；兩個索引只向內，不需 Set。JavaScript substring 全串轉小寫仍配置 O(n)，不能算作常數空間。
 
@@ -266,7 +277,7 @@ def is_palindrome(s: str) -> bool:
 
 字串很短時清理反轉更簡潔。如果必須給使用者看清理結果，反正需要那份字串，不必刻意避免配置。Unicode 使用者可見字元需另定切分規則，不能直接套 UTF-16 索引。
 
-### 13. 可執行測試
+### 13. 測試
 
 把本頁 Stage B 的暴力解、完整實作及下列同語言測試依序放進 `solution.ts`／`solution.py`；不要混入 Stage A 的空白模板。TypeScript 使用已有的 `tsx` 執行器執行 `tsx solution.ts`，或先用 TypeScript 編譯器以 ES2020 編譯再執行；Python 使用 `python3 solution.py`。
 
@@ -319,7 +330,9 @@ for solve in (is_palindrome_brute, is_palindrome):
 print('125: both implementations passed', len(cases), 'cases')
 ```
 
-## Stage C｜解題後：帶回真實工作
+---
+
+## Stage C｜解題後：遷移到 Production（50–60 分鐘）
 
 ### 1. 【這個資料結構／演算法是為了解決什麼問題？】
 
@@ -394,4 +407,9 @@ function checkPhrase(text: string): PalindromeCheck {
 
 完成後回填：實際練習日期＿＿；TypeScript／Python 測試＿＿；能否閉卷解釋＿＿；下次要重寫的部分＿＿。
 
-[回到一個月預習索引](/docs/career-blueprint/leetcode-month-01)
+---
+
+## 相關連結
+
+- [Two Sum II - Input Array Is Sorted](/docs/algorithms/leetcode/f0101-0200/l0167-input-array-is-sorted)
+- [一個月 LeetCode 預習索引](/docs/career-blueprint/leetcode-month-01)

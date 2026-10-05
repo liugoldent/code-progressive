@@ -1,27 +1,62 @@
 ---
 sidebar_position: 7
-sidebar_label: "7. 一個月 LeetCode 預習"
+sidebar_label: "7. 26 週 LeetCode 排程"
 slug: "/career-blueprint/leetcode-month-01"
-title: "一個月 LeetCode 預習：Day 4 之後的完整題目筆記"
-description: "依 Google Calendar 2026 年 9 月 11 日至 10 月 10 日安排，整理 13 題完整 TypeScript＋Python 三階段筆記，以及閉卷複習與週測入口。"
+title: "26 週 LeetCode 排程：完整題單與複習索引"
+description: "依 Google Calendar 整理 2026 年 9 月 7 日至 2027 年 3 月 5 日的 26 週 NC150 題目、複習和週測，並連到既有完整題解。"
 toc_max_heading_level: 2
 tags: [Career, LeetCode, TypeScript, Python, Interview]
 ---
 
-# 一個月 LeetCode 預習
+# 26 週 LeetCode 排程
 
-這一頁讓你先把接下來一個月的題目讀完，不必等每日課表才取得題解。每個題目入口都是完整的解題前、解題分析、解題後三階段筆記，含 TypeScript＋Python 暴力解、最佳化解與可執行測試。
+把日曆排到 2027 年 3 月 5 日的 NC150 題目、複習與週測集中在這裡，方便預習和回頭重練。已有題目筆記會連回原網址。前五週的 16 題有完整三階段筆記，含 TypeScript＋Python 實作與測試；後續週次也連結本站既有的相關筆記，其餘題目仍可從日曆查閱。
 
 ## 範圍與閱讀方式
 
-- 日曆來源：Google Calendar 的「行程」，於 **2026-09-08** 讀取；以下日期可開啟 Google 日曆的當日檢視。
-- 起點：[Week 1 Day 4](/docs/career-blueprint/week-01-day-04) 對應 **2026-09-10**。往後一個月涵蓋 **2026-09-11～2026-10-10**；最後一筆平日課表是 10 月 9 日。
-- 共 **13 題後續具名題目**。原有短題解已補成完整格式，沿用原網址；複習日連回同一篇。
-- 9 月 11 日的週測沿用先前 217、242、1，共同算入可閱讀範圍時是 **16 個不同題目**。
-- 你可直接先讀 Stage B、C；若要練獨立解題，先停在 Stage A，填完自己的計畫與第一次實作再看提示。
-- 日曆日期是安排日期，並不代表實際完成日。每題的耗時、第一次作答與完成紀錄保留空白。
+- 日曆來源：Google Calendar 的「行程」，於 **2026-09-28** 核對；範圍為 **2026-09-07～2027-03-05**，共 26 週。這是日曆快照，日後異動需再核對。
+- 先用下方週索引選一題，開啟當天日曆活動確認任務。已有的題解可直接點題名；其中 Week 1 Day 4 對應 [1 Two Sum 的完整日課](/docs/career-blueprint/week-01-day-04)。
+- 前五週共有 **16 個不同具名題目**，包含第 4 週週測中的 42 Trapping Rain Water。後續週次列出日曆題名與複習節點，部分題目也有既存筆記。
+- 要練獨立解題，先讀既有筆記的 Stage A，完成第一次實作後再讀 Stage B、C。日曆日期只代表安排，不代表已完成。
 
-## Day 4 以前的起點
+## 26 週完整 LeetCode 排程
+
+以下逐週列出 Google 日曆「行程」中 **2026/9/7–2027/3/5** 的 NC150 主線。日期可直接打開當天活動；題名有連結者已有本站筆記；前五週的連結是完整三階段題解。沒有連結的題目請從 [NeetCode 150 題單](https://neetcode.io/practice/practice/neetcode150) 進入。表格呈現**安排**，不代表已完成；需要重練時可從週三和週五欄回找原週。週三、週五的具體檢討項目仍以當日日曆活動為準。
+
+| 週次／日期 | 週一、二、四：新題或指定練習 | 週三：複習 | 週五：週測 |
+| --- | --- | --- | --- |
+| W01 · 2026/9/7–9/11 | [9/7](https://calendar.google.com/calendar/u/0/r/day/2026/9/7) [Contains Duplicate](/docs/algorithms/leetcode/f0201-0300/l0217-contain-duplicate)<br/>[9/8](https://calendar.google.com/calendar/u/0/r/day/2026/9/8) [Valid Anagram](/docs/algorithms/leetcode/f0201-0300/l0242-valid-anagram)<br/>[9/10](https://calendar.google.com/calendar/u/0/r/day/2026/9/10) [Two Sum](/docs/algorithms/leetcode/f0001-0100/l0001-two-sum) | [9/9](https://calendar.google.com/calendar/u/0/r/day/2026/9/9) 複習（依當日清單） | [9/11](https://calendar.google.com/calendar/u/0/r/day/2026/9/11) 週測（依當日清單） |
+| W02 · 2026/9/14–9/18 | [9/14](https://calendar.google.com/calendar/u/0/r/day/2026/9/14) [Group Anagrams](/docs/algorithms/leetcode/f0001-0100/l0049-groupAnagrams)<br/>[9/15](https://calendar.google.com/calendar/u/0/r/day/2026/9/15) [Top K Frequent Elements](/docs/algorithms/leetcode/f0301-0400/l0347-top-K-frequent-elements)<br/>[9/17](https://calendar.google.com/calendar/u/0/r/day/2026/9/17) [Product of Array Except Self](/docs/algorithms/leetcode/f0201-0300/l0238-product-of-array-except-self) | [9/16](https://calendar.google.com/calendar/u/0/r/day/2026/9/16) 複習（依當日清單） | [9/18](https://calendar.google.com/calendar/u/0/r/day/2026/9/18) 週測（依當日清單） |
+| W03 · 2026/9/21–9/25 | [9/21](https://calendar.google.com/calendar/u/0/r/day/2026/9/21) [Valid Sudoku](/docs/algorithms/leetcode/f0001-0100/l0036-valid-sudoku)<br/>[9/22](https://calendar.google.com/calendar/u/0/r/day/2026/9/22) [Longest Consecutive Sequence](/docs/algorithms/leetcode/f0101-0200/l0128-longest-consecutive-sequence)<br/>[9/24](https://calendar.google.com/calendar/u/0/r/day/2026/9/24) [Valid Palindrome](/docs/algorithms/leetcode/f0101-0200/l0125-valid-palindrome) | [9/23](https://calendar.google.com/calendar/u/0/r/day/2026/9/23) 複習（依當日清單） | [9/25](https://calendar.google.com/calendar/u/0/r/day/2026/9/25) 週測（依當日清單） |
+| W04 · 2026/9/28–10/2 | [9/28](https://calendar.google.com/calendar/u/0/r/day/2026/9/28) [Two Sum II](/docs/algorithms/leetcode/f0101-0200/l0167-input-array-is-sorted)<br/>[9/29](https://calendar.google.com/calendar/u/0/r/day/2026/9/29) [3Sum](/docs/algorithms/leetcode/f0001-0100/l0015-3Sum)<br/>[10/1](https://calendar.google.com/calendar/u/0/r/day/2026/10/1) [Container With Most Water](/docs/algorithms/leetcode/f0001-0100/l0011-container-with-most-water) | [9/30](https://calendar.google.com/calendar/u/0/r/day/2026/9/30) 複習（依當日清單） | [10/2](https://calendar.google.com/calendar/u/0/r/day/2026/10/2) 週測；[Trapping Rain Water](/docs/algorithms/leetcode/f0001-0100/l0042-trapping-rain-water) 以圖解理解為主 |
+| W05 · 2026/10/5–10/9 | [10/5](https://calendar.google.com/calendar/u/0/r/day/2026/10/5) [Best Time to Buy and Sell Stock](/docs/algorithms/leetcode/f0101-0200/l0121-best-time-to-buy-and-sell-stock)<br/>[10/6](https://calendar.google.com/calendar/u/0/r/day/2026/10/6) [Longest Substring Without Repeating Characters](/docs/algorithms/leetcode/f0001-0100/l0003-longest-substring-without-repeating-characters)<br/>[10/8](https://calendar.google.com/calendar/u/0/r/day/2026/10/8) [Longest Repeating Character Replacement](/docs/algorithms/leetcode/f0401-0500/l0424-longest-repeating-character-replacement) | [10/7](https://calendar.google.com/calendar/u/0/r/day/2026/10/7) 複習（依當日清單） | [10/9](https://calendar.google.com/calendar/u/0/r/day/2026/10/9) 週測（依當日清單） |
+| W06 · 2026/10/12–10/16 | [10/12](https://calendar.google.com/calendar/u/0/r/day/2026/10/12) Permutation in String<br/>[10/13](https://calendar.google.com/calendar/u/0/r/day/2026/10/13) [Minimum Window Substring（先理解模板）](/docs/algorithms/leetcode/f0001-0100/l0076-minimum-window-substring)<br/>[10/15](https://calendar.google.com/calendar/u/0/r/day/2026/10/15) [Valid Parentheses](/docs/algorithms/leetcode/f0001-0100/l0020-valid-parentheses) | [10/14](https://calendar.google.com/calendar/u/0/r/day/2026/10/14) 複習（依當日清單） | [10/16](https://calendar.google.com/calendar/u/0/r/day/2026/10/16) 週測（依當日清單） |
+| W07 · 2026/10/19–10/23 | [10/19](https://calendar.google.com/calendar/u/0/r/day/2026/10/19) Evaluate Reverse Polish Notation<br/>[10/20](https://calendar.google.com/calendar/u/0/r/day/2026/10/20) Daily Temperatures<br/>[10/22](https://calendar.google.com/calendar/u/0/r/day/2026/10/22) Car Fleet | [10/21](https://calendar.google.com/calendar/u/0/r/day/2026/10/21) 複習（依當日清單） | [10/23](https://calendar.google.com/calendar/u/0/r/day/2026/10/23) 週測（依當日清單） |
+| W08 · 2026/10/26–10/30 | [10/26](https://calendar.google.com/calendar/u/0/r/day/2026/10/26) [Binary Search](/docs/algorithms/leetcode/f0701up/l0704-binary-search)<br/>[10/27](https://calendar.google.com/calendar/u/0/r/day/2026/10/27) Search a 2D Matrix<br/>[10/29](https://calendar.google.com/calendar/u/0/r/day/2026/10/29) Koko Eating Bananas | [10/28](https://calendar.google.com/calendar/u/0/r/day/2026/10/28) 複習（依當日清單） | [10/30](https://calendar.google.com/calendar/u/0/r/day/2026/10/30) 週測（依當日清單） |
+| W09 · 2026/11/2–11/6 | [11/2](https://calendar.google.com/calendar/u/0/r/day/2026/11/2) [Search in Rotated Sorted Array](/docs/algorithms/leetcode/f0001-0100/l0033-search-in-rotated-sorted-array)<br/>[11/3](https://calendar.google.com/calendar/u/0/r/day/2026/11/3) Time Based Key-Value Store<br/>[11/5](https://calendar.google.com/calendar/u/0/r/day/2026/11/5) [Reverse Linked List](/docs/algorithms/leetcode/f0201-0300/l0206-reverse-linked-list) | [11/4](https://calendar.google.com/calendar/u/0/r/day/2026/11/4) 複習（依當日清單） | [11/6](https://calendar.google.com/calendar/u/0/r/day/2026/11/6) 週測（依當日清單） |
+| W10 · 2026/11/9–11/13 | [11/9](https://calendar.google.com/calendar/u/0/r/day/2026/11/9) [Reorder List](/docs/algorithms/leetcode/f0101-0200/l0143-reorder-list)<br/>[11/10](https://calendar.google.com/calendar/u/0/r/day/2026/11/10) [Remove Nth Node From End](/docs/algorithms/leetcode/f0001-0100/l0019-remove-nth-node-from-end-of-list)<br/>[11/12](https://calendar.google.com/calendar/u/0/r/day/2026/11/12) Copy List With Random Pointer | [11/11](https://calendar.google.com/calendar/u/0/r/day/2026/11/11) 複習（依當日清單） | [11/13](https://calendar.google.com/calendar/u/0/r/day/2026/11/13) 週測（依當日清單） |
+| W11 · 2026/11/16–11/20 | [11/16](https://calendar.google.com/calendar/u/0/r/day/2026/11/16) [Linked List Cycle](/docs/algorithms/leetcode/f0101-0200/l0141-linked-list-cycle)<br/>[11/17](https://calendar.google.com/calendar/u/0/r/day/2026/11/17) Find the Duplicate Number<br/>[11/19](https://calendar.google.com/calendar/u/0/r/day/2026/11/19) [Invert Binary Tree](/docs/algorithms/leetcode/f0201-0300/l0226-invert-binary-tree) | [11/18](https://calendar.google.com/calendar/u/0/r/day/2026/11/18) 複習（依當日清單） | [11/20](https://calendar.google.com/calendar/u/0/r/day/2026/11/20) 週測（依當日清單） |
+| W12 · 2026/11/23–11/27 | [11/23](https://calendar.google.com/calendar/u/0/r/day/2026/11/23) [Same Tree](/docs/algorithms/leetcode/f0001-0100/l0100-same-tree)<br/>[11/24](https://calendar.google.com/calendar/u/0/r/day/2026/11/24) [Subtree of Another Tree](/docs/algorithms/leetcode/f0501-0600/l0572-subtree-of-another-tree)<br/>[11/26](https://calendar.google.com/calendar/u/0/r/day/2026/11/26) [Balanced Binary Tree](/docs/algorithms/leetcode/f0101-0200/l0110-balanced-binary-tree) | [11/25](https://calendar.google.com/calendar/u/0/r/day/2026/11/25) 複習（依當日清單） | [11/27](https://calendar.google.com/calendar/u/0/r/day/2026/11/27) 週測（依當日清單） |
+| W13 · 2026/11/30–12/4 | [11/30](https://calendar.google.com/calendar/u/0/r/day/2026/11/30) [Binary Tree Level Order Traversal](/docs/algorithms/leetcode/f0101-0200/l0102.binary-tree-level-order-traversal)<br/>[12/1](https://calendar.google.com/calendar/u/0/r/day/2026/12/1) Binary Tree Right Side View<br/>[12/3](https://calendar.google.com/calendar/u/0/r/day/2026/12/3) Count Good Nodes in Binary Tree | [12/2](https://calendar.google.com/calendar/u/0/r/day/2026/12/2) 複習（依當日清單） | [12/4](https://calendar.google.com/calendar/u/0/r/day/2026/12/4) 週測（依當日清單） |
+| W14 · 2026/12/7–12/11 | [12/7](https://calendar.google.com/calendar/u/0/r/day/2026/12/7) [Kth Smallest Element in a BST](/docs/algorithms/leetcode/f0201-0300/l0230-kth-smallest-element-in-a-bst)<br/>[12/8](https://calendar.google.com/calendar/u/0/r/day/2026/12/8) [Lowest Common Ancestor of a BST](/docs/algorithms/leetcode/f0201-0300/l0235-lowest-common-ancestor-of-a-binary-search-tree)<br/>[12/10](https://calendar.google.com/calendar/u/0/r/day/2026/12/10) [Construct Binary Tree from Preorder and Inorder](/docs/algorithms/leetcode/f0101-0200/l0105-construct-binary-tree-from-preorder-and-inorder-traversal) | [12/9](https://calendar.google.com/calendar/u/0/r/day/2026/12/9) 複習（依當日清單） | [12/11](https://calendar.google.com/calendar/u/0/r/day/2026/12/11) 週測（依當日清單） |
+| W15 · 2026/12/14–12/18 | [12/14](https://calendar.google.com/calendar/u/0/r/day/2026/12/14) [Kth Largest Element in a Stream](/docs/algorithms/leetcode/f0701up/l0703-kth-largest-element-in-a-stream)<br/>[12/15](https://calendar.google.com/calendar/u/0/r/day/2026/12/15) [Last Stone Weight](/docs/algorithms/leetcode/f0701up/l1046-last-stone-weight)<br/>[12/17](https://calendar.google.com/calendar/u/0/r/day/2026/12/17) [K Closest Points to Origin](/docs/algorithms/leetcode/f0701up/l0973-k-closest-points-to-origin) | [12/16](https://calendar.google.com/calendar/u/0/r/day/2026/12/16) 複習（依當日清單） | [12/18](https://calendar.google.com/calendar/u/0/r/day/2026/12/18) 週測（依當日清單） |
+| W16 · 2026/12/21–12/25 | [12/21](https://calendar.google.com/calendar/u/0/r/day/2026/12/21) Subsets<br/>[12/22](https://calendar.google.com/calendar/u/0/r/day/2026/12/22) [Combination Sum](/docs/algorithms/leetcode/f0001-0100/l0039-combination-sum)<br/>[12/24](https://calendar.google.com/calendar/u/0/r/day/2026/12/24) Permutations | [12/23](https://calendar.google.com/calendar/u/0/r/day/2026/12/23) 複習（依當日清單） | [12/25](https://calendar.google.com/calendar/u/0/r/day/2026/12/25) 週測（依當日清單） |
+| W17 · 2026/12/28–1/1 | [12/28](https://calendar.google.com/calendar/u/0/r/day/2026/12/28) Combination Sum II<br/>[12/29](https://calendar.google.com/calendar/u/0/r/day/2026/12/29) [Word Search](/docs/algorithms/leetcode/f0001-0100/l0079-word-search)<br/>[12/31](https://calendar.google.com/calendar/u/0/r/day/2026/12/31) Palindrome Partitioning | [12/30](https://calendar.google.com/calendar/u/0/r/day/2026/12/30) 複習（依當日清單） | [1/1](https://calendar.google.com/calendar/u/0/r/day/2027/1/1) 週測（依當日清單） |
+| W18 · 2027/1/4–1/8 | [1/4](https://calendar.google.com/calendar/u/0/r/day/2027/1/4) [Number of Islands](/docs/algorithms/leetcode/f0101-0200/l0200-number-of-islands)<br/>[1/5](https://calendar.google.com/calendar/u/0/r/day/2027/1/5) Max Area of Island<br/>[1/7](https://calendar.google.com/calendar/u/0/r/day/2027/1/7) [Clone Graph](/docs/algorithms/leetcode/f0101-0200/l0133-clone-graph) | [1/6](https://calendar.google.com/calendar/u/0/r/day/2027/1/6) 複習（依當日清單） | [1/8](https://calendar.google.com/calendar/u/0/r/day/2027/1/8) 週測（依當日清單） |
+| W19 · 2027/1/11–1/15 | [1/11](https://calendar.google.com/calendar/u/0/r/day/2027/1/11) Surrounded Regions<br/>[1/12](https://calendar.google.com/calendar/u/0/r/day/2027/1/12) Rotting Oranges<br/>[1/14](https://calendar.google.com/calendar/u/0/r/day/2027/1/14) Walls and Gates | [1/13](https://calendar.google.com/calendar/u/0/r/day/2027/1/13) 複習（依當日清單） | [1/15](https://calendar.google.com/calendar/u/0/r/day/2027/1/15) 週測（依當日清單） |
+| W20 · 2027/1/18–1/22 | [1/18](https://calendar.google.com/calendar/u/0/r/day/2027/1/18) [Course Schedule](/docs/algorithms/leetcode/f0201-0300/l0207-course-schedule)<br/>[1/19](https://calendar.google.com/calendar/u/0/r/day/2027/1/19) Course Schedule II<br/>[1/21](https://calendar.google.com/calendar/u/0/r/day/2027/1/21) Graph Valid Tree | [1/20](https://calendar.google.com/calendar/u/0/r/day/2027/1/20) 複習（依當日清單） | [1/22](https://calendar.google.com/calendar/u/0/r/day/2027/1/22) 週測（依當日清單） |
+| W21 · 2027/1/25–1/29 | [1/25](https://calendar.google.com/calendar/u/0/r/day/2027/1/25) Redundant Connection<br/>[1/26](https://calendar.google.com/calendar/u/0/r/day/2027/1/26) Word Ladder<br/>[1/28](https://calendar.google.com/calendar/u/0/r/day/2027/1/28) Reconstruct Itinerary | [1/27](https://calendar.google.com/calendar/u/0/r/day/2027/1/27) 複習（依當日清單） | [1/29](https://calendar.google.com/calendar/u/0/r/day/2027/1/29) 週測（依當日清單） |
+| W22 · 2027/2/1–2/5 | [2/1](https://calendar.google.com/calendar/u/0/r/day/2027/2/1) [Climbing Stairs](/docs/algorithms/leetcode/f0001-0100/l0070-climbing-stairs)<br/>[2/2](https://calendar.google.com/calendar/u/0/r/day/2027/2/2) Min Cost Climbing Stairs<br/>[2/4](https://calendar.google.com/calendar/u/0/r/day/2027/2/4) House Robber | [2/3](https://calendar.google.com/calendar/u/0/r/day/2027/2/3) 複習（依當日清單） | [2/5](https://calendar.google.com/calendar/u/0/r/day/2027/2/5) 週測（依當日清單） |
+| W23 · 2027/2/8–2/12 | [2/8](https://calendar.google.com/calendar/u/0/r/day/2027/2/8) Unique Paths<br/>[2/9](https://calendar.google.com/calendar/u/0/r/day/2027/2/9) Longest Common Subsequence<br/>[2/11](https://calendar.google.com/calendar/u/0/r/day/2027/2/11) Target Sum | [2/10](https://calendar.google.com/calendar/u/0/r/day/2027/2/10) 複習（依當日清單） | [2/12](https://calendar.google.com/calendar/u/0/r/day/2027/2/12) 週測（依當日清單） |
+| W24 · 2027/2/15–2/19 | [2/15](https://calendar.google.com/calendar/u/0/r/day/2027/2/15) [Maximum Subarray](/docs/algorithms/leetcode/f0001-0100/l0053-maximum-subarray)<br/>[2/16](https://calendar.google.com/calendar/u/0/r/day/2027/2/16) [Jump Game](/docs/algorithms/leetcode/f0001-0100/l0055-jump-game)<br/>[2/18](https://calendar.google.com/calendar/u/0/r/day/2027/2/18) [Merge Intervals](/docs/algorithms/leetcode/f0001-0100/l0056-merge-intervals) | [2/17](https://calendar.google.com/calendar/u/0/r/day/2027/2/17) 複習（依當日清單） | [2/19](https://calendar.google.com/calendar/u/0/r/day/2027/2/19) 週測（依當日清單） |
+| W25 · 2027/2/22–2/26 | [2/22](https://calendar.google.com/calendar/u/0/r/day/2027/2/22) [Rotate Image](/docs/algorithms/leetcode/f0001-0100/l0048-rotate-image)<br/>[2/23](https://calendar.google.com/calendar/u/0/r/day/2027/2/23) Set Matrix Zeroes<br/>[2/25](https://calendar.google.com/calendar/u/0/r/day/2027/2/25) [Sum of Two Integers（理解 bit carry）](/docs/algorithms/leetcode/f0301-0400/l0371-sum-of-two-integers) | [2/24](https://calendar.google.com/calendar/u/0/r/day/2027/2/24) 複習（依當日清單） | [2/26](https://calendar.google.com/calendar/u/0/r/day/2027/2/26) 週測（依當日清單） |
+| W26 · 2027/3/1–3/5 | [3/1](https://calendar.google.com/calendar/u/0/r/day/2027/3/1) [Longest Increasing Subsequence](/docs/algorithms/leetcode/f0201-0300/l0300-longest I-increasing-subsequence)<br/>[3/2](https://calendar.google.com/calendar/u/0/r/day/2027/3/2) Partition Equal Subset Sum | [3/3](https://calendar.google.com/calendar/u/0/r/day/2027/3/3) 閉卷複習 | [3/4](https://calendar.google.com/calendar/u/0/r/day/2027/3/4) 45 分鐘 Mixed Medium Mock<br/>[3/5](https://calendar.google.com/calendar/u/0/r/day/2027/3/5) 最終週測與下一循環 |
+
+第 4 週週五另有具名的 **42 Trapping Rain Water**，原安排重點是圖解與理解。第 6 週的 Minimum Window Substring 先理解模板；第 25 週的 Sum of Two Integers 先理解 bit carry；第 26 週週四是 Mixed Medium Mock，沒有指定新題。這些都保留日曆原本的練習深度，不把它們當作已閉卷完成。
+
+## 前五週的逐日筆記入口
+
+### Day 4 以前的起點
 
 | 題目 | 筆記 |
 | --- | --- |
@@ -30,27 +65,27 @@ tags: [Career, LeetCode, TypeScript, Python, Interview]
 | Day 3 | 閉卷複習 217、242 |
 | Day 4 | [1 Two Sum](/docs/algorithms/leetcode/f0001-0100/l0001-two-sum) |
 
-## 依日曆順序預習
+### 前五週逐日題解與閱讀重點
 
 | 日期／日曆當日 | 週次 | 題目筆記 | 原安排與閱讀重點 |
 | --- | --- | --- | --- |
 | [2026-09-11](https://calendar.google.com/calendar/u/0/r/day/2026/9/11) | W01 | [217 Contains Duplicate](/docs/algorithms/leetcode/f0201-0300/l0217-contain-duplicate)、[242 Valid Anagram](/docs/algorithms/leetcode/f0201-0300/l0242-valid-anagram)、[1 Two Sum](/docs/algorithms/leetcode/f0001-0100/l0001-two-sum) | 本週三題隨機抽一題，30 分鐘閉卷重寫，整理三個最重要錯誤。 |
-| [2026-09-14](https://calendar.google.com/calendar/u/0/r/day/2026/9/14) | W02 | [49 Group Anagrams](/docs/algorithms/leetcode/f0001-0100/l0049-groupAnagrams) | 完整三階段預習；自行決定何時閉卷重寫。 |
-| [2026-09-15](https://calendar.google.com/calendar/u/0/r/day/2026/9/15) | W02 | [347 Top K Frequent Elements](/docs/algorithms/leetcode/f0301-0400/l0347-top-K-frequent-elements) | 完整三階段預習；自行決定何時閉卷重寫。 |
-| [2026-09-16](https://calendar.google.com/calendar/u/0/r/day/2026/9/16) | W02 | [49 Group Anagrams](/docs/algorithms/leetcode/f0001-0100/l0049-groupAnagrams) | 閉卷重寫，完成後回看如何建立群組代表。 |
+| [2026-09-14](https://calendar.google.com/calendar/u/0/r/day/2026/9/14) | W02 | [49 Group Anagrams](/docs/algorithms/leetcode/f0001-0100/l0049-groupAnagrams) | [第 2 週 Day 1 完整日課](/docs/career-blueprint/week-02-day-01)：React 跨 render 比較、網路請求路徑與補課清單。 |
+| [2026-09-15](https://calendar.google.com/calendar/u/0/r/day/2026/9/15) | W02 | [347 Top K Frequent Elements](/docs/algorithms/leetcode/f0301-0400/l0347-top-K-frequent-elements) | [第 2 週 Day 2 完整日課](/docs/career-blueprint/week-02-day-02)：30 分鐘獨立嘗試、Python 容器、React 回想與 HTTP 版本比較。 |
+| [2026-09-16](https://calendar.google.com/calendar/u/0/r/day/2026/9/16) | W02 | [49 Group Anagrams](/docs/algorithms/leetcode/f0001-0100/l0049-groupAnagrams) | [第 2 週 Day 3 完整日課](/docs/career-blueprint/week-02-day-03)：閉卷重寫與 frequency key 圖解、React 計時器與 DOM focus、CDN 快取。 |
 | [2026-09-17](https://calendar.google.com/calendar/u/0/r/day/2026/9/17) | W02 | [238 Product of Array Except Self](/docs/algorithms/leetcode/f0201-0300/l0238-product-of-array-except-self) | 完整三階段預習；自行決定何時閉卷重寫。 |
 | [2026-09-18](https://calendar.google.com/calendar/u/0/r/day/2026/9/18) | W02 | [49 Group Anagrams](/docs/algorithms/leetcode/f0001-0100/l0049-groupAnagrams)、[347 Top K Frequent Elements](/docs/algorithms/leetcode/f0301-0400/l0347-top-K-frequent-elements)、[238 Product of Array Except Self](/docs/algorithms/leetcode/f0201-0300/l0238-product-of-array-except-self) | 口述三題解法的判斷理由，重寫 238。 |
 | [2026-09-21](https://calendar.google.com/calendar/u/0/r/day/2026/9/21) | W03 | [36 Valid Sudoku](/docs/algorithms/leetcode/f0001-0100/l0036-valid-sudoku) | 完整三階段預習；自行決定何時閉卷重寫。 |
-| [2026-09-22](https://calendar.google.com/calendar/u/0/r/day/2026/9/22) | W03 | [128 Longest Consecutive Sequence](/docs/algorithms/leetcode/f0101-0200/l0128-longest-consecutive-sequence) | 完整三階段預習；自行決定何時閉卷重寫。 |
+| [2026-09-22](https://calendar.google.com/calendar/u/0/r/day/2026/9/22) | W03 | [128 Longest Consecutive Sequence](/docs/algorithms/leetcode/f0101-0200/l0128-longest-consecutive-sequence) | [第 3 週 Day 2 完整日課](/docs/career-blueprint/week-03-day-02)：30 分鐘獨立嘗試、Python 函式語意、React 回想與 Load Balancer health check。 |
 | [2026-09-23](https://calendar.google.com/calendar/u/0/r/day/2026/9/23) | W03 | [36 Valid Sudoku](/docs/algorithms/leetcode/f0001-0100/l0036-valid-sudoku)、[128 Longest Consecutive Sequence](/docs/algorithms/leetcode/f0101-0200/l0128-longest-consecutive-sequence) | 重寫前兩題，完成後比較需要保存的資訊。 |
 | [2026-09-24](https://calendar.google.com/calendar/u/0/r/day/2026/9/24) | W03 | [125 Valid Palindrome](/docs/algorithms/leetcode/f0101-0200/l0125-valid-palindrome) | 完整三階段預習；自行決定何時閉卷重寫。 |
 | [2026-09-25](https://calendar.google.com/calendar/u/0/r/day/2026/9/25) | W03 | [125 Valid Palindrome](/docs/algorithms/leetcode/f0101-0200/l0125-valid-palindrome) | 限時重寫，畫出每次排除位置的理由。 |
 | [2026-09-28](https://calendar.google.com/calendar/u/0/r/day/2026/9/28) | W04 | [167 Two Sum II - Input Array Is Sorted](/docs/algorithms/leetcode/f0101-0200/l0167-input-array-is-sorted) | 完整三階段預習；自行決定何時閉卷重寫。 |
-| [2026-09-29](https://calendar.google.com/calendar/u/0/r/day/2026/9/29) | W04 | [15 3Sum](/docs/algorithms/leetcode/f0001-0100/l0015-3Sum) | 完整三階段預習；自行決定何時閉卷重寫。 |
-| [2026-09-30](https://calendar.google.com/calendar/u/0/r/day/2026/9/30) | W04 | [167 Two Sum II - Input Array Is Sorted](/docs/algorithms/leetcode/f0101-0200/l0167-input-array-is-sorted) | 重寫並解釋排序保證如何支援每次排除。 |
-| [2026-10-01](https://calendar.google.com/calendar/u/0/r/day/2026/10/1) | W04 | [11 Container With Most Water](/docs/algorithms/leetcode/f0001-0100/l0011-container-with-most-water) | 完整三階段預習；自行決定何時閉卷重寫。 |
+| [2026-09-29](https://calendar.google.com/calendar/u/0/r/day/2026/9/29) | W04 | [15 3Sum](/docs/algorithms/leetcode/f0001-0100/l0015-3Sum) | [第 4 週 Day 2 完整日課](/docs/career-blueprint/week-04-day-02)：30 分鐘獨立嘗試、Python package／例外／finally、React 回想與 cache-aside 讀寫。 |
+| [2026-09-30](https://calendar.google.com/calendar/u/0/r/day/2026/9/30) | W04 | [167 Two Sum II - Input Array Is Sorted](/docs/algorithms/leetcode/f0101-0200/l0167-input-array-is-sorted) | [第 4 週 Day 3 完整日課](/docs/career-blueprint/week-04-day-03)：閉卷重寫並畫 sorted invariant、React reducer＋Context、快取失效設計。 |
+| [2026-10-01](https://calendar.google.com/calendar/u/0/r/day/2026/10/1) | W04 | [11 Container With Most Water](/docs/algorithms/leetcode/f0001-0100/l0011-container-with-most-water) | [第 4 週 Day 4 完整日課](/docs/career-blueprint/week-04-day-04)：Pattern、程式、測試與 Big-O；Python package／domain error；快取高併發三種情境。 |
 | [2026-10-02](https://calendar.google.com/calendar/u/0/r/day/2026/10/2) | W04 | [42 Trapping Rain Water](/docs/algorithms/leetcode/f0001-0100/l0042-trapping-rain-water) | 週測只要求圖解與理解，不要求一次寫完；完整雙語實作已備妥。 |
-| [2026-10-05](https://calendar.google.com/calendar/u/0/r/day/2026/10/5) | W05 | [121 Best Time to Buy and Sell Stock](/docs/algorithms/leetcode/f0101-0200/l0121-best-time-to-buy-and-sell-stock) | 完整三階段預習；自行決定何時閉卷重寫。 |
+| [2026-10-05](https://calendar.google.com/calendar/u/0/r/day/2026/10/5) | W05 | [121 Best Time to Buy and Sell Stock](/docs/algorithms/leetcode/f0101-0200/l0121-best-time-to-buy-and-sell-stock) | [第 5 週 Day 1 完整日課](/docs/career-blueprint/week-05-day-01)：閉卷練習、React Hook 契約與 users／orders schema／index。 |
 | [2026-10-06](https://calendar.google.com/calendar/u/0/r/day/2026/10/6) | W05 | [3 Longest Substring Without Repeating Characters](/docs/algorithms/leetcode/f0001-0100/l0003-longest-substring-without-repeating-characters) | 完整三階段預習；自行決定何時閉卷重寫。 |
 | [2026-10-07](https://calendar.google.com/calendar/u/0/r/day/2026/10/7) | W05 | [121 Best Time to Buy and Sell Stock](/docs/algorithms/leetcode/f0101-0200/l0121-best-time-to-buy-and-sell-stock)、[3 Longest Substring Without Repeating Characters](/docs/algorithms/leetcode/f0001-0100/l0003-longest-substring-without-repeating-characters) | 重寫前兩題，說明各自如何推進與更新狀態；121 不必硬套縮窗。 |
 | [2026-10-08](https://calendar.google.com/calendar/u/0/r/day/2026/10/8) | W05 | [424 Longest Repeating Character Replacement](/docs/algorithms/leetcode/f0401-0500/l0424-longest-repeating-character-replacement) | 完整三階段預習；自行決定何時閉卷重寫。 |
@@ -58,12 +93,10 @@ tags: [Career, LeetCode, TypeScript, Python, Interview]
 
 ## 複習與測試怎麼使用
 
-每篇 Stage B 都附可執行的 TypeScript 與 Python 測試。把暴力解、完整實作與測試接在同一個檔案中執行，順序不限的結果會先正規化；保留重複資料與輸入不變的檢查。網站原始碼另有 `scripts/verify-leetcode-month.mjs`，可直接從 Markdown 擷取這批文章的程式做型別檢查與測試。
+前五週的完整三階段題解在 Stage B 附有可執行的 TypeScript 與 Python 測試。把暴力解、完整實作與測試接在同一個檔案中執行，順序不限的結果會先正規化；保留重複資料與輸入不變的檢查。網站原始碼另有 `scripts/verify-leetcode-month.mjs`，可直接從 Markdown 擷取這批文章的程式做型別檢查與測試。
 
 做完一題，再用一分鐘複習卡口述：最直接怎麼做、哪裡一直重算、為什麼能省掉、每輪要保持什麼、時間與空間代價，以及工作案例在哪些條件下才成立。
 
 ## 日曆中的未具名項目
 
-10 月 9 日的週測原文是「四題 Pattern 口述＋最弱一題重寫」，但同週事件只指定 121、3、424 三題。這份索引保留原安排差異，不把其他未具名題目當成日曆指定題。
-
-週末沒有這個查詢範圍內的固定 NeetCode 新題事件；可以用來補課或預習。這份資料是本次讀取的快照，之後日曆修改不會自動同步到筆記。
+10 月 9 日的週測原文是「四題 Pattern 口述＋最弱一題重寫」，但同週事件只指定 121、3、424 三題；索引不推定第四題。其餘週測或 Mock 若未具名，也只列練習形式。週末可依日曆說明補課，不延後下一週主線。

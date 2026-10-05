@@ -13,7 +13,7 @@ keywords: ["Binance 前端面試", "Binance Frontend Interview", "Vue 轉 React"
 
 # Binance 前端面試攻略總覽
 
-## 目標職缺定位
+## 公開職缺與能力對照
 
 這份筆記針對 Binance 前端工程師 / Senior Front-end Developer 類型職缺整理，尤其是職缺中反覆出現的要求：
 
@@ -70,7 +70,7 @@ React 官方把 state 描述成每次 render 的 snapshot，Rules of Hooks 的�
 | Identity & Security | OAuth / OIDC、session/token lifecycle、WebAuthn / passkeys、複雜流程建模、SSR / BFF、安全與可觀測性 |
 | Payments / Full Stack | React / TypeScript、API contract、idempotency、分散式系統基本觀念、後端與資料庫 |
 
-> [.COM Frontend](https://jobs.lever.co/binance/08deb184-b150-4e44-8cc2-4b9fb2c000c0) 是限定 current students / recent graduates 的 Binance Accelerator Program，不能拿它的「接受 Vue / Angular」推論 experienced hire 的 React 要求。本攻略不把它當成你的目標職缺證據。
+> [.COM Frontend](https://jobs.lever.co/binance/08deb184-b150-4e44-8cc2-4b9fb2c000c0) 是限定 current students / recent graduates 的 Binance Accelerator Program，不能拿它的「接受 Vue / Angular」推論 experienced hire 的 React 要求。本攻略不把它當成 experienced hire 的職缺證據。
 
 較接近 experienced hire 的公開職缺中，[Stablecoin](https://jobs.lever.co/binance/d1a13207-95f2-484a-976f-a25593eaa3e9) 把 React / Flux / Web security 列為要求，dApp 經驗則列為 bonus；[Identity & Security](https://jobs.lever.co/binance/a90333e6-777f-41fd-9bf5-50f5895ffde3) 另外要求 deep proficiency in React 18+、data fetching、複雜流程、SSR / BFF 與認證領域能力。Vue 經驗可以證明可轉移的前端能力，但不能取代這些職缺要求的 React 熟練度。職缺會變動，投遞前要再以目標 JD 校準一次。
 

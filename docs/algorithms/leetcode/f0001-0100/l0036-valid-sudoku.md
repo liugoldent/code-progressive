@@ -1,35 +1,36 @@
 ---
 title: "[0036] Valid Sudoku"
-toc_max_heading_level: 2
-description: "LeetCode 36 Valid Sudoku 三階段筆記：獨立讀題、推導解法、TypeScript 與 Python 實作測試，以及工程應用與取捨。"
+sidebar_label: "[0036] Valid Sudoku"
+description: "LeetCode 0036 Valid Sudoku 三階段刷題筆記：先讀懂題目與限制，再推導解法，最後把技巧遷移到真實工程案例。"
 tags:
   - LeetCode
   - Medium
-  - TypeScript
-  - Python
   - Array
   - Interview
-keywords: ["0036", "Valid Sudoku", "TypeScript", "Python", "面試練習"]
+keywords: ["0036", "Valid Sudoku", "LeetCode", "TypeScript", "Python", "數獨驗證", "面試刷題"]
 ---
 
 # [0036] Valid Sudoku
 
-> [一個月 LeetCode 預習索引](/docs/career-blueprint/leetcode-month-01) · 日曆安排：2026-09-21（W03）<br />
-> 整理／官方題面核對：2026-09-08；實際練習日期與完成狀態由你填寫。
+> 題單：[NeetCode 150](https://neetcode.io/practice/practice/neetcode150)<br />
+> 官方題目：[LeetCode 36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/)<br />
+> 練習索引：[一個月 LeetCode 預習索引](/docs/career-blueprint/leetcode-month-01)
 
-可以直接預習；若要測試獨立解題能力，先完成 Stage A，再展開提示與 Stage B。
+## Stage A｜解題前：先獨立完成（0–25 分鐘）
 
-## Stage A｜解題前：先獨立完成
+這一段先不提示最佳資料結構。請先計時、口述題意，再寫自己的版本。
 
 ### 1. 題目基本資料
 
 | 項目 | 內容 |
 | --- | --- |
-| 題號／難度 | 36／Medium |
-| 廣義分類 | Array |
-| 官方題面 | [LeetCode：Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) |
-| 練習日期 | 自行填寫；日曆日期不代表已完成 |
-| 建議限時 | 讀題與測資 10 分鐘、第一次計畫與實作 20 分鐘、分析測試 20 分鐘、複習 10 分鐘；工程延伸另讀 |
+| 題號 | 0036 |
+| 題名 | Valid Sudoku |
+| 難度 | Medium |
+| 題目大類 | Array |
+| 官方題目 | [LeetCode：Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) |
+| 本次整理日期 | 2026-09-08 |
+| 建議限時 | 第一次作答 20 分鐘，口述 5 分鐘 |
 
 ### 2. 白話題意
 
@@ -106,7 +107,7 @@ board 有 9 行，每行有 9 格；每格只可能是 1–9 的字元或點。�
 我認為最容易錯的測資與理由：
 ```
 
-### 12. 第一次實作
+### 12. 第一次閉卷實作
 
 #### TypeScript
 
@@ -152,11 +153,21 @@ def is_valid_sudoku(board: list[list[str]]) -> bool:
 
 </details>
 
-## Stage B｜解題分析：完成第一次實作後再看
+---
+
+## Stage B｜解題分析：完成閉卷後再看（25–50 分鐘）
+
+:::warning 先完成第一次作答
+
+以下開始包含解法。若還沒自己嘗試，先停在 A 區。
+
+:::
 
 ### 1. 看到這題，怎麼想到要用按行／列／宮分開的 Set？
 
-真正要問的是「這個數字在這一行、這一列或這一宮出現過沒」。最直接是每格重掃它所在區域，但同一區域會一直被掃。例：左上角的 5 應分別記在 row0、col0、box0，另一宮的 5 不能只因數字相同就被擋。Set 足以回答看過沒；需要指出衝突格座標時才改用 Map 保存位置。
+**先抓住這個想法：** 真正要問的是「這個數字在這一行、這一列或這一宮出現過沒」，所以要把三種範圍分開記錄。
+
+最直接是每格重掃它所在區域，但同一區域會一直被掃。例：左上角的 5 應分別記在 row0、col0、box0，另一宮的 5 不能只因數字相同就被擋。Set 足以回答看過沒；需要指出衝突格座標時才改用 Map 保存位置。
 
 **下次可以怎麼想：** 限制是某個範圍內不能重複時，先找出範圍身分，再分開記錄看過的值。
 
@@ -201,11 +212,11 @@ def is_valid_sudoku_brute(board: list[list[str]]) -> bool:
 
 固定棋盤最多比較 81×80/2=3240 對；每填一格都從既有格重新判斷區域。固定大小下仍是 O(1)，優化重點是減少重複工作並明確表示規則。
 
-### 4. 從瓶頸推導資料結構／演算法
+### 4. 從重複掃描推導三組 Set
 
 掃描每格時，對三個區域做三次看過沒的查詢。已處理部分的資訊存在對應 Set，不再重掃已填格。
 
-### 5. 為什麼是這個資料結構／方法
+### 5. 為什麼是按行／列／宮分開的 Set
 
 建立三組各 9 個獨立 Set；平均 has/add 為 O(1)。宮編號把 3×3 區域映射到 0–8。不要只以數字當全棋盤唯一 key，也不要用 fill(new Set()) 共享容器。
 
@@ -286,7 +297,7 @@ def is_valid_sudoku(board: list[list[str]]) -> bool:
 
 也可逐一檢查 27 個單位，各用一個局部 Set，較省同時持有的狀態且易讀。位元遮罩能縮記憶體，但要解釋 bit 對應；固定小棋盤優先可讀性。解數獨則需要搜尋，不是這個驗證問題。
 
-### 13. 可執行測試
+### 13. 測試
 
 把本頁 Stage B 的暴力解、完整實作及下列同語言測試依序放進 `solution.ts`／`solution.py`；不要混入 Stage A 的空白模板。TypeScript 使用已有的 `tsx` 執行器執行 `tsx solution.ts`，或先用 TypeScript 編譯器以 ES2020 編譯再執行；Python 使用 `python3 solution.py`。
 
@@ -339,7 +350,9 @@ for solve in (is_valid_sudoku_brute, is_valid_sudoku):
 print('36: both implementations passed', len(cases), 'cases')
 ```
 
-## Stage C｜解題後：帶回真實工作
+---
+
+## Stage C｜解題後：遷移到 Production（50–60 分鐘）
 
 ### 1. 【這個資料結構／演算法是為了解決什麼問題？】
 
@@ -419,4 +432,9 @@ function hasConflict(users: readonly ImportUser[]): boolean {
 
 完成後回填：實際練習日期＿＿；TypeScript／Python 測試＿＿；能否閉卷解釋＿＿；下次要重寫的部分＿＿。
 
-[回到一個月預習索引](/docs/career-blueprint/leetcode-month-01)
+---
+
+## 相關連結
+
+- [Longest Consecutive Sequence](/docs/algorithms/leetcode/f0101-0200/l0128-longest-consecutive-sequence)
+- [一個月 LeetCode 預習索引](/docs/career-blueprint/leetcode-month-01)

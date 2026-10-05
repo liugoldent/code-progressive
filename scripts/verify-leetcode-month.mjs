@@ -10,7 +10,9 @@ import { createRequire } from 'node:module';
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const require = createRequire(import.meta.url);
 const index = await readFile(join(root, 'docs/career-blueprint/06-leetcode-month-01.md'), 'utf8');
-const paths = [...new Set([...index.matchAll(/\]\(\/(docs\/algorithms\/leetcode\/[^)]+)\)/g)].map(m => `${m[1]}.md`))];
+// The page now lists all 26 weeks. This verifier covers the original first-five-week notes.
+const firstFiveWeeks = index.slice(index.indexOf('## 前五週的逐日筆記入口'));
+const paths = [...new Set([...firstFiveWeeks.matchAll(/\]\(\/(docs\/algorithms\/leetcode\/[^)]+)\)/g)].map(m => `${m[1]}.md`))];
 const existing = new Set([1, 217, 242]);
 const workspace = await mkdtemp(join(tmpdir(), 'leetcode-month-'));
 const sources = [];
@@ -134,7 +136,8 @@ assert normalize(${pyfn}(*large[0])) == normalize(large[1])` : ''}`);
   // Day 2 is also linked in this month's review: validate its migrated standalone tests.
   const anagramPath = paths.find(p => /l0242-/.test(p));
   const anagram = await readFile(join(root, anagramPath), 'utf8');
-  const tests = part(anagram, '### 10. 可執行測試', '### 11. 複雜度分析');
+  const testHeading = anagram.includes('### 13. 測試') ? '### 13. 測試' : '### 10. 可執行測試';
+  const tests = part(anagram, testHeading, testHeading === '### 13. 測試' ? '## Stage C' : '### 11. 複雜度分析');
   const tsPath = join(workspace, 'p242.ts'), pyPath = join(workspace, 'p242.py');
   await writeFile(tsPath, blocks(tests, 'ts')[0] + '\nexport {};\n');
   await writeFile(pyPath, blocks(tests, 'python')[0]);

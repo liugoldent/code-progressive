@@ -1,36 +1,37 @@
 ---
 title: "[0128] Longest Consecutive Sequence"
-toc_max_heading_level: 2
-description: "LeetCode 128 Longest Consecutive Sequence 三階段筆記：獨立讀題、推導解法、TypeScript 與 Python 實作測試，以及工程應用與取捨。"
+sidebar_label: "[0128] Longest Consecutive Sequence"
+description: "LeetCode 0128 Longest Consecutive Sequence 三階段刷題筆記：先讀懂題目與限制，再推導解法，最後把技巧遷移到真實工程案例。"
 tags:
   - LeetCode
   - Medium
-  - TypeScript
-  - Python
   - Array
   - Interview
-keywords: ["0128", "Longest Consecutive Sequence", "TypeScript", "Python", "面試練習"]
+keywords: ["0128", "Longest Consecutive Sequence", "LeetCode", "TypeScript", "Python", "Set", "面試刷題"]
 date: 2025-06-16
 ---
 
 # [0128] Longest Consecutive Sequence
 
-> [一個月 LeetCode 預習索引](/docs/career-blueprint/leetcode-month-01) · 日曆安排：2026-09-22（W03）<br />
-> 整理／官方題面核對：2026-09-08；實際練習日期與完成狀態由你填寫。
+> 題單：[NeetCode 150](https://neetcode.io/practice/practice/neetcode150)<br />
+> 官方題目：[LeetCode 128. Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)<br />
+> 練習索引：[一個月 LeetCode 預習索引](/docs/career-blueprint/leetcode-month-01)
 
-可以直接預習；若要測試獨立解題能力，先完成 Stage A，再展開提示與 Stage B。
+## Stage A｜解題前：先獨立完成（0–25 分鐘）
 
-## Stage A｜解題前：先獨立完成
+這一段先不提示最佳資料結構。請先計時、口述題意，再寫自己的版本。
 
 ### 1. 題目基本資料
 
 | 項目 | 內容 |
 | --- | --- |
-| 題號／難度 | 128／Medium |
-| 廣義分類 | Array |
-| 官方題面 | [LeetCode：Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) |
-| 練習日期 | 自行填寫；日曆日期不代表已完成 |
-| 建議限時 | 讀題與測資 10 分鐘、第一次計畫與實作 20 分鐘、分析測試 20 分鐘、複習 10 分鐘；工程延伸另讀 |
+| 題號 | 0128 |
+| 題名 | Longest Consecutive Sequence |
+| 難度 | Medium |
+| 題目大類 | Array |
+| 官方題目 | [LeetCode：Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) |
+| 本次整理日期 | 2026-09-08 |
+| 建議限時 | 第一次作答 20 分鐘，口述 5 分鐘 |
 
 ### 2. 白話題意
 
@@ -109,7 +110,7 @@ def longest_consecutive(nums: list[int]) -> int: ...
 我認為最容易錯的測資與理由：
 ```
 
-### 12. 第一次實作
+### 12. 第一次閉卷實作
 
 #### TypeScript
 
@@ -155,11 +156,21 @@ Set 能快速查下一個整數是否存在；但還要避免從每個中間點�
 
 </details>
 
-## Stage B｜解題分析：完成第一次實作後再看
+---
 
-### 1. 看到這題，怎麼想到要用Set 與序列起點判斷？
+## Stage B｜解題分析：完成閉卷後再看（25–50 分鐘）
 
-不想從 1 數到 4，又從 2 數到 4、從 3 數到 4。要知道「下一個整數在不在」可存 Set；更重要的是只從沒有前一個整數的起點出發。`[4,1,3,2]` 中只有 1 沒有前驅，整條只走一次。Map 計次數多存了本題不需要的資訊；單有 Set 但每個值都向後走，仍可能平方時間。
+:::warning 先完成第一次作答
+
+以下開始包含解法。若還沒自己嘗試，先停在 A 區。
+
+:::
+
+### 1. 看到這題，怎麼想到要用 Set 與序列起點判斷？
+
+**先抓住這個想法：** Set 讓我們快速回答「下一個整數在不在」，序列起點判斷則避免把同一段連續數字反覆走很多次。
+
+不想從 1 數到 4，又從 2 數到 4、從 3 數到 4。更重要的是只從沒有前一個整數的起點出發。`[4,1,3,2]` 中只有 1 沒有前驅，整條只走一次。Map 計次數多存了本題不需要的資訊；單有 Set 但每個值都向後走，仍可能平方時間。
 
 **下次可以怎麼想：** 當要找可串接的連續段，先問能不能只從段的起點展開，讓每個元素只屬於一次展開。
 
@@ -200,11 +211,11 @@ def longest_consecutive_brute(nums: list[int]) -> int:
 
 長度 u 的連續段會走 u+(u−1)+…+1 次，最差 O(n+u²)。查詢變快，不等於查詢次數變少。
 
-### 4. 從瓶頸推導資料結構／演算法
+### 4. 從重複展開推導序列起點判斷
 
 先檢查 start−1；若存在，這個數屬於更早起點的序列，跳過。外層必須走去重集合，否則大量重複起點又會重掃相同長段。
 
-### 5. 為什麼是這個資料結構／方法
+### 5. 為什麼是 Set 加上起點判斷
 
 Set 建立平均 O(n)，查找平均 O(1)；不需要額外排序。整數加一在官方範圍內可安全表示；不把 Map／Set 操作的極端碰撞成本說成嚴格最差 O(1)。
 
@@ -279,7 +290,7 @@ def longest_consecutive(nums: list[int]) -> int:
 
 複製後排序再去重掃描簡單、O(n log n)，但不符合題面線性要求。值域很小且密集時可用布林陣列；本題值域二十億，直接配置不合理。
 
-### 13. 可執行測試
+### 13. 測試
 
 把本頁 Stage B 的暴力解、完整實作及下列同語言測試依序放進 `solution.ts`／`solution.py`；不要混入 Stage A 的空白模板。TypeScript 使用已有的 `tsx` 執行器執行 `tsx solution.ts`，或先用 TypeScript 編譯器以 ES2020 編譯再執行；Python 使用 `python3 solution.py`。
 
@@ -331,7 +342,9 @@ for solve in (longest_consecutive_brute, longest_consecutive):
 print('128: both implementations passed', len(cases), 'cases')
 ```
 
-## Stage C｜解題後：帶回真實工作
+---
+
+## Stage C｜解題後：遷移到 Production（50–60 分鐘）
 
 ### 1. 【這個資料結構／演算法是為了解決什麼問題？】
 
@@ -411,4 +424,10 @@ function longestChunkRun(ids: readonly number[]): number {
 
 完成後回填：實際練習日期＿＿；TypeScript／Python 測試＿＿；能否閉卷解釋＿＿；下次要重寫的部分＿＿。
 
-[回到一個月預習索引](/docs/career-blueprint/leetcode-month-01)
+---
+
+## 相關連結
+
+- [Valid Sudoku](/docs/algorithms/leetcode/f0001-0100/l0036-valid-sudoku)
+- [Valid Palindrome](/docs/algorithms/leetcode/f0101-0200/l0125-valid-palindrome)
+- [一個月 LeetCode 預習索引](/docs/career-blueprint/leetcode-month-01)

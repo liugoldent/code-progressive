@@ -1,33 +1,25 @@
 ---
 sidebar_position: 1
 sidebar_label: "1. 未來藍圖"
-title: "未來藍圖：半年內建立四家公司共用的面試能力"
-description: "以前端工程師的既有經驗為起點，重新建立資料結構與演算法基礎，並同步準備 Amazon、Binance、台積電與聯發科的前端面試。"
+title: "未來藍圖：半年內建立可遷移的面試能力"
+description: "以前端工程經驗為起點，建立資料結構、演算法、前端實作與系統設計能力，並用作品和練習成果驗證。"
 tags:
   - Career
   - Interview
   - Frontend
   - Algorithms
-keywords: ["未來藍圖", "前端工程師轉職", "Amazon 面試", "Binance 面試", "台積電面試", "聯發科面試", "半年面試準備"]
+keywords: ["未來藍圖", "前端工程師轉職", "演算法", "React", "系統設計", "半年面試準備"]
 ---
 
 # 1. 未來藍圖
 
 ## 最終目標
 
-未來半年不是單押一家公司，而是建立一套可以重複使用的面試能力，再依不同公司補上少量專項準備。
+未來半年建立可重複使用的工程與面試能力，並以可公開驗證的作品、測試紀錄和技術說明呈現成果。
 
-主要目標分成三條職涯路線、四家公司：
-
-1. **衝刺天花板：Amazon**
-   - 目標角色：Front-End Engineer，或以前端為主的 Software Development Engineer。
-   - 職涯價值：建立大廠等級的解題、系統設計、行為面試與國際履歷。
-2. **追求 Remote 與國際薪資：Binance**
-   - 目標角色：Frontend Engineer / Senior Frontend Engineer。
-   - 職涯價值：累積全球協作、即時資料、交易產品與高效能前端經驗。
-3. **在地穩健高薪：台積電、聯發科**
-   - 目標角色：IT Front-End Developer、Web Front-End Engineer，或前端導向的 Software Engineer。
-   - 職涯價值：進入台灣大型科技企業，累積企業系統、開發者工具與跨部門協作經驗。
+1. **演算法與程式實作**：能說明限制、推導解法、寫出可執行程式並驗證邊界情況。
+2. **前端與系統設計**：掌握 React、資料流、效能、可靠性和跨團隊協作所需的設計取捨。
+3. **作品與技術表達**：用真實數字、測試和架構決策說明自己的貢獻。
 
 ## 參考公司
 
@@ -39,44 +31,44 @@ keywords: ["未來藍圖", "前端工程師轉職", "Amazon 面試", "Binance �
 
 這是公司非主管職員工的整體薪資統計，不代表前端工程師的薪資、起薪或保證 offer。投遞前仍需確認實際職缺、團隊、職等、工作地點及薪酬組成；名單也不代表各公司目前都有前端職缺。
 
-### 台北與竹北高鐵周邊軟體職涯目標：依職缺與筆記重疊度篩選
+### 台北與竹北高鐵周邊軟體職缺研究：依職缺與筆記重疊度篩選
 
-**以華碩、台達電、華邦電的前端職缺作為近期準備主軸；聯發科的全端 AI 職缺作為有條件的衝刺目標。** Python 後端則用華碩與緯穎的需求校準長期能力。這是依目前約五年前端經驗與既有筆記所做的準備順序判斷，不是錄取機率排名。
+以下職缺研究用來比較前端、全端與 Python 後端要求和既有筆記的重疊程度。職缺條件與技術要求可能變動，實際申請前須重新查核。
 
 可接受地點擴充為 **台北市＋竹北的新竹高鐵站周邊**，新北仍依通勤條件評估。竹北職缺須核對辦公地址及高鐵出站後的交通；只標示「竹北」或「新竹」時，先列待確認，不直接當成高鐵站附近。
 
-查核日期：**2026-09-09**。以下是本次找到具體職缺證據的目標清單，**不是 86 家公司的完整招募普查**；未列入不等於沒有職缺。地點以職缺的實際上班地點為準，台北市與新北市分列。「刊登中」表示查詢頁面仍呈現職缺及應徵入口，實際名額以企業回覆為準。
+查核日期：**2026-09-09**。以下是本次找到具體職缺證據的研究樣本，**不是 86 家公司的完整招募普查**；未列入不等於沒有職缺。地點以職缺的實際上班地點為準，台北市與新北市分列。「刊登中」表示查詢頁面仍呈現職缺及應徵入口，實際名額以企業回覆為準。
 
 #### 台北市：優先追蹤
 
 | 公司／2025 中位年薪 | 地點與職缺來源 | 技術與職務重點 | 門檻、狀態與準備定位 |
 | --- | --- | --- | --- |
-| **華碩（2357）／153.9 萬** | 北投區：[RD21113 前端工程師 Frontend Developers (Medical AI)](https://www.104.com.tw/job/7wbn5) | Vue 3、Composition API、JS/TS、Pinia/Vuex、REST API、WebSocket；元件設計、效能、測試、CI/CD。 | **近期主目標**。刊登中，頁面更新 08/05；3 年以上、大學以上及相關科系。與既有 Vue 經驗直接重疊，要補上可展示的測試、效能量測及架構成果。 |
-| **台達電（2308）／166.5 萬** | 內湖區瑞光路 186 號：[VueJS 前端開發工程師－風險管理－資訊處](https://www.104.com.tw/job/8idw3) | Vue 3、TypeScript、Pinia、Vite、REST API、單元測試、前端架構、XSS/CSRF、OAuth2/JWT；Python、Docker/K8s、CI/CD 為加分。 | **近期主目標**。刊登中，頁面更新 09/03；3 年以上、大學／碩士及資管／資工相關科系。前端是主體，Python 能作為延伸能力。 |
-| **聯發科（2454）／355.2 萬** | 內湖區瑞光路 218 號：[全端 AI 稽核應用工程師](https://www.104.com.tw/job/94m5p) | Python、JavaScript、React/Vue、前後端 API、資料流、LLM 串接、雲端及容器部署；MCP/RAG/向量資料庫列為加分。 | **有條件衝刺**。刊登中，頁面更新 08/07；碩士以上，年資欄不拘，但必要條件包含前後端、AI/ML 應用及雲端容器實戰。須先核對學歷資格，不能只靠前端筆記。 |
+| **華碩（2357）／153.9 萬** | 北投區：[RD21113 前端工程師 Frontend Developers (Medical AI)](https://www.104.com.tw/job/7wbn5) | Vue 3、Composition API、JS/TS、Pinia/Vuex、REST API、WebSocket；元件設計、效能、測試、CI/CD。 | **技能高度重疊**。刊登中，頁面更新 08/05；3 年以上、大學以上及相關科系。與既有 Vue 經驗直接重疊，要補上可展示的測試、效能量測及架構成果。 |
+| **台達電（2308）／166.5 萬** | 內湖區瑞光路 186 號：[VueJS 前端開發工程師－風險管理－資訊處](https://www.104.com.tw/job/8idw3) | Vue 3、TypeScript、Pinia、Vite、REST API、單元測試、前端架構、XSS/CSRF、OAuth2/JWT；Python、Docker/K8s、CI/CD 為加分。 | **技能高度重疊**。刊登中，頁面更新 09/03；3 年以上、大學／碩士及資管／資工相關科系。前端是主體，Python 能作為延伸能力。 |
+| **聯發科（2454）／355.2 萬** | 內湖區瑞光路 218 號：[全端 AI 稽核應用工程師](https://www.104.com.tw/job/94m5p) | Python、JavaScript、React/Vue、前後端 API、資料流、LLM 串接、雲端及容器部署；MCP/RAG/向量資料庫列為加分。 | **需核對資格與經驗**。刊登中，頁面更新 08/07；碩士以上，年資欄不拘，但必要條件包含前後端、AI/ML 應用及雲端容器實戰。須先核對學歷資格，不能只靠前端筆記。 |
 | **是方（6561）／214.4 萬** | 內湖區瑞光路 68 號 2 樓：[系統開發工程師](https://www.1111.com.tw/job/91162065/) | 企業資訊系統開發與維護；JS、Python 是可接受語言之一，並列 ERP、SQL、系統分析能力。 | **次要候選**。刊登中，頁面日期 2026-08-03；3 年以上、大學以上。需確認實際技術組合及開發／維運比例；不是已確認以 Python 或現代前端為主的團隊。頁面月薪 4 萬，不能由公司中位數推算這份職缺年薪。 |
 
-華碩另有 **AD10601 Senior Python Backend Engineer**，位於北投、要求 5 年以上，涵蓋 Python 高併發 API、微服務、SQL 查詢優化、快取、安全與型別註記，可列為後端延伸目標。五年前端年資不能直接視為符合資深 Python 後端能力。[華碩刊登職缺清單](https://www.104.com.tw/company/auxx12g?jobsource=index_cmp_3&roleJobCat=1_2007001016)
+華碩另有 **AD10601 Senior Python Backend Engineer**，位於北投、要求 5 年以上，涵蓋 Python 高併發 API、微服務、SQL 查詢優化、快取、安全與型別註記，可作為後端能力對照。五年前端年資不能直接視為符合資深 Python 後端能力。[華碩刊登職缺清單](https://www.104.com.tw/company/auxx12g?jobsource=index_cmp_3&roleJobCat=1_2007001016)
 
 #### 新北市：通勤可接受時再納入
 
 | 公司／2025 中位年薪 | 地點與職缺來源 | 技術與筆記重疊 | 門檻、狀態與準備定位 |
 | --- | --- | --- | --- |
-| **緯穎（6669）／227 萬** | 汐止區新台五路一段 90 號 8 樓：[AJ5 解決方案開發工程師（技術主任／技術副理）](https://www.104.com.tw/job/8o415?jobsource=googlejobs) | Python、FastAPI、微服務、K8s、Azure/AWS、系統分析；與 Python API、Redis、系統設計路線高度重疊。 | **長期目標**。頁面有應徵入口、更新 07/31；總年資 8 年以上，且 Python/FastAPI 後端需 2 年以上，英文要求高。現階段用來定義能力差距，不當作已符合資格的職缺。 |
+| **緯穎（6669）／227 萬** | 汐止區新台五路一段 90 號 8 樓：[AJ5 解決方案開發工程師（技術主任／技術副理）](https://www.104.com.tw/job/8o415?jobsource=googlejobs) | Python、FastAPI、微服務、K8s、Azure/AWS、系統分析；與 Python API、Redis、系統設計路線高度重疊。 | **能力差距較大**。頁面有應徵入口、更新 07/31；總年資 8 年以上，且 Python/FastAPI 後端需 2 年以上，英文要求高。現階段用來定義能力差距，不當作已符合資格的職缺。 |
 | **鈊象（3293）／259.3 萬** | 五股區五工路 130 號：[Python 軟體工程師](https://www.104.com.tw/job/7f9ff) | 遊戲平台與 Server 開發維護、效能優化、遊戲資料庫；可延伸 Python、SQL、即時系統筆記。 | **條件式候選**。刊登中，頁面更新 09/08；年資不拘、大學以上。需接受遊戲產品方向；頁面月薪 3～6 萬，應另問全年薪酬與分紅，不把 259.3 萬當成此職缺待遇。 |
 
-#### 竹北高鐵周邊：新增華邦電為前端主目標
+#### 竹北高鐵周邊：華邦電前端職缺研究
 
 **華邦電（2344），2025 年非主管職員工年薪中位數 161.7 萬元**，已在原本 86 家公司池內。辦公地址為 **新竹縣竹北市文興路二段 539 號**；官方活動交通說明列出新竹高鐵站下車後，經復興三路二段及高鐵二路，**步行約 5 分鐘**。這是出站後步行時間，不含住家至車站、候車及高鐵乘車時間。[華邦官方交通說明](https://sscm.winbond.com/Page/SES/SSCMForum2025)
 
-| 具體職缺 | 技術與資格 | 目標定位 |
+| 具體職缺 | 技術與資格 | 條件分析 |
 | --- | --- | --- |
-| [(竹北／台中) Senior Frontend Engineer](https://careers.winbond.com/job/新竹，台灣-%28竹北-台中%29-Senior-Frontend-Engineer/1359857666/) | 大學、資工／資管相關，2 年以上；要求 Vue 3 或 React 至少 2 年上線經驗、JavaScript、HTML/CSS、模組設計、效能與安全、Git、AI Agent/MCP 基本概念及 AI 工具協作。 | **近期主目標**。2026-09-09 查詢官方頁仍有應徵入口，內文明列竹北辦公地址。JD 同時包含 Azure、微服務、IaC 與 CI/CD，面試需確認前端開發及平台工作比例。 |
+| [(竹北／台中) Senior Frontend Engineer](https://careers.winbond.com/job/新竹，台灣-%28竹北-台中%29-Senior-Frontend-Engineer/1359857666/) | 大學、資工／資管相關，2 年以上；要求 Vue 3 或 React 至少 2 年上線經驗、JavaScript、HTML/CSS、模組設計、效能與安全、Git、AI Agent/MCP 基本概念及 AI 工具協作。 | **技能高度重疊**。2026-09-09 查詢官方頁仍有應徵入口，內文明列竹北辦公地址。JD 同時包含 Azure、微服務、IaC 與 CI/CD，面試需確認前端開發及平台工作比例。 |
 | [(竹北／台中) 資深軟體開發工程師](https://careers.winbond.com/job/新竹，台灣-%28竹北-台中%29-資深軟體開發工程師/1331478866/) | 大學、資工／資管相關，5 年以上；C#.NET Core、Vue 3、SQL、前後端分離及微服務，Azure／CI/CD／測試加分。 | **條件式延伸**。官方頁有應徵入口，同址；系統設計筆記可共用，但 C# 是必要條件，不能以 Python 直接取代。 |
 
 兩個職缺標題都包含台中，但目前內文明列竹北地址；投遞時註明選擇竹北，確認實際團隊駐地。公司中位年薪是公司池的篩選依據，兩個 JD 並未保證個人年薪達 161.7 萬元。
 
-**筆記與作品的對應：** 沿用 [Vue 3](../frontend-frameworks/vue/fe-vue3.md)、[React 練習](../react-job-bootcamp/react-30-drills.md)、[前端效能](../react-job-bootcamp/frontend-performance.md)及[工程品質與系統](../frontend-interview/binance/04-frontend-core/03-quality-performance-system.md)。在下方「企業稽核與監控平台」作品補上可重用元件、前端權限與安全、GitHub Actions、效能改善紀錄，再逐步練 Azure 容器部署與 MCP。Python 可繼續作為自己的作品後端，但目前這兩份 JD 並未確認採 Python 作為主要後端。
+**筆記與作品的對應：** 沿用 [Vue 3](../frontend-frameworks/vue/fe-vue3.md)、[React 練習](../react-job-bootcamp/react-30-drills.md)、[前端效能](../react-job-bootcamp/frontend-performance/index.md)及[工程品質與系統](../frontend-interview/binance/04-frontend-core/03-quality-performance-system.md)。在下方「企業稽核與監控平台」作品補上可重用元件、前端權限與安全、GitHub Actions、效能改善紀錄，再逐步練 Azure 容器部署與 MCP。Python 可繼續作為自己的作品後端，但目前這兩份 JD 並未確認採 Python 作為主要後端。
 
 #### 高鐵出站後可接受短程接駁：台元園區候選
 
@@ -84,20 +76,20 @@ keywords: ["未來藍圖", "前端工程師轉職", "Amazon 面試", "Binance �
 
 | 公司／2025 中位年薪 | 已確認據點 | 職缺吻合程度與定位 |
 | --- | --- | --- |
-| **華邦電／161.7 萬** | 文興路二段 539 號，官方說明高鐵步行約 5 分鐘。 | **第一優先**：上方已核實 Vue 3／React 前端職缺與地址。 |
+| **華邦電／161.7 萬** | 文興路二段 539 號，官方說明高鐵步行約 5 分鐘。 | **已確認職缺**：上方已核實 Vue 3／React 前端職缺與地址。 |
 | **聯發科／355.2 萬** | [官方列出的竹北台元辦公室](https://www.mediatek.com/zh-tw/company/contact-us)，例如台元街 18 號、26 號。 | **地點候選**：可擴充追蹤竹北的 Web／全端職缺，但上方已確認的 Python＋JS 全端 AI 職缺在內湖，不能直接當成竹北也有同職缺。須逐筆確認團隊地址。 |
 | **聯詠／265.2 萬** | [台元大樓：台元二街 9 號](https://www.novatek.com.tw/zh-TW/Location/global_office)。 | **Python／DevOps 條件式候選**：[企業刊登清單](https://www.104.com.tw/company/12nopku0?jobsource=digital_company&roleJobCat=2007002003)有竹北「系統自動化工程師(IT)」，包含 Python 等程式語言、Git／Jenkins、CI/CD、監控及 HPC／伺服器維運；1 年以上、大學以上。不是 Web 前端職缺，且職缺列表僅確認竹北市，台元實際駐地仍須確認。 |
-| **矽創／224.5 萬** | [總公司：台元一街 5 號 11 樓之 1](https://www.sitronix.com.tw/tw/contacts/)。 | **僅列地點候選**：本次未核實符合 JS／Python Web 路線的當期職缺，先不提升為準備主目標。 |
+| **矽創／224.5 萬** | [總公司：台元一街 5 號 11 樓之 1](https://www.sitronix.com.tw/tw/contacts/)。 | **僅列地點候選**：本次未核實符合 JS／Python Web 路線的當期職缺，目前缺乏職缺證據。 |
 
-查核日期：2026-09-09。這張表區分「地點可評估」與「已確認適合的職缺」，不表示四家公司都已有符合條件的工作。**若希望出站後直接步行，目前首選仍是華邦電；若能接受接駁，再追蹤聯發科、聯詠，矽創先觀察。** 聯詠方向可接回 Python、CI/CD、監控與系統設計筆記，但需要額外補足 Linux／伺服器維運實務。
+查核日期：2026-09-09。這張表區分「地點可評估」與「已確認職缺」，不表示表內公司都有符合條件的工作。華邦電的前端職缺與地址已核實；台元園區的其他職缺須逐筆確認團隊地址和技能要求。聯詠方向可接回 Python、CI/CD、監控與系統設計筆記，但需要額外補足 Linux／伺服器維運實務。
 
-#### 有軟體機會，但目前不列為 JS／Python Web 主目標
+#### 其他軟體職缺的技能差距
 
 | 公司 | 本次查到的證據 | 暫緩原因 |
 | --- | --- | --- |
 | 瑞昱 | 大直／中山區樂群三路 126 號：[嵌入式多媒體軟體開發工程師](https://www.1111.com.tw/job/98755952/)；頁面日期 2026-09-06。 | 核心是 Linux embedded、C/C++、平台移植及多媒體效能，Python 是其中一項技能；需要另一套嵌入式準備，且要求碩士。 |
 | 鴻海 | 內湖：[C4 後端應用開發工程師](https://www.1111.com.tw/job/132087413)；頁面日期 2026-09-03。 | 實際 JD 以 .NET Core／C# 為主。API、資料庫、系統設計可共用，但語言與框架需要額外投入。 |
-| 台積電 | [Software Engineer 官方招募說明](https://www.tsmc.com/static/english/careers/campus_recruitment_2025/index.html)列出 JS/TS/Python 與資料結構；本次查到的 [Backend Software Engineer](https://www.104.com.tw/job/759lt)位於新竹市。 | 有技術重疊，但本次尚未確認符合條件的台北職缺；保留原本衝刺目標，地點確認後再決定投遞。官方 2025 校招頁只作能力參考，不當成當期台北職缺證據。 |
+| 台積電 | [Software Engineer 官方招募說明](https://www.tsmc.com/static/english/careers/campus_recruitment_2025/index.html)列出 JS/TS/Python 與資料結構；本次查到的 [Backend Software Engineer](https://www.104.com.tw/job/759lt)位於新竹市。 | 有技術重疊，但本次尚未確認符合條件的台北職缺。官方 2025 校招頁只作能力參考，不當成當期台北職缺證據。 |
 
 #### 把公司需求接回現有筆記
 
@@ -106,14 +98,14 @@ keywords: ["未來藍圖", "前端工程師轉職", "Amazon 面試", "Binance �
 | 能力主線 | 現有筆記 | 對應公司與下一個可驗證成果 |
 | --- | --- | --- |
 | Vue 3／狀態管理 | [Vue 3](../frontend-frameworks/vue/fe-vue3.md)、[Pinia](../frontend-frameworks/vue/pinia.md) | 華碩、台達電：做出有路由、角色權限、表單驗證、錯誤處理的企業後台，並說清楚元件與狀態如何拆分。 |
-| JS／TS／React | [JavaScript 與 TypeScript](../frontend-interview/binance/04-frontend-core/01-javascript-typescript.md)、[React 30 題](../react-job-bootcamp/react-30-drills.md) | 聯發科全端與原有 Amazon／Binance 路線：保留 React 主線，把同一個 API 功能用 React 實作，練習型別、非同步狀態與競態處理。 |
+| JS／TS／React | [JavaScript 與 TypeScript](../frontend-interview/binance/04-frontend-core/01-javascript-typescript.md)、[React 30 題](../react-job-bootcamp/react-30-drills.md) | 把同一個 API 功能用 React 實作，練習型別、非同步狀態與競態處理。 |
 | Python API／SQL／快取 | [Flask 入門](../backend/python/flask-base.md)、[Python SQL](../backend/python/python-sql.md)、[React × Python × Redis](../system-design/02-redis-cache-react-python.md) | 聯發科、華碩後端、緯穎、是方：完成 FastAPI＋資料庫＋Redis 的 API，加入驗證、交易、快取失效與整合測試。FastAPI 入門範例仍需擴充成完整服務。 |
-| 即時資料／效能 | [WebSocket](../frontend-core/javascript/fe-websocket.md)、[前端效能](../react-job-bootcamp/frontend-performance.md) | 華碩、台達電；鈊象可作伺服器方向延伸：實作斷線重連、重複事件處理、列表效能量測，保存改善前後數字。鈊象 JD 未指定 WebSocket，這是練習建議。 |
+| 即時資料／效能 | [WebSocket](../frontend-core/javascript/fe-websocket.md)、[前端效能](../react-job-bootcamp/frontend-performance/index.md) | 華碩、台達電；鈊象可作伺服器方向延伸：實作斷線重連、重複事件處理、列表效能量測，保存改善前後數字。鈊象 JD 未指定 WebSocket，這是練習建議。 |
 | 系統設計／工程品質 | [高流量網站架構](../system-design/01-high-traffic-web-architecture.md)、[工程品質、效能與系統](../frontend-interview/binance/04-frontend-core/03-quality-performance-system.md) | 台達電、華碩、聯發科、緯穎：補齊測試、CI/CD、權限檢查、監控與故障處理，能解釋取捨而不只列工具名稱。 |
 
 **建議作品：企業稽核與監控平台。** 以 Vue 3＋TypeScript 做主要介面，Python FastAPI 提供 API，資料庫保存正式資料，Redis 處理可重建的快取；先完成登入／權限、查詢列表、稽核紀錄、測試及 Docker 部署。這一份作品就能串起華碩與台達電的前端要求，以及 Python 與系統設計筆記。
 
-基礎功能穩定後，再加上 React 介面練習；若要衝刺聯發科，追加有來源引用、存取權限與失敗處理的 LLM／RAG 功能。AI 整合、雲端部署及向量檢索是要補強的新範圍，不能把平常使用 AI 工具等同於開發經驗。
+基礎功能穩定後，再加上 React 介面練習；若要展示 AI 整合能力，追加有來源引用、存取權限與失敗處理的 LLM／RAG 功能。先用 [RAG 入門](../system-design/03-rag-basics.md)建立概念，再用[精選 AI 工程面試題](../resources/learning-resources.md#ai-工程面試先挑與全端作品有關的題目)檢查設計取捨。AI 整合、雲端部署及向量檢索是要補強的新範圍，不能把平常使用 AI 工具等同於開發經驗。
 
 每次準備投遞時，重新核對職缺是否開放、聘僱公司、地點、學歷及年資。以同一份履歷的工程成果為底，分別強調「Vue 前端品質」或「Python 全端整合」，讓筆記、作品與目標 JD 對得起來。
 
@@ -220,9 +212,15 @@ keywords: ["未來藍圖", "前端工程師轉職", "Amazon 面試", "Binance �
 
 準備方式採用 **共同核心 70% + 公司專項 30%**。這不是面試題型的固定占比，而是個人的時間配置原則。
 
+### 未來面試筆記的選題依據
+
+過去的面試經驗只能說明當時遇到什麼，不能直接推定未來的題型。後續更新公司別面試筆記時，**提高近期公開題庫與當期職缺的權重**：[公司別 AI 工程面試題庫](https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise)用來發現 AI／全端新題型；實際 JD 與公司官方面試說明用來確認目標職務和考察範圍；自己的舊面試經驗則用來補上時間管理與真實追問。公開題庫自述為面試經驗彙整，職務、團隊與時間可能不同，因此每一題都要標明來源與適用職務，不寫成「這家公司一定會考」。
+
+整理順序固定為：**目標職務 → 當期證據 → 共通能力 → 新題型 → 自己可展示的作品或經驗 → 練習與驗收**。若未來投的是前端職缺，先守住前端與 coding；若投全端 AI 或 AI 產品職缺，從題庫提高 RAG、Agent、評估、權限與成本題的優先度。每次拿到新 JD，就重排該公司頁的練習順序，不把半年前的題單當成永久清單。
+
 ### 共同核心
 
-四家公司都能使用的能力：
+不同前端與全端職務都能使用的能力：
 
 1. 資料結構與演算法基礎。
 2. JavaScript、TypeScript 與瀏覽器底層。
@@ -232,12 +230,12 @@ keywords: ["未來藍圖", "前端工程師轉職", "Amazon 面試", "Binance �
 6. Production 專案的技術決策與成果證據。
 7. 中文與英文的技術表達、行為面試故事。
 
-### 公司專項
+### 情境專項
 
-- **Amazon**：Leadership Principles、無 IDE Coding、Front-End System Design。
-- **Binance**：交易產品、WebSocket、即時資料正確性、Web Security、React 深度。
-- **台積電**：企業內部系統、穩定性、權限、跨部門需求、長期維護。
-- **聯發科**：React / TypeScript、元件架構、測試、CI/CD、RD 生產力工具。
+- **大型前端產品**：無 IDE Coding、前端系統設計、可用性與效能。
+- **即時資料產品**：WebSocket、資料正確性、安全與高頻更新。
+- **企業內部系統**：權限、稽核、穩定性、跨部門需求與長期維護。
+- **開發者工具**：React／TypeScript、元件架構、測試、CI/CD 與生產力工具。
 
 ## 每週固定訓練節奏
 
@@ -274,14 +272,14 @@ Google Calendar 的正式訓練時段為週一至週五 20:30～22:50。每天�
   → Security / Observability / Deployment
   → Autocomplete / Feed / Dashboard / Chat / Media
   → Order / Payment / Trading / 企業內部平台
-  → Amazon FEE Mock / 四家公司需求變體
+  → 前端與全端 Mock / 不同產品情境的需求變體
 ```
 
 ## 半年路線
 
 ### 第 1 個月：重新定位與建立基線
 
-- 整理四家公司的目標職缺與能力矩陣。
+- 整理前端與全端職務的能力矩陣。
 - 盤點五年工作中可公開描述的專案、技術決策、事故與量化成果。
 - 測試資料結構、演算法、JavaScript、React、英文口說的目前程度。
 - 建立演算法資料結構筆記、Pattern 筆記與錯題複習機制。
@@ -306,13 +304,13 @@ Google Calendar 的正式訓練時段為週一至週五 20:30～22:50。每天�
 - 每週進行 Coding、Frontend System Design、專案 Deep Dive 與英文 Mock Interview。
 - 先投遞相近公司取得真實面試回饋，再修正準備方向。
 
-### 第 6 個月：四家公司專項衝刺
+### 第 6 個月：職務情境練習與成果整理
 
 - 依當期實際 JD 補上公司與團隊專項。
-- 完成 Amazon Leadership Principles 故事庫。
-- 完成 Binance 交易與即時資料系統設計題。
-- 完成台積電、聯發科版本的履歷與企業系統案例。
-- 正式投遞四家公司，不因單一公司的招募時程停止其他機會。
+- 完成以真實工作經驗為基礎的行為面試故事庫。
+- 完成交易與即時資料系統設計題。
+- 整理前端、全端與企業系統案例，依職務要求調整履歷重點。
+- 依當期職缺條件投遞，並用實際回饋修正準備方向。
 
 ## 半年後的驗收標準
 
